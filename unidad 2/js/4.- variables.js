@@ -12,15 +12,8 @@ Some features use strict mode by default:
     -Arrow functions
     -Tagged template literals
 */
-/*
-Special values:
-    -null: Developer has to specify this value when creating a variable. It means it has no valid value
-    -undefined: Variable has been created but with no value
-    https://es.stackoverflow.com/questions/603458/cu%C3%A1l-es-la-diferencia-entre-null-y-undefined-en-javascript    
-*/
-/*JavaScript es débilmente tipado, es decir
-    -no es necesario declarar el tipo de las variables
-    -la variable puede cambiar de tipo a lo largo de su vida (no recomendado)*/
+
+
 
 //ejemplo del uso de variables, constantes y tipos
 //las variables se deben definir con let. var está anticuado

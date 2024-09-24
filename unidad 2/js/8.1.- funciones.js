@@ -85,9 +85,6 @@ console.log(otroObjeto.propiedad); // 'valor original' (no cambia)
 
 
 
-
-
-
 ///////////RETURNING VALUES/////////////
 let usuario={nombre:"pepe",edad:"17"};
 function compruebaMayoriaEdad(edad) {
@@ -285,3 +282,5 @@ solicitudServidor("El vaso está medio  ", obtenerResultados);
 
 //Resultado en la consola luego de 5 segundos:
 // El vaso está medio lleno!
+
+
