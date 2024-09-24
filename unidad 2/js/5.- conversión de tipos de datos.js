@@ -22,7 +22,6 @@ Complex data types:
     Function: It's an object representing an executable chunk of code that can be called anywhere. function sumar (a,b){ return a+b;}
     Date: An object to work with dates and time. new Date();
     RegExp: An object to work with regular expressions. /\d+/
-
 */
 
 /*JavaScript es débilmente tipado, es decir
