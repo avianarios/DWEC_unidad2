@@ -93,17 +93,35 @@ salida: for (let i = 0; i < 3; i++) {
 }
 
 
-//Iterable and non-iterable objects//
-//for...of -> iterable elements
+//Iterating trough objects with for//
 const matriz= [1, 2, 3];
+const obj = { name: "Alice", age: 25 };
 
+//an array
+for (let i=0; i<matriz.length; i++)
+  console.log(matriz[i]);
+
+//an object. It needs to use Object.keys(objeto), a predefined method. We'll talk about methods of predefined objects in a later chapter
+//Object.keys returns an array with the keys of the object
+let numero_llaves=Object.keys(obj).length
+for (let i=0; i<numero_llaves; i++){    
+  let llave=Object.keys(obj)[i];
+  console.log (obj[llave]);
+}
+
+//Objects can be classified as iterable and non-iterable//
+//Both of them have special for structures to iterate over that makes it easier than traditional for
+
+//How do I know if it's an iterable object?
+console.log (matriz[Symbol.iterator]);  //if returns function, then it exists and, therefore, it's iterable
+console.log (obj[Symbol.iterator]);  //if returns undefined, then it does not exist and, therefore, it is not iterable
+
+//for...of -> iterable elements
 for (let elemento of matriz) {
   console.log(elemento);  // 1, 2, 3
 }
 
 //for...in -> non-iterable object
-const obj = { name: "Alice", age: 25 };
-
 for (let key in obj) {
   console.log(key, obj[key]);  // name Alice, age 25
 }
