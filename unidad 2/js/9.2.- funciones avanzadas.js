@@ -118,6 +118,15 @@ usua();
 Closure allows a function to access variables in its creation context, even after the outer function has finished executing. It allows functions that remember their state
 */
 
+//example 0
+let tratamiento="señor";
+function saluda(nombre, saludo){
+  let tratamiento="Don";  //local variable prevails over global one
+  console.log (`${saludo} ${tratamiento} ${nombre}`);
+}
+
+saluda("pepe", "hola");
+
 //example 1
 let globalVar = 'Global';
 function exampleFunction() {

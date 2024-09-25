@@ -30,61 +30,29 @@ hola();
 ///////////ARGUMENTS/////////////
 //iterating over arguments using an object called "arguments". It is a non-iterable object
 //It can be converted to an array by using Array.from in order to iterate by using foreach or for..of
-let tratamiento="señor";
-function saluda(nombre, saludo){
-    for (let key in arguments){
-      console.log (arguments[key]);
-    }
+function muestra_argumentos(nombre, saludo){
+  for (let key in arguments){
+    console.log (arguments[key]);
+  }
 /* Alternative way of iterating
-  for (let i=0; i<arguments.length; i++){
-    console.log (arguments[i]);
-  }*/
-  
-  let tratamiento="Don";  //local variable prevails over global one
-  console.log (`${saludo} ${tratamiento} ${nombre}`);
+for (let i=0; i<arguments.length; i++){
+  console.log (arguments[i]);
+}*/
 }
 
-saluda("pepe", "hola");
+muestra_argumentos("pepe", "hola");
+
 
 //Primitive arguments (number, string, boolean, null, undefined, symbol, y bigint) are passed as value, meaning that a copy of them is made. Therefore, its original value won't change
 function muestraCliente(nombre, apellido) {
-    nombre="el inconfundible "+nombre;  //an argument is a copy of a global variable. Modifying it don't change global variable
-    console.log(nombre+" "+apellido);
+  nombre="el inconfundible "+nombre;  //an argument is a copy of a global variable. Modifying it don't change global variable
+  console.log(nombre+" "+apellido);
 }
 
 let nombre="Perico";
 muestraCliente(nombre,"Pérez");
 console.log(nombre);  //nombre variable won't be modified
 
-/*default value when an argument is not provided (modern JavaScript)*/
-function muestraCliente2(nombre, apellido="sin apellido") {
-    nombre="el inconfundible "+nombre;
-    console.log(nombre+" "+apellido);
-}
-
-let nombres=["procopio","patrocinio"];
-
-for (let i=0; i<nombres.length; i++)
-  muestraCliente2(nombres[i]);    //when missing an argument, its default value is used (defined in the function)
-
-
-/*It is also possible to provide a function as a default value for a parameter*/
-function muestraCliente3(nombre, apellido=buscaApellido(nombre)) { //default value for arguments
-    nombre="el inconfundible "+nombre;
-    console.log(nombre+" "+apellido);
-}
-
-function buscaApellido(nombreBuscado){
-    let nombres=[{nombre:"procopio",apellido:"máximo"},
-                {nombre:"patrocinio",apellido:"Sánchez"}];
-    for (let i=0; i<nombres.length; i++){
-        if (nombreBuscado==nombres[i].nombre){
-            return nombres[i].apellido;
-        }
-    }
-}
-
-muestraCliente3("procopio");
 
 //Object arguments are passed as a reference meaning that there is a variable pointing to the original object. Thus, If function modifies object using this reference, it will change outside but, if the variable which is pointing to the object, is reassigned and then the object is modified, it won't change
 function modificarObjeto(obj) {
@@ -95,7 +63,6 @@ let miObjeto = { propiedad: 'valor original' };
 modificarObjeto(miObjeto);
 console.log(miObjeto.propiedad); // 'nuevo valor' (cambia)
 
-
 function reasignarObjeto(obj) {
   obj = { propiedad: 'otro valor' }; // Reasigna a un nuevo objeto, pero no afecta el original
 }
@@ -104,6 +71,36 @@ let otroObjeto = { propiedad: 'valor original' };
 reasignarObjeto(otroObjeto);
 console.log(otroObjeto.propiedad); // 'valor original' (no cambia)
 
+
+/*default value when an argument is not provided (modern JavaScript)*/
+function muestraCliente2(nombre, apellido="sin apellido") {
+  nombre="el inconfundible "+nombre;
+  console.log(nombre+" "+apellido);
+}
+
+let nombres=["procopio","patrocinio"];
+
+for (let i=0; i<nombres.length; i++)
+muestraCliente2(nombres[i]);    //when missing an argument, its default value is used (defined in the function)
+
+
+/*It is also possible to provide a function as a default value for a parameter*/
+function muestraCliente3(nombre, apellido=buscaApellido(nombre)) { //default value for arguments
+  nombre="el inconfundible "+nombre;
+  console.log(nombre+" "+apellido);
+}
+
+function buscaApellido(nombreBuscado){
+  let nombres=[{nombre:"procopio",apellido:"máximo"},
+              {nombre:"patrocinio",apellido:"Sánchez"}];
+  for (let i=0; i<nombres.length; i++){
+      if (nombreBuscado==nombres[i].nombre){
+          return nombres[i].apellido;
+      }
+  }
+}
+
+muestraCliente3("procopio");
 
 
 ///////////RETURNING VALUES/////////////
