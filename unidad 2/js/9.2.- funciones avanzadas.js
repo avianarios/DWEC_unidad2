@@ -84,6 +84,22 @@ alert( Math.max(1, ...arr, ...arr1, 2, ...arr2, 25));
 /////////Nested functions/////////////
 //a function created within another function
 //inner function is invisible outside and can use outer variables
+//example 1
+function externa() {
+  console.log("Soy la función externa");
+
+  function interna() {
+      console.log("Soy la función interna");
+  }
+
+  interna(); // Llamamos a la función interna desde dentro de la función externa
+}
+
+externa(); // Llamada a la función externa
+
+
+//Example 2
+//inner function can be returned. Thus, by calling external function, internal one is executed
 function saludador(quien){
   return function(){ //acá se crea la funcion anónima a retornar. No hace falta nombre
     console.log("hola " + quien);
@@ -92,22 +108,6 @@ function saludador(quien){
 var saluda = saludador("mundo");
 saluda(); //hola mundo
 
-
-function creaUsuario(quien){
-  let nombre; //inner variables can't be accessed outside function
-  return function usu(){  //need a name to create properties
-    nombre=quien;
-    console.log("Usuario "+nombre+" creado");
-  };
-  usu.apellido="perez";
-}
-
-let usua=creaUsuario("pepe");
-usua.apellido="gonzález";
-console.log (usua.apellido);  //gonzález
-console.log (usua.nombre);  //undefined
-usua();
-  
   
 ////scope and closure////
 /*Scope refers to the accessibility of variables within a program. In JavaScript, there are different types of scope:
@@ -174,7 +174,8 @@ function creaUsuario() {
 
 let nombre = "Manolo";
 let usuario = creaUsuario();  // crea una función
-usuario(); // Pepe. Es el valor de la variable interna
+
+console.log(usuario()); // Pepe. Es el valor de la variable interna
 
 //Example 4
 //nested function lexical environment has no value for the variable "nombre"
@@ -223,7 +224,6 @@ document.getElementById('size-16').onclick = size16;
 
 
 //example 7
-// ámbito global
 const f = 10;
 
 function sum(a) {
@@ -239,25 +239,3 @@ function sum(a) {
 }
 
 console.log(sum(1)(2)(3)(4)); // 20
-
-//Example 8
-// ámbito global
-const e = 10;
-
-function sum(a) {
-  return function sum2(b) {
-    return function sum3(c) {
-      // ámbito de funciones externas
-      return function sum4(d) {
-        // ámbito local
-        return a + b + c + d + e;
-      };
-    };
-  };
-}
-
-const sum2 = sum(1);
-const sum3 = sum2(2);
-const sum4 = sum3(3);
-const result = sum4(4);
-console.log(result); // 20
