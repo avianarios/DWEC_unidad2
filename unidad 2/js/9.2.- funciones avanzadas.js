@@ -81,7 +81,7 @@ alert( Math.max(1, ...arr, ...arr1, 2, ...arr2, 25));
 })("mundo");
 
 
-/////////Nested functions and closure/////////////
+/////////Nested functions/////////////
 //a function created within another function
 //inner function is invisible outside and can use outer variables
 function saludador(quien){
@@ -109,20 +109,52 @@ console.log (usua.nombre);  //undefined
 usua();
   
   
-//scope and closure
-//"use strict" is needed. Otherwise, some of them would work, but they wouldn't have to
-//functions remember where they were created using a [[environment]] property
-//allowing them to access an exterior function scope within an inner function
+////scope and closure////
+/*Scope refers to the accessibility of variables within a program. In JavaScript, there are different types of scope:
+    -Global Scope: Variables defined outside any function have a global scope and are accessible from anywhere in the code.
+    -Function Scope: Variables defined inside a function are local to that function and cannot be accessed from outside it.
+    -Block Scope: Introduced in ES6 with let and const, block scope limits access to variables within blocks of code, such as those delimited by {} braces.
+    
+Closure allows a function to access variables in its creation context, even after the outer function has finished executing. It allows functions that remember their state
+*/
 
 //example 1
-nombre= "Máximo";
-function saluda() {
-  console.log("Hola, " + nombre);
+let globalVar = 'Global';
+function exampleFunction() {
+  let localFuncVar = 'Local a la función';
+  console.log(globalVar);
+  console.log(localFuncVar);
+  //console.log(localIfVar);  //Error. It's not defined
+  if (1){
+    let localIfVar="Local al if";
+    console.log(globalVar);
+    console.log(localFuncVar);
+    console.log(localIfVar);
+  }
 }
-nombre="Procopio";
-saluda(); //Procopio
+
+exampleFunction();
+console.log(globalVar);
+//console.log(localFuncVar);    //Error. It's not defined
+//console.log(localIfVar);    //Error. It's not defined
 
 //example 2
+let frase = "hola";
+
+if (1) {
+  let usuario = "Patrocinio";
+  function saluda() {
+    console.log(`${frase}, ${usuario}`);
+  }
+}
+
+saluda();   //Saluda is unknown outside the "if" block if "use strict" is present
+
+//example 3
+/*The lexical environment is the context in which a function was created, not in which it was called. This means that a function remembers the place where it was defined and has access to the variables in that context even if it is invoked elsewhere.
+
+When nested function was created, nombre="pepe". No matter if nombre changes its value, this function will remember its lexical environment
+*/
 function creaUsuario() {
   let nombre= "Pepe";
 
@@ -135,7 +167,8 @@ let nombre = "Manolo";
 let usuario = creaUsuario();  // crea una función
 usuario(); // Pepe. Es el valor de la variable interna
 
-//Example 3
+//Example 4
+//nested function lexical environment has no value for the variable "nombre"
 function persona(aux){
   let nombre=aux;
   return function(){
@@ -149,18 +182,6 @@ let persona2=persona("manolo");
 console.log(persona1());
 console.log(persona2());
 
-
-//Example 4
-let frase = "hola";
-
-if (1) {
-  let usuario = "Patrocinio";
-  function saluda() {
-    console.log(`${frase}, ${usuario}`);
-  }
-}
-
-saluda();   //Saluda is unknown outside the "if" block if "use strict" is present
 
 //example 5
 function makeAdder(x) {
@@ -231,59 +252,3 @@ const sum3 = sum2(2);
 const sum4 = sum3(3);
 const result = sum4(4);
 console.log(result); // 20
-
-
-///////////callback functions////////////
-//a callback function is the one which is passed as argument to another function to be called
-//example 1
-function calculate(a, b, fn) {
-  var c = a + b + fn(a, b);
-  return c;
-}
-
-function sum(a, b) {
-  return a + b;
-}
-
-function product(a, b) {
-  return a * b;
-}
-
-console.log(calculate(10, 20, sum));  //60
-console.log(calculate(10, 20, product));  //230
-  
-  
-//example 2
-function ask(question, yes, no) {
-  if (confirm(question)) yes()  //confirm shows up a window asking accept or cancel
-  else no();
-}
-
-//showOk and showCancel are called callback functions
-function showOk() {
-  console.log( "You agreed." );
-}
-
-function showCancel() {
-  console.log( "You canceled the execution." );
-}
-
-// usage: functions showOk, showCancel are passed as arguments to ask
-ask("Do you agree?", showOk, showCancel);
-
-
-//example 3
-//Another way to express the last code (not recommended tough)
-function pregunta(question, yes, no) {
-  if (confirm(question)) yes()  //confirm shows up a window asking accept or cancel
-  else no();
-}
-
-pregunta(
-  "Agree?",
-  function() {console.log("estás de acuerdo");},
-  function () { console.log ("no estás de acuerdo");}
-);
-  
-  
-  

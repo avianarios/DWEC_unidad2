@@ -4,15 +4,19 @@
 /*Example of how to use global and local variables*/
 let mensaje1="hola don pepito",
     mensaje2="hola don josé";
+
 function muestraMensaje() {
-    let mensaje1 = "Saludos desde dentro de la función!"; // If a local variable with the same name is defined, global variable can't be used
-    console.log (mensaje1, mensaje2);
-    mensaje2="cambio el mensaje dentro de la función";  //a global variable can be accessed and modified inside a function
+  let mensaje1 = "Saludos desde dentro de la función!"; // If a local variable with the same name is defined, global variable can't be used
+  if (1){
+    let mensaje1="mensaje 1 dentro del if"; //this variable is local to if block
   }
+  console.log (mensaje1, mensaje2);
+  mensaje2="cambio el mensaje dentro de la función";  //a global variable can be accessed and modified inside a function
+}
   
-  console.log ("muestro variables globales antes de llamar a la función:", mensaje1, mensaje2); //showing global message variable 
-  muestraMensaje();
-  console.log ("muestro variables globales después de llamar a la función:", mensaje1, mensaje2); //showing global message variable 
+console.log ("muestro variables globales antes de llamar a la función:", mensaje1, mensaje2); //showing global message variable 
+muestraMensaje();
+console.log ("muestro variables globales después de llamar a la función:", mensaje1, mensaje2); //showing global message variable 
   
 
 let adios="adios";
@@ -24,8 +28,25 @@ hola();
 
 
 ///////////ARGUMENTS/////////////
-//Primitive arguments (number, string, boolean, null, undefined, symbol, y bigint) are passed as value, meaning that a copy of them is made. Therefore, its original value won't change
+//iterating over arguments using an object called "arguments". It is a non-iterable object
+//It can be converted to an array by using Array.from in order to iterate by using foreach or for..of
+let tratamiento="señor";
+function saluda(nombre, saludo){
+    for (let key in arguments){
+      console.log (arguments[key]);
+    }
+/* Alternative way of iterating
+  for (let i=0; i<arguments.length; i++){
+    console.log (arguments[i]);
+  }*/
+  
+  let tratamiento="Don";  //local variable prevails over global one
+  console.log (`${saludo} ${tratamiento} ${nombre}`);
+}
 
+saluda("pepe", "hola");
+
+//Primitive arguments (number, string, boolean, null, undefined, symbol, y bigint) are passed as value, meaning that a copy of them is made. Therefore, its original value won't change
 function muestraCliente(nombre, apellido) {
     nombre="el inconfundible "+nombre;  //an argument is a copy of a global variable. Modifying it don't change global variable
     console.log(nombre+" "+apellido);
@@ -35,8 +56,8 @@ let nombre="Perico";
 muestraCliente(nombre,"Pérez");
 console.log(nombre);  //nombre variable won't be modified
 
-/*how to create a default value when an argument is not provided. Is a feature of modern JavaScript*/
-function muestraCliente2(nombre, apellido="sin apellido") { //default value for arguments
+/*default value when an argument is not provided (modern JavaScript)*/
+function muestraCliente2(nombre, apellido="sin apellido") {
     nombre="el inconfundible "+nombre;
     console.log(nombre+" "+apellido);
 }
@@ -118,7 +139,8 @@ console.log(garantizaAcceso(usuario));
 
 
 ////////////FUNCTIONS AS EXPRESSIONS////////////////
-//a function can be seen as an expression. 
+//as a function can return a value, it can be seen as an expression and, therefore, assigned to a variable
+//naming the function it is not mandatory
 let showMessage = function(){
   console.log("hola");
 };
@@ -133,18 +155,13 @@ let func=saluda;  //no parenthesis when assigning, they are variables
 func(); 
 saluda(); 
 
-//Another example
-// program to find the square of a number
-// function is declared inside the variable
-let x = function (num) { return num * num };
-console.log(x(4));
-
 // function can be used as variable value for other variables
+let x = function (num) { return num * num };
 let y = x(3);
 console.log(y);
 
 //named expression function
-//No mandatory function name, but useful when need to call itself
+//No mandatory function name, but useful when it needs to call itself
 let sayHi = function func(who) {
   if (who) {
     console.log(`Hello, ${who}`);
@@ -176,7 +193,6 @@ let saluda=function(nombre){
 //when using strict mode...
 //function expressions (expresión de función) can be used even outside the scope they were declared at
 //function declaration (declaración de función) can only be used within the scope they were declared at
-"use strict"
 if (1){
   function saluda(nombre){
     console.log("hola "+nombre);
@@ -189,8 +205,6 @@ if (1){
 saluda("pepe");
 
 
-
-"use strict";
 //this is the key. I define the variable outside the scope and, assign to the function inside
 let saluda, despidete2;
 if (1){
@@ -234,6 +248,8 @@ console.log(resta(4,2));
 console.log(suma(4,2));
 
 ///////////CALLBACK FUNCTIONS (funciones de retorno)//////////////
+//a callback function is the one which is passed as argument to another function
+//example 1
 function ask(question, yes, no) {
   if (confirm(question)) yes()  //confirm shows up a window asking accept or cancel
   else no();
@@ -252,8 +268,7 @@ function showCancel() {
 ask("Do you agree?", showOk, showCancel);
 
 
-
-//Another way to express the last code (not recommended tough)
+//example 2: Another way to express the last code (not recommended tough)
 function pregunta(question, yes, no) {
   if (confirm(question)) yes()  //confirm shows up a window asking accept or cancel
   else no();
@@ -266,7 +281,7 @@ pregunta(
 );
 
 
-//yet another callback example
+//example 3
 function solicitudServidor(consulta, callback){
   setTimeout(function(){
     var respuesta = consulta + "lleno!";
@@ -279,8 +294,22 @@ function obtenerResultados(resultados){
 }
 
 solicitudServidor("El vaso está medio  ", obtenerResultados);
-
 //Resultado en la consola luego de 5 segundos:
 // El vaso está medio lleno!
 
+//example 4
+function calculate(a, b, fn) {
+  var c = a + b + fn(a, b);
+  return c;
+}
 
+function sum(a, b) {
+  return a + b;
+}
+
+function product(a, b) {
+  return a * b;
+}
+
+console.log(calculate(10, 20, sum));  //60
+console.log(calculate(10, 20, product));  //230
