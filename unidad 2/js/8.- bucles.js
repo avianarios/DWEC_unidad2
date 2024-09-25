@@ -60,6 +60,11 @@ while (suma<5){
 //much better
 for (suma=0;suma<5;suma++);
 
+//Force input to be a number
+let num;
+do{
+    num = +prompt("Enter a number", '');    //+converts what prompt reads, a string, to a number
+}while (isNaN(num));
 
 //continue will finish the actual iteration and move on to the next one
 for (i = 0; i < 10; i++) {
