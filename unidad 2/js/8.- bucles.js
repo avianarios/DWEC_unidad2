@@ -108,10 +108,9 @@ for (let i=0; i<matriz.length; i++)
 
 //an object. It needs to use Object.keys(objeto), a predefined method. We'll talk about methods of predefined objects in a later chapter
 //Object.keys returns an array with the keys of the object
-let numero_llaves=Object.keys(obj).length
-for (let i=0; i<numero_llaves; i++){    
-  let llave=Object.keys(obj)[i];
-  console.log (obj[llave]);
+let llaves=Object.keys(obj);
+for (let i=0; i<llaves.length; i++){    
+  console.log (obj[llaves[i]]);
 }
 
 //Objects can be classified as iterable and non-iterable//
