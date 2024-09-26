@@ -8,7 +8,7 @@ console.log("esto es un texto");
 let respuesta=confirm("¿acepta?"); 
 
 //shows up a modal window asking the user for a value
-let numero=prompt("dame un número", "numero");
+let numero=prompt("dame un número", "numero");  //esc and cancel returns null, accept returns empty string
 console.log (`El número introducido es ${numero}`);
 
 //the following variables are known due to an early import of variables.js at index.html
