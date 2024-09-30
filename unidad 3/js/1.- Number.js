@@ -8,6 +8,8 @@ let numero_objeto2=new Number(10);
 console.log (numero_primitivo1==numero_objeto1);    //true. JS makes numero_objeto1.valueof(), converting an object into a primitive value 
 
 
+//Number object is focused on representation of numbers and individual operations on them like verification, conversion or access
+
 /*some properties:
     Number.MAX_VALUE: El valor numérico más grande representable en JavaScript (~1.7976931348623157e+308).
     Number.MIN_VALUE: El valor numérico más pequeño representable (~5e-324).
@@ -115,15 +117,6 @@ console.log ( sum == 0.3 ); // false
 console.log( sum.toFixed(2)==0.3 ); // true 
 
 console.log(9999999999999999);  //returns 10000000000000000
-
-
-//MATH is an object for number type, that has methods and properties related with mathematics
-let real=3.193;
-let real2=3.6;
-//floor roudns down, ceil rounds up, round rounds to the next integer and trunc removes anything beyond decimal point
-console.log (Math.floor(real), Math.ceil(real), Math.round(real), Math.trunc(real));
-console.log (Math.floor(real2), Math.ceil(real2), Math.round(real2), Math.trunc(real2));
-
 
 
 
