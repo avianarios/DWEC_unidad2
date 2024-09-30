@@ -1,3 +1,5 @@
+//although you can work with arrays as you would do with a primitive type, they are objects
+
 let matriz1=new Array();
 let matrizFrutas=["chirimoya", "mango", "aguacate"];  //most used. Can be created empty
 //an array can store different data types
@@ -37,7 +39,11 @@ let funcion = (elemento) => console.log (elemento);
 matrizFrutas.forEach(funcion);
 
 //option #2
-for (let fruta of matrizFrutas){
+//Objects can be classified as iterable and non-iterable//
+//Both of them have special for structures to iterate over that makes it easier than traditional for
+//How do I know if it's an iterable object?
+console.log (matriz[Symbol.iterator]);  //if returns function, then it exists and, therefore, it's iterable
+for (let fruta of matrizFrutas){  //for...of->non-iterable objects
     console.log (fruta);
 }
 

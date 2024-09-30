@@ -92,6 +92,7 @@ externa(); // Llamada a la función externa
 
 //Example 2
 //inner function can be returned. Thus, by calling external function, internal one is executed
+//this is called high-order function
 function saludador(quien){
   return function(){ //acá se crea la funcion anónima a retornar. No hace falta nombre
     console.log("hola " + quien);

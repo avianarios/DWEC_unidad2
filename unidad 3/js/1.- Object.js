@@ -1,16 +1,35 @@
 //Object "object" is the base of any other object in JS. It is where the other objects inherit
-/*Complex data types:    
-    Object: They are a category of complex data types. They can contain data collections (pair key-value) and functionality (methods). There are some kinds of objects:
-        -simple ones as {} 
-        -complex ones as arrays, classes or functions
-    Array: It's a subtype of an object. It is an ordered list of values of any type enclosed into brackets. Example: [1, 2, 3, “pepe”, “jose”, true]  
-    Function: It's an object representing an executable chunk of code that can be called anywhere. function sumar (a,b){ return a+b;}
-    Date: An object to work with dates and time. new Date();
-    RegExp: An object to work with regular expressions. /\d+/
+/*built-in objects:
+
+    -Object: They contain data collections (pair key-value) and functionality (methods). All every object inherits from object "object"
+    
+    -Array: It is an ordered list of values of any type enclosed into brackets. Example: [1, 2, 3, “pepe”, “jose”, true]  
+
+    -String: Represents a chain of text
+
+    -Function: It's an object representing an executable chunk of code that can be called anywhere. function sumar (a,b){ return a+b;}
+
+    -Boolean: Although it exists a boolean object, it is recommended to use primitive type as it is simpler. You can evaluate a boolean object or its content. In the first case, if it exists it returns true, even if it contains false, which is confusing. Thus, using primitive type is preferred
+
+    -Error handling objects, like Error, EvalError, RangeError, ReferenceError, SyntaxError, TypeError and URIError
+
+    -Math. Provides mathematical functions
+
+    -Date: An object to work with dates and time. new Date();
+
+    -RegExp: An object to work with regular expressions. /\d+/
+
+    -Data Structure: Map, Set, WeakMap and WeakSet
+
+    -JSON
+
+    -Promise and AsyncFunction
+
+    -Console
 */
-
-
+//////////////////////////////
 //////Creating objects////////
+//////////////////////////////
 //directly
 let usuario={
     id:"1",
@@ -18,15 +37,15 @@ let usuario={
     edad:30
 };
 
-//with NEW
+//Using constructor
 function perro(nombre, raza) {
     this.nombre = nombre;
     this.raza = raza;
 }
 
+//new is an operator that instantiates objects from construtor functions
 let perro1=new Perro ("pirata","beagle");
 console.log (perro1);
-
 
 //with rest parameter
 //allows to create an object without knowing the amount of properties it will have
@@ -38,68 +57,7 @@ const { street, ...address } = {
 
 console.log (address);
 
-///////iterating trough objects///////
-const matriz= [1, 2, 3];
-const obj = { name: "Alice", age: 25 };
-
-//an array. Traditional method
-for (let i=0; i<matriz.length; i++)
-  console.log(matriz[i]);
-
-//an object. It needs to use Object.keys(objeto), a predefined method. We'll talk about methods of predefined objects in a later chapter
-//Object.keys returns an array with the keys of the object
-let llaves=Object.keys(obj);
-for (let i=0; i<llaves.length; i++){    
-  console.log (obj[llaves[i]]);
-}
-
-//Objects can be classified as iterable and non-iterable//
-//Both of them have special for structures to iterate over that makes it easier than traditional for
-//How do I know if it's an iterable object?
-console.log (matriz[Symbol.iterator]);  //if returns function, then it exists and, therefore, it's iterable
-console.log (obj[Symbol.iterator]);  //if returns undefined, then it does not exist and, therefore, it is not iterable
-
-//for...of -> iterable elements
-for (let elemento of matriz) {
-  console.log(elemento);  // 1, 2, 3
-}
-
-//for...in -> non-iterable object
-for (let key in obj) {
-  console.log(key, obj[key]);  // name Alice, age 25
-}
-
-
-
-//accessing object properties
-console.log(usuario.nombre);    //returns value
-console.log(usuario.noExiste);    //returns undefined, but no error
-console.log("hola" in usuario);     //returns false, but no error
-console.log("edad" in usuario);   //returns true
-
-//assigning new properties with values
-usuario.esAdmin=false;
-usuario['direccion']="avenida pez, 3";
-console.log(usuario);
-
-//removing properties
-delete(usuario.edad);
-delete(usuario['esAdmin']);
-console.log(usuario);
-
-//brackets allows to calculate in real-time the key 
-let llave=prompt("¿Qué quieres saber del usuario?");  //needs to be a valid key name
-console.log(usuario[llave]);    //llave=edad or nombre...
-
-//another example of brackets
-let llave2=prompt("¿Qué elemento quieres?");
-let cantidad={
-    [llave2]: 5
-}
-console.log (cantidad);
-console.log (cantidad[llave2]);
-
-//create users using property value shorthand
+//create users by using a "factory function", a function that creates and returns objects
 function makeUser(name, age){
     return{
         name: name,
@@ -110,7 +68,6 @@ function makeUser(name, age){
 let user=makeUser("paco", 40);
 console.log (user);
 
-//another way of doing the same
 //same as before but function as arrow
 //as properties have the same name as parameters, they can be removed
 //here they have been removed from arrow, but can be done in traditional funcion as well
@@ -121,45 +78,81 @@ let creaUsuario=(name,age)=>(
 user=creaUsuario("pepe", 30);
 console.log (user);
 
-//iterating through objects
-for (let llave in usuario){
-    console.log (usuario.llave);  //it doesn't work
-    console.log (usuario[llave]);  //it works
+///////////////////////////
+////getting object info////
+///////////////////////////
+const persona = { nombre: "Procopio", cargo: "Prefecto", edad: 29};
+console.log (Object.keys(persona));    //returns an array with keys (name of properties)
+console.log (Object.values(persona));   //returns an array with values (values of the properties)
+console.log (Object.entries(persona));  //returns an array of pairs key-value
+
+//////////////////////////////////////
+///////iterating trough objects///////
+//////////////////////////////////////
+////Object.keys() can be used to iterate trough an object
+let llaves=Object.keys(persona);        //llaves=['name', 'age']
+for (let i=0; i<llaves.length; i++){       //traditional for
+  console.log (persona[llaves[i]]);
 }
 
-//Comparison
-//as it occurs with arrays, two objects can't be compared with ==
-let objeto1=objeto2={
-    nombre:"pepe",
-    profesion: "fontanero"
-};
+//Objects can be classified as iterable and non-iterable//
+//Both of them have special for structures to iterate over that makes it easier than traditional for
+//How do I know if it's an iterable object?
+console.log (persona[Symbol.iterator]);  //if returns undefined, then it does not exist and, therefore, it is not iterable
 
-let objeto3={
-    nombre:"pepe",
-    profesion: "fontanero"
-};
+//for...in -> non-iterable object
+for (let clave in persona) {
+  console.log(clave, persona[clave]);
+}
 
-//object references and copy
-let aux="hola";
-let aux2=aux;   //aux value is copied into aux2 value. Both point to a different memory location
+//object.values() can be used to iterate as well
+//by using a traditional for
+let valores=Object.values(persona);        //llaves=['name', 'age']
+for (let i=0; i<valores.length; i++){       //traditional for
+    console.log ([valores[i]);
+}
 
-aux2="adios";   //if I modify aux2, aux still holds its original value
-console.log(aux, aux2);
+//or by using an iterable for...of
+//Object.values returns an array. It's an iterable object that can be iterated by using for...of instead of for...in
+for (let valor of Object.values(persona)){      
+    console.log (valor);
+}
 
-//when copying objects (array are objects as well), they both point to the same memory location
-let usuario={ nombre:"pepe" };
-let usuario2=usuario;   //usuario2 and usuario point to the same memory location. they are the same object
-let usuario3={ nombre:"pepe" };
+///////////////////////////////////
+////accessing object properties////
+///////////////////////////////////
+console.log (persona.nombre);    //returns value
+console.log (persona.noExiste);    //returns undefined, but no error
+console.log (persona["cargo"]);     //by using brackets, complex field names can be used
+console.log ("hola" in persona);     //returns false, but no error
+console.log ("edad" in persona);   //returns true
 
-usuario.nombre="fede";
-console.log(usuario2.nombre);
+//assigning new properties with values
+persona.licenciado=false;
+persona['nacimiento']="Roma";
+console.log(persona);
 
-//Objects comparison with == or === is tricky
-console.log (objeto1==objeto2); //true. They are both the same object
-console.log (objeto1==objeto3); //false. They are different objects (although they have the same information)
+//removing properties
+delete(persona.nacimiento);
+delete(persona['licenciado']);
+console.log(persona);
+
+//brackets notation allows to calculate in real-time the key 
+let llave=prompt("¿Qué quieres saber del usuario?");  //needs to be a valid key name
+console.log(persona[llave]);    //llave=edad or nombre...
+
+//another example of brackets
+let llave2=prompt("¿Qué elemento quieres?");
+let cantidad={
+    [llave2]: 5
+}
+console.log (cantidad);
+console.log (cantidad[llave2]);
 
 
-//Adding and removing properties
+//////////////////////////////////////
+////Adding and removing properties////
+//////////////////////////////////////
 persona1={
     nombre:"pepe",
     profesion: "fontanero",
@@ -174,8 +167,45 @@ delete(persona1.medidas);
 console.log (persona1);
 
 
+////////////////////
+/////Comparison/////
+////////////////////
+//two objects can't be compared with == (it'll happen the same with arrays)
+let objeto1=objeto2={
+    nombre:"pepe",
+    profesion: "fontanero"
+};
+
+let objeto3={
+    nombre:"pepe",
+    profesion: "fontanero"
+};
+
+//object references and copy
+//when copying variables, they are different elements at different memory position
+let aux="hola";
+let aux2=aux;   
+aux2="adios";   //if I modify aux2, aux still holds its original value
+console.log(aux, aux2);
+
+//when copying objects, they both point to the same memory location. Second object it's just a reference to the first one
+let usuario={ nombre:"pepe" };
+let usuario2=usuario;   //usuario2 and usuario point to the same memory location. they are the same object
+let usuario3={ nombre:"pepe" };
+
+usuario.nombre="fede";
+console.log(usuario2.nombre);
+
+//Objects comparison with == or === is tricky
+console.log (objeto1==objeto2); //true. They are both the same object
+console.log (objeto1==objeto3); //false. They are different objects (although they have the same information)
+
+
+/////////////////////
+////assign method////
+/////////////////////
 //Cloning and copying
-//Object.assign copy one ore more objects into another (to create two different objects with the same values)
+//copy one ore more objects into another (to create two different objects with the same values)
 let objeto1={
     nombre:"pepe",
     profesion: "fontanero"
@@ -186,11 +216,12 @@ let objeto2={
     nacionalidad:"Española"
 }
 
-let objeto4=(Object.assign({}, objeto1, objeto2));  //copy objeto1 and objeto2 into objeto4. Overwrite if exist
+let objeto4=Object.assign({}, objeto1, objeto2);  //copy objeto1 and objeto2 into objeto4. Overwrite if exist
 console.log(objeto4);
 
-//nested cloning and copying. structuredclone allows objects inside objects to be copied as well
-//should not be used, object inside object would be copied by reference
+////global function structuredClone////
+//Object.assign creates a surface copy, meaning it does not copy nested objects
+//structuredClone allows objects inside objects to be copied as well (deep clone)
 persona1={
     nombre:"pepe",
     profesion: "fontanero",
@@ -200,16 +231,17 @@ persona1={
     }
 };
 
-let persona2=Object.assign({}, persona);
+let persona2=Object.assign({}, persona1);   //first level of persona1 is copied by value (they are different copies of the same object in different locations in memory) whereas nested levels are copied by reference (they are pointers pointing to the same object)
 persona2.nombre="juan";
 persona1.medidas.altura=170;
 console.log(persona1, persona2);
-persona2=structuredClone(persona1);   //persona2 is now copied by value, not by reference
+persona2=structuredClone(persona1);   //all levels are copied by value
 persona1.medidas.altura=200;
-console.log(persona1.medidas.altura, persona2.medidas.altura);
+console.log(persona1, persona2);
 
-
-///////////THIS//////////
+////////////
+////THIS////
+////////////
 //Example 1
 usuario={nombre:"pepe"}
 usuario2={nombre:"juan"}
@@ -362,28 +394,10 @@ console.log( personal1?.[clave] ); // Felipe
 console.log( personal2?.[clave] ); // undefined
 
 
-//Keys and values of an object can be retrieved
-for (let valor of Object.values(persona1)){
-    console.log (valor);
-}
-console.log (Object.keys(persona1));
-
-////////Performing operations with all object's properties/////////
-let prices = {
-    banana: 1,
-    orange: 2,
-    meat: 4,
-  };
-  
-// Object.entries converts each property into an array to facilitate operating with it
-// Object.fromEntries takes an array and returns an object
-  let doublePrices = Object.fromEntries(
-    Object.entries(prices).map(entry => [entry[0], entry[1] * 2]));
-
-  console.log(doublePrices);
-
-
-////////////getters and setters/////////
+///////////////////////////
+////getters and setters////
+///////////////////////////
+//when creating an object, it's desirable to encapsulate its information avoiding users to access it from outside. Therefore, methods to access an consult its properties must be provided
 let coche={
     marca:"",
     modelo:"",
