@@ -28,7 +28,7 @@ console.log( pow(2, 3) ); // 8
 
 ///////Rest parameters////////
 //example 1
-//allows to pass an undetermined number or parameters. Must be placed at the end
+//Group several elements into an array, allowing to pass as argument an undetermined number or parameters to a function. Must be placed at the end
 function sumaTodo(aux,...numeros){
   let acumulado=aux;
   for (let num of numeros){
@@ -61,14 +61,6 @@ function restarRecursivo(total,...numeros){
 let aux=1000;
 console.log(restarRecursivo(aux,4,56,24,2,123,123,123));
 
-///////Spread syntax////////
-//operador de expansión o de propagación//
-let arr = [3, 5, 1];
-let arr1 = [1, -2, 3, 4];
-let arr2 = [8, 3, -8, 1];
-
-//an array can't be passed to Math.max, as it expects a list of items. Spread syntax “expands” an iterable object arr into the list of arguments.
-alert( Math.max(1, ...arr, ...arr1, 2, ...arr2, 25));  
 
 /////////Autoexecutable functions///////
 //executed once, then can't be called again

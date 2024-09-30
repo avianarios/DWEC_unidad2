@@ -113,19 +113,3 @@ for (let i=0; i<llaves.length; i++){
   console.log (obj[llaves[i]]);
 }
 
-//Objects can be classified as iterable and non-iterable//
-//Both of them have special for structures to iterate over that makes it easier than traditional for
-
-//How do I know if it's an iterable object?
-console.log (matriz[Symbol.iterator]);  //if returns function, then it exists and, therefore, it's iterable
-console.log (obj[Symbol.iterator]);  //if returns undefined, then it does not exist and, therefore, it is not iterable
-
-//for...of -> iterable elements
-for (let elemento of matriz) {
-  console.log(elemento);  // 1, 2, 3
-}
-
-//for...in -> non-iterable object
-for (let key in obj) {
-  console.log(key, obj[key]);  // name Alice, age 25
-}

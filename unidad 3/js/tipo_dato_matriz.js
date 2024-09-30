@@ -3,6 +3,20 @@ let matrizFrutas=["chirimoya", "mango", "aguacate"];  //most used. Can be create
 //an array can store different data types
 let matrizMezcla=["hola", 1, 4.2, function(){console.log ("saludos");}]
 
+
+//Spread operator
+const array1 = [1, 2, 3];
+const array2 = [...array1, 4, 5]; // [1, 2, 3, 4, 5]
+console.log(array2);
+
+//example 3
+function sumar(a, b, c) {
+  return a + b + c;
+}
+
+const numeros = [1, 2, 3];
+console.log(sumar(...numeros)); // 6
+
 //show the whole array
 console.log(matrizFrutas);
 

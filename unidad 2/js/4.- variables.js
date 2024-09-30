@@ -13,12 +13,61 @@ Some features use strict mode by default:
     -Tagged template literals
 */
 
-
-
 //ejemplo del uso de variables, constantes y tipos
 //las variables se deben definir con let. var está anticuado
+//cuando el valor de la variable no va a cambiar, se debe usar const
 //Es recomendable que los nombres de las variables sean lo más descriptivos posible
 
+
+//number primitive type
+let numero_entero=2;
+let numero_real=2.5;
+
+//Very large numbers can be defined
+let billon=1e12;
+let millon=1e6;
+let microsegundo=1e-6;
+
+//Define octal, hexadecimal or binary numbers 
+let decimal=15;
+let binario=0b1111;
+let octal=0o17;
+let hexadecimal=0xf;
+
+//string primitive type
+let cadena1="una cadena de texto";
+let cadena2='otra cadena de texto';
+let cadena3=`una tercera cadena de texto`;
+let lista=`lista de compra:
+            -tomates
+            -lechuga`;
+
+//boolean primitive type
+const verdadero=true;
+const falso=false;
+
+//special values
+let nulo=null;
+let indefinido;
+
+//complex data types. We'll cover with much more detail in next unit but, as they are useful, let me introduce them here
+let matriz=[1, 2, 3];
+let matriz2=["DWEC", "DWES", "DIW", "ED"];
+let persona={
+    nombre: "Procopio",
+    cargo: "Prefecto"
+}
+
+//printing variables
+console.log (`La variable cadena1 vale....\t ${cadena1}\n`);    //\n is a newline \t is tabulator
+console.log("el numero vale "+numero_entero+" y el número real vale "+numero_real);
+console.log(billon);
+console.log (indefinido);
+console.log (decimal==binario, binario==octal, octal==hexadecimal);
+console.log (indefinido==undefined);
+
+
+//////bad and good coding//////
 //Ejemplos de mala sintaxis y malas prácticas. Funciona, pero no está recomendado
 let numero1=5, numero2=10, cadena="hola don pepito";
 cadena="5";
@@ -43,14 +92,10 @@ let numero3=2,
 let numero6=4;
 let numero7=5;
 
-//variables' value are copied.
+//variables' value is copied.
 let aux="hola";
 let aux2=aux;   //aux value is copied into aux2 value. Both point to a different memory location
 
 aux2="adios";   //if I modify aux2, aux still holds its original value
 console.log(aux, aux2);
 
-//printing variables
-console.log ('esto es un texto');
-console.log (`La variable userName vale....\t ${userName}\n`);    //\n is a newline \t is tabulator
-console.log("el numero vale", numero);

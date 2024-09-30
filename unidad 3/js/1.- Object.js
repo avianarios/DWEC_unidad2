@@ -1,7 +1,21 @@
+//Object "object" is the base of any other object in JS. It is where the other objects inherit
+/*Complex data types:    
+    Object: They are a category of complex data types. They can contain data collections (pair key-value) and functionality (methods). There are some kinds of objects:
+        -simple ones as {} 
+        -complex ones as arrays, classes or functions
+    Array: It's a subtype of an object. It is an ordered list of values of any type enclosed into brackets. Example: [1, 2, 3, “pepe”, “jose”, true]  
+    Function: It's an object representing an executable chunk of code that can be called anywhere. function sumar (a,b){ return a+b;}
+    Date: An object to work with dates and time. new Date();
+    RegExp: An object to work with regular expressions. /\d+/
+*/
+
+
 //////Creating objects////////
 //directly
 let usuario={
-    id:"1", nombre:"pepe", edad:30
+    id:"1",
+    nombre:"pepe",
+    edad:30
 };
 
 //with NEW
@@ -23,6 +37,39 @@ const { street, ...address } = {
   };
 
 console.log (address);
+
+///////iterating trough objects///////
+const matriz= [1, 2, 3];
+const obj = { name: "Alice", age: 25 };
+
+//an array. Traditional method
+for (let i=0; i<matriz.length; i++)
+  console.log(matriz[i]);
+
+//an object. It needs to use Object.keys(objeto), a predefined method. We'll talk about methods of predefined objects in a later chapter
+//Object.keys returns an array with the keys of the object
+let llaves=Object.keys(obj);
+for (let i=0; i<llaves.length; i++){    
+  console.log (obj[llaves[i]]);
+}
+
+//Objects can be classified as iterable and non-iterable//
+//Both of them have special for structures to iterate over that makes it easier than traditional for
+//How do I know if it's an iterable object?
+console.log (matriz[Symbol.iterator]);  //if returns function, then it exists and, therefore, it's iterable
+console.log (obj[Symbol.iterator]);  //if returns undefined, then it does not exist and, therefore, it is not iterable
+
+//for...of -> iterable elements
+for (let elemento of matriz) {
+  console.log(elemento);  // 1, 2, 3
+}
+
+//for...in -> non-iterable object
+for (let key in obj) {
+  console.log(key, obj[key]);  // name Alice, age 25
+}
+
+
 
 //accessing object properties
 console.log(usuario.nombre);    //returns value

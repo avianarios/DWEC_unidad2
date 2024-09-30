@@ -50,6 +50,20 @@ console.log (Math.max(4, 5, 2, 1, 18));
 console.log (Math.min(1, 5, 9, 21));
 
 
+///////Spread operator////////
+//parámetros de expansión o de propagación//
+//since ES6
+//Allows to expand elements from an iterable component into individual components
+
+//example 1
+//Math.max method expects a list of items, not an array
+let arr = [3, 5, 1];
+let arr1 = [1, -2, 3, 4];
+let arr2 = [8, 3, -8, 1];
+
+alert( Math.max(1, ...arr, ...arr1, 2, ...arr2, 25));  
+
+
 //random -> returns a pseudorandom number between 0 (included) and 1 (not included)
 let max=10;
 let min=5;
