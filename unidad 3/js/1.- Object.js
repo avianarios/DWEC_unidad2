@@ -1,3 +1,4 @@
+"use strict";
 //Object "object" is the base of any other object in JS. It is where the other objects inherit
 /*built-in objects:
 
@@ -31,21 +32,36 @@
 //////Creating objects////////
 //////////////////////////////
 //directly
-let usuario={
+let usuario2={
     id:"1",
     nombre:"pepe",
-    edad:30
-};
+    edad:30,
+    saluda:function(){
+      console.log ("hola");
+    },
+    despidete(como){
+      console.log (como);
+    },
+    pregunta:()=>console.log ("¿estás bien?")
+}
+
+console.log (usuario2.saluda());
+console.log (usuario2.despidete("con dios"));
+console.log (usuario2.pregunta());
+
 
 //Using constructor
-function perro(nombre, raza) {
+function Perro(nombre, raza) {
     this.nombre = nombre;
     this.raza = raza;
+    this.saludar= function(){
+        console.log("guau guau")
+    };
 }
 
 //new is an operator that instantiates objects from construtor functions
 let perro1=new Perro ("pirata","beagle");
-console.log (perro1);
+console.log (perro1.saludar());
 
 //with rest parameter
 //allows to create an object without knowing the amount of properties it will have
@@ -65,8 +81,8 @@ function makeUser(name, age){
     };
 }
 
-let user=makeUser("paco", 40);
-console.log (user);
+let user2=makeUser("paco", 40);
+console.log (user2);
 
 //same as before but function as arrow
 //as properties have the same name as parameters, they can be removed
@@ -86,38 +102,6 @@ console.log (Object.keys(persona));    //returns an array with keys (name of pro
 console.log (Object.values(persona));   //returns an array with values (values of the properties)
 console.log (Object.entries(persona));  //returns an array of pairs key-value
 
-//////////////////////////////////////
-///////iterating trough objects///////
-//////////////////////////////////////
-////Object.keys() can be used to iterate trough an object
-let llaves=Object.keys(persona);        //llaves=['name', 'age']
-for (let i=0; i<llaves.length; i++){       //traditional for
-  console.log (persona[llaves[i]]);
-}
-
-//Objects can be classified as iterable and non-iterable//
-//Both of them have special for structures to iterate over that makes it easier than traditional for
-//How do I know if it's an iterable object?
-console.log (persona[Symbol.iterator]);  //if returns undefined, then it does not exist and, therefore, it is not iterable
-
-//for...in -> non-iterable object
-for (let clave in persona) {
-  console.log(clave, persona[clave]);
-}
-
-//object.values() can be used to iterate as well
-//by using a traditional for
-let valores=Object.values(persona);        //llaves=['name', 'age']
-for (let i=0; i<valores.length; i++){       //traditional for
-    console.log ([valores[i]);
-}
-
-//or by using an iterable for...of
-//Object.values returns an array. It's an iterable object that can be iterated by using for...of instead of for...in
-for (let valor of Object.values(persona)){      
-    console.log (valor);
-}
-
 ///////////////////////////////////
 ////accessing object properties////
 ///////////////////////////////////
@@ -126,33 +110,28 @@ console.log (persona.noExiste);    //returns undefined, but no error
 console.log (persona["cargo"]);     //by using brackets, complex field names can be used
 console.log ("hola" in persona);     //returns false, but no error
 console.log ("edad" in persona);   //returns true
-
-//assigning new properties with values
-persona.licenciado=false;
-persona['nacimiento']="Roma";
-console.log(persona);
-
-//removing properties
-delete(persona.nacimiento);
-delete(persona['licenciado']);
-console.log(persona);
-
 //brackets notation allows to calculate in real-time the key 
 let llave=prompt("¿Qué quieres saber del usuario?");  //needs to be a valid key name
 console.log(persona[llave]);    //llave=edad or nombre...
 
-//another example of brackets
-let llave2=prompt("¿Qué elemento quieres?");
-let cantidad={
-    [llave2]: 5
-}
-console.log (cantidad);
-console.log (cantidad[llave2]);
-
-
 //////////////////////////////////////
 ////Adding and removing properties////
 //////////////////////////////////////
+//example 1: assigning spare properties
+persona.licenciado=false;
+persona['lugar de nacimiento']="Roma";  //this name is only possible by using brackets
+console.log(persona);
+
+//example 2: using brackets to access properties
+let clave1=prompt("¿Qué elemento quieres crear?");
+let valor=prompt("Dame la cantidad");
+let obj={
+    [clave1]: valor
+}
+console.log (obj);
+console.log (obj[clave1]);
+
+//example 3: external assignment of an arrow function to a property
 persona1={
     nombre:"pepe",
     profesion: "fontanero",
@@ -163,14 +142,69 @@ persona1={
 };
 
 persona1.edad=37;
+persona1.saluda=()=>console.log ("hola a todos");
 delete(persona1.medidas);
+persona1.saluda();
 console.log (persona1);
 
+//example 4: external assignment of an expression function to a property
+let usuario={nombre:"pepe"}
+let diHola2=function (saludo){
+    console.log(saludo);
+}
 
-////////////////////
-/////Comparison/////
-////////////////////
-//two objects can't be compared with == (it'll happen the same with arrays)
+usuario.saluda=diHola2;
+usuario.saluda("hola, estimado usuario");
+
+//////////////////////////////////////
+///////iterating trough objects///////
+//////////////////////////////////////
+//example 1: Object.keys() can be used to iterate trough an object
+let llaves=Object.keys(persona);        //llaves=['name', 'age']
+for (let i=0; i<llaves.length; i++){       //traditional for
+  console.log (persona[llaves[i]]);
+}
+
+//example 2: using for...in (non-iterable structure)
+//Objects can be classified as iterable and non-iterable//
+//Both of them have special for structures to iterate over that makes it easier than traditional for
+//How do I know if it's an iterable object?
+console.log (persona[Symbol.iterator]);  //if returns undefined, then it does not exist and, therefore, it is not iterable
+
+//for...in -> non-iterable object
+for (let clave in persona) {
+  console.log(clave, persona[clave]);
+}
+
+//example 3: by using object.values() and traditional for
+let valores=Object.values(persona);        //llaves=['name', 'age']
+for (let i=0; i<valores.length; i++){       //traditional for
+    console.log (valores[i]);
+}
+
+//example 4: by using Object.values and iterable for...of structure
+//Object.values returns an array. It's an iterable object that can be iterated by using for...of instead of for...in
+for (let valor of Object.values(persona)){      
+    console.log (valor);
+}
+
+//example 5: by using forEach, a method that iterates to 
+zzzzzzzzzzzzzzzzzzzzzz
+
+///////////////////////////////////////
+/////Copying and comparing objects/////
+///////////////////////////////////////
+//when it comes to copy variables, they are different elements at different memory position
+let aux="hola";
+let aux2=aux;   
+aux2="adios";   //if I modify aux2, aux still holds its original value
+console.log(aux, aux2);
+console.log (aux==aux2, aux===aux2);    //comparing onle value and value and type
+
+
+//when copying objects, they both point to the same memory location. Second object it's just a reference to the first one
+//therefore objects can't be compared with == (it'll happen the same with arrays)
+//objeto1 and objeto2 points to the same memory location
 let objeto1=objeto2={
     nombre:"pepe",
     profesion: "fontanero"
@@ -181,24 +215,15 @@ let objeto3={
     profesion: "fontanero"
 };
 
-//object references and copy
-//when copying variables, they are different elements at different memory position
-let aux="hola";
-let aux2=aux;   
-aux2="adios";   //if I modify aux2, aux still holds its original value
-console.log(aux, aux2);
 
-//when copying objects, they both point to the same memory location. Second object it's just a reference to the first one
-let usuario={ nombre:"pepe" };
-let usuario2=usuario;   //usuario2 and usuario point to the same memory location. they are the same object
-let usuario3={ nombre:"pepe" };
+objeto1.nombre="fede";
+console.log(objeto2.nombre);
 
-usuario.nombre="fede";
-console.log(usuario2.nombre);
 
-//Objects comparison with == or === is tricky
 console.log (objeto1==objeto2); //true. They are both the same object
 console.log (objeto1==objeto3); //false. They are different objects (although they have the same information)
+console.log (objeto1===objeto2);    //true
+console.log (objeto1===objeto3);    //false. when using === with objects, JS not only verifies their type, but if both objects point to the same memory location
 
 
 /////////////////////
@@ -239,47 +264,60 @@ persona2=structuredClone(persona1);   //all levels are copied by value
 persona1.medidas.altura=200;
 console.log(persona1, persona2);
 
+
+
+
 ////////////
 ////THIS////
 ////////////
-//Example 1
-usuario={nombre:"pepe"}
-usuario2={nombre:"juan"}
+//this is a reference to the current object in execution
+//Each time a traditional function is invoked, a new execution context is established. This context determines the value of this within the function.
+//The value of this can be affected by how the function is called, whether as a method on an object, globally, as a callback function, or using call, apply, or bind.
 
-//create a function that utilizes "this"
-diHola=function (){
+//example 1: using this
+//"this" only works with methods. When a method is invoked, this refers to the object that invoked the method.
+let persona={
+    nombre:"pepe",
+    edad:25,
+    profesion: "fontanero",
+    no_funciona: this,
+    dame_objeto(){
+      return this;
+    },
+    dame_nombre:function(){
+      return this.nombre;
+    },
+    dame_edad(){
+      return this.edad;
+    },
+}
+
+console.log (persona.no_funciona.nombre);    //doesn't work. "this" is only for methods
+console.log (persona.dame_objeto().nombre);  //it works
+console.log (persona.dame_nombre());
+console.log (persona.dame_edad());
+
+//example 3: creating a function externally on the fly and assigning to an object
+let usuario={nombre:"pepe"}
+
+let diHola1=function (){
     console.log(this.nombre);
 }
 
-//assign function to an object property
-usuario.saluda=diHola;
-usuario2.saluda=diHola;
-
+usuario.saluda=diHola1;
 usuario.saluda();
-usuario2.saluda();
 
-//example 2
-//"this" only works with methods
-"use strict";
-let persona={
-      nombre:"pepe",
-      ref1: this,
-      ref2(){
-        return this;
-      }
-}
 
-console.log(persona.ref1.nombre);    //doesn't work. "this" is only for methods
-console.log(persona.ref2().nombre);  //it works
+//example 3: this in arrow functions
+//in an arrow function, "this" doesn't reference to the object that invoked the method
+//this references the context where the arrow function was defined. Therefore no matter which object is invoking function, this will always be refered to the scope where arrow function was created
+let usuario={nombre:"pepe"}
 
-//example 3
-//"this" loses its context in arrow functions, so it doesn't work
-usuario={nombre:"pepe"}
-
-diHola=function (){
+let diHola=function (){
   return(`Hola, soy ${this.nombre}`);
 }
-let diAdios=() => {return(`Adiós, soy ${this.nombre}`)};
+
+let diAdios=() => (`Adiós, soy ${this.nombre}`);
 
 //assign function to object property
 usuario.saluda=diHola;
@@ -289,8 +327,8 @@ console.log(usuario.saluda());
 console.log(usuario.despidete());
 
 
-//example 4
-persona1={
+//example 4: internal and external functions
+let persona1={
     nombre:"pepe",
     profesion: "fontanero",
     medidas: {
@@ -301,8 +339,10 @@ persona1={
     buenosDias(){
       console.log (`yo, ${this.nombre}, te doy los buenos días`);
     },
+    //defining as a constant an arrow function that utilizes "this" and calling it 
     felizAnyo: function(){
-        console.log (`yo, ${this.nombre}, te felicito el año nuevo`);
+        const saludar_anyo=()=> console.log (`yo, ${this.nombre}, te felicito el año nuevo`);
+        saludar_anyo();
     }
 };
 
@@ -310,17 +350,17 @@ persona1={
 persona1.buenasTardes=function(){
       console.log (`yo, ${this.nombre}, te doy las buenas tardes`);
 };
-persona1.buenasNoches=()=>{     //arrow functions have no "this". Here, "this" refers to persona1's context. 
-      console.log (`yo, ${this.nombre}, te doy las buenas noches`);
+persona1.buenasNoches=()=>{
+      console.log (`yo, ${this.nombre}, te doy las buenas noches`); //this doesn't work
 };
 
 persona1.buenosDias();
 persona1.buenasTardes();
 persona1.buenasNoches();
+persona1.felizAnyo();
 
 
-//example 5
-/////////////Arrow functions and "this" on arrays inside objects///////////
+//example 5: making "this" in a arrow function work
 let grupo = {
     nombre: "Los amigos",
     habitantes: ["Máximo", "Higinio", "Salustiano"],
@@ -328,7 +368,7 @@ let grupo = {
   
     muestraLista() {
         this.habitantes.forEach(
-            //arrow functions have no "this", so here "this" references muestraLista's context. That's why it works
+            //arrow functions have no "this", so here "this" references muestraLista's context which is grupo. That's why it works
             persona => console.log(this.nombre + ': ' + persona)   
         );
     },
@@ -348,15 +388,18 @@ grupo.muestraLista();
 grupo.muestraLocalidades();
 grupo.muestraNombre();
 
-///////?. special syntax construct/////////
+
+///////////////////////////////////
+////?. special syntax construct////
+///////////////////////////////////
 //it's been recently added. Allows to return undefined instead of error ir a property doesn't exist.
 //appliable to nested properties from declared objects
-let user = {}; // a user without properties
+let user3 = {}; // a user without properties
 //console.log(user.address.street); // Throws an error
 
 //could be solved by checking before with ? or &&. Not very elegant
-console.log(user.address ? user.address.street : undefined);
-console.log( user.address && user.address.street && user.address.street.name ); // undefined (no error)
+console.log(user3.address ? user3.address.street : undefined);
+console.log(user3.address && user3.address.street && user3.address.street.name ); // undefined (no error)
 
 //The optional chaining ?. stops the evaluation if the value before ?. is undefined or null and returns undefined.
 let user = {}; // user has no address
@@ -403,7 +446,7 @@ let coche={
     modelo:"",
     set marcayModelo(aux){
         [this.marca, this.modelo]=aux.split(' ');
-    }
+    },
 
     get marcayModelo(){
         return `${this.marca} ${this.modelo}`;
