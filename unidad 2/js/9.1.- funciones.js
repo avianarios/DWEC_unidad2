@@ -18,7 +18,7 @@ console.log ("muestro variables globales antes de llamar a la función:", mensaj
 muestraMensaje();
 console.log ("muestro variables globales después de llamar a la función:", mensaje1, mensaje2); //showing global message variable 
   
-
+//example2
 let adios="adios";
 function hola(){
     let adios="nos despedimos";
@@ -102,7 +102,6 @@ function buscaApellido(nombreBuscado){
 
 muestraCliente3("procopio");
 
-
 ///////////RETURNING VALUES/////////////
 let usuario={nombre:"pepe",edad:"17"};
 function compruebaMayoriaEdad(edad) {
@@ -113,11 +112,13 @@ function compruebaMayoriaEdad(edad) {
     }
 
     //alternative #1 (BEST)
-    //return (usuario.edad>=18);
+    //return (edad>=18);
 
-    //alternative #2
-    //(usuario.edad>=18) ? return true : return false;
+    //alternative #2 (redundant compared to previous one)
+    //return (edad>=18) ? true : false;
 }
+compruebaMayoriaEdad(usuario.edad)
+
 
 function garantizaAcceso(usuario){
   if (compruebaMayoriaEdad(usuario)){
