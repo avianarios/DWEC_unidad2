@@ -202,8 +202,8 @@ if (1){
 saluda("pepe");
 
 
-//this is the key. I define the variable outside the scope and, assign to the function inside
-let saluda, despidete2;
+
+let saluda, despidete2; //If this variables were not defined, they couldn't be used outside the scope
 if (1){
   saluda=function(nombre){
     console.log("hola "+nombre);
@@ -229,16 +229,24 @@ let saluda=(nombre)=> console.log("yo te saludo "+nombre);
 let despidete=()=>console.log("adiós");
 
 let edad=prompt("¿cuál es tu edad?");
-let vasPreso=(edad<=18) ?
-  () => console.log("vas preso") :  //no arguments, so empty parenthesis must be present
-  () => console.log("al correccional");
+let vasPreso=(edad) => (edad<=18) ?
+  console.log("vas preso") :  //no arguments, so empty parenthesis must be present
+  console.log("al correccional");
 
 vasPreso(edad);
 
+
+let carcel = (edad) => (edad >= 18) ?
+    console.log("vas preso") :
+    console.log("no vas preso");
+
+carcel(19); // Aquí pasas la edad como parámetro
+
+
 //for multiline functions, curly brace and return statement must be used
 let resta=(a,b)=>{
-  let resultado=a-b;
-  return (resultado); //could've been done in a single line, but for demonstration purposes
+  console.log ("vamos a restar");
+  return (a-b);
 }
 
 console.log(resta(4,2));
@@ -253,13 +261,8 @@ function ask(question, yes, no) {
 }
 
 //showOk and showCancel are called callback functions
-function showOk() {
-  console.log( "You agreed." );
-}
-
-function showCancel() {
-  console.log( "You canceled the execution." );
-}
+let showOk=()=>console.log("aceptaste");
+let showCancel=()=>console.log("rechazaste");
 
 // usage: functions showOk, showCancel are passed as arguments to ask
 ask("Do you agree?", showOk, showCancel);
@@ -273,8 +276,8 @@ function pregunta(question, yes, no) {
 
 pregunta(
   "Agree?",
-  function() {console.log("estás de acuerdo");},
-  function () { console.log ("no estás de acuerdo");}
+  () => {console.log("estás de acuerdo");},
+  () => { console.log ("no estás de acuerdo");}
 );
 
 
@@ -300,13 +303,16 @@ function calculate(a, b, fn) {
   return c;
 }
 
-function sum(a, b) {
+let sum=(a,b)=>(a+b);
+/*function sum(a, b) {
   return a + b;
-}
+}*/
 
-function product(a, b) {
+let product=(a,b)=>(a*b);
+/*function product(a, b) {
   return a * b;
-}
+}*/
 
-console.log(calculate(10, 20, sum));  //60
-console.log(calculate(10, 20, product));  //230
+console.log (calculate(10, 20, sum));  //60
+console.log (calculate(10, 20, product));  //230
+console.log (calculate(100,2,(a,b)=>(a/b)));  //50
