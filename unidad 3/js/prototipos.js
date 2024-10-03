@@ -38,41 +38,7 @@ console.log(conejo.come, perro.come, conejito.come);
 console.log (perro.desplazate(), conejo.desplazate());
 
 //example 2
-//getter and setter
-let vehiculo = {
-    marca: "",
-    modelo: "",
-    circulando: "",
-    set circula(value) {
-      this.circulando = value;
-    },
-    set marcaModelo(aux){
-        [this.marca, this.modelo]=aux.split(' ');
-    },
-  
-    get marcaModelo(){
-        return `${this.marca} ${this.modelo}`;
-    }
-};
-  
-let coche = { };
 
-Object.setPrototypeOf(coche, vehiculo);
-coche.circula="true";
-coche.marcaModelo="ford fiesta";  //besides calling the setter, a marcaModelo property is created
-//to avoid creating, don't use getters and setters.
-/*
-    creaMarcaModelo(aux){
-        bla,bla
-    },
-
-    dimeMarcaModelo(){
-        bla,bla        
-    }
-
-    coche.creaMarcaModelo("ford fiesta");
-*/
-console.log(vehiculo, coche);
 
 ///////////iterating through objects///////////
 let persona={

@@ -1,3 +1,38 @@
+
+
+//In JavaScript classes are a special kind of functions. They are just syntactic sugar meaning under the hood, they are just objects with another syntax
+
+
+//example 5: classes as sintactic sugar
+class Animal {
+  hacerSonido() {
+    console.log("El animal hace un sonido");
+  }
+}
+
+class Perro extends Animal {
+  hacerSonido() {
+    console.log("El perro ladra");
+  }
+}
+
+const perro = new Perro();
+perro.hacerSonido();  // "El perro ladra"
+
+
+
+
+
+class Persona {
+  constructor(nombre) {
+    this.nombre = nombre;
+  }
+}
+
+console.log(typeof Persona);  // "function"
+
+
+
 //"new" allows to create objects of the same type, but class is more advanced
 class User {
 
