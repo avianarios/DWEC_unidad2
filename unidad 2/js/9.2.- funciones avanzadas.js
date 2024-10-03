@@ -25,8 +25,9 @@ function pow(x, n) {
 }
 console.log( pow(2, 3) ); // 8
 
-
-///////Rest parameters////////
+////////////////////////////
+///////Rest parameters//////
+////////////////////////////
 //example 1
 //Group several elements into an array, allowing to pass as argument an undetermined number or parameters to a function. Must be placed at the end
 function sumaTodo(aux,...numeros){
@@ -62,7 +63,9 @@ let aux=1000;
 console.log(restarRecursivo(aux,4,56,24,2,123,123,123));
 
 
-/////////Autoexecutable functions///////
+////////////////////////////////
+////Autoexecutable functions////
+////////////////////////////////
 //executed once, then can't be called again
 //option 1
 (function() { console.log("hola mundo") }) ();
