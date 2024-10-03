@@ -32,13 +32,10 @@ matrizFrutas[2]="sandía";
 console.log (matrizFrutas[matrizFrutas.length-1]);
 console.log (matrizFrutas[matrizFrutas.at(-1)]);    //may not work on old browsers
 
-
-////////////ITERATE/////////////
-//option #1. Needs to define a function
-let funcion = (elemento) => console.log (elemento);
-matrizFrutas.forEach(funcion);
-
-//option #2
+///////////////
+////ITERATE////
+///////////////
+//option #1
 //Objects can be classified as iterable and non-iterable//
 //Both of them have special for structures to iterate over that makes it easier than traditional for
 //How do I know if it's an iterable object?
@@ -47,10 +44,13 @@ for (let fruta of matrizFrutas){  //for...of->non-iterable objects
     console.log (fruta);
 }
 
-//option #3, traditional way. Needs to get array length
+//option #2, traditional way. Needs to get array length
 for (let i=0; i<matrizFrutas.length; i++){
     console.log (matrizFrutas[i]);
 }
+
+//option #3. Needs to define a function
+matrizFrutas.forEach(elemento=>console.log(elemento));
 
 //Iterate over the bidimensional array
 //option #1
@@ -320,3 +320,59 @@ let cad="hola";
 console.log(...cad);    //returns every letter separately 
 console.log([...cad]);  //returns an array of letters
 //array.from iterables
+
+
+////////////////////////////
+////unstructuring arrays////
+////////////////////////////
+//example 1. Unstructuring just some variables
+const numeros = [10, 20, 30];
+
+const [a, , c] = numeros;
+
+console.log(a); // 10
+console.log(c); // 30
+
+//example 2. default value
+const colores = ['rojo'];
+
+const [color1, color2 = 'azul'] = colores;
+
+console.log(color1); // rojo
+console.log(color2); // azul (valor por defecto)
+
+//example 3. Interchanging values
+let x = 5;
+let y = 10;
+
+[x, y] = [y, x];
+
+console.log(x); // 10
+console.log(y); // 5
+
+//example 4. Unstructuring arrays passed as arguments to a function
+const sumar = ([a, b]) => {
+  return a + b;
+};
+
+const numeros = [5, 10];
+console.log(sumar(numeros)); // 15
+
+//example 5. Unstructuring a function that returns multiple values
+function obtenerCoordenadas() {
+  return [100, 200];
+}
+
+const [x, y] = obtenerCoordenadas();
+
+console.log(x); // 100
+console.log(y); // 200
+
+//example 6. Combining unstructuration with rest operator
+const numeros = [1, 2, 3, 4, 5];
+
+const [primero, segundo, ...resto] = numeros;
+
+console.log(primero); // 1
+console.log(segundo); // 2
+console.log(resto);   // [3, 4, 5]
