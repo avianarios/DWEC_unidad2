@@ -119,11 +119,11 @@ console.log(persona);
 //example 2: using brackets to access properties
 let clave1=prompt("¿Qué elemento quieres crear?");
 let valor=prompt("Dame la cantidad");
-let obj={
+let obj2={
     [clave1]: valor
 }
-console.log (obj);
-console.log (obj[clave1]);
+console.log (obj2);
+console.log (obj2[clave1]);
 
 //example 3: external assignment of an arrow function to a property
 persona1={
@@ -203,8 +203,8 @@ console.log(persona);  // { edad: 31 }
 //////////////////////////////////
 //example 1: object.hasOwnProperties 
 //it verifies if the object has a particular property
-const obj = { a: 1 };
-console.log(obj.hasOwnProperty('a')); // true
+const obj3 = { a: 1 };
+console.log(obj3.hasOwnProperty('a')); // true
 
 //example 2:object.keys, .values and .entries
 //return array with keys, values and pairs key-value. They can be used to iterate over an object (we'll cover when talking about arrays)
@@ -236,7 +236,7 @@ let aux="hola";
 let aux2=aux;   
 aux2="adios";   //if I modify aux2, aux still holds its original value
 console.log(aux, aux2);
-console.log (aux==aux2, aux===aux2);    //comparing onle value and value and type
+console.log (aux==aux2, aux===aux2);    //comparing only value and value and type
 
 
 //when copying objects, they both point to the same memory location. Second object it's just a reference to the first one
