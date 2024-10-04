@@ -227,7 +227,7 @@ let sumar=(a,b)=>{
 //same as before but more concise
 let suma=(a,b)=>(a+b);
 let saluda=(nombre)=> console.log("yo te saludo "+nombre);
-let despidete=()=>console.log("adiós");
+let despidete=()=>("adiós");   //returns "adios". Doesn't work if braces are opened {("adios")} -> doesn't work
 
 let edad=prompt("¿cuál es tu edad?");
 let vasPreso=(edad) => (edad<=18) ?
