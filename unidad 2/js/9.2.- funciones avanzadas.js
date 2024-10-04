@@ -29,7 +29,7 @@ console.log( pow(2, 3) ); // 8
 ///////Rest parameters//////
 ////////////////////////////
 //example 1
-//Group several elements into an array, allowing to pass as argument an undetermined number or parameters to a function. Must be placed at the end
+//Group several elements into an array (the opposite to spread operator), allowing to pass as argument an undetermined number or parameters to a function. Must be placed at the end
 function sumaTodo(aux,...numeros){
   let acumulado=aux;
   for (let num of numeros){
@@ -51,6 +51,15 @@ let concatena2 = (...palabras) => {
 console.log (concatena("a", "b", "c", "d"));
 
 //example 3
+function sumar(a, b, c) {
+  return a + b + c;
+}
+
+const numeros = [1, 2, 3];
+console.log(sumar(...numeros)); // 6
+
+
+//example 4
 function restarRecursivo(total,...numeros){
   if (numeros.length==1){
     return (total-=numeros.pop());
@@ -75,8 +84,9 @@ console.log(restarRecursivo(aux,4,56,24,2,123,123,123));
   console.log("hola " + quien);
 })("mundo");
 
-
+//////////////////////////////////////
 /////////Nested functions/////////////
+//////////////////////////////////////
 //a function created within another function
 //inner function is invisible outside and can use outer variables
 //example 1
@@ -105,7 +115,9 @@ var saluda = saludador("mundo");
 saluda(); //hola mundo
 
   
+/////////////////////////
 ////scope and closure////
+/////////////////////////
 /*Scope refers to the accessibility of variables within a program. In JavaScript, there are different types of scope:
     -Global Scope: Variables defined outside any function have a global scope and are accessible from anywhere in the code.
     -Function Scope: Variables defined inside a function are local to that function and cannot be accessed from outside it.
