@@ -1,58 +1,64 @@
 ///////////////////////
 ////creating arrays////
 ///////////////////////
-//although you can work with arrays as you would do with a primitive type, they are objects
 
-//example 1: using constructor
-let matriz1=new Array();
-let matriz2=new Array(1, 2, 3, "cuatro", true);
-let matriz3=new Array(5);   //be careful. This creates an empty array with 5 empty slots!
-
-//example 2: using brackets
+//example 1: using brackets
 let matrizFrutas=["chirimoya", "mango", "aguacate", "guayaba"];  //most used. Can be created empty
 //an array can store different data types
 let matrizMezcla=["hola", 1, 4.2, function(){console.log ("saludos");}]
 let matrizNumeros = [1, 2, 3];
 
-//example 3: creating bi-dimensional arrays
-let matrizBidimensional=new Array(
-    new Array(1,2,3),
-    new Array(true,"espinete",()=>"hola don pepito")
-);
-
 let matrizComida=[
-    ["chirimoya", "mango", "aguacate", "guayaba"],
-    ["tomate", "pepino", "pimiento", "berenjena"],
-    ["leche", "yougur", "requesón", "queso"]
+  ["chirimoya", "mango", "aguacate", "guayaba"],
+  ["tomate", "pepino", "pimiento", "berenjena"],
+  ["leche", "yougur", "requesón", "queso"]
 ];
 
 let matrizComida2=[
-    ["chirimoya", "mango", "aguacate", "guayaba"],
-    ["tomate", "pepino", "pimiento", "berenjena"],
-    ["leche", "yougur", "requesón", "queso"]
+  ["chirimoya", "mango", "aguacate", "guayaba"],
+  ["tomate", "pepino", "pimiento", "berenjena"],
+  ["leche", "yougur", "requesón", "queso"]
 ];
 
-//example 4: creating an array of objects
 let inventario=[
   { nombre: "manzanas", cantidad: 2 },
   { nombre: "plátanos", cantidad: 0 },
   { nombre: "cerezas", cantidad: 5 },
 ];
 
+//example 2: using Array constructor
+let matriz1=new Array();
+let matriz2=new Array(1, 2, 3, "cuatro", true);
+let matriz3=new Array(5);   //be careful. This creates an empty array with 5 empty slots!
 
-///////////////////////////////////
-////accessing to their elements////
-///////////////////////////////////
-//example 1: access to an element and replace it
-console.log (matrizFrutas[2]);
+let matrizBidimensional=new Array(
+    new Array(1,2,3),
+    new Array(true,"espinete",()=>"hola don pepito")
+);
+
+let matrizObjetos=[
+  { nombre: "Procopio", profesion: "Centurión" },
+  { nombre: "Apolinar", profesion: "Auriga" },
+  { nombre: "Servando", profesion: "Esclavo" }
+];
+
+
+/////////////////////////////////
+////accessing to its elements////
+/////////////////////////////////
+
+//example 1: accessing to an element
+console.log (matrizFrutas[2], matrizObjetos[2][1]);
 
 //example 2: access to the last element by using length property
 console.log (matrizFrutas[matrizFrutas.length-1]);
 console.log (matrizFrutas[matrizFrutas.at(-1)]);    //may not work on old browsers
 
+
 //////////////////////////////
 ////inserting new elements////
 //////////////////////////////
+
 //example 1: by using spread operator (it transforms an array into a list of arguments (the opposite to REST))
 const array1 = [1, 2, 3];
 const array2 = [...array1, 4, 5]; // [1, 2, 3, 4, 5]
@@ -86,26 +92,32 @@ let nuevoArray = matrizNumeros.concat([4, 5]); // Combina matrizNumeros con otra
 console.log(nuevoArray); // [1, 2, 3, 4, 5]
 console.log(matrizFrutas.concat(matrizComida[1],"otra fruta"));
 
+
 /////////////////////////
 ////removing elements////
 /////////////////////////
+
 matrizNumeros.pop(); // remove at the top position (the end)
 console.log (matrizNumeros);
 
 matrizNumeros.shift();   //extracts an element from the beginning. It is very costly, as all array elements have to me moved one position backward
 console.log (matrizNumeros);
 
+
 /////////////////////////
 ////changing elements////
 /////////////////////////
+
 matrizFrutas[2]="sandía";
 matrizComida[2][2]="Calabaza";
+
 
 ////////////////////////////////////////////
 ////arrays behaving as stacks and queues////
 ////////////////////////////////////////////
 //stack->LIFO data structure where the last inserted is the first leaving
 //queue -> FIFO data structure where the first inserted is the first leaving
+
 //example 1: array as stack: pop and push
 matrizFrutas.pop(); // remove "aguacate" from the top position (the end)
 console.log (matrizFrutas);
@@ -122,6 +134,7 @@ console.log(matrizFrutas);
 //////////////////////////////////////
 ///////iterating through arrays///////
 //////////////////////////////////////
+
 const persona = {
   nombre: 'Carlos',
   edad: 25,
@@ -139,7 +152,6 @@ for (let i=0; i<matrizFrutas.length; i++){
   console.log (matrizFrutas[i]);
 }
 
-
 //example 2: by using iterable for...of structure
 //Objects can be classified as iterable and non-iterable//
 //Both of them have special for structures to iterate over that makes it easier than traditional for
@@ -152,7 +164,6 @@ for (let fruta of matrizFrutas){  //for...of->non-iterable objects
 for (let valor of Object.keys(persona)){      
     console.log (valor);
 }
-
 
 //example 3: using foreach with all its parameters: current element to be processed, index of the current element at the matrix and the whole matrix
 //forEach is a method that iterates trough arrays. it doesn't return anything and it doesn't modify array
@@ -182,7 +193,6 @@ let listado = (elemento) =>
   console.log (`El elemento ${elemento.nombre} tiene ${elemento.cantidad} unidades`);
 inventario.forEach(listado);
 
-
 //example 7: using forEach within an internal function to iterate over a bidimensional array
 matrizComidas.forEach(fila=>{
   fila.forEach(i=>{
@@ -194,22 +204,25 @@ matrizComidas.forEach(fila=>{
 /////////////////////////////////
 ////getting array information////
 /////////////////////////////////
-//Array.isArray() is the only way to know if something is an array
+
+//Example 1: knowing if something is an array
 console.log (typeof(numeros));  //object
 console.log(Array.isArray(numeros));  //true
 
-//Get position of an element in an array
+//Example 2: Getting position of an element in an array
 console.log (matrizFrutas.indexOf("mango"), matrizFrutas.indexOf("esta no existe"));
 
-//returns if an element exists in an array
+//Example 3: returning if an element exists in an array
 console.log (matrizFrutas.includes("mango"), matrizFrutas.includes("esta no existe"));
 
-//get the position of the last element (in case they are repeated)
+//Example 4: getting the position of the last element (in case they are repeated)
 console.log (matrizFrutas.lastIndexOf("mango"));
+
 
 ///////////////////////////////////////////////////
 ////extracting, replacing or inserting elements////
 ///////////////////////////////////////////////////
+
 //Example 1: splice removes element from original array, changing it, AND returns a subarray with the removed elements
 console.log (matrizFrutas.splice(1,2), matrizFrutas);   //starting from position 1 (included), remove 2 elements
 console.log (matrizComida[1].splice(1), matrizComida);  //remove from the element number 1 (included) until the last element of first subarray (due to no index provided). Remember elements are numbered starting by 0
@@ -233,6 +246,7 @@ console.log (matrizFrutas.slice(-3,-1));  //extract an array starting at the 3rd
 /////////////////////////
 ////converting arrays////
 /////////////////////////
+
 //example 1: toString returns a string without changing original array
 console.log(matrizFrutas.toString());
 
@@ -246,49 +260,55 @@ aux2="adios";   //if I modify aux2, aux still holds its original value
 console.log(aux, aux2);
 console.log (aux==aux2, aux===aux2);    //comparing only value and value and type
 
-//example 1: copying arrays with =
-//when copying objects (and array are objects), they both point to the same memory location. Second object it's just a reference to the first one
-//therefore objects can't be compared with ==
-//example 1: matrizAlimentos and matrizComida point to the same memory location
+//example 1: simple assignment of arrays and comparison with == and ===
+//matrizAlimentos and matrizComida point to the same memory location
 let matrizAlimentos=matrizComida;
 console.log (matrizComida);
 matrizAlimentos[2][2]="puerro"; //by modifying matrizAlimentos, matrizComida is also modified
 console.log (matrizComida);
 
-//example 2: Arrays comparison with == or === is tricky
-//both arrays are different objects, so == is always false.
-//you have to compare them item by item
-console.log (matrizComida==matrizAlimentos);    //True. both of them point to the same memory area
-console.log (matrizComida==matrizComida2);      //False. both have the same elements, but are different objects, meaning each one has his own memory area
+//example 2: copying by using Array.from
+let mat1 = [1, 2, 3];
+let mat2 = [...mat1]; // spread the array into a list of parameters then put the result into a new array
+let  mat3=Array.from(mat1);  //copy numeros values into numeros2. If we use =, a reference is created and both are the same object
+console.log (mat1==mat2); //false although they contain the same information, they point to different memory locations
 
-//example 3: copying
-zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-let arr = arrCopy = [1, 2, 3];
-let arrCopy2 = [...arr]; // spread the array into a list of parameters then put the result into a new array
-let  arrCopy3=Array.from(arr);  //copy numeros values into numeros2. If we use =, a reference is created and both are the same object
+//equal or strictly equal can't be used to compare. They only check if objects points to the same memory location
+console.log(mat1 == mat2); //true. They both point to the same memory location
+console.log(mat1 == mat3); //false. Despite both of them have the same elements (everybody would say they are "they are equals"), they are different objects, meaning each one points to its own memory location, and this is what equal measures
+console.log(mat1 === mat2); //true
+console.log(mat1 === mat3); //false. when using === with objects, JS not only verifies their type, but if both objects point to the same memory location
 
-// do the arrays have the same contents?
-console.log(JSON.stringify(arr) === JSON.stringify(arrCopy)); // true
-console.log(JSON.stringify(arr) === JSON.stringify(arrCopy2)); // true
-console.log(JSON.stringify(arr) === JSON.stringify(arrCopy3)); // true
+//example 3: comparing arrays by using Object.toString()
+const arr1 = [1, [2, 3]];
+const arr2 = [1, [2, 3]];
+const arr3 = [1, 2, 3];
 
-// are the arrays equal?
-console.log(arr === arrCopy); // true (same reference)
-console.log(arr === arrCopy2); // false (not same reference)
-console.log(arr === arrCopy3); // false (not same reference)
+//by using toString, hierarchical relationships are lost, meaning different arrays can look the same and, therefore, return true when comparing them
+console.log (arr1.toString() == arr2.toString()); //true
+console.log (arr1.toString() === arr2.toString()); // true
+console.log (arr1.toString() == arr3.toString()); //true, but it shouldn't
+console.log (arr1.toString() === arr3.toString()); //true, but it shouldn't
 
-// modifying our initial array does not modify the copy:
-arr.push(4);
-console.log(arr); // 1, 2, 3, 4
-console.log(arrCopy); // 1, 2, 3, 4
-console.log(arrCopy2); // 1, 2, 3
-console.log(arrCopy3); // 1, 2, 3
+//example 4: comparing arrays by using JSON.stringify
+//JSON (JavaScript Object Notation) is a lightweight data interchange format that is easy to read and write for both humans and machines. Although based on JavaScript object syntax, JSON is language independent and is used in a wide variety of technologies and programming languages to transfer structured data.
+//its method stringify converts an object into string. 
+//What we are comparing with JSON.stringify is if they are sintactically equals (which it may have no sense)
 
-zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+//JSON.stringify deals correctly with nested arrays
+console.log (JSON.stringify(arr1) == JSON.stringify(arr2)); // true
+console.log (JSON.stringify(arr1) == JSON.stringify(arr3)); // false
+
+//example 5: JSON.stringify converts correctly nested arrays, but it fails when there are functions or undefined within an array
+const arr4=[1, true, undefined, null, function (){return 1}];
+const arr5=[1, true, null, null, null];
+console.log (JSON.stringify(arr4)==JSON.stringify(arr5)); //returns true, but it shouldn't
+
 
 /////////////////////////
 ////locating elements////
 /////////////////////////
+
 //example 1: findIndex returns the index of the first element that matches, -1 otherwise
 console.log (inventario.findIndex(elemento=>elemento.nombre=="aguacate"));
 
@@ -308,9 +328,11 @@ let elemento=inventario.find(elemento=>elemento.nombre=="manzanas");
 let esFruta=(fruta)=> fruta.nombre=="cerezas"; //arrow function
 console.log (inventario.find(esFruta));
 
+
 //////////////////////////
 ////filtering elements////
 //////////////////////////
+
 //filter returns  an array with all matching elements
 //example 1: using filter with a simple condition
 let elementos = inventario.filter(item => item.cantidad < 3);
@@ -329,30 +351,35 @@ razasAnimales.filter(elemento=>(elemento.animal=="perro") && (elemento.pacientes
 let razas=["perro 1", "perro 2", "gato 1"];
 let perros2=razas.filter(elemento=>elemento.startsWith("perro"));
 
+
 ////////////////////////////////////////////////////////////
 ////Performing calculations with one or several elements////
 ////////////////////////////////////////////////////////////
-//map creates a new array as a result of applying some function to an existing array
-//example 1:
-let numeros=[7,13,2,5];
-console.log (numeros, numeros.map(x=>x*2));
+//When iterate over an array is needed – we can use forEach, for or for..of.
+//When iterate and return the data for each element is needed– we can use map.
+//When iterate and return a single value calculated by using the whole array is needed, we can use reduce
 
-//example 2:
+//map creates a new array as a result of applying some function to an existing array
+//example 1: using map to multiply each number by 2
+let numeros=[7,13,2,5];
+console.log (numeros, numeros.map(x=>x*2));   //map creates a new array
+
+//example 2: perform an action (concatenate) over all array element
 let razasPerro=["salchicha", "podenco", "chucho"];
 console.log (razasPerro, razasPerro.map(x=>"perro "+x));
 
-//reduce
-//When we need to iterate over an array – we can use forEach, for or for..of.
-//When we need to iterate and return the data for each element – we can use map.
-//When we need to iterate and return a single value calculated by using the whole array, we can use reduce
-//zero or empty brackets need to be added as 2nd parameter of reduce when using an empty array. It is the starting value;
-//example 3: using reduce to perform some calculations
+//example 3: perform some calculations that returns just one value
 console.log (numeros, numeros.reduce((total, actual)=>total+actual));
 
-//example 4: combining methods to perform a calculation only over some values that meet certain condition
-console.log (numeros.filter(actual=>actual>5).map(actual=>actual+10));
+//example 4: perform calculations over an empty array
+let matrizVacia = [];
+let resultadoConValorInicial = matrizVacia.reduce((total, actual) => total + actual, 10); //a starting value (10 in this case, could be {}) must be provided to prevent it from throwing an error
+console.log(resultadoConValorInicial); // 10
 
 //example 5: combining methods to perform a calculation only over some values that meet certain condition
+console.log (numeros.filter(actual=>actual>5).map(actual=>actual+10));
+
+//example 6: combining methods to perform a calculation only over some values that meet certain condition
 console.log (numeros.filter(actual=>actual>5).reduce((total, actual)=>total+actual));
 
 let sumaDirecta = numeros.reduce((total, actual) => {
@@ -360,9 +387,11 @@ let sumaDirecta = numeros.reduce((total, actual) => {
 }, 0);
 console.log(sumaDirecta); // 18
 
+
 //////////////////////////////
 ////concatenating elements////
 //////////////////////////////
+
 //JOIN does the opposite to string.split. It returns a string made of concatenating the elements of an array
 //example 1
 let nombres=['Purificación', 'Procopio', 'Patrocinio', 'Apolinar'];
@@ -375,57 +404,69 @@ let matrizRazasGato=razasGato.split(",");
 console.log (matrizRazasGato);
 
 
-
-zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-
-
+/////////////////////////
+////sorting elements/////
+/////////////////////////
 //SORT sorts the original array and returns it
+
+//example 1: using sort out of the box
 let numeros2=Array.from(numeros);
 numeros2.sort();    //numeros2 has been ordered converting numbers to strings, so 15<2 as 1<2
 console.log (numeros);
 
+//example 2: using an ordering function
 //In order to sort numbers properly, a function has to be provided
 //numbers a,b are sorted depending on what is returned by this function:
 //   <0, then a is ordered first
 //   0, then there is no change between a and b
 //   >0 ,then b is ordered first
 let ordenaNumeros=(a,b)=>{
-    /*it can't be expressed with ?, as it does not support return statement
-    (a>b) ? (return 1) :
-            (a==b) ? return 0 :
-            return -1;*/
-    if (a>b){
-      return 1;
-    }else if (a==b){
-      return 0;
-    }return -1;
+    return (a > b) ? 1 : (a == b ? 0 : -1);
 }
 numeros2.sort(ordenaNumeros);
 console.log (numeros2, numeros);    //numeros2 has changed
 numeros2=Array.from(numeros);
 
-//a shorter adn much more elegant version
+//example 3: a much sorter and elegant version of the ordering function
 numeros.sort((a,b)=>a-b);
 
-//REVERSE do as its name suggests in an array. it modifies the array
+
+////////////////////////
+////reversing arrays////
+////////////////////////
+// do as its name suggests in an array. it modifies the array
 numeros.reverse();
 console.log (numeros);
 
-//fill
 
+///////////////////////////
+////filling with values////
+///////////////////////////
+//fill (value, start, end)
 
+//example 1: filling a new array
+let matriz4=new Array(5); //5 empty positions
+matriz4.fill(0);    //fills the whole array with 0s
 
+//example 2: filling part of the array
+matrizFrutas.fill("plátano", 1, 3); // Rellena desde el índice 1 hasta el 3 (sin incluir el 3)
+console.log(matrizFrutas); // ["chirimoya", "plátano", "plátano", "guayaba"]
 
+//example 3: filling from one index untill the end
+let numeros = [1, 2, 3, 4, 5];
+numeros.fill(10, 2); // Rellena desde el índice 2 hasta el final con el valor 10
+console.log(numeros); // [1, 2, 10, 10, 10]
 
-//any iterable object, and string is, works with spread operator
-let cad="hola";
-console.log(...cad);    //returns every letter separately 
-console.log([...cad]);  //returns an array of letters
+//example 4: filling using negative indexes
+let matriz = new Array(5).fill(0); // Crea una matriz de 5 elementos inicializados a 0
+matriz.fill(7, -3); // Rellena desde el tercer último elemento hasta el final
+console.log(matriz); // [0, 0, 7, 7, 7]
 
 
 ////////////////////////////
 ////unstructuring arrays////
 ////////////////////////////
+
 //example 1. Unstructuring just some variables
 const numeros = [10, 20, 30];
 
