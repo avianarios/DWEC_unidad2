@@ -242,10 +242,8 @@ aux2="adios";   //if I modify aux2, aux still holds its original value
 console.log(aux, aux2);
 console.log (aux==aux2, aux===aux2);    //comparing only value and value and type
 
-
-//when copying objects, they both point to the same memory location. Second object it's just a reference to the first one
-//therefore objects can't be compared with == (it'll happen the same with arrays)
-//example 1: simple assignemnt of objects. objeto1 and objeto2 points to the same memory location
+//example 1: simple assignment of objects and comparison with == and ===
+//objeto1 and objeto2 points to the same memory location. Second object it's just a reference to the first one
 let objeto1=objeto2={
     nombre:"pepe",
     profesion: "fontanero"
@@ -257,14 +255,15 @@ let objeto3={
 };
 
 objeto1.nombre="fede";
-//you can't compare by using == nor ===
 console.log(objeto2.nombre);
-console.log (objeto1==objeto2); //true. They are both the same object
-console.log (objeto1==objeto3); //false. They are different objects (although they have the same information)
+
+//equal or strictly equal can't be used to compare. They only check if objects points to the same memory location
+console.log (objeto1==objeto2); //true. They both point to the same memory location
+console.log (objeto1==objeto3); //false. They both point to different memory location (although they have the same information)
 console.log (objeto1===objeto2);    //true
 console.log (objeto1===objeto3);    //false. when using === with objects, JS not only verifies their type, but if both objects point to the same memory location
 
-//Example 2: copying objects with assign method
+//Example 2: copying objects with Object.assign method
 //copy one ore more objects into another (to create two different objects with the same values)
 let objeto1={
     nombre:"pepe",
@@ -279,7 +278,7 @@ let objeto2={
 let objeto4=Object.assign({}, objeto1, objeto2);  //copy objeto1 and objeto2 into objeto4. Overwrite if exist
 console.log(objeto4);
 
-//Example 3: shallowly copying objects with assign method and deep clone with global function structuredClone
+//Example 3: shallowly copying objects with Object.assign method and deep clone with global function structuredClone
 //Object.assign creates a surface copy, meaning it does not copy nested objects
 //structuredClone allows objects inside objects to be copied as well (deep clone)
 persona1={
