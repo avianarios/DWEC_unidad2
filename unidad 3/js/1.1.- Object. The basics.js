@@ -305,15 +305,14 @@ console.log (objeto1===objeto3);    //false. when using === with objects, JS not
 //example 4: comparing objects by using JSON.stringify
 //JSON (JavaScript Object Notation) is a lightweight data interchange format that is easy to read and write for both humans and machines. Although based on JavaScript object syntax, JSON is language independent and is used in a wide variety of technologies and programming languages to transfer structured data.
 //its method stringify converts an object into string. 
-//What we are comparing with JSON.stringify is if they are sintactically equals (wich it may have no sense)
+//What we are comparing with JSON.stringify is if they are sintactically equals (which it may have no sense)
 let obj1={a:1, b:2};
 let obj2={a:1, b:2};
 let obj3={b:2, a:1};
 console.log (JSON.stringify(obj1)==JSON.stringify(obj2), JSON.stringify(obj2)==JSON.stringify(obj3));
 
 
-//example 5: JSON.stringify fails when there are functions or undefined within an object
-//constraints: it doesn't deal correctly with functions and undefined, so use it carefully
+//example 5: JSON.stringify converts correctly nested objects, but it fails when there are functions or undefined within an object
 let obj4={
     a: {b:1, c:function(){return 1}},
     b:2,
