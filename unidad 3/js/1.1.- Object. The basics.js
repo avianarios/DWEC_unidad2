@@ -235,35 +235,15 @@ for (let clave in persona) {
 //objects should be considered differents when there are differences in the number or name of properties or in their values.
 
 
-//when it comes to copy variables, they are different elements at different memory position
+//when it comes to copying variables, the result is two different elements at different memory positions. This won't happen with objects
 let aux="hola";
 let aux2=aux;   
 aux2="adios";   //if I modify aux2, aux still holds its original value
 console.log(aux, aux2);
 console.log (aux==aux2, aux===aux2);    //comparing only value and value and type
 
-//example 1: simple assignment of objects and comparison with == and ===
-//objeto1 and objeto2 point to the same memory location. Second object it's just a reference to the first one
-let objeto1=objeto2={
-    nombre:"pepe",
-    profesion: "fontanero"
-};
 
-let objeto3={
-    nombre:"pepe",
-    profesion: "fontanero"
-};
-
-objeto1.nombre="fede";
-console.log(objeto2.nombre);
-
-//equal or strictly equal can't be used to compare. They only check if objects points to the same memory location
-console.log (objeto1==objeto2); //true. They both point to the same memory location
-console.log (objeto1==objeto3); //false. They both point to different memory location (although they have the same information)
-console.log (objeto1===objeto2);    //true
-console.log (objeto1===objeto3);    //false. when using === with objects, JS not only verifies their type, but if both objects point to the same memory location
-
-//Example 2: copying objects with Object.assign method
+//Example 1: copying objects with Object.assign method
 //copy one ore more objects into another (to create two different objects with the same values)
 let objeto1={
     nombre:"pepe",
@@ -276,10 +256,11 @@ let objeto2={
 }
 
 let objeto4=Object.assign({}, objeto1, objeto2);  //copy objeto1 and objeto2 into objeto4. Overwrite if exist
-console.log(objeto4);
+let objeto5=Object.assign({}, objeto4);  //copys objeto4 into objeto5
+console.log(objeto4, objeto5);
 
-//Example 3: shallowly copying objects with Object.assign method and deep clone with global function structuredClone
-//Object.assign creates a surface copy, meaning it does not copy nested objects
+//Example 2: deep clone with global function structuredClone
+//Object.assign creates a surface copy, meaning it does not copy nested objects (it keeps them as reference)
 //structuredClone allows objects inside objects to be copied as well (deep clone)
 persona1={
     nombre:"pepe",
@@ -297,6 +278,28 @@ console.log(persona1, persona2);
 persona2=structuredClone(persona1);   //all levels are copied by value
 persona1.medidas.altura=200;
 console.log(persona1, persona2);
+
+
+//example 3: simple assignment of objects and comparison with == and ===
+//objeto1 and objeto2 point to the same memory location. Second object it's just a reference to the first one
+let objeto1=objeto2={
+    nombre:"pepe",
+    profesion: "fontanero"
+};
+
+let objeto3={
+    nombre:"pepe",
+    profesion: "fontanero"
+};
+
+objeto1.nombre="fede";
+console.log(objeto2.nombre);
+
+//equal or strictly equal can't be used to compare. They only check if objects points to the same memory location
+console.log (objeto1==objeto2); //true. They both point to the same memory location
+console.log (objeto1==objeto3); //false. Despite both of them have the same elements (everybody would say they are "they are equals"), they are different objects, meaning each one points to its own memory location, and this is what equal measures
+console.log (objeto1===objeto2);    //true
+console.log (objeto1===objeto3);    //false. when using === with objects, JS not only verifies their type, but if both objects point to the same memory location
 
 
 //example 4: comparing objects by using JSON.stringify
@@ -324,7 +327,7 @@ let obj5={
 console.log (JSON.stringify(obj4)==JSON.stringify(obj5));   //returns true, but it should be false
 
 
-//example 6: solution: comparing by using a custom function
+//example 6: (solution) comparing by using a custom function
 function areObjectsEqual(obj1, obj2) {
     const keys1 = Object.keys(obj1);
     const keys2 = Object.keys(obj2);
@@ -345,7 +348,7 @@ function areObjectsEqual(obj1, obj2) {
 console.log(areObjectsEqual(obj1, obj3)); // true
 console.log(areObjectsEqual(obj4, obj5)); // true
 
-//next solution, using an external library like lodash with specific methods for comparing, we'll discuss in a later unit
+//next solution, using an external library like lodash with specific methods for comparing, we'll discuss it in a later unit
 
 
 /////////////////////////////
