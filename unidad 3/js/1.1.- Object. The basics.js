@@ -243,7 +243,7 @@ console.log(aux, aux2);
 console.log (aux==aux2, aux===aux2);    //comparing only value and value and type
 
 //example 1: simple assignment of objects and comparison with == and ===
-//objeto1 and objeto2 points to the same memory location. Second object it's just a reference to the first one
+//objeto1 and objeto2 point to the same memory location. Second object it's just a reference to the first one
 let objeto1=objeto2={
     nombre:"pepe",
     profesion: "fontanero"
