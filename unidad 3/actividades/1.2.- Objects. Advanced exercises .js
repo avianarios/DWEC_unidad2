@@ -47,4 +47,65 @@ const coche = { marca: "Toyota", modelo: "Corolla", año: 2021 };
 
 
 
+//////////////////////////////
+////final object exercises////
+//////////////////////////////
 
+//Exercise 1: You have two objects:
+
+const person = { name: "Ana", age: 25 };
+const extraData = { age: 30, city: "Madrid", profession: "Engineer" };
+
+//Merge both objects in such a way that if there are duplicate properties, keep the value from the object that comes first. Then, add a new property called nationality with the value "Spanish" and delete the city property. Finally, check if the final object contains the properties age and profession.
+
+//Exercise 2: Create an object user with the following properties:
+
+    name: "Carlos"
+    surname: "Pérez"
+    age: 35
+
+//Add a method inside the object that returns the full name of the user. Then, iterate over all the properties of the object and make sure to print only the own properties (not inherited ones).
+
+//Exercise 3: Given the following object:
+
+const car = { brand: "Ford", model: "Fiesta", year: 2020 };
+
+//Make it impossible to add new properties to this object, but allow the existing properties to be modified. Then, add a new property color: "red" and change the value of model to "Focus". Print the object to check if the changes have been applied.
+
+
+//Exercise 4: You have the following object:
+
+const product = { name: "Laptop", price: 1000 };
+
+//You must implement a solution to prevent the object's properties from being modified, but you should be able to delete properties if needed. After that, try to change the price to 1200 and delete the name property. Print the final result.
+
+
+//Exercise 5: Create an object called book with the following properties:
+
+    title: "Don Quixote"
+    author: "Miguel de Cervantes"
+    pages: 500
+
+//Add a method that allows modifying the number of pages and ensures the new value is greater than 0. Also, implement a solution to ensure none of the object's properties can be deleted. Print the object to confirm the changes have been applied.
+
+
+//Exercise 6: Starting with the following object:
+
+const employee = { name: "Lucía", salary: 3000 };
+
+//Create a full copy of this object so that modifying the copy doesn't affect the original object. Change the salary in the copy to 3500 and print both objects to confirm the original hasn't been altered.
+
+
+//Exercise 7:You have two objects representing the grades of two students:
+
+const student1 = { math: 8, english: 9, history: 7 };
+const student2 = { math: 9, english: 8, history: 8 };
+
+//Create a function that takes these two objects and returns true if they have at least one grade in common (i.e., if any subject has the same grade for both students). If they don't have any grades in common, it should return false.
+
+
+//Exercise 8: Given the following object:
+
+const bankAccount = { owner: "Juan", balance: 500 };
+
+//Implement a way to lock all the properties of the object so that they cannot be modified, deleted, or new properties added. Then, try to change the balance to 600, delete the owner property, and add a new property bank: "BBVA". Print the object to verify the results.
