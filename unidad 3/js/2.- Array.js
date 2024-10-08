@@ -59,7 +59,7 @@ console.log (matrizFrutas[matrizFrutas.at(-1)]);    //may not work on old browse
 ////inserting new elements////
 //////////////////////////////
 
-//example 1: by using spread operator (it transforms an array into a list of arguments (the opposite to REST))
+//example 1: by using spread operator that decomposes an iterable (such as an array or an object) into its individual elements (the opposite to REST))
 const array1 = [1, 2, 3];
 const array2 = [...array1, 4, 5]; // [1, 2, 3, 4, 5]
 console.log(array2);
@@ -467,7 +467,25 @@ console.log(matriz); // [0, 0, 7, 7, 7]
 ////unstructuring arrays////
 ////////////////////////////
 
-//example 1. Unstructuring just some variables
+//example 1: by using spread operator to break down an array into individual values
+function sumar(a, b, c) {
+  return a + b + c;
+}
+
+console.log(sumar(...[1,2,3])); // 6
+
+
+//example 2. Combining unstructuration with rest operator
+const numeros = [1, 2, 3, 4, 5];
+
+const [primero, segundo, ...resto] = numeros;
+
+console.log(primero); // 1
+console.log(segundo); // 2
+console.log(resto);   // [3, 4, 5]
+
+
+//example 3. by using breaks to unstructuring just some variables
 const numeros = [10, 20, 30];
 
 const [a, , c] = numeros;
@@ -475,7 +493,7 @@ const [a, , c] = numeros;
 console.log(a); // 10
 console.log(c); // 30
 
-//example 2. default value
+//example 4. providing a default value
 const colores = ['rojo'];
 
 const [color1, color2 = 'azul'] = colores;
@@ -483,7 +501,7 @@ const [color1, color2 = 'azul'] = colores;
 console.log(color1); // rojo
 console.log(color2); // azul (valor por defecto)
 
-//example 3. Interchanging values
+//example 5. Interchanging values
 let x = 5;
 let y = 10;
 
@@ -492,7 +510,7 @@ let y = 10;
 console.log(x); // 10
 console.log(y); // 5
 
-//example 4. Unstructuring arrays passed as arguments to a function
+//example 6. Unstructuring arrays passed as arguments to a function
 const sumar = ([a, b]) => {
   return a + b;
 };
@@ -500,7 +518,7 @@ const sumar = ([a, b]) => {
 const numeros = [5, 10];
 console.log(sumar(numeros)); // 15
 
-//example 5. Unstructuring a function that returns multiple values
+//example 7. Unstructuring a function that returns multiple values
 function obtenerCoordenadas() {
   return [100, 200];
 }
@@ -510,11 +528,3 @@ const [x, y] = obtenerCoordenadas();
 console.log(x); // 100
 console.log(y); // 200
 
-//example 6. Combining unstructuration with rest operator
-const numeros = [1, 2, 3, 4, 5];
-
-const [primero, segundo, ...resto] = numeros;
-
-console.log(primero); // 1
-console.log(segundo); // 2
-console.log(resto);   // [3, 4, 5]
