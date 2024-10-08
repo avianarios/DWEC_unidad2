@@ -1,89 +1,3 @@
-
-////////RECURSION//////////
-//Two ways of creating a function: traditional
-function pow(x, n) {
-    let result = 1;
-    // multiply result by x n times in the loop
-    for (let i = 0; i < n; i++) {
-      result *= x;
-    }
-    return result;
-}
-console.log( pow(2, 3) ); // 8
-  
-//or recursive 
-//Not all problems can be expressed as recursive functions. Two conditions must be satisfied:
-//1.- there must be a base case that finishes recursion
-//2.- there must be a way of dividing problems in subproblems
-//Recursive functions call themselves
-function pow(x, n) {
-  if (n == 1) { //base case
-    return x;
-  } else {
-    return x * pow(x, n - 1); //breaking down in subproblems
-  }
-}
-console.log( pow(2, 3) ); // 8
-
-////////////////////////////
-///////Rest parameters//////
-////////////////////////////
-//example 1
-//Group several elements into an array (the opposite to spread operator), allowing to pass as argument an undetermined number or parameters to a function. Must be placed at the end
-function sumaTodo(aux,...numeros){
-  let acumulado=aux;
-  for (let num of numeros){
-    acumulado+=num;
-  }
-  return acumulado;
-}
-console.log (sumaTodo(0,1,2,3,4,5,6,7,8));
-
-//example 2  
-let concatena2 = (...palabras) => {
-  let resultado="";
-  for (let palabra of palabras){
-    resultado+=palabra;
-  }
-  return resultado;
-}
-
-console.log (concatena("a", "b", "c", "d"));
-
-//example 3
-function sumar(a, b, c) {
-  return a + b + c;
-}
-
-const numeros = [1, 2, 3];
-console.log(sumar(...numeros)); // 6
-
-
-//example 4
-function restarRecursivo(total,...numeros){
-  if (numeros.length==1){
-    return (total-=numeros.pop());
-  }else{
-    total-=numeros.pop();
-    return (restarRecursivo(total,...numeros));
-  }
-}
-let aux=1000;
-console.log(restarRecursivo(aux,4,56,24,2,123,123,123));
-
-
-////////////////////////////////
-////Autoexecutable functions////
-////////////////////////////////
-//executed once, then can't be called again
-//option 1
-(function() { console.log("hola mundo") }) ();
-
-//option 2
-( function(quien){
-  console.log("hola " + quien);
-})("mundo");
-
 //////////////////////////////////////
 /////////Nested functions/////////////
 //////////////////////////////////////
@@ -113,6 +27,208 @@ function saludador(quien){
 }
 var saluda = saludador("mundo");
 saluda(); //hola mundo
+
+/////////////////
+////RECURSION////
+/////////////////
+/*Not all problems can be expressed as recursive algorithms. Two conditions must be satisfied:
+  -1.- there must be a base case that finishes recursion
+  -2.- there must be a way of dividing problems in subproblems
+Recursive functions call themselves with a subproblem as argument until a stop recursion condition is met
+*/
+
+//example 1: power
+//non recursive v1
+function pow(x,n){
+  return (x**n);
+}
+ 
+//non recursive v2
+function pow(x, n) {
+  let result = 1;
+  // multiply result by x n times in the loop
+  for (let i = 0; i < n; i++) {
+    result *= x;
+  }
+  return result;
+}
+console.log( pow(2, 3) ); // 8
+
+
+//recursive
+function pow(x, n) {
+  if (n == 1) { //base case
+    return x;
+  } else {
+    return x * pow(x, n - 1); //breaking down in subproblems
+  }
+}
+
+console.log( pow(2, 3) ); // 8
+
+//example 2: substraction
+//non recursive
+function restar() {
+  const args = Array.from(arguments); // Convertimos `arguments` en una matriz
+  let total = args[0]; // El primer número es la base para restar
+
+  for (let i = 1; i < args.length; i++) {
+    total -= args[i]; // Restamos cada número al total
+  }
+
+  return total;
+
+/*
+  let total=matriz_argumentos.shift();
+  for (let elemento of matriz_argumentos){
+    total-=elemento;
+  }
+  return total;
+  */
+}
+
+console.log(restar(10, 2, 3, 4)); // Salida: 1 (10 - 2 - 3 - 4)
+
+//recursive v1
+function restarRecursivo() {
+  const args = Array.from(arguments); // Convertimos `arguments` en una matriz
+
+  // Función interna recursiva
+  function restar(total, index) {
+    if (index >= args.length) {
+      return total; // Caso base: si se han procesado todos los argumentos
+    } else {
+      return restar(total - args[index], index + 1); // Restamos el número actual y llamamos a la función de nuevo
+    }
+  }
+
+  return restar(args[0], 1); // Iniciamos con el primer argumento y el índice 1
+}
+
+console.log(restarRecursivo(10, 2, 3, 4)); 
+
+//recursive v2
+function restarRecursivo() {
+  let total = arguments[0]; // El primer argumento es el total
+  let numeros = Array.prototype.slice.call(arguments, 1); // Convertimos el resto de argumentos en un arreglo
+
+  if (numeros.length == 1) {
+    return (total -= numeros.pop());
+  } else {
+    total -= numeros.pop();
+    return restarRecursivo(total, ...numeros);
+  }
+}
+
+////////////////////////////
+///////Rest parameters//////
+////////////////////////////
+//a variable number of variables can be passed to a function with no need of declaring them at the header. This way, to iterate over them, arguments array can be used. Be careful arrow functions have no "arguments" array
+
+//Group several elements into an array (the opposite to spread operator), allowing to pass as argument an undetermined number or parameters to a function. Must be placed at the end
+//example 1
+//without rest parameters
+function sumaTodo() {
+  let acumulado=0;  
+  // Recorremos el objeto `arguments` comenzando desde el índice 1
+  for (let i = 0; i < arguments.length; i++) {
+    acumulado += arguments[i]; // Suma cada argumento al acumulado
+  }
+
+  return acumulado;
+}
+
+console.log(sumaTodo(1, 2, 3, 4, 5, 6, 7, 8)); // Salida: 36
+
+
+//with rest parameters
+function sumaTodo(...numeros){
+  let acumulado=0;
+  for (let num of numeros){
+    acumulado+=num;
+  }
+  return acumulado;
+}
+console.log (sumaTodo(1,2,3,4,5,6,7,8));
+
+
+//example 2  
+let concatena2 = (...palabras) => {
+  let resultado="";
+  for (let palabra of palabras){
+    resultado+=palabra;
+  }
+  return resultado;
+}
+
+console.log (concatena("a", "b", "c", "d"));
+
+//example 3
+function sumar(a, b, c) {
+  return a + b + c;
+}
+
+const numeros = [1, 2, 3];
+console.log(sumar(...numeros)); // 6
+
+
+//example 4
+//iterative
+function restar(total, ...numeros) {
+  // Recorremos la matriz de números
+  for (let num of numeros) {
+    total -= num; // Restamos cada número al total
+  }
+  return total; // Devolvemos el total final
+}
+
+let aux = 1000;
+console.log(restar(aux, 4, 56, 24, 2, 123, 123, 123)); // Salida: 644
+
+//recursive
+function restarRecursivo(total,...numeros){
+  if (numeros.length==1){
+    return (total-=numeros.pop());
+  }else{
+    total-=numeros.pop();
+    return (restarRecursivo(total,...numeros));
+  }
+}
+let aux=1000;
+console.log(restarRecursivo(aux,4,56,24,2,123,123,123));
+
+
+//example 5
+function restarRecursivo(...numeros) {
+  // Caso base: si no hay más números, devolvemos 0
+  if (numeros.length === 0) {
+    return 0;
+  }
+  // Si hay un solo número, devolvemos ese número
+  if (numeros.length === 1) {
+    return numeros[0];
+  }
+
+  // Llamada recursiva restando el siguiente número
+  return numeros[0] - restarRecursivo(...numeros.slice(1));
+}
+
+console.log(restarRecursivo(10, 2, 3, 4)); // Salida: 1 (10 - 2 - 3 - 4)
+
+
+
+////////////////////////////////
+////Autoexecutable functions////
+////////////////////////////////
+//executed once, then can't be called again
+//option 1
+(function() { console.log("hola mundo") }) ();
+
+//option 2
+( function(quien){
+  console.log("hola " + quien);
+})("mundo");
+
 
   
 /////////////////////////
