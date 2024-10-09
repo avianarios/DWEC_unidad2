@@ -6,7 +6,11 @@
     -null: Developer has to specify this value when creating a variable. It means it has no valid value
     -undefined: Variable has been created but with no value
     
-non-primitive data types: Object, Array, Function, Date, RegExp*/
+non-primitive data types: Object, Array, Function, Date, RegExp
+
+Primitive data types are inmutable. They can't be changed after being created. Any operation that involves changing its value, is creating a new element
+
+Non-primitive data types are mutable. Their value can be changed while the objects remains the same*/
 
 
 
