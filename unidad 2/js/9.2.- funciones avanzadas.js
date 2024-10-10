@@ -64,7 +64,6 @@ function creaUsuario() {
 }
 
 let nombre = "Manolo";
-//creaUsuario()();  //another way of calling the inner function
 let usuario = creaUsuario();  // crea una función
 console.log(usuario()); // Pepe. Es el valor de la variable interna
 
