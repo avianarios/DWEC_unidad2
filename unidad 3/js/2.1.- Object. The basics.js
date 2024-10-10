@@ -213,20 +213,27 @@ console.log (Object.keys(persona));    //returns an array with keys (name of pro
 console.log (Object.values(persona));   //returns an array with values (values of the properties)
 console.log (Object.entries(persona));  //returns an array of pairs key-value
 
-
-
 //////////////////////////////////////
 ///////iterating through objects///////
 //////////////////////////////////////
-//example 1: for...in -> non-iterable object
+//example 1: traditional for
+let valores=Object.values(persona);        //llaves=['name', 'age']
+for (let i=0; i<valores.length; i++){       //traditional for
+    console.log (valores[i]);
+}
+
+//example 2: for...in -> non-iterable object
 //Objects can be classified as iterable and non-iterable//
 //Both of them have special for structures to iterate over that makes it easier than traditional for
 //How do I know if it's an iterable object?
 console.log (persona[Symbol.iterator]);  //if returns undefined, then it does not exist and, therefore, it is not iterable
-
 for (let clave in persona) {
   console.log(clave, persona[clave]);
 }
+
+//Example 3: using forEach (with array)
+Object.values(persona).forEach((valor)=>console.log(valor));
+Object.entries(persona).forEach(([clave, valor]) => console.log(`${clave}: ${valor}`)); //brackets are needed to unstructure an array into separate variables
 
 ///////////////////////////////////////
 /////Copying and comparing objects/////
