@@ -143,11 +143,6 @@ const persona = {
 
 //remember object.keys, values and entries return arrays, so they are iterable objects that can be iterated by using for...of instead of for...in
 //example 1: by using traditional for with length property
-let valores=Object.values(persona);        //llaves=['name', 'age']
-for (let i=0; i<valores.length; i++){       //traditional for
-    console.log (valores[i]);
-}
-
 for (let i=0; i<matrizFrutas.length; i++){
   console.log (matrizFrutas[i]);
 }
@@ -177,8 +172,7 @@ matrizFrutas.forEach((elemento,indice,matriz) =>{
 //example 4: usage of forEach with less parameters (more common)
 matrizFrutas.forEach(elemento=>console.log(elemento));
 matrizComida[1].forEach(comida=>console.log(comida));
-Object.values(persona).forEach((valor)=>console.log(valor));
-Object.entries(persona).forEach(([clave, valor]) => console.log(`${clave}: ${valor}`)); //brackets are needed to unstructure an array into separate variables
+
 
 //example 5: using forEach within an external function to iterate over a bidimensional array
 let funcion2=(elemento)=>{
