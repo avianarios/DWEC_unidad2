@@ -1,7 +1,6 @@
 /////////////////////////
 ////creating a string////
 /////////////////////////
-
 //example 1: creating as a primitive type
 let single = 'single-quoted';
 let double = "double-quoted";
@@ -17,7 +16,7 @@ let cad2="Ho\nla"; // /n is new line while /t is tab
 let cad3="SOME CHARACTERS need to be protected in order to be printed: \" \\";  
 
 //example 2: creating as an object
-let cadena_Objeto=new String("una cadena objeto");
+let cadena_Objeto=new String("Una Cadena Objeto");
 
 //////////////////////////////////
 ////getting string information////
@@ -25,20 +24,39 @@ let cadena_Objeto=new String("una cadena objeto");
 //example 1: getting string length
 console.log (cadena_Objeto.length);
 
-
 //example 2: getting the character located at certain position
-console.log (cadena_Objeto[3], cadena_Objeto.at(3));  //two ways of accessing 3rd character
+console.log (cadena_Objeto[2], cadena_Objeto.at(2));  //two ways of accessing 3rd character
 console.log (cadena_Objeto.at(-1), cadena_Objeto[cadena_Objeto.length-1]);  //two ways of accessing the last character
 
 ///////////////////////////
 ////changing the string////
 ///////////////////////////
+//strings are inmutable. Every change results in a new string object
+//Example 1: changing some characters
+cadena_Objeto[0]="a";  //strings can't be modified this way as they are inmutable objects
 
-//Example 1: changing case to capital letters and small letters
-console.log(cadena_Objeto.toUpperCase(), cadena_Objeto.toLowerCase());
+//Example 2: changing case to capital letters and small letters
+let mayusculas=cadena_Objeto.toUpperCase();
+let minusculas=cadena_Objeto.toLowerCase();
+console.log(cadena_Objeto);       // Una Cadena Objeto
+console.log(mayusculas, minusculas);  // UNA CADENA OBJETO, una cadena objeto
 
-//Example 2: changing some characters
-cadena_Objeto[0]="a";  //strings can't be modified this way
+//Example 3: replacing the first occurrence of a substring
+let texto="Hola Hola Hola";
+console.log(texto.replace("Hola", "Adiós"));  // 'Adiós Hola Hola'
+
+//Example 4: replacing all occurrences of a substring
+console.log(texto.replaceAll("Hola", "Adiós")); // 'Adiós Adiós Adiós'
+
+//Example 5: removing empty spaces from the beginning and ending of a string
+texto="   hola   hola   hola   ";
+console.log (cadena_Objeto.trim());
+
+//Example 6: removing empty spaces only from the beginning of a string
+console.log (cadena_Objeto.trimStart());
+
+//Example 7: removing empty spaces only from the ending of a string
+console.log (cadena_Objeto.trimEnd());
 
 
 //////////////////////////////
@@ -47,7 +65,7 @@ cadena_Objeto[0]="a";  //strings can't be modified this way
 //Example 1: getting positions of a searched string 
 let buscar="a"
 //console.log(cad3.indexOf(buscar)); 
-if (cad3.indexOf(buscar) != -1){  //returns the position, starting at position 1, where it starts the first occurrence of a substring within a string. Return -1 if not found
+if (cad3.indexOf(buscar) != -1){  //returns the position, starting at position 1, where it starts the first occurrence of a aa within a string. Return -1 if not found
   console.log(`cadena ${buscar} encontrada`);
 }
 console.log(cad3.indexOf(buscar, 20)); //returns the position, starting at position 20, where it starts the first occurrence of a substring within a string
@@ -62,10 +80,10 @@ console.log(cad3.startsWith("SOME"));
 //example 4: return true if a string object ends with a substring
 console.log (cad3.endsWith("hola"));
 
+
 //////////////////////////
 ////getting substrings////
 //////////////////////////
-
 //Example 1: using substring to extract a substring. It doesn't modify original string
 console.log (cad1.substring(0,4));  //extracts a substring from position 0 to 4
 console.log (cad1.substring(7));  //extracts a substring from position 7 to the end
@@ -79,6 +97,10 @@ console.log (cad3.slice(-10,-5));  //returns substring from 10th to the end unti
 //Example 3: split returns an array of substrings separated by the argument without changing original
 console.log (cad3.split(" "));
 
+//Example 4:String is an iterable object, so it works with spread operator
+let cad="hola";
+let a,b,c,d=console.log(...cad);    //returns every letter separately 
+console.log([...cad]);  //returns an array of letters
 
 /////////////////////////
 ////comparing strings////
@@ -112,13 +134,6 @@ console.log ("café".localeCompare("Cafe", 'es', {sensitivity: 'base'}));  //0
 var elements = [ 'casa', 'cacao', 'CAFÉ', 'café', 'california' ];
 console.log (elements.sort((a, b) => a.localeCompare(b)));
 // Returning sorted elements
-
-
-zzzzzzzzzzzzzz
-//String is an iterable object, so it works with spread operator
-let cad="hola";
-let a,b,c,d=console.log(...cad);    //returns every letter separately 
-console.log([...cad]);  //returns an array of letters
 
 
 /////////////////
