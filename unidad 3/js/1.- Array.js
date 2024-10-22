@@ -324,6 +324,19 @@ let elemento=inventario.find(elemento=>elemento.nombre=="manzanas");
 let esFruta=(fruta)=> fruta.nombre=="cerezas"; //arrow function
 console.log (inventario.find(esFruta));
 
+//example 6: using findIndex to look for information in an object with complex conditions
+let personas = [
+  { nombre: "Juan", edad: 25, ciudad: "Barcelona" },
+  { nombre: "María", edad: 32, ciudad: "Madrid" },
+  { nombre: "Pedro", edad: 35, ciudad: "Sevilla" },
+  { nombre: "Lucía", edad: 28, ciudad: "Madrid" }
+];
+
+let indice = personas.findIndex(persona => persona.edad > 30 && persona.ciudad === "Madrid");
+
+console.log(indice); // Resultado: 1 (María es la primera que cumple ambas condiciones)
+
+
 
 //////////////////////////
 ////filtering elements////
