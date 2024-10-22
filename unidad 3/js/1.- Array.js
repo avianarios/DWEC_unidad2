@@ -348,14 +348,15 @@ console.log (inventario.find(esFruta));
 
 //example 6: using findIndex to look for information in an object with complex conditions
 let personas = [
-  { nombre: "Juan", edad: 25, ciudad: "Barcelona" },
-  { nombre: "María", edad: 32, ciudad: "Madrid" },
-  { nombre: "Pedro", edad: 35, ciudad: "Sevilla" },
-  { nombre: "Lucía", edad: 28, ciudad: "Madrid" }
+  { nombre: "Agapito", edad: 25, ciudad: "Madrid" },
+  { nombre: "Eberarda", edad: 32, ciudad: "Barcelona" },
+  { nombre: "Aniceto", edad: 35, ciudad: "Madrid" },
+  { nombre: "Febronia", edad: 28, ciudad: "Sevilla" },
+  { nombre: "Celedonio", edad: 46, ciudad: "Madrid" },
+  { nombre: "Apolinario", edad: 42, ciudad: "Madrid" }
 ];
 
 let indice = personas.findIndex(persona => persona.edad > 30 && persona.ciudad === "Madrid");
-
 console.log(indice); // Resultado: 1 (María es la primera que cumple ambas condiciones)
 
 
@@ -363,24 +364,13 @@ console.log(indice); // Resultado: 1 (María es la primera que cumple ambas cond
 //////////////////////////
 ////filtering elements////
 //////////////////////////
-
-//filter returns  an array with all matching elements
+//filter returns an array with all matching elements
 //example 1: using filter with a simple condition
-let elementos = inventario.filter(item => item.cantidad < 3);
-console.log (elementos);
+console.log (inventario.filter(item => item.cantidad < 3));
 
-//example 2: using filter with complex conditions
-let razasAnimales=[
-    {animal: "perro", raza:"salchicha", pacientes:5},
-    {animal: "perro", raza:"chihuahua", pacientes:7},
-    {animal: "gato", raza:"angora", pacientes:2},
-    {animal: "gato", raza:"romano", pacientes:1},
-  ];
-razasAnimales.filter(elemento=>(elemento.animal=="perro") && (elemento.pacientes>6));
+//example 2: using filter with several conditions
+console.log (personas.filter(persona => persona.edad > 30 && persona.ciudad === "Madrid" && persona.nombre.startsWith("A")));
 
-//example 3: combining filter with string functions, like startsWith, endsWith or includes, to help searching for an element
-let razas=["perro 1", "perro 2", "gato 1"];
-let perros2=razas.filter(elemento=>elemento.startsWith("perro"));
 
 
 ////////////////////////////////////////////////////////////
