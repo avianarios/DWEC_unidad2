@@ -204,6 +204,7 @@ console.log (typeof(numeros));  //object
 console.log(Array.isArray(numeros));  //true
 
 //Example 2: Getting position of an element in an array
+//it compares by using strict comparison ===. Ideal for looking for primitive values
 console.log (matrizFrutas.indexOf("mango"), matrizFrutas.indexOf("esta no existe"));
 
 //Example 3: returning if an element exists in an array
@@ -304,6 +305,7 @@ console.log (JSON.stringify(arr4)==JSON.stringify(arr5)); //returns true, but it
 /////////////////////////
 
 //example 1: findIndex returns the index of the first element that matches, -1 otherwise
+//it allows to use functions and complex conditions while indexOf only compares by using ===
 console.log (inventario.findIndex(elemento=>elemento.nombre=="aguacate"));
 
 //example 2: findLastIndex returns the index of the last element that matches, -1 otherwise
