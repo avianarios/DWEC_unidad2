@@ -299,6 +299,29 @@ const arr5=[1, true, null, null, null];
 console.log (JSON.stringify(arr4)==JSON.stringify(arr5)); //returns true, but it shouldn't
 
 
+//example 6: by using a custom function
+function compararMatrices(matriz1, matriz2) {
+  if (matriz1.length !== matriz2.length) {
+    return false; // Las matrices tienen diferentes tamaños
+  }
+  
+  for (let i = 0; i < matriz1.length; i++) {
+    if (matriz1[i] !== matriz2[i]) {
+      return false; // Si algún elemento es diferente, las matrices no son iguales
+    }
+  }
+  
+  return true; // Las matrices son iguales
+}
+
+const matrizA = [1, 2, 3];
+const matrizB = [1, 2, 3];
+const matrizC = [1, 2, 4];
+
+console.log(compararMatrices(matrizA, matrizB)); // true
+console.log(compararMatrices(matrizA, matrizC)); // false
+
+
 /////////////////////////
 ////locating elements////
 /////////////////////////
