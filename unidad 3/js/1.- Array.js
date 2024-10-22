@@ -360,7 +360,6 @@ let indice = personas.findIndex(persona => persona.edad > 30 && persona.ciudad =
 console.log(indice); // Resultado: 1 (María es la primera que cumple ambas condiciones)
 
 
-
 //////////////////////////
 ////filtering elements////
 //////////////////////////
@@ -370,7 +369,6 @@ console.log (inventario.filter(item => item.cantidad < 3));
 
 //example 2: using filter with several conditions
 console.log (personas.filter(persona => persona.edad > 30 && persona.ciudad === "Madrid" && persona.nombre.startsWith("A")));
-
 
 
 ////////////////////////////////////////////////////////////
