@@ -204,6 +204,7 @@ console.log (typeof(numeros));  //object
 console.log(Array.isArray(numeros));  //true
 
 //Example 2: Getting position of an element in an array
+//it compares by using strict comparison ===. Ideal for looking for primitive values
 console.log (matrizFrutas.indexOf("mango"), matrizFrutas.indexOf("esta no existe"));
 
 //Example 3: returning if an element exists in an array
@@ -327,6 +328,7 @@ console.log(compararMatrices(matrizA, matrizC)); // false
 /////////////////////////
 
 //example 1: findIndex returns the index of the first element that matches, -1 otherwise
+//it allows to use functions and complex conditions while indexOf only compares by using ===
 console.log (inventario.findIndex(elemento=>elemento.nombre=="aguacate"));
 
 //example 2: findLastIndex returns the index of the last element that matches, -1 otherwise
@@ -344,6 +346,19 @@ let elemento=inventario.find(elemento=>elemento.nombre=="manzanas");
 //example 5: alternative to previous example: define function outside
 let esFruta=(fruta)=> fruta.nombre=="cerezas"; //arrow function
 console.log (inventario.find(esFruta));
+
+//example 6: using findIndex to look for information in an object with complex conditions
+let personas = [
+  { nombre: "Juan", edad: 25, ciudad: "Barcelona" },
+  { nombre: "María", edad: 32, ciudad: "Madrid" },
+  { nombre: "Pedro", edad: 35, ciudad: "Sevilla" },
+  { nombre: "Lucía", edad: 28, ciudad: "Madrid" }
+];
+
+let indice = personas.findIndex(persona => persona.edad > 30 && persona.ciudad === "Madrid");
+
+console.log(indice); // Resultado: 1 (María es la primera que cumple ambas condiciones)
+
 
 
 //////////////////////////
