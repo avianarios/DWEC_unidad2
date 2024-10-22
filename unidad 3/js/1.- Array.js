@@ -248,33 +248,34 @@ console.log(matrizFrutas.toString());
 ///////////////////////////////////////
 /////Copying and comparing arrays/////
 ///////////////////////////////////////
-//when it comes to copy variables, they are different elements at different memory position
+//Example 1: copying and comparing variables by using == or ===
 let aux="hola";
-let aux2=aux;   
-aux2="adios";   //if I modify aux2, aux still holds its original value
-console.log(aux, aux2);
-console.log (aux==aux2, aux===aux2);    //comparing only value and value and type
+let aux2=aux;   //When a variable is assigned to another one. A new, pointer to a new memory position is created and the same value is stored in that position. Therefore, both of them are different elements at different memory positions
+console.log (aux==aux2, aux===aux2);    //true, true. when comparing variables, only their value are compared
 
-//example 1: simple assignment of arrays and comparison with == and ===
-//matrizAlimentos and matrizComida point to the same memory location
-let matrizAlimentos=matrizComida;
-console.log (matrizComida);
-matrizAlimentos[2][2]="puerro"; //by modifying matrizAlimentos, matrizComida is also modified
-console.log (matrizComida);
+aux2="adios";   //But if I modify aux2, aux still holds its original value since they point to different memory locations
+console.log (aux==aux2, aux===aux2);    //false, false
 
-//example 2: copying by using Array.from
-let mat1 = [1, 2, 3];
-let mat2 = [...mat1]; // spread the array into a list of parameters then put the result into a new array
-let  mat3=Array.from(mat1);  //copy numeros values into numeros2. If we use =, a reference is created and both are the same object
-console.log (mat1==mat2); //false although they contain the same information, they point to different memory locations
+//example 2: three different ways of copying arrays
+let mat1=[1,2,3];
+let mat4=mat1;  //simple assignment. They both point to the same memory location
+let mat2=[...mat1]; //spread the array into a list of parameters then put the result into a new array. They are different objects
+let mat3=Array.from(mat1);  //copy mat1 values into mat3. They are different objects
 
-//equal or strictly equal can't be used to compare. They only check if objects points to the same memory location
+//example 3: comparing arrays by using == or ===
+mat2=mat1;    //they both point to the same memory location
+mat2[2]=0;  //so if I change mat2, mat1 is changed as well
+console.log(mat1,mat2);
+mat3=[1,2,3];
+
+//equal or strictly equal can't be used to compare. They only check if objects points to the same memory location, not their content
 console.log(mat1 == mat2); //true. They both point to the same memory location
 console.log(mat1 == mat3); //false. Despite both of them have the same elements (everybody would say they are "they are equals"), they are different objects, meaning each one points to its own memory location, and this is what equal measures
 console.log(mat1 === mat2); //true
-console.log(mat1 === mat3); //false. when using === with objects, JS not only verifies their type, but if both objects point to the same memory location
+console.log(mat1 === mat3); //false
 
-//example 3: comparing arrays by using Object.toString()
+
+//example 4: comparing arrays by using Object.toString()
 const arr1 = [1, [2, 3]];
 const arr2 = [1, [2, 3]];
 const arr3 = [1, 2, 3];
@@ -290,17 +291,15 @@ console.log (arr1.toString() === arr3.toString()); //true, but it shouldn't
 //its method stringify converts an object into string. 
 //What we are comparing with JSON.stringify is if they are sintactically equals (which it may have no sense)
 
-//JSON.stringify deals correctly with nested arrays
+//JSON.stringify deals correctly with nested arrays, but it doesn't work when there are functions or undefined
 console.log (JSON.stringify(arr1) == JSON.stringify(arr2)); // true
 console.log (JSON.stringify(arr1) == JSON.stringify(arr3)); // false
-
-//example 5: JSON.stringify converts correctly nested arrays, but it fails when there are functions or undefined within an array
 const arr4=[1, true, undefined, null, function (){return 1}];
 const arr5=[1, true, null, null, null];
 console.log (JSON.stringify(arr4)==JSON.stringify(arr5)); //returns true, but it shouldn't
 
 
-//example 6: by using a custom function
+//example 5: by using a custom function (only way it works)
 function compararMatrices(matriz1, matriz2) {
   if (matriz1.length !== matriz2.length) {
     return false; // Las matrices tienen diferentes tamaños
