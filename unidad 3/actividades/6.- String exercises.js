@@ -53,3 +53,15 @@
 //Exercise 27: Given the string "abc123def456ghi789", extract all sequences of numbers and create a new string with them, leaving a space between each group of numbers. The result should be "123 456 789".
 
 //Exercise 28: Given the sentence "Programming in JavaScript is amazing", replace all the vowels in the first half of the sentence with their uppercase equivalents. The result should be "PrOgrAmmIng in JavaScript is amazing".
+
+//Exercise 30: Find Numbers in a String. Write a function extractNumbers(string) that takes a string and returns an array containing all the numbers it contains. Use a regular expression to find the numbers.
+
+//Exercise 31: Replace Spaces with Hyphens. Create a function replaceSpaces(string) that takes a string and replaces all whitespace with hyphens (-). Use a regular expression to perform the replacement.
+
+//Exercise 32: Count Words. Write a function countWords(string) that takes a string and returns the total number of words it contains. Use a regular expression to identify the words.
+
+//Exercise 33: Validate Phone Numbers. Create a function validatePhone(phone) that takes a phone number in a format of 10 digits (e.g., 1234567890) and returns true if it is valid and false otherwise. Consider that the number should contain only digits.
+
+//Exercise 34: Extract Hashtags. Write a function extractHashtags(string) that takes a string and returns an array containing all the hashtags it contains. A hashtag is a word that begins with the # symbol.
+
+//Exercise 35: Validate Passwords. Create a function validatePassword(password) that takes a string and returns true if the password is valid. A valid password must have at least 8 characters, at least one uppercase letter, at least one lowercase letter, and at least one number.
