@@ -1,12 +1,3 @@
-/*regular expressions
-
-Sets: Brackets [] allow you to define a set of characters that can be matched. For example, [aeiou] matches any vowel.
-Negation: [^abc] matches any character other than a, b or c.
-Groups: Parentheses () allow parts of a regular expression to be grouped together. For example, (abc)+ matches one or more repetitions of ‘abc’.
-Alternation: The symbol | acts as an OR operator. For example, cat|dog matches ‘cat’ or ‘dog’.
-Escape character for using any special character in the regular expression: \
-*/
-
 ////////////////
 ////creation////
 ////////////////
@@ -26,6 +17,7 @@ const regex2=/JavaScript/;
 const cadena='JavaScript es divertido y no es difícil. Te gustará JavaScript';
 console.log(regex.exec(cadena)); //false
 console.log(regex2.texto(cadena)) //true
+
 
 /////////////////
 ////modifiers////
@@ -56,7 +48,8 @@ Use the RegExp(‘pattern’) constructor when:
     You work with special characters that can be difficult to handle with literal syntax.
 */    
 
-//  |: logic OR
+//  The symbol | acts as an OR operator. For example, cat|dog matches ‘cat’ or ‘dog’.
+
 //example 3: create dinamic patterns (only possible by using object)
 // Lista de palabras clave que el usuario puede ingresar
 const palabrasClave = ['JavaScript', 'Python', 'Ruby'];
@@ -74,6 +67,7 @@ console.log(patronDinamico.exec(texto));  //true
 const coincidencias = texto.match(patronDinamico);
 console.log(coincidencias); // ["JavaScript"]
 
+
 ///////////////////////////////
 ////looking for occurrences////
 ///////////////////////////////
@@ -87,6 +81,7 @@ let resultado;
 while ((resultado = regex.exec(cadena)) !== null) {
   console.log(resultado[0]); // "JavaScript", luego "JavaScript"
 }
+
 
 ///////////////////////////////////////////////////////////
 ////getting information about regular expression itself////
@@ -102,6 +97,7 @@ regex = /javascript/ig;
 console.log(regex.source); // "javascript"
 console.log(regex.sticky); // false
 console.log(regex.ignoreCase); // true
+
 
 ///////////////////
 ////Quantifiers////
@@ -140,10 +136,33 @@ console.log(regex.exec('aaa'));   // true, it contains, at least, 2 consecutive 
 console.log(regex.exec('aa'));    // ["aa"]
 console.log(regex.exec('a'));     // null
 
+//Example 5: {n,m} n min m max
 regex = /a{2,3}/; //will look for 2 or 3 consecutive "a"
 console.log(regex.exec('aaa'));   // true, it contains, at least, 2 consecutive "a" ["aaa"]
 console.log(regex.exec('aa'));    // ["aa"]
 console.log(regex.exec('a'));     // null
+
+//Example 6: greedy and non-greedy behaviour
+//greedy
+const cadena = "<div>Texto 1</div><div>Texto 2</div>";
+const greedyRegex = /<div>.*<\/div>/g;  // Codicioso. Obtiene tanta información como puede.
+console.log(greedyRegex.exec(cadena));	// ['<div>Texto 1</div><div>Texto 2</div>']
+
+//non greedy
+const nonGreedyRegex = /<div>(.*?)<\/div>/g;  //non-greedy. It gets as less information as it can
+const resultado = [];
+let match;
+while ((match = regex.exec(cadena)) !== null) {
+    resultado.push(match[1]); // Capturamos el contenido dentro de las etiquetas
+}
+console.log(resultado); // ['Texto 1', 'Texto 2']
+
+//Example 7: another greedy vs non-greedy example
+let texto = "a123b456b";
+let resultadoCodicioso=texto.match(/a.*b/);
+let resultadoNoCodicioso=texto.match(/a.*?b/);
+console.log(resultadoCodicioso, resultadoNoCodicioso);  // ["a123b456b"] ["a123b"]
+
 
 /////////////////////////
 ////Character classes////
@@ -156,6 +175,9 @@ console.log(regex.exec('a'));     // null
   \W: Matches any non-word character.
   \s: Matches any whitespace (spaces, tabs, line breaks).
   \S: Matches any character that is not a whitespace.
+  []: allow  to define a set of characters that can be matched. For example, [aeiou] matches any vowel.
+  ^: (negation) [^abc] matches any character other than a, b or c.
+  // \ is used to escape character for using any special character in the regular expression
 */
 
 //Example 1: .
@@ -189,6 +211,29 @@ console.log(regex.exec('Hola mundo')); // [" "]
 regex = /\S/;
 console.log(regex.exec('   Hola')); // ["H"]
 
+//Example 8: []
+regex = /[aeiou]/;
+console.log(regex.exec('Hola'));  // ["o"]
+console.log(regex.exec('zzz'));    // null
+
+//Example 9: ^
+regex = /[^aeiou]/;
+console.log(regex.exec('Hola')); // ["H"]
+
+//Example 10: \
+regex=/\//;  //regular expression to look for "/"
+console.log(regex.exec('/hola/'));  //["\"]
+
+
+/////////////////////////
+////groups and ranges////
+/////////////////////////
+//() allow parts of a regular expression to be grouped together.
+//Example 1: ()
+regex = /(abc)+/;
+console.log(regex.exec('abcabcabc')); // ["abcabcabc"]
+
+
 //////////////
 ////Limits////
 //////////////
@@ -218,4 +263,7 @@ console.log(regex.exec('Holanda'));    // null
 regex = /\Bola/;
 console.log(regex.exec('Hola')); // ["ola"]
 
-
+//Example 5: check if a string is an email
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const email = "ejemplo@dominio.com";
+console.log(emailRegex.exec(email)); // true
