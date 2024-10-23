@@ -28,6 +28,14 @@ console.log (cadena_Objeto.length);
 console.log (cadena_Objeto[2], cadena_Objeto.at(2));  //two ways of accessing 3rd character
 console.log (cadena_Objeto.at(-1), cadena_Objeto[cadena_Objeto.length-1]);  //two ways of accessing the last character
 
+
+////////////////////////////
+////repeating the string////
+////////////////////////////
+//example 1: repeating a string
+console.log (cadena_Objeto.repeat(3));
+
+
 ///////////////////////////
 ////changing the string////
 ///////////////////////////
@@ -58,6 +66,11 @@ console.log (cadena_Objeto.trimStart());
 //Example 7: removing empty spaces only from the ending of a string
 console.log (cadena_Objeto.trimEnd());
 
+//example 8: padStart (total_length, character) adding characters at the beginning until length is reached. If length is less than string's length, it does nothing
+console.log (cadena_Objeto.padStart(cadena_Objeto.length+5,"a")); //adds as many "a" at the beginning as necessary so cadena_objeto's size is cadena_Objecto.length+5
+
+//example 9: padEnd
+console.log (cadena_Objeto.padEnd(cadena_Objeto.length+5, 0));
 
 //////////////////////////////
 ////looking for substrings////
@@ -79,6 +92,95 @@ console.log(cad3.startsWith("SOME"));
 
 //example 4: return true if a string object ends with a substring
 console.log (cad3.endsWith("hola"));
+
+//example 5: look for the first occurrence by using regular expressions
+//match returns an array with all coincidences or null if none
+let texto = "JavaScript es divertido y no es difícil";
+let resultado = texto.match(/es/);  // Busca la primera ocurrencia de "es"
+console.log(resultado);  // ["es"]
+
+/*regular expressions
+
+  /pattern-to-find/
+
+metacharacters
+  .: Matches any character (except line break).
+  ^: Matches the beginning of a string.
+  $: Matches the end of a string.
+  *: Matches 0 or more repetitions of the previous element.
+  +: Matches 1 or more repetitions of the previous element.
+  ?: Matches 0 or 1 repetition of the previous element.
+  {n}: Matches exactly n repetitions of the previous element.
+  {n,}: Matches n or more repetitions of the previous element.
+  {n,m}: Matches between n and m repetitions of the previous element.
+
+  *, + and ? are greedy by default (they try to match as many characters as possible). If you add ? after them, they become lazy or non-greedy, trying to match as few characters as possible.
+
+Sets: Brackets [] allow you to define a set of characters that can be matched. For example, [aeiou] matches any vowel.
+
+Negation: [^abc] matches any character other than a, b or c.
+
+Groups: Parentheses () allow parts of a regular expression to be grouped together. For example, (abc)+ matches one or more repetitions of ‘abc’.
+
+Alternation: The symbol | acts as an OR operator. For example, cat|dog matches ‘cat’ or ‘dog’.
+
+Common characters
+  \b (word boundary): matches the boundary between a word character and a non-word character. \bcat\b will match only cat. \bcat will match any word starting with cat
+  \B (non-word boundary): matches where there is no word limit.
+  \d: Matches any digit (equivalent to [0-9]).
+  \D: Matches any character that is not a digit.
+  \w: Matches any word character (letters, numbers, underscores) (equivalent to [a-zA-Z0-9_]).
+  \W: Matches any non-word character.
+  \s: Matches any whitespace (spaces, tabs, line breaks).
+  \S: Matches any character that is not a whitespace.
+
+Modifyers:
+  /g: returns all occurrences, not only the first one
+  /i: case insensitive
+  /m: Multiline (makes ^ and $ match at the beginning and end of each line).
+  /s: Allows . to match line breaks.
+  /y: Sticky search (match from last found position).
+  /u: Unicode support, allowing to work with non ASCII characters, like emojis or special characters
+
+Escape character for using any special character in the regular expression: \
+*/
+
+//example 6: search by using modifiers
+console.log(texto.match(/es/g));  // ["es es"]  // look for any occurrence of "es"
+console.log(texto.match(/ES/i));  // ["es"]   Search for "es" string
+
+//Example: 7: search by using common characters
+const cadena = "Mi número es 12345";
+console.log(cadena.match(/\d+/)); // ["12345"]  //search in a greedy way, any number
+console.log(cadena.match(/\d+?/)); // ["1"]  //search in a non-greedy way, any number (similar as /\d/)
+console.log(cadena.match(/\bmi\b/i)); // ["Mi"] Search for "mi" word case insensitive \b represents a word boundary
+console.log(cadena.match(/\w/));
+
+
+/*
+zzzzzzzzzzzzz
+String.match(regex): Busca coincidencias en la cadena.
+String.replace(regex, replacement): Reemplaza coincidencias en la cadena.
+String.search(regex): Devuelve el índice de la primera coincidencia.
+String.split(regex): Divide la cadena en un array usando el patrón como delimitador.
+*/
+
+//Example 9: using word boundary and global modifier
+const texto = "Las manzanas son rojas, pero los plátanos son amarillos.";
+const resultado = texto.match(/\b[m]\w+/g); // ["manzanas"]
+
+//Example 10: using greedy and non-greedy pattern
+let texto = "a123b456b";
+let resultadoCodicioso=texto.match(/a.*b/);
+let resultadoNoCodicioso=texto.match(/a.*?b/);
+console.log(resultadoCodicioso, resultadoNoCodicioso);  // ["a123b456b"] ["a123b"]
+
+
+//Example 8: check if a string is an email
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const email = "ejemplo@dominio.com";
+console.log(emailRegex.test(email)); // true
+
 
 
 //////////////////////////
