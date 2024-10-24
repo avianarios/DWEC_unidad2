@@ -188,6 +188,15 @@ console.log(partes);
 // Output: ["Juan", "Pérez", "", "Calle", "Falsa", "123", "María", "López", "", "Avenida", "Siempre", "Viva", "456", "Pedro", "Gómez", "", "Calle", "de", "la", "Amargura", "789"]
 
 
+////////////////////////////
+////converting an string////
+////////////////////////////
+//example 1: split converts a string into an array
+let razasGato="pelo corto, pelo largo, angora, callejero";
+let matrizRazasGato=razasGato.split(",");
+console.log (matrizRazasGato, typeof(matrizRazasGato));
+
+
 /////////////////////////
 ////comparing strings////
 /////////////////////////

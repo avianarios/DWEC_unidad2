@@ -407,20 +407,15 @@ let sumaDirecta = numeros.reduce((total, actual) => {
 console.log(sumaDirecta); // 18
 
 
-//////////////////////////////
-////concatenating elements////
-//////////////////////////////
+///////////////////////////
+////converting an array////
+///////////////////////////
 
-//JOIN does the opposite to string.split. It returns a string made of concatenating the elements of an array
+//JOIN returns a string made of concatenating the elements of an array
 //example 1
 let nombres=['Purificación', 'Procopio', 'Patrocinio', 'Apolinar'];
 let cad=nombres.join();
 console.log (cad,typeof(cad));
-
-//example 2: using split (a string method), which is the opposite to join
-let razasGato="pelo corto, pelo largo, angora, callejero";
-let matrizRazasGato=razasGato.split(",");
-console.log (matrizRazasGato);
 
 
 /////////////////////////
