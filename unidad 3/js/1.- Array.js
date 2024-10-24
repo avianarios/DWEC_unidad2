@@ -481,7 +481,7 @@ console.log(matriz); // [0, 0, 7, 7, 7]
 ////unstructuring arrays////
 ////////////////////////////
 
-//example 1: by using spread operator to break down an array into individual values
+//example 1: spread operator breaks down an array into individual values
 function sumar(a, b, c) {
   return a + b + c;
 }
