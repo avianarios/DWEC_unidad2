@@ -286,20 +286,7 @@ console.log (arr1.toString() === arr2.toString()); // true
 console.log (arr1.toString() == arr3.toString()); //true, but it shouldn't
 console.log (arr1.toString() === arr3.toString()); //true, but it shouldn't
 
-//example 4: comparing arrays by using JSON.stringify
-//JSON (JavaScript Object Notation) is a lightweight data interchange format that is easy to read and write for both humans and machines. Although based on JavaScript object syntax, JSON is language independent and is used in a wide variety of technologies and programming languages to transfer structured data.
-//its method stringify converts an object into string. 
-//What we are comparing with JSON.stringify is if they are sintactically equals (which it may have no sense)
-
-//JSON.stringify deals correctly with nested arrays, but it doesn't work when there are functions or undefined
-console.log (JSON.stringify(arr1) == JSON.stringify(arr2)); // true
-console.log (JSON.stringify(arr1) == JSON.stringify(arr3)); // false
-const arr4=[1, true, undefined, null, function (){return 1}];
-const arr5=[1, true, null, null, null];
-console.log (JSON.stringify(arr4)==JSON.stringify(arr5)); //returns true, but it shouldn't
-
-
-//example 5: by using a custom function (only way it works)
+//example 4: by using a custom function (only way it works)
 function compararMatrices(matriz1, matriz2) {
   if (matriz1.length !== matriz2.length) {
     return false; // Las matrices tienen diferentes tamaños
