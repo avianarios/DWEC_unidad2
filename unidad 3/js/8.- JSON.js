@@ -1,5 +1,4 @@
-/*JSON is a global object used to work with data in JSON (JavaScript Object Notation) format.
- It allows to convert a complex object into a string to send it over a network in a standarized way
+/*JSON (JavaScript Object Notation) is a lightweight data interchange format that is easy to read and write for both humans and machines. Although based on JavaScript object syntax, JSON is language independent and is used in a wide variety of technologies and programming languages to transfer structured data.
 
 Basic rules: 
   -Objects and Arrays: Property names must be double-quoted strings; trailing commas are forbidden.
@@ -54,3 +53,27 @@ const jsonText = `{
     }
   }`;
     console.log(JSON.parse(jsonText));
+
+//////////////////////////////////////////////
+///using JSON to compare objects or arrays////
+//////////////////////////////////////////////
+//example 1: comparing arrays by using JSON.stringify
+//JSON.stringify deals correctly with nested arrays, but it doesn't work when there are functions or undefined
+console.log (JSON.stringify(arr1) == JSON.stringify(arr2)); // true
+console.log (JSON.stringify(arr1) == JSON.stringify(arr3)); // false
+const arr4=[1, true, undefined, null, function (){return 1}];
+const arr5=[1, true, null, null, null];
+console.log (JSON.stringify(arr4)==JSON.stringify(arr5)); //returns true, but it shouldn't
+
+//example 2: comparing objects by using JSON.stringify. It converts correctly nested objects, but it fails when there are functions or undefined within an object
+let obj4={
+    a: {b:1, c:function(){return 1}},
+    b:2,
+    c:undefined
+};
+let obj5={
+    a: {b:1},
+    b:2
+};
+
+console.log (JSON.stringify(obj4)==JSON.stringify(obj5));   //returns true, but it should be false
