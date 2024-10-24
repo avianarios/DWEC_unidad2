@@ -3,29 +3,17 @@
 /*built-in objects:
 
     -Object: They contain data collections (pair key-value) and functionality (methods). All every object inherits from object "object"
-    
     -Array: It is an ordered list of values of any type enclosed into brackets. Example: [1, 2, 3, “pepe”, “jose”, true]  
-
     -String: Represents a chain of text
-
     -Function: It's an object representing an executable chunk of code that can be called anywhere. function sumar (a,b){ return a+b;}
-
     -Boolean: Although it exists a boolean object, it is recommended to use primitive type as it is simpler. You can evaluate a boolean object or its content. In the first case, if it exists it returns true, even if it contains false, which is confusing. Thus, using primitive type is preferred
-
     -Error handling objects, like Error, EvalError, RangeError, ReferenceError, SyntaxError, TypeError and URIError
-
     -Math. Provides mathematical functions
-
     -Date: An object to work with dates and time. new Date();
-
     -RegExp: An object to work with regular expressions. /\d+/
-
     -Data Structure: Map, Set, WeakMap and WeakSet
-
     -JSON
-
     -Promise and AsyncFunction
-
     -Console
 */
 //////////////////////////////
@@ -44,6 +32,8 @@ let usuario2={
     },
     pregunta:()=>console.log ("¿estás bien?")
 }
+
+let persona={}; //empty object
 
 console.log (usuario2.saluda());
 console.log (usuario2.despidete("con dios"));
@@ -95,6 +85,62 @@ user=creaUsuario("pepe", 30);
 console.log (user);
 
 
+///////////////////////////////
+////defining new properties////
+///////////////////////////////
+//example 1: defining a property directly
+persona.licenciado=false;
+persona['lugar de nacimiento']="Roma";  //this name is only possible by using brackets
+console.log(persona);
+
+//example 2: defining a property by using defineProperty
+//it allows more control over this property 
+Object.defineProperty(persona, 'nombre', {
+  value: 'Juan',
+  writable: false,  // El valor no se puede cambiar
+  enumerable: true,  // Se puede listar en bucles
+  configurable: false  // No se puede eliminar ni reconfigurar
+});
+
+console.log(persona.nombre);  // "Juan"
+persona.nombre = 'Pedro';  // No tiene efecto
+console.log(persona.nombre);  // Sigue siendo "Juan"
+
+//example 3: external assignment of an arrow function to a property
+persona1={
+  nombre:"pepe",
+  profesion: "fontanero",
+  medidas: {
+      altura:180,
+      pecho: 100,
+  },
+};
+
+persona1.edad=37;
+persona1.saluda=()=>console.log ("hola a todos");
+delete(persona1.medidas);
+persona1.saluda();
+console.log (persona1);
+
+//example 4: external assignment of an expression function to a property
+let usuario={nombre:"pepe"}
+let diHola2=function (saludo){
+  console.log(saludo);
+}
+
+usuario.saluda=diHola2;
+usuario.saluda("hola, estimado usuario");
+
+//example 5: using brackets to access properties
+let clave1=prompt("¿Qué elemento quieres crear?");
+let valor=prompt("Dame la cantidad");
+let obj2={
+    [clave1]: valor
+}
+console.log (obj2);
+console.log (obj2[clave1]);
+
+
 ///////////////////////////////////
 ////accessing object properties////
 ///////////////////////////////////
@@ -108,52 +154,9 @@ let llave=prompt("¿Qué quieres saber del usuario?");  //needs to be a valid ke
 console.log(persona[llave]);    //llave=edad or nombre...
 
 
-//////////////////////////////////////
-////Adding and removing properties////
-//////////////////////////////////////
-//example 1: assigning spare properties
-persona.licenciado=false;
-persona['lugar de nacimiento']="Roma";  //this name is only possible by using brackets
-console.log(persona);
-
-//example 2: using brackets to access properties
-let clave1=prompt("¿Qué elemento quieres crear?");
-let valor=prompt("Dame la cantidad");
-let obj2={
-    [clave1]: valor
-}
-console.log (obj2);
-console.log (obj2[clave1]);
-
-//example 3: external assignment of an arrow function to a property
-persona1={
-    nombre:"pepe",
-    profesion: "fontanero",
-    medidas: {
-        altura:180,
-        pecho: 100,
-    },
-};
-
-persona1.edad=37;
-persona1.saluda=()=>console.log ("hola a todos");
-delete(persona1.medidas);
-persona1.saluda();
-console.log (persona1);
-
-//example 4: external assignment of an expression function to a property
-let usuario={nombre:"pepe"}
-let diHola2=function (saludo){
-    console.log(saludo);
-}
-
-usuario.saluda=diHola2;
-usuario.saluda("hola, estimado usuario");
-
 ////////////////////////////////////////////
 ////preventing object from being changed////
 ////////////////////////////////////////////
-
 //example 1: object.freezes
 //it freezes the object completely, i.e. does not allow adding, deleting or modifying properties.
 const persona = { nombre: 'Juan', edad: 30 };
