@@ -421,7 +421,7 @@ console.log (cad,typeof(cad));
 /////////////////////////
 ////sorting elements/////
 /////////////////////////
-//SORT sorts the original array and returns it
+//SORT sorts converts to string and orders the elements depending on their unicode value.It changes the original array and returns it
 
 //example 1: using sort out of the box
 let numeros2=Array.from(numeros);
