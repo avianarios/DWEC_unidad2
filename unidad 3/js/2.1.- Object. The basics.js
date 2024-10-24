@@ -131,7 +131,17 @@ let diHola2=function (saludo){
 usuario.saluda=diHola2;
 usuario.saluda("hola, estimado usuario");
 
-//example 5: using brackets to access properties
+///////////////////////////////////
+////accessing object properties////
+///////////////////////////////////
+//Example 1: by using dot
+console.log (persona.nombre);    //returns value
+console.log (persona.noExiste);    //returns undefined, but no error
+
+//Example 2: by using brackets
+console.log (persona["cargo"]);     //by using brackets, complex field names can be used
+
+//Example 3: accessing to properties by using dinamic names
 let clave1=prompt("¿Qué elemento quieres crear?");
 let valor=prompt("Dame la cantidad");
 let obj2={
@@ -140,18 +150,25 @@ let obj2={
 console.log (obj2);
 console.log (obj2[clave1]);
 
-
-///////////////////////////////////
-////accessing object properties////
-///////////////////////////////////
-console.log (persona.nombre);    //returns value
-console.log (persona.noExiste);    //returns undefined, but no error
-console.log (persona["cargo"]);     //by using brackets, complex field names can be used
-console.log ("hola" in persona);     //returns false, but no error
-console.log ("edad" in persona);   //returns true
-//brackets notation allows to calculate in real-time the key 
+//Example 4: brackets notation allows to calculate in real-time the key 
 let llave=prompt("¿Qué quieres saber del usuario?");  //needs to be a valid key name
 console.log(persona[llave]);    //llave=edad or nombre...
+
+
+/////////////////////////////////////
+////checking if a property exists////
+/////////////////////////////////////
+//Example 1: checking if an object has a property with hasOwnProperties (older, not recommended)
+const obj3 = { a: 1 };
+console.log(obj3.hasOwnProperty('a')); // true
+
+//Example 2: checking if an object has a property with hasOwn
+let persona = { nombre: "Juan" };
+console.log(Object.hasOwn(persona, "nombre")); // true
+
+//Example 3: checking if an object has a property with in
+console.log ("hola" in persona);     //returns false, but no error
+console.log ("edad" in persona);   //returns true
 
 
 ////////////////////////////////////////////
@@ -201,31 +218,33 @@ delete persona.nombre; // Esto funciona, se puede eliminar una propiedad existen
 console.log(persona);  // { edad: 31 }
 
 
-//////////////////////////////////
-////getting object information////
-//////////////////////////////////
-//example 1: object.hasOwnProperties 
-//it verifies if the object has a particular property
-const obj3 = { a: 1 };
-console.log(obj3.hasOwnProperty('a')); // true
-
-//example 2:object.keys, .values and .entries
-//return array with keys, values and pairs key-value. They can be used to iterate over an object (we'll cover when talking about arrays)
+//////////////////////////////////////////
+///////iterating through properties///////
+//////////////////////////////////////////
 const persona = { nombre: "Procopio", cargo: "Prefecto", edad: 29};
-console.log (Object.keys(persona));    //returns an array with keys (name of properties)
-console.log (Object.values(persona));   //returns an array with values (values of the properties)
-console.log (Object.entries(persona));  //returns an array of pairs key-value
+//Example 1: getting an array with keys (name of properties)
+const claves=Object.keys(persona);
+for (const clave of claves) {
+  console.log(`${clave}: ${persona[clave]}`);
+}
 
-//////////////////////////////////////
-///////iterating through objects///////
-//////////////////////////////////////
-//example 1: traditional for
+//Example 2: getting an array with values (value of properties)
+Object.values(persona).forEach((valor) => {
+  console.log(valor);
+});
+
+//Example 3: getting an array with pairs key-value
+Object.entries(persona).forEach(([key,value]) => {
+  console.log(`${key}: ${value}`);
+});
+
+//example 4: traditional for
 let valores=Object.values(persona);        //llaves=['name', 'age']
 for (let i=0; i<valores.length; i++){       //traditional for
     console.log (valores[i]);
 }
 
-//example 2: for...in -> non-iterable object
+//example 5: for...in -> non-iterable object
 //Objects can be classified as iterable and non-iterable//
 //Both of them have special for structures to iterate over that makes it easier than traditional for
 //How do I know if it's an iterable object?
@@ -234,24 +253,18 @@ for (let clave in persona) {
   console.log(clave, persona[clave]);
 }
 
-//Example 3: using forEach (with array)
-Object.values(persona).forEach((valor)=>console.log(valor));
-Object.entries(persona).forEach(([clave, valor]) => console.log(`${clave}: ${valor}`)); //brackets are needed to unstructure an array into separate variables
 
-///////////////////////////////////////
-/////Copying and comparing objects/////
-///////////////////////////////////////
+/////////////////////////
+/////Copying objects/////
+/////////////////////////
 //From a practical point of view, objects with the same properties and values but different order are functionally equivalent, and if you work with them, they will behave in the same way. The order of the properties does not change how you can access them or their meaning within the program. 
 //objects should be considered differents when there are differences in the number or name of properties or in their values.
-
-
 //when it comes to copying variables, the result is two different elements at different memory positions. This won't happen with objects
 let aux="hola";
 let aux2=aux;   
 aux2="adios";   //if I modify aux2, aux still holds its original value
 console.log(aux, aux2);
 console.log (aux==aux2, aux===aux2);    //comparing only value and value and type
-
 
 //Example 1: copying objects with Object.assign method
 //copy one ore more objects into another (to create two different objects with the same values)
@@ -290,7 +303,10 @@ persona1.medidas.altura=200;
 console.log(persona1, persona2);
 
 
-//example 3: simple assignment of objects and comparison with == and ===
+///////////////////////////
+/////Comparing objects/////
+///////////////////////////
+//example 1: comparison with == and ===
 //objeto1 and objeto2 point to the same memory location. Second object it's just a reference to the first one
 let objeto1=objeto2={
     nombre:"pepe",
@@ -311,32 +327,7 @@ console.log (objeto1==objeto3); //false. Despite both of them have the same elem
 console.log (objeto1===objeto2);    //true
 console.log (objeto1===objeto3);    //false. when using === with objects, JS not only verifies their type, but if both objects point to the same memory location
 
-
-//example 4: comparing objects by using JSON.stringify
-//JSON (JavaScript Object Notation) is a lightweight data interchange format that is easy to read and write for both humans and machines. Although based on JavaScript object syntax, JSON is language independent and is used in a wide variety of technologies and programming languages to transfer structured data.
-//its method stringify converts an object into string. 
-//What we are comparing with JSON.stringify is if they are sintactically equals (which it may have no sense)
-let obj1={a:1, b:2};
-let obj2={a:1, b:2};
-let obj3={b:2, a:1};
-console.log (JSON.stringify(obj1)==JSON.stringify(obj2), JSON.stringify(obj2)==JSON.stringify(obj3));
-
-
-//example 5: JSON.stringify converts correctly nested objects, but it fails when there are functions or undefined within an object
-let obj4={
-    a: {b:1, c:function(){return 1}},
-    b:2,
-    c:undefined
-};
-let obj5={
-    a: {b:1},
-    b:2
-};
-
-console.log (JSON.stringify(obj4)==JSON.stringify(obj5));   //returns true, but it should be false
-
-
-//example 6: (solution) comparing by using a custom function
+//example 2: (solution) comparing by using a custom function
 function areObjectsEqual(obj1, obj2) {
     const keys1 = Object.keys(obj1);
     const keys2 = Object.keys(obj2);
@@ -357,7 +348,7 @@ function areObjectsEqual(obj1, obj2) {
 console.log(areObjectsEqual(obj1, obj3)); // true
 console.log(areObjectsEqual(obj4, obj5)); // true
 
-//next solution, using an external library like lodash with specific methods for comparing, we'll discuss it in a later unit
+//next solution, using an external library like lodash with specific methods for comparing, it'll be discussed it in a later unit
 
 
 /////////////////////////////
