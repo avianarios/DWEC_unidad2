@@ -19,7 +19,15 @@
 //////////////////////////////
 //////Creating objects////////
 //////////////////////////////
-//directly
+//Example 1: simple object
+let persona={}; //empty object
+let usuario={
+  nombre:"Procopio",
+  edad:27,
+  Rando: "prefecto"
+}
+
+//Example 2: complex object
 let usuario2={
     id:"1",
     nombre:"pepe",
@@ -33,14 +41,8 @@ let usuario2={
     pregunta:()=>console.log ("¿estás bien?")
 }
 
-let persona={}; //empty object
 
-console.log (usuario2.saluda());
-console.log (usuario2.despidete("con dios"));
-console.log (usuario2.pregunta());
-
-
-//Using constructor
+//Example 3: create a complex object by using a constructor
 function Perro(nombre, raza) {
     this.nombre = nombre;
     this.raza = raza;
@@ -53,7 +55,7 @@ function Perro(nombre, raza) {
 let perro1=new Perro ("pirata","beagle");
 console.log (perro1.saludar());
 
-//with rest parameter
+//Example 4: Creating a new object with rest parameter
 //allows to create an object without knowing the amount of properties it will have
 const { street, ...address } = {
     street: 'Platz der Republik 1',
@@ -63,7 +65,7 @@ const { street, ...address } = {
 
 console.log (address);
 
-//create users by using a "factory function", a function that creates and returns objects
+//Example 5: create users by using a "factory function", a function that creates and returns objects
 function makeUser(name, age){
     return{
         name: name,
@@ -74,7 +76,7 @@ function makeUser(name, age){
 let user2=makeUser("paco", 40);
 console.log (user2);
 
-//same as before but function as arrow
+//Example 6: same as before but function as arrow
 //as properties have the same name as parameters, they can be removed
 //here they have been removed from arrow, but can be done in traditional funcion as well
 let creaUsuario=(name,age)=>(
@@ -85,9 +87,36 @@ user=creaUsuario("pepe", 30);
 console.log (user);
 
 
-///////////////////////////////
-////defining new properties////
-///////////////////////////////
+///////////////////////////////////////////////
+////accessing object properties and methods////
+///////////////////////////////////////////////
+//Example 1: by using dot
+console.log (persona.nombre);    //returns value
+console.log (persona.noExiste);    //returns undefined, but no error
+console.log (usuario2.saluda());
+console.log (usuario2.despidete("con dios"));
+console.log (usuario2.pregunta());
+
+//Example 2: by using brackets
+console.log (persona["cargo"]);     //by using brackets, complex field names can be used
+
+//Example 3: accessing to properties by using dinamic names
+let clave1=prompt("¿Qué elemento quieres crear?");
+let valor=prompt("Dame la cantidad");
+let obj2={
+    [clave1]: valor
+}
+console.log (obj2);
+console.log (obj2[clave1]);
+
+//Example 4: brackets notation allows to calculate in real-time the key 
+let llave=prompt("¿Qué quieres saber del usuario?");  //needs to be a valid key name
+console.log(persona[llave]);    //llave=edad or nombre...
+
+
+///////////////////////////////////////////////////////////
+////defining new properties after the object is created////
+///////////////////////////////////////////////////////////
 //example 1: defining a property directly
 persona.licenciado=false;
 persona['lugar de nacimiento']="Roma";  //this name is only possible by using brackets
@@ -130,29 +159,6 @@ let diHola2=function (saludo){
 
 usuario.saluda=diHola2;
 usuario.saluda("hola, estimado usuario");
-
-///////////////////////////////////
-////accessing object properties////
-///////////////////////////////////
-//Example 1: by using dot
-console.log (persona.nombre);    //returns value
-console.log (persona.noExiste);    //returns undefined, but no error
-
-//Example 2: by using brackets
-console.log (persona["cargo"]);     //by using brackets, complex field names can be used
-
-//Example 3: accessing to properties by using dinamic names
-let clave1=prompt("¿Qué elemento quieres crear?");
-let valor=prompt("Dame la cantidad");
-let obj2={
-    [clave1]: valor
-}
-console.log (obj2);
-console.log (obj2[clave1]);
-
-//Example 4: brackets notation allows to calculate in real-time the key 
-let llave=prompt("¿Qué quieres saber del usuario?");  //needs to be a valid key name
-console.log(persona[llave]);    //llave=edad or nombre...
 
 
 /////////////////////////////////////
