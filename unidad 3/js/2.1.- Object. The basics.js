@@ -41,7 +41,6 @@ let usuario2={
     pregunta:()=>console.log ("¿estás bien?")
 }
 
-
 //Example 3: create a complex object by using a constructor
 function Perro(nombre, raza) {
     this.nombre = nombre;
@@ -51,13 +50,18 @@ function Perro(nombre, raza) {
     };
 }
 
-//new is an operator that instantiates objects from construtor functions
-let perro1=new Perro ("pirata","beagle");
-console.log (perro1.saludar());
+let perro1=new Perro ("pirata","beagle"); //new is an operator that instantiates objects from construtor functions
+/*
+Differences between create an object with let and with new
+  -let inherits directly from Object.prototype while new can create a chain of inheritance. We'll cover later
+  -Using new with a constructor allows you to create multiple instances of the object with the same structure and functionality, ideal for object templates.
+  -With a constructor, you can define methods directly in the prototype, saving memory, since all instances share these methods. This is not possible when you define an object with {}, because all methods are copied to each instance.
+*/
 
-//Example 4: Creating a new object with rest parameter
-//allows to create an object without knowing the amount of properties it will have
-const { street, ...address } = {
+
+//Example 4: Unstructuring with rest parameter to create a new object
+//this example uses unstructuring to assign street property to streetName variable and creates an object address with two properties: postalCode and city
+const { streetName, ...address } = {
     street: 'Platz der Republik 1',
     postalCode: '11011',
     city: 'Berlin',
@@ -96,6 +100,7 @@ console.log (persona.noExiste);    //returns undefined, but no error
 console.log (usuario2.saluda());
 console.log (usuario2.despidete("con dios"));
 console.log (usuario2.pregunta());
+console.log (perro1.saludar());
 
 //Example 2: by using brackets
 console.log (persona["cargo"]);     //by using brackets, complex field names can be used
@@ -113,16 +118,26 @@ console.log (obj2[clave1]);
 let llave=prompt("¿Qué quieres saber del usuario?");  //needs to be a valid key name
 console.log(persona[llave]);    //llave=edad or nombre...
 
+////////////////////////////////////////////////
+////removing existing properties and methods////
+////////////////////////////////////////////////
+//Example 1: Removing properties
+delete persona.edad;
+console.log(persona.edad);
 
-///////////////////////////////////////////////////////////
-////defining new properties after the object is created////
-///////////////////////////////////////////////////////////
-//example 1: defining a property directly
+//Example 2: Removing methods
+delete usuario2.saluda;
+console.log(usuario2);
+
+///////////////////////////////////////////////////////////////////////
+////defining new properties and methods after the object is created////
+///////////////////////////////////////////////////////////////////////
+//Example 1: defining a property directly
 persona.licenciado=false;
 persona['lugar de nacimiento']="Roma";  //this name is only possible by using brackets
 console.log(persona);
 
-//example 2: defining a property by using defineProperty
+//Example 2: defining a property by using defineProperty. The three properties can be omitted. Their default value is false
 //it allows more control over this property 
 Object.defineProperty(persona, 'nombre', {
   value: 'Juan',
@@ -135,7 +150,29 @@ console.log(persona.nombre);  // "Juan"
 persona.nombre = 'Pedro';  // No tiene efecto
 console.log(persona.nombre);  // Sigue siendo "Juan"
 
-//example 3: external assignment of an arrow function to a property
+//Example 3: defining a new function by using defineProperty
+let objeto = {};
+Object.defineProperty(objeto, 'saludar', {
+    value: function() {
+        console.log("¡Hola!");
+    },
+    writable: false,    // No se puede modificar el método
+    enumerable: true,   // Se incluye en enumeraciones
+    configurable: true  // Se puede eliminar o modificar
+});
+
+objeto.saludar();  // "¡Hola!"
+
+// Intentar cambiar el método
+objeto.saludar = function() {
+    console.log("¡Adiós!");
+};
+
+objeto.saludar();  // "¡Hola!", sigue siendo el mismo método
+delete objeto.saludar;    // Eliminar el método
+objeto.saludar();  // undefined, el método ya no existe
+
+//Example 4: external assignment of an arrow function to a property
 persona1={
   nombre:"pepe",
   profesion: "fontanero",
@@ -181,10 +218,8 @@ console.log ("edad" in persona);   //returns true
 ////preventing object from being changed////
 ////////////////////////////////////////////
 //example 1: object.freezes
-//it freezes the object completely, i.e. does not allow adding, deleting or modifying properties.
+//freezes the object completely, i.e. does not allow adding, deleting or modifying properties.
 const persona = { nombre: 'Juan', edad: 30 };
-
-//congelar el objeto
 Object.freeze(persona);
 
 persona.edad = 31;  // No tiene efecto
@@ -197,8 +232,6 @@ console.log(persona);  // { nombre: 'Juan', edad: 30 }
 //example 2: object.seal
 //it does not allow properties to be added or removed, but existing properties can still be modified.
 const persona = { nombre: 'Juan', edad: 30 };
-
-// Sellar el objeto
 Object.seal(persona);
 
 // Intentos de modificación
@@ -212,8 +245,6 @@ console.log(persona);  // { nombre: 'Juan', edad: 31 }
 //example 3: Object.preventExtensions
 //it prevents new properties from being added to the object, but allows existing properties to be modified and removed.
 const persona = { nombre: 'Juan', edad: 30 };
-
-// Prevenir extensiones al objeto
 Object.preventExtensions(persona);
 
 // Intentos de modificación
@@ -228,36 +259,63 @@ console.log(persona);  // { edad: 31 }
 ///////iterating through properties///////
 //////////////////////////////////////////
 const persona = { nombre: "Procopio", cargo: "Prefecto", edad: 29};
-//Example 1: getting an array with keys (name of properties)
-const claves=Object.keys(persona);
-for (const clave of claves) {
-  console.log(`${clave}: ${persona[clave]}`);
-}
+/*Three important methods
+  Object.keys -> returns an array with the name of the properties
+  Object.values -> returns an array with the value of the properties
+  Object.entries -> returns an array with a pair key-value
+*/
 
-//Example 2: getting an array with values (value of properties)
-Object.values(persona).forEach((valor) => {
-  console.log(valor);
-});
-
-//Example 3: getting an array with pairs key-value
-Object.entries(persona).forEach(([key,value]) => {
-  console.log(`${key}: ${value}`);
-});
-
-//example 4: traditional for
+//Example 1: traditional for
 let valores=Object.values(persona);        //llaves=['name', 'age']
 for (let i=0; i<valores.length; i++){       //traditional for
     console.log (valores[i]);
 }
 
-//example 5: for...in -> non-iterable object
-//Objects can be classified as iterable and non-iterable//
-//Both of them have special for structures to iterate over that makes it easier than traditional for
+//Example 2: for...in -> non-iterable object
+//Objects can be classified as iterable and non-iterable. Both of them have special for structures to iterate over that makes it easier than traditional for
 //How do I know if it's an iterable object?
-console.log (persona[Symbol.iterator]);  //if returns undefined, then it does not exist and, therefore, it is not iterable
+console.log (persona[Symbol.iterator]);  //if returns undefined, it is not iterable
 for (let clave in persona) {
   console.log(clave, persona[clave]);
 }
+
+//Example 3: for of... (Object.keys return an iterable array)
+const claves=Object.keys(persona);
+for (const clave of claves) {
+  console.log(`${clave}: ${persona[clave]}`);
+}
+
+//Example 4: forEach
+Object.values(persona).forEach((valor) => {
+  console.log(valor);
+});
+
+Object.entries(persona).forEach(([key,value]) => {
+  console.log(`${key}: ${value}`);
+});
+
+//Example 5: when defining a property as enumerable:false, it is not shown when iterating over object's properties
+let persona = {
+  nombre: "Juan",
+  edad: 30
+};
+
+// Definimos una nueva propiedad "salario" con enumerable: false
+Object.defineProperty(persona, "salario", {
+  value: 50000,
+  enumerable: false
+});
+
+// Intentamos enumerar las propiedades del objeto "persona"
+for (let key in persona) {
+  console.log(key); // Solo mostrará "nombre" y "edad"
+}
+
+// Probamos con Object.keys
+console.log(Object.keys(persona)); // ["nombre", "edad"]
+
+// Sin embargo, podemos acceder a la propiedad "salario" directamente
+console.log(persona.salario); // 50000
 
 
 /////////////////////////
