@@ -250,10 +250,10 @@ console.log(matrizFrutas.toString());
 ///////////////////////////////////////
 //Example 1: copying and comparing variables by using == or ===
 let aux="hola";
-let aux2=aux;   //When a variable is assigned to another one. A new, pointer to a new memory position is created and the same value is stored in that position. Therefore, both of them are different elements at different memory positions
+let aux2=aux;   //When a variable is assigned to another one a new pointer to a new memory position is created and the same value is stored in that position. Therefore, both of them are different elements at different memory positions
 console.log (aux==aux2, aux===aux2);    //true, true. when comparing variables, only their value are compared
 
-aux2="adios";   //But if I modify aux2, aux still holds its original value since they point to different memory locations
+aux2="adios";   //Since both of them point to different memory locations, when modifying aux2, aux still holds its value
 console.log (aux==aux2, aux===aux2);    //false, false
 
 //example 2: three different ways of copying arrays
@@ -276,9 +276,9 @@ console.log(mat1 === mat3); //false
 
 
 //example 4: comparing arrays by using Object.toString()
-const arr1 = [1, [2, 3]];
-const arr2 = [1, [2, 3]];
-const arr3 = [1, 2, 3];
+arr1 = [1, [2, 3]];
+arr2 = [1, [2, 3]];
+arr3 = [1, 2, 3];
 
 //by using toString, hierarchical relationships are lost, meaning different arrays can look the same and, therefore, return true when comparing them
 console.log (arr1.toString() == arr2.toString()); //true
@@ -367,7 +367,7 @@ console.log (personas.filter(persona => persona.edad > 30 && persona.ciudad === 
 
 //map creates a new array as a result of applying some function to an existing array
 //example 1: using map to multiply each number by 2
-let numeros=[7,13,2,5];
+const numeros=[7,13,2,5];
 console.log (numeros, numeros.map(x=>x*2));   //map creates a new array
 
 //example 2: perform an action (concatenate) over all array element
@@ -454,7 +454,7 @@ matrizFrutas.fill("plátano", 1, 3); // Rellena desde el índice 1 hasta el 3 (s
 console.log(matrizFrutas); // ["chirimoya", "plátano", "plátano", "guayaba"]
 
 //example 3: filling from one index untill the end
-let numeros = [1, 2, 3, 4, 5];
+numeros = [1, 2, 3, 4, 5];
 numeros.fill(10, 2); // Rellena desde el índice 2 hasta el final con el valor 10
 console.log(numeros); // [1, 2, 10, 10, 10]
 
@@ -477,7 +477,7 @@ console.log(sumar(...[1,2,3])); // 6
 
 
 //example 2. Combining unstructuration with rest operator
-const numeros = [1, 2, 3, 4, 5];
+const numeros3 = [1, 2, 3, 4, 5];
 
 const [primero, segundo, ...resto] = numeros;
 
@@ -487,7 +487,7 @@ console.log(resto);   // [3, 4, 5]
 
 
 //example 3. by using breaks to unstructuring just some variables
-const numeros = [10, 20, 30];
+const numeros4 = [10, 20, 30];
 
 const [a, , c] = numeros;
 
@@ -516,7 +516,7 @@ const sumar = ([a, b]) => {
   return a + b;
 };
 
-const numeros = [5, 10];
+const numeros5 = [5, 10];
 console.log(sumar(numeros)); // 15
 
 //example 7. Unstructuring a function that returns multiple values
@@ -524,8 +524,8 @@ function obtenerCoordenadas() {
   return [100, 200];
 }
 
-const [x, y] = obtenerCoordenadas();
+const [c1, c2] = obtenerCoordenadas();
 
-console.log(x); // 100
-console.log(y); // 200
+console.log(c1); // 100
+console.log(c2); // 200
 
