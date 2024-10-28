@@ -19,76 +19,168 @@
 //////////////////////////////
 //////Creating objects////////
 //////////////////////////////
-//Example 1: simple object
-let persona={}; //empty object
-let usuario={
-  nombre:"Procopio",
-  edad:27,
-  Rando: "prefecto"
-}
+/*
+Ways of creating objects:
+  -Object literals: definition of an spare object
+  -Factory functions: a function with parameters that returns an object with its own methods
+  -Constructor functions: a constructor that creates an instace of an object
+  -Classes (starting at mES6)
+*/
+//Example 1: using object literal
+//defines a single, specific object at the time it is created.
+//you do not need to use "this" when defining the object's properties, because you are creating the properties directly on the object. However, you do need to use "this" inside the methods to access the object's properties.
 
-//Example 2: complex object
-let usuario2={
-    id:"1",
-    nombre:"pepe",
+//"this" is a reserved word that refers to the current execution context. Its value is defined when the method or property is called, not when it's defined. It depends on its execution context and it is different depending on how the function is called, whether as a method on an object, globally, as a callback function, or using call, apply, or bind.
+
+//Talking about objects, it references the object that called the method and it's a way of binding properties and methods to the object instance.
+
+const persona={
+    id:1,
+    nombre:"Procopio",
     edad:30,
+    direccion:{
+      calle:"pez",
+      numero:3
+    },
     saluda:function(){
-      console.log ("hola");
+      console.log (`hola soy ${this.nombre}`);  //references the current object
     },
     despidete(como){
       console.log (como);
     },
-    pregunta:()=>console.log ("¿estás bien?")
-}
+    pregunta:()=>console.log (`yo, ${this.nombre}, quiero preguntarte algo`);
+};
 
-//Example 3: create a complex object by using a constructor
-function Perro(nombre, raza) {
-    this.nombre = nombre;
-    this.raza = raza;
-    this.saludar= function(){
-        console.log("guau guau")
-    };
-}
-
-let perro1=new Perro ("pirata","beagle"); //new is an operator that instantiates objects from construtor functions
-/*
-Differences between create an object with let and with new
-  -let inherits directly from Object.prototype while new can create a chain of inheritance. We'll cover later
-  -Using new with a constructor allows you to create multiple instances of the object with the same structure and functionality, ideal for object templates.
-  -With a constructor, you can define methods directly in the prototype, saving memory, since all instances share these methods. This is not possible when you define an object with {}, because all methods are copied to each instance.
+/*create objects this way when...
+  -...You need to create a simple object and do not plan to create multiple instances.
+  -...The object does not require complex methods or logic.*/
+  
+/*Options to create a new object...
+  -Option 1: duplicate the whole code of the first object and change its property's value inside the object (really inefficient)
+  -Option 2: Object.assign
+  -Option 3: Object.create
 */
 
+//Example 2: creating several objects by using Object literal
+//Option 1: duplicating code (highly inefficient)
+const persona = {
+  nombre: "Ascensio",
+  saludar() {
+      console.log(`Hola, soy ${this.nombre}`);
+  }
+};
 
-//Example 4: Unstructuring with rest parameter to create a new object
-//this example uses unstructuring to assign street property to streetName variable and creates an object address with two properties: postalCode and city
-const { streetName, ...address } = {
-    street: 'Platz der Republik 1',
-    postalCode: '11011',
-    city: 'Berlin',
+const persona2 = {
+  nombre: "Conrado",
+  saludar() {
+      console.log(`Hola, soy ${this.nombre}`);
+  }
+};
+
+//Option 2 (Object.assign): assigning the object to an empty one and change its properties. There's no inheritance, each object receives a copy of properties and methods so code is duplicated in memory.
+const personaProto = { 
+  saludar() { console.log(`Hola, amigos, soy ${this.nombre}`); }
+};
+const persona1=Object.assign({}, personaProto);
+const persona2=Object.assign({}, personaProto);
+persona1.nombre="Torcuata";
+persona1.saludar();
+persona2.nombre="Urraca";
+persona2.saludar();
+
+
+//Option 3 (Object.create): creating a new object specifying its prototype (object it inherits from). There's inheritance, so each object has a prototype. Code is not duplicated in memory
+const personaProto = {
+  saludar() {
+    console.log(`Hola, soy ${this.nombre}`);
+  }
+};
+
+const persona1 = Object.create(personaProto); //doesn't work with nested properties
+const persona2 = Object.create(personaProto); //doesn't work with nested properties
+persona1.nombre = "Tiburcia";
+persona1.saludar();
+persona2.nombre = "Socorro";
+persona2.saludar();
+
+//Problem: both methods copy references to nested objects. This means that if you change a value in one instance's nested object, it will affect all instances that share that reference.
+
+
+//Example 3: using a factory function (a function that returns an object)
+//Everytime the function is called, a new object is generated with its own methods. There's no inheritance nor prototypes. Therefore, different objects don't share the same method in memory
+//code can be reutilized to create new objects
+/*use it when...
+  -...you don't need prototypical inheritance
+  -...If you need individual and complete instances without sharing methods through prototypes.
+*/
+const crearPersona = (nombre, edad) => {
+  return {
+      nombre, //as properties have the same name as parameters, parameter's name can be removed
+      edad,
+      saludar() {
+          console.log(`Hola, soy ${this.nombre}`);
+      }
   };
+};
 
-console.log (address);
+const persona1 = crearPersona("Eufrasio", 30);
+const persona2 = crearPersona("Homobona", 25);
 
-//Example 5: create users by using a "factory function", a function that creates and returns objects
-function makeUser(name, age){
-    return{
-        name: name,
-        age: age,
-    };
+
+//Example 4: using a constructor function (traditional way of creating objects in JavaScript)
+/*use it when...
+  -...you need to create complex objects
+  -...You need to create multiple instances of an object that share the same structure and methods.
+  -...You want to use prototypical inheritance.
+*/
+function Persona(nombre, edad) {
+  this.nombre = nombre;
+  this.edad = edad;
+  this.saludar = function() {   //saludar method defined inside constructor function
+      console.log(`Hola, soy ${this.nombre}`);
+  };
 }
 
-let user2=makeUser("paco", 40);
-console.log (user2);
+const persona1 = new Persona("Eufrasio", 30);
+const persona2 = new Persona("Homobona", 25);
 
-//Example 6: same as before but function as arrow
-//as properties have the same name as parameters, they can be removed
-//here they have been removed from arrow, but can be done in traditional funcion as well
-let creaUsuario=(name,age)=>(
-    {name, age}
-);
 
-user=creaUsuario("pepe", 30);
-console.log (user);
+//Alternative: using Persona.prototype which is a special object in JavaScript that acts as a template or ‘prototype’ shared by all instances created from the Persona constructor function. Each instance created by new Persona() inherits the properties and methods defined in Persona.prototype, allowing functionality to be shared without duplicating methods for each instance.
+function Persona(nombre, edad) {
+  this.nombre = nombre;
+  this.edad = edad;
+}
+
+Persona.prototype.saludar = function() {    //saludar method defined at prototype
+  console.log(`Hola, soy ${this.nombre}`);
+};
+
+const persona1 = new Persona("Eufrasio", 30);
+const persona2 = new Persona("Homobona", 25);
+
+
+//Example 5: using classes (ES6)
+/*Same functionality that constructor function, but with modern sintax
+Advantages:
+  -Easier syntax
+  -no need to manually create methods in prototype
+  -it's easier to inherit. Just use the word "extends". With constructors, you need to use Object.create or Object.setPrototypeOf
+  -use of "new" to create new classes is a must. With constructors, it can be bypassed, resulting in this refering to the global object or to undefined in strict mode.
+*/
+
+class Persona {
+  constructor(nombre, edad) {
+      this.nombre = nombre;
+      this.edad = edad;
+  }
+
+  saludar() {
+      console.log(`Hola, soy ${this.nombre}`);
+  }
+}
+
+const persona1 = new Persona("Eufrasio", 30);
+const persona2 = new Persona("Homobona", 25);
 
 
 ///////////////////////////////////////////////
@@ -118,6 +210,7 @@ console.log (obj2[clave1]);
 let llave=prompt("¿Qué quieres saber del usuario?");  //needs to be a valid key name
 console.log(persona[llave]);    //llave=edad or nombre...
 
+
 ////////////////////////////////////////////////
 ////removing existing properties and methods////
 ////////////////////////////////////////////////
@@ -129,6 +222,7 @@ console.log(persona.edad);
 delete usuario2.saluda;
 console.log(usuario2);
 
+
 ///////////////////////////////////////////////////////////////////////
 ////defining new properties and methods after the object is created////
 ///////////////////////////////////////////////////////////////////////
@@ -137,20 +231,32 @@ persona.licenciado=false;
 persona['lugar de nacimiento']="Roma";  //this name is only possible by using brackets
 console.log(persona);
 
-//Example 2: defining a property by using defineProperty. The three properties can be omitted. Their default value is false
+//Example 2: external assignment of an arrow function to a property
+persona.saluda=()=>console.log ("hola a todos");
+persona.saluda();
+
+//Example 3: external assignment of an expression function to a property
+let diHola2=function (saludo){
+  console.log(saludo);
+}
+
+persona.saluda=diHola2;
+persona.saluda("hola, estimado usuario");
+
+//Example 4: defining a property by using defineProperty. The three properties can be omitted. Their default value is false
 //it allows more control over this property 
 Object.defineProperty(persona, 'nombre', {
-  value: 'Juan',
+  value: 'Ursicino',
   writable: false,  // El valor no se puede cambiar
   enumerable: true,  // Se puede listar en bucles
   configurable: false  // No se puede eliminar ni reconfigurar
 });
 
-console.log(persona.nombre);  // "Juan"
-persona.nombre = 'Pedro';  // No tiene efecto
-console.log(persona.nombre);  // Sigue siendo "Juan"
+console.log(persona.nombre);  // "Ursicino"
+persona.nombre = 'Venancio';  // No tiene efecto
+console.log(persona.nombre);  // Sigue siendo "Ursicino"
 
-//Example 3: defining a new function by using defineProperty
+//Example 5: defining a new method by using defineProperty
 let objeto = {};
 Object.defineProperty(objeto, 'saludar', {
     value: function() {
@@ -171,31 +277,6 @@ objeto.saludar = function() {
 objeto.saludar();  // "¡Hola!", sigue siendo el mismo método
 delete objeto.saludar;    // Eliminar el método
 objeto.saludar();  // undefined, el método ya no existe
-
-//Example 4: external assignment of an arrow function to a property
-persona1={
-  nombre:"pepe",
-  profesion: "fontanero",
-  medidas: {
-      altura:180,
-      pecho: 100,
-  },
-};
-
-persona1.edad=37;
-persona1.saluda=()=>console.log ("hola a todos");
-delete(persona1.medidas);
-persona1.saluda();
-console.log (persona1);
-
-//example 4: external assignment of an expression function to a property
-let usuario={nombre:"pepe"}
-let diHola2=function (saludo){
-  console.log(saludo);
-}
-
-usuario.saluda=diHola2;
-usuario.saluda("hola, estimado usuario");
 
 
 /////////////////////////////////////
@@ -218,7 +299,7 @@ console.log ("edad" in persona);   //returns true
 ////preventing object from being changed////
 ////////////////////////////////////////////
 //example 1: object.freezes
-//freezes the object completely, i.e. does not allow adding, deleting or modifying properties.
+//adding, removing or modifying properties isn't allowed
 const persona = { nombre: 'Juan', edad: 30 };
 Object.freeze(persona);
 
@@ -230,7 +311,7 @@ console.log(persona);  // { nombre: 'Juan', edad: 30 }
 
 
 //example 2: object.seal
-//it does not allow properties to be added or removed, but existing properties can still be modified.
+//adding or removing properties isn't allowed
 const persona = { nombre: 'Juan', edad: 30 };
 Object.seal(persona);
 
@@ -243,7 +324,7 @@ console.log(persona);  // { nombre: 'Juan', edad: 31 }
 
 
 //example 3: Object.preventExtensions
-//it prevents new properties from being added to the object, but allows existing properties to be modified and removed.
+//adding new properties isn't allowed
 const persona = { nombre: 'Juan', edad: 30 };
 Object.preventExtensions(persona);
 
@@ -279,7 +360,7 @@ for (let clave in persona) {
   console.log(clave, persona[clave]);
 }
 
-//Example 3: for of... (Object.keys return an iterable array)
+//Example 3: for of... (Object.keys returns an iterable array)
 const claves=Object.keys(persona);
 for (const clave of claves) {
   console.log(`${clave}: ${persona[clave]}`);
@@ -294,7 +375,7 @@ Object.entries(persona).forEach(([key,value]) => {
   console.log(`${key}: ${value}`);
 });
 
-//Example 5: when defining a property as enumerable:false, it is not shown when iterating over object's properties
+//Example 5: a property defined as enumerable:false is not shown when iterating over object's properties
 let persona = {
   nombre: "Juan",
   edad: 30
@@ -321,49 +402,55 @@ console.log(persona.salario); // 50000
 /////////////////////////
 /////Copying objects/////
 /////////////////////////
-//From a practical point of view, objects with the same properties and values but different order are functionally equivalent, and if you work with them, they will behave in the same way. The order of the properties does not change how you can access them or their meaning within the program. 
-//objects should be considered differents when there are differences in the number or name of properties or in their values.
-//when it comes to copying variables, the result is two different elements at different memory positions. This won't happen with objects
-let aux="hola";
-let aux2=aux;   
-aux2="adios";   //if I modify aux2, aux still holds its original value
-console.log(aux, aux2);
-console.log (aux==aux2, aux===aux2);    //comparing only value and value and type
+//From a practical point of view, objects with the same properties and values but different order are functionally equivalent, and if you work with them, they will behave in the same way. The order of the properties does not change how you can access them or their meaning within the program. Objects should be considered different when there are differences in the number or name of properties or in their values.
 
-//Example 1: copying objects with Object.assign method
+//Example 1: copying and comparing variables by using == or ===
+let aux="hola";
+let aux2=aux;   //When a variable is assigned to another one a new pointer to a new memory position is created and the same value is stored in that position. Therefore, both of them are different elements at different memory positions
+console.log (aux==aux2, aux===aux2);    //true, true. when comparing variables, only their value are compared
+
+aux2="adios";   //Since both of them point to different memory locations, when modifying aux2, aux still holds its value
+console.log (aux==aux2, aux===aux2);    //false, false
+
+//Example 2: copying objects with Object.assign method
 //copy one ore more objects into another (to create two different objects with the same values)
-let objeto1={
+persona1={
     nombre:"pepe",
     profesion: "fontanero"
 };
-objeto1.edad=33;
+persona1.edad=33;
 
-let objeto2={
+persona2={
     nacionalidad:"Española"
 }
 
-let objeto4=Object.assign({}, objeto1, objeto2);  //copy objeto1 and objeto2 into objeto4. Overwrite if exist
-let objeto5=Object.assign({}, objeto4);  //copys objeto4 into objeto5
-console.log(objeto4, objeto5);
+let persona3=Object.assign({}, persona1, persona2);  //copy persona1 and persona2 into an empty object ({}) and the assigns it to persona3
+let persona4={};
+Object.assign(persona4, persona3);  //copy persona3 into persona4
+console.log(persona3, persona4);
 
-//Example 2: deep clone with global function structuredClone
-//Object.assign creates a surface copy, meaning it does not copy nested objects (it keeps them as reference)
-//structuredClone allows objects inside objects to be copied as well (deep clone)
+//Example 3: Object.assign doesn't work with nested objects
+//Object.assign creates a reference to nested objects, it does not copy them
 persona1={
-    nombre:"pepe",
-    profesion: "fontanero",
-    medidas: {
-        altura:180,
-        pecho: 100,
-    }
+  nombre:"pepe",
+  profesion: "fontanero",
+  medidas: {
+      altura:180,
+      pecho: 100,
+  }
 };
 
 let persona2=Object.assign({}, persona1);   //first level of persona1 is copied by value (they are different copies of the same object in different locations in memory) whereas nested levels are copied by reference (they are pointers pointing to the same object)
-persona2.nombre="juan";
+persona2.nombre="juan"; //if persona2 is modified so is persona1
 persona1.medidas.altura=170;
 console.log(persona1, persona2);
+
+
+//Example 4: deep clone with global function structuredClone
+//structuredClone copies by value nested objects (deep clone). They are not references, but copies pointing to different memory locations.
+//structuredClone does not use prototypical inheritance
 persona2=structuredClone(persona1);   //all levels are copied by value
-persona1.medidas.altura=200;
+persona1.medidas.altura=200;  //if persona1 is modified, so is not persona2
 console.log(persona1, persona2);
 
 
@@ -381,15 +468,16 @@ let objeto3={
     nombre:"pepe",
     profesion: "fontanero"
 };
-
-objeto1.nombre="fede";
+objeto1.nombre="fede";  //if objeto1 is changed, so is objeto2, as they both point to the same memory location
 console.log(objeto2.nombre);
+objeto3.nombre="fede";
 
 //equal or strictly equal can't be used to compare. They only check if objects points to the same memory location
 console.log (objeto1==objeto2); //true. They both point to the same memory location
 console.log (objeto1==objeto3); //false. Despite both of them have the same elements (everybody would say they are "they are equals"), they are different objects, meaning each one points to its own memory location, and this is what equal measures
 console.log (objeto1===objeto2);    //true
 console.log (objeto1===objeto3);    //false. when using === with objects, JS not only verifies their type, but if both objects point to the same memory location
+
 
 //example 2: (solution) comparing by using a custom function
 function areObjectsEqual(obj1, obj2) {
@@ -412,89 +500,157 @@ function areObjectsEqual(obj1, obj2) {
 console.log(areObjectsEqual(obj1, obj3)); // true
 console.log(areObjectsEqual(obj4, obj5)); // true
 
-//next solution, using an external library like lodash with specific methods for comparing, it'll be discussed it in a later unit
+//next solution, using an external library like lodash with specific methods for comparing, will be discussed it in a later unit
 
 
 /////////////////////////////
 ////basic usage of "this"////
 /////////////////////////////
-//Using this allows you to write methods that work for any object that calls them. Instead of relying on the object name, which may or may not be the same in all cases, this always refers to the actual object, making your code more flexible, reusable and dynamic.
-//The value of this is defined when the function is called, not when it's defined. It depends on its execution context and it is different depending on how the function is called, whether as a method on an object, globally, as a callback function, or using call, apply, or bind.
-//this is a reference to the current object in execution
+/*
+Using "this" allows to use properties and methods outside the object (Which is may be not always desirable).
+If not used, properties and methods would be local and getters and setters would be needed to access and modify them.
+*/
 
-//example 1: calling a method within an object
-const obj = {
-    nombre: "Carlos",
-    saludar: function() {
-      console.log("Hola soy "+this.nombre); //this = obj
-    }
-};
-  
-obj.saludar();  //Hola soy Carlos
-
-//example 2: creating a function externally and assigning it to an object
-let usuario={nombre:"pepe"}
-
-let diHola1=()=>{
-    console.log("Hola soy "+this.nombre);
+//Example 1: the need of using "this"
+function Persona(nombre, edad) {
+  nombre=nombre;  //won't work
+  edad=edad;
+/*  this.nombre = nombre;
+  this.edad = edad;*/
+}
+Persona.prototype.saludar = function() {
+  console.log(`Hola, soy ${this.nombre}`);   //"this" is needed as I'm accessing an object property from outside it. It won't work if "this" weren't used at Persona properties
 };
 
-usuario.saluda=diHola1;
-usuario.saluda();   //Hola soy pepe
+const persona1 = new Persona("Eufrasio", 30);
+persona1.saludar();
+const persona2 = new Persona("Homobona", 25);
+persona2.saludar();
 
 
-//example 3: using this with properties and methods.
-//"this" only works with methods. When a method is invoked, this refers to the object that invoked the method.
-let persona={
-  nombre:"pepe",
-  edad:25,
-  profesion: "fontanero",
-  no_funciona: this,
-  dame_objeto(){
-    return this;
-  },
-  dame_nombre:function(){
-    return this.nombre;
-  },
-  dame_edad(){
-    return this.edad;
-  },
+//Example 2: using object name instead of "this"
+function Producto(nombre, precio) {
+  this.nombre = nombre;
+  this.precio = precio;
+  this.aplicarDescuento = function(producto, porcentaje) {
+      const descuento = producto.precio * (porcentaje / 100);
+      console.log(`El precio con descuento es: ${producto.precio - descuento}`);    
+  };
 }
 
-console.log (persona.no_funciona.nombre);    //doesn't work. "this" is only for methods
-console.log (persona.dame_objeto().nombre);  //it works
-console.log (persona.dame_nombre());
-console.log (persona.dame_edad());
+const producto1 = new Producto("Zapatos", 100);
+const producto2 = new Producto("Camisa", 50);
+
+producto1.aplicarDescuento(producto2, 20);
+/*problems
+  -the object has to be passed as an argument to the method. If the method changes in the future, every single call to the method must be changed. Besides, it's redundant and difficult to maintain
+  -Despite not having any sense, you can call producto.aplicarDescuento(producto2,20); What does it mean? it's confusing
+
+if "this" were removed...
+  -...only from nombre and precio, they couldn't be used outside the object. Since it's producto1 who is calling aplicarDescuento over producto2 properties, the method would return NaN
+  -...only from aplicarDescuento, it couldn't be used outside the object. The call would return an error
+  */
 
 
-//example 4: internal and external functions
-let persona1={
-  nombre:"pepe",
-  profesion: "fontanero",
-  medidas: {
-      altura:180,
-      pecho: 100,
-  },
-  //two differente ways of declaring a function
-  buenosDias(){
-    console.log (`yo, ${this.nombre}, te doy los buenos días`);
-  },
-  //defining as a constant an arrow function that utilizes "this" and calling it 
-  felizAnyo: function(){
-      const saludar_anyo=()=> console.log (`yo, ${this.nombre}, te felicito el año nuevo`);
-      saludar_anyo();
-  }
+//alternative
+function Producto(nombre, precio) {
+  this.nombre = nombre;
+  this.precio = precio;
+  this.aplicarDescuento = function(porcentaje) {
+      const descuento = this.precio * (porcentaje / 100);
+      console.log(`El precio con descuento es: ${this.precio - descuento}`);
+  };
+}
+const producto1 = new Producto("Zapatos", 100);
+const producto2 = new Producto("Camisa", 50);
+
+producto1.aplicarDescuento(20); // El precio con descuento es: 80
+producto2.aplicarDescuento(10); // El precio con descuento es: 45
+
+
+//Example 3: without "this" in producto object, its properties can't be accessed outside object. This could be solved by using getters
+function Producto(nombre, precio) {
+  this.nombre = nombre;
+  this.precio = precio;
+}
+
+function Carrito() {
+  this.productos = [];
+  this.agregarProducto = function(producto) {
+      this.productos.push(producto);
+  };
+  this.totalCarrito = function() {
+      let total = 0;
+      this.productos.forEach(prod => {
+          total += prod.precio; // It access to the property of instance price. If "this" weren't used at Producto, it wouldn't work and getters would be needed
+      });
+      return total;
+  };
+}
+
+const producto1 = new Producto("Zapatos", 100);
+const producto2 = new Producto("Camisa", 50);
+
+const carrito = new Carrito();
+carrito.agregarProducto(producto1);
+carrito.agregarProducto(producto2);
+
+console.log(`El total del carrito es: ${carrito.totalCarrito()}`);
+
+
+//Example 4: "this" doesn't work with arrow functions
+let usuario={nombre:"Sandalio"}
+usuario.saluda=()=>{
+  console.log("Hola soy "+this.nombre);
+};
+usuario.despidete=function(){
+  console.log (`Adiós, soy ${this.nombre}`);
 };
 
-//example 5: creating two functions for later assignment to the object
-persona1.buenasTardes=function(){
-    console.log (`yo, ${this.nombre}, te doy las buenas tardes`);
+usuario.saluda();
+usuario.despidete();
+
+//solution
+let usuario = { nombre: "Sandalio" };
+usuario.saluda = function() {
+  console.log("Hola soy " + this.nombre);
 };
-persona1.buenasNoches=()=>{
-    console.log (`yo, ${this.nombre}, te doy las buenas noches`); //this doesn't work
+usuario.despidete = function() {
+  console.log(`Adiós, soy ${this.nombre}`);
 };
 
-persona1.buenosDias();
-persona1.buenasTardes();  //this function is being invoked as a method of the object
-persona1.buenasNoches();  //arrow functions don't have their own this. Instead, they get it from the context they were created at
-persona1.felizAnyo();
+usuario.saluda();
+usuario.despidete();
+
+zzzzzzzzzzzzz TERMINAR DE EXPLICAR THIS EN FUNCIONES DE FLECHA
+
+//Example 5: "this" doesn't work in arrow functions. Its context its defined when the function is created (lexical context), not when is called like the rest of methods
+function Usuario(nombre) {
+  this.nombre = nombre; // Asignar el nombre a la propiedad del objeto
+  this.saluda = () => {
+      console.log("Hola soy " + this.nombre); // 'this' se refiere al contexto léxico
+  };
+  this.despidete = function() {
+      console.log(`Adiós, soy ${this.nombre}`); // 'this' se refiere al objeto 'Usuario'
+  };
+}
+
+const usuario = new Usuario("Sandalio");
+usuario.saluda();   // Salida: Hola soy undefined (debido a la función de flecha)
+usuario.despidete(); // Salida: Adiós, soy Sandalio
+
+
+//solution
+function Usuario(nombre) {
+  this.nombre = nombre; // Asignar el nombre a la propiedad del objeto
+  this.saluda = function(){
+      console.log("Hola soy " + this.nombre);
+  };
+  this.despidete = function() {
+      console.log(`Adiós, soy ${this.nombre}`); // 'this' se refiere al objeto 'Usuario'
+  };
+}
+
+const usuario = new Usuario("Sandalio");
+usuario.saluda();   // Salida: Hola soy undefined (debido a la función de flecha)
+usuario.despidete(); // Salida: Adiós, soy Sandalio
