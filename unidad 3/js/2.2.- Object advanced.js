@@ -5,41 +5,24 @@
 //instead of brackets, braces are needed 
 //example 1
 const persona = {
-    nombre: 'Carlos',
-    edad: 25,
-    ciudad: 'Barcelona'
+  nombre: 'Carlos',
+  edad: 25,
+  ciudad: 'Barcelona'
 };
-  
-const { nombre, edad } = persona; //unstructuring
+
+const { nombre, edad, altura=150 } = persona; //unstructuring. Default value
 
 console.log(nombre); // Carlos
 console.log(edad);   // 25
+console.log(altura);
 
-  
 //example 2. Changing name besides unstructuring
-const persona = {
-    nombre: 'Ana',
-    edad: 30,
-    ciudad: 'Madrid'
-};
-  
 const { nombre: nombreCompleto, ciudad: localizacion } = persona;
 
 console.log(nombreCompleto); // Ana
 console.log(localizacion);   // Madrid
   
-//example 3. a default value can be specified
-const usuario = {
-    nombre: 'Luis'
-};
-  
-const { nombre, edad = 18 } = usuario;
-  
-console.log(nombre); // Luis
-console.log(edad);   // 18 (valor por defecto)
-  
-
-//example 4. nested unstructuration
+//example 3. nested unstructuration
 const producto = {
     nombre: 'Portátil',
     especificaciones: {
@@ -53,35 +36,36 @@ const { especificaciones: { peso, almacenamiento } } = producto;
 console.log(peso);           // 1,5kg
 console.log(almacenamiento); // 512GB
   
-//example 5. unstructuring objects passed as arguments to a function
+//example 4. unstructuring objects passed as arguments to a function
 const mostrarInfo = ({ nombre, edad }) => {
     console.log(`Nombre: ${nombre}, Edad: ${edad}`);
 };
   
-const persona = { nombre: 'Pedro', edad: 40 };
-mostrarInfo(persona);  // Nombre: Pedro, Edad: 40
+const persona2 = { nombre: 'Pedro', edad: 40 };
+mostrarInfo(persona2);  // Nombre: Pedro, Edad: 40
   
-//example 6. Unsctructuring a function that returns an object
+//example 5. Unstructuring a function that returns an object
 const crearUsuario=()=>({
-    nombre: 'Marta',
-    rol: 'admin'
+    id: 'Marta123',
+    puesto: 'admin'
 });
   
-const { nombre, rol } = crearUsuario();
+const { id, puesto } = crearUsuario();
   
-console.log(nombre); // Marta
+console.log(id); // Marta123
 console.log(rol);    // admin
 
-//example 7: combining unstructuration with rest operator
-const persona = {
+//example 6: combining unstructuration with rest operator
+const persona3 = {
     nombre: 'Laura',
+    profesion: 'diseñadora',
     edad: 28,
     ciudad: 'Sevilla'
 };
   
-const { nombre, ...otrosDatos } = persona;
+const { profesion, ...otrosDatos } = persona3;
   
-console.log(nombre);      // Laura
+console.log(profesion);      // "diseñadora"
 console.log(otrosDatos);  // { edad: 28, ciudad: 'Sevilla' }
   
 
@@ -147,7 +131,7 @@ saludar.call(obj2);  // "Hola, soy María"
 
 
 //example 4: this inside a nested function
-const obj = {
+const obj3 = {
     nombre: "Carlos",
     saludar: function() {
       console.log(this.nombre);  // Correcto, `this` es `obj`
@@ -160,13 +144,13 @@ const obj = {
     }
 };
   
-obj.saludar(); 
+obj3.saludar(); 
   
 
 //Example 5: this within arrow functions
 //in an arrow function, "this" doesn't reference to the object that invoked the method
 //this references the context where the arrow function was defined. Therefore no matter which object is invoking function, this will always be refered to the scope where arrow function was created
-const obj = {
+const obj4 = {
     nombre: "Carlos",
     saludar: function() {
       console.log(this.nombre);  // Correcto, `this` es `obj`
@@ -179,11 +163,11 @@ const obj = {
     }
 };
   
-obj.saludar();  // "Carlos", "Carlos"
+obj4.saludar();  // "Carlos", "Carlos"
 
 
 //example 6: another example of this within arrow functions
-let usuario={nombre:"pepe"}
+const usuario2={nombre:"pepe"}
 
 let diHola=function (){
   return(`Hola, soy ${this.nombre}`);
@@ -192,11 +176,11 @@ let diHola=function (){
 let diAdios=() => (`Adiós, soy ${this.nombre}`);
 
 //assign function to object property
-usuario.saluda=diHola;
-usuario.despidete=diAdios;
+usuario2.saluda=diHola;
+usuario2.despidete=diAdios;
 
-console.log(usuario.saluda());
-console.log(usuario.despidete()); //doesn't work. This points to global object
+console.log(usuario2.saluda());
+console.log(usuario2.despidete()); //doesn't work. This points to global object
 //solutions:
 //1: convert to traditional function
 /*
@@ -294,6 +278,45 @@ let personal2 = null;
 console.log( personal1?.[clave] ); // Felipe
 //console.log( personal2[clave] ); // throws an error as it doesn't exist
 console.log( personal2?.[clave] ); // undefined
+
+
+/////////////////////
+////encapsulation////
+/////////////////////
+//Example 1: encapsulation in constructor functions
+//it is not a real encapsulation. It's a convention. Therefore, it can be changed from outside the object
+function Persona(nombre, edad) {
+  this._nombre = nombre;  // Propiedad "pseudo-privada" (convención)
+  this._edad = edad;      // Propiedad "pseudo-privada" (convención)
+}
+
+const persona1 = new Persona("Mamerto", 30);
+
+// Modificar las propiedades "pseudo-privadas"
+console.log(persona1._nombre); // Mamerto
+persona1._nombre = "Petra";
+console.log(persona1._nombre); // Petra
+
+
+//Example 2: encapsulation in classes (from ECMAScript 2022)
+//it's a real encapsulation. It can't be changed from outside the object
+class Persona {
+  #nombre; // Propiedad privada
+  #edad;   // Propiedad privada
+
+  constructor(nombre, edad) {
+      this.#nombre = nombre;
+      this.#edad = edad;
+  }
+
+  getNombre() {
+      return this.#nombre;
+  }
+}
+
+const persona2 = new Persona("Saturnino", 40);
+console.log(persona2.getNombre()); // Saturnino
+console.log(persona2.#nombre);     // Error: propiedad privada
 
 
 ///////////////////////////
@@ -407,7 +430,7 @@ const abuelo = {
   edad: 70
 };
 
-const padre = Object.create(abuelo);
+const padre2 = Object.create(abuelo);
 padre.nombre = "Carlos";
 
 const hijo = Object.create(padre);
@@ -436,7 +459,7 @@ hijo.saludar();
 // "Hola desde el padre"
 
 //example 4: Using Object.setPrototypeOf to, once created the object, stablish its father
-let vehiculo = {
+let vehiculo2 = {
   marca: "",
   modelo: "",
   saluda(){
@@ -445,13 +468,13 @@ let vehiculo = {
 };
 
 let coche = { };
-vehiculo.marca="seat";
-Object.setPrototypeOf(coche, vehiculo);   //prototypical inheritance
+vehiculo2.marca="seat";
+Object.setPrototypeOf(coche, vehiculo2);   //prototypical inheritance
 console.log(coche.marca);
 
 
 //example 5: same as before
-let animal={
+const animal2={
   come: true,
   desplazate(){
       return "voy andando";
@@ -475,9 +498,9 @@ conejito.desplazate=()=>("voy dando saltitos");  //overrides prototype's method
 
 
 //Object.setPrototype (object, prototype)
-Object.setPrototypeOf(conejo, animal);  //animal is the prototype of conejo. The latter inherits from the former
+Object.setPrototypeOf(conejo, animal2);  //animal is the prototype of conejo. The latter inherits from the former
 //conejo.__proto__=animal;    shorter, but outdated. 
-Object.setPrototypeOf(perro, animal);
+Object.setPrototypeOf(perro, animal2);
 Object.setPrototypeOf(conejito, conejo);
 
 console.log(conejo.come, perro.come, conejito.come);
@@ -498,12 +521,54 @@ const persona1 = new Persona("Carlos");
 persona1.saludar(); // Salida: Hola, soy Carlos
 console.log (Persona);
 
+//Example 6: chained inheritance. Possible only with New
+function Vehiculo(tipo) {
+  this.tipo = tipo;
+}
+
+Vehiculo.prototype.mover = function() {
+  console.log(`El ${this.tipo} se está moviendo`);
+};
+
+function Automovil(marca) {
+  Vehiculo.call(this, "automóvil");
+  this.marca = marca;
+}
+
+// Heredamos de Vehiculo
+Automovil.prototype = Object.create(Vehiculo.prototype);
+Automovil.prototype.constructor = Automovil;
+
+Automovil.prototype.acelerar = function() {
+  console.log(`El ${this.marca} está acelerando`);
+};
+
+function Camioneta(marca, traccion) {
+  Automovil.call(this, marca);
+  this.traccion = traccion;
+}
+
+// Heredamos de Automovil
+Camioneta.prototype = Object.create(Automovil.prototype);
+Camioneta.prototype.constructor = Camioneta;
+
+Camioneta.prototype.atravesarTerreno = function() {
+  console.log(`La ${this.marca} con tracción ${this.traccion} atraviesa el terreno`);
+};
+
+// Crear una instancia de Camioneta
+let miCamioneta = new Camioneta("Toyota", "4x4");
+miCamioneta.mover(); // "El automóvil se está moviendo"
+miCamioneta.acelerar(); // "El Toyota está acelerando"
+miCamioneta.atravesarTerreno(); // "La Toyota con tracción 4x4 atraviesa el terreno"
+
+
 //////////////////
 ////overriding////
 //////////////////
 
 // Let's override constructor iniciar
-let vehiculo = {
+let vehiculo3 = {
   _marca: "",
   _modelo: "",
   _año: 0,
@@ -537,7 +602,7 @@ let vehiculo = {
 };
 
 // "Constructor" para coche
-let coche = Object.create(vehiculo); // Crea un nuevo objeto que hereda de vehiculo
+let coche = Object.create(vehiculo3); // Crea un nuevo objeto que hereda de vehiculo
 
 //setting some properties of coche object
 coche.marca = "Ford";
@@ -553,7 +618,7 @@ coche.iniciar = function() {
 coche.iniciar(); // Salida: Iniciando el coche Ford Fiesta (2022)
 
 // Probar el método del "constructor" original
-vehiculo.iniciar.call(coche); // Salida: Iniciando el vehículo Ford Fiesta del año 2022
+vehiculo3.iniciar.call(coche); // Salida: Iniciando el vehículo Ford Fiesta del año 2022
 
 
 
