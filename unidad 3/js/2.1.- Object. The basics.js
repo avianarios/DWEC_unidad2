@@ -28,9 +28,11 @@ Ways of creating objects:
 */
 //Example 1: using object literal
 //defines a single, specific object at the time it is created.
-//you do not need to use "this" when defining the object's properties, because you are creating the properties directly on the object. However, you do need to use "this" inside the methods to access the object's properties.
 
 //"this" is a reserved word that refers to the current execution context. Its value is defined when the method or property is called, not when it's defined. It depends on its execution context and it is different depending on how the function is called, whether as a method on an object, globally, as a callback function, or using call, apply, or bind.
+
+//you do not need to use "this" when defining the object's properties, because you are creating the properties directly on the object. However, you do need to use "this" inside the methods to access the object's properties.
+
 
 //Talking about objects, it references the object that called the method and it's a way of binding properties and methods to the object instance.
 
@@ -529,23 +531,23 @@ console.log(areObjectsEqual(obj4, obj5)); // true
 //next solution, using an external library like lodash with specific methods for comparing, will be discussed it in a later unit
 
 
-/////////////////////////////
-////basic usage of "this"////
-/////////////////////////////
+////////////////////////////////////////
+////Common mistakes regarding "this"////
+////////////////////////////////////////
 /*
-Using "this" allows to use properties and methods outside the object (Which is may be not always desirable).
-If not used, properties and methods would be local and getters and setters would be needed to access and modify them.
+Remember: "this" is a reserved word that refers to the current execution context. Its value depends on its execution context and it is different depending on how the function is called: a method on an object, globally, as a callback function, or using call, apply, or bind.
+
+Remember: Using "this" binds properties and methods to the object that calls them (except in an arrow function), allowing to work with them outside the object. If not used, properties and methods would be local variables and getters and setters would be needed to access and modify them (we'll cover later)
 */
 
-//Example 1: the need of using "this"
+//Example 1: Mistake nº1: not using "this" in constructor's properties.
+//Not using "this" makes these variables to be local and, therefore, being unaccesible from outside the object (unless using getters and setters)
 function Persona(nombre, edad) {
-  nombre=nombre;  //won't work
+  nombre=nombre;
   edad=edad;
-/*  this.nombre = nombre;
-  this.edad = edad;*/
 }
 Persona.prototype.saludar = function() {
-  console.log(`Hola, soy ${this.nombre}`);   //"this" is needed as I'm accessing an object property from outside it. It won't work if "this" weren't used at Persona properties
+  console.log(`Hola, soy ${this.nombre}`);   //"this" is needed as I'm accessing an object property from outside it. Here, it's not working as nombre and edad are local variables only existint at Persona's constructor function
 };
 
 const persona1 = new Persona("Eufrasio", 30);
@@ -554,15 +556,17 @@ const persona2 = new Persona("Homobona", 25);
 persona2.saludar();
 
 
-//Example 2: using object name instead of "this"
+//Example 2. Mistake nº2: using object name instead of "this" in methods
 function Producto(nombre, precio) {
   this.nombre = nombre;
   this.precio = precio;
-  this.aplicarDescuento = function(producto, porcentaje) {
-      const descuento = producto.precio * (porcentaje / 100);
-      console.log(`El precio con descuento es: ${producto.precio - descuento}`);    
-  };
-}
+};
+
+Producto.prototype.aplicarDescuento=function(producto, porcentaje) {
+  const descuento = producto.precio * (porcentaje / 100);
+  console.log(`El precio con descuento es: ${producto.precio - descuento}`);    
+};
+
 
 const producto1 = new Producto("Zapatos", 100);
 const producto2 = new Producto("Camisa", 50);
@@ -577,62 +581,33 @@ if "this" were removed...
   -...only from aplicarDescuento, it couldn't be used outside the object. The call would return an error
   */
 
-
-//alternative
+//solution 1: using this when declaring properties and at the method
 function Producto(nombre, precio) {
   this.nombre = nombre;
   this.precio = precio;
-  this.aplicarDescuento = function(porcentaje) {
-      const descuento = this.precio * (porcentaje / 100);
-      console.log(`El precio con descuento es: ${this.precio - descuento}`);
   };
-}
+};
+
+Producto.prototype.aplicarDescuento=function(porcentaje){
+  const descuento = this.precio * (porcentaje / 100);
+  console.log(`El precio con descuento es: ${this.precio - descuento}`);
+};
+
 const producto1 = new Producto("Zapatos", 100);
 const producto2 = new Producto("Camisa", 50);
 
 producto1.aplicarDescuento(20); // El precio con descuento es: 80
 producto2.aplicarDescuento(10); // El precio con descuento es: 45
 
-
-//Example 3: without "this" in producto object, its properties can't be accessed outside object. This could be solved by using getters
-function Producto(nombre, precio) {
-  this.nombre = nombre;
-  this.precio = precio;
-}
-
-function Carrito() {
-  this.productos = [];
-  this.agregarProducto = function(producto) {
-      this.productos.push(producto);
-  };
-  this.totalCarrito = function() {
-      let total = 0;
-      this.productos.forEach(prod => {
-          total += prod.precio; // It access to the property of instance price. If "this" weren't used at Producto, it wouldn't work and getters would be needed
-      });
-      return total;
-  };
-}
-
-const producto1 = new Producto("Zapatos", 100);
-const producto2 = new Producto("Camisa", 50);
-
-const carrito = new Carrito();
-carrito.agregarProducto(producto1);
-carrito.agregarProducto(producto2);
-
-console.log(`El total del carrito es: ${carrito.totalCarrito()}`);
+//solution 2: not using when declaring properties and using getters and setters (we'll cover later)
 
 
-/*
-"this" doesn't work with arrow functions
+//Example 3: mistake nº3: working with "this" in arrow functions
 
-An arrow function does not create its own this context. Instead it inherits "this" from the context in which it was created.
-
-When you define an arrow function as a method inside an object, this does not point to the object itself, but to the this of the external context in which the object is created.
-
+/*"this" doesn't work with arrow functions
+A traditional function define its context when it is called.
+An arrow function has its own context defined since it's created (lexical context). An arrow function is defined in the global scope, so "this" inherits from the global context (could be window in a web browser or global in node.js), not the object that called the method. So when you call usuario.saluda(), this.name does not find the nombre property in the global scope, resulting in undefined.
 */
-//Example 4: the arrow function is defined in the global scope, so "this" inherits from the global context, not the user object. So when you call usuario.saluda(), this.name does not find the nombre property in the global scope, resulting in undefined.
 let usuario={nombre:"Sandalio"}
 usuario.saluda=()=>{
   console.log("Hola soy "+this.nombre);
@@ -644,7 +619,7 @@ usuario.despidete=function(){
 usuario.saluda();
 usuario.despidete();
 
-//solution 1: define as a traditional function outside
+//solution: define arrow function as a regular function
 let usuario = { nombre: "Sandalio" };
 usuario.saluda = function() {
   console.log("Hola soy " + this.nombre);
@@ -657,19 +632,20 @@ usuario.saluda();
 usuario.despidete();
 
 
-//Example 5: "this" doesn't work in arrow functions. Its context its defined when the function is created (lexical context), not when is called like the rest of methods
+//Example 3: another example of "this" not working in an arrow function using a constructor function and prototypes
 function Usuario(nombre) {
   this.nombre = nombre;
-  this.saluda = () => {
-      console.log("Hola soy " + this.nombre); // 'this' se refiere al contexto léxico
-  };
-  this.despidete = function() {
-      console.log(`Adiós, soy ${this.nombre}`); // 'this' se refiere al objeto 'Usuario'
-  };
 }
 
+Usuario.prototype.saluda= () => {
+  console.log("Hola soy " + this.nombre); // 'this' refers to the global context
+};
+Usuario.prototype.despidete = function() {
+  console.log(`Adiós, soy ${this.nombre}`); // 'this' refers to the object that summons the method
+};
+
 const usuario = new Usuario("Sandalio");
-usuario.saluda();   // Hola soy undefined (debido a la función de flecha)
+usuario.saluda();   // Hola soy undefined
 usuario.despidete(); // Adiós, soy Sandalio
 
 
