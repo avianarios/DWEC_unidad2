@@ -243,9 +243,11 @@ let diHola2=function (saludo){
 persona.saluda=diHola2;
 persona.saluda("hola, estimado usuario");
 
-//Example 4:  using defineProperty to define a property in the prototype of a constructor. The three properties can be omitted. Their default value is false
+//Example 4:  using defineProperty
+//in this example, property is added to  define a property in the prototype of a constructor. The three properties can be omitted. Their default value is false
 //it allows more control over this property 
-Object.defineProperty(Persona.prototype, 'nombre', { 
+let persona={};
+Object.defineProperty(persona, 'nombre', { 
   value: 'Ursicino',
   writable: false,  // El valor no se puede cambiar
   enumerable: true,  // Se puede listar en bucles
@@ -255,28 +257,36 @@ Object.defineProperty(Persona.prototype, 'nombre', {
 console.log(persona.nombre);  // "Ursicino"
 persona.nombre = 'Venancio';  // No tiene efecto
 console.log(persona.nombre);  // Sigue siendo "Ursicino"
+delete persona.nombre;    //not allowed due to configurable:false
+console.log(persona.nombre);  // Sigue siendo "Ursicino"
 
-//Example 5: using defineProperty to define a new method in the literal object
-let objeto = {};
-Object.defineProperty(objeto, 'saludar', {
+
+//Example 5: using defineProperty to define a new method in the prototype of the object
+function Persona(nombre, edad) {
+  this.nombre = nombre;
+  this.edad = edad
+}
+
+Object.defineProperty(Persona.prototype, 'saludar', {
     value: function() {
-        console.log("¡Hola!");
+        console.log(`¡Hola!, soy ${this.nombre}`);
     },
     writable: false,    // No se puede modificar el método
     enumerable: true,   // Se incluye en enumeraciones
     configurable: true  // Se puede eliminar o modificar
 });
 
-objeto.saludar();  // "¡Hola!"
+const persona1=new Persona("Obdulio", 35);
+persona1.saludar();  // "¡Hola!, soy Obdulio"
 
 // Intentar cambiar el método
-objeto.saludar = function() {
+persona1.saludar = function() {
     console.log("¡Adiós!");
 };
 
-objeto.saludar();  // "¡Hola!", sigue siendo el mismo método
-delete objeto.saludar;    // Eliminar el método
-objeto.saludar();  // undefined, el método ya no existe
+persona1.saludar();  // "¡Hola!, soy Obdulio". The method is not overriden due to writable: false
+delete persona1.prototype.saludar;    // Eliminar el método
+persona1.saludar();  // Error: El método ya no existe en el prototipo
 
 
 /////////////////////////////////////
