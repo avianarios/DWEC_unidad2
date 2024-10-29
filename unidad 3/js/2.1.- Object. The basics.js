@@ -293,6 +293,7 @@ persona1.saludar();  // Error: El método ya no existe en el prototipo
 ////checking if a property exists////
 /////////////////////////////////////
 //Example 1: using  hasOwnProperties (older, not recommended) to check if an object has a non inherited property
+//every object inherits hasOwnProperty method from Object.prototype
 const objeto = { a: 1 };
 console.log(objeto.hasOwnProperty('a')); // true
 console.log(objeto.hasOwnProperty('b')); // false
@@ -302,6 +303,7 @@ console.log(objetoHeredado.hasOwnProperty('a')); // false
 
 
 //Example 2: using hasOwn (ES13 or ECMAScript 2022), to check if an object has a property. Similar to hasOwnProperty
+//hasOwn is a static method of the object Object. It is not inherited by any object. It can only be summoned directly over Object
 const objeto = { a: 1 };
 console.log(Object.hasOwn(objeto, 'a')); // true
 console.log(Object.hasOwn(objeto, 'b')); // false
