@@ -97,6 +97,30 @@ saludarAtado(); // Ahora `this` dentro de `saludar()` siempre será `obj`, impri
 saludarFuera.call(obj); // Invoca `saludar()` con `this` apuntando a `obj`, imprime "Carlos"
 
 
+/*******************************
+ * zzzzzzzzzzzz
+ * Sí, puedes llamar al método del prototipo directamente con Persona.prototype.saludar.call(persona1);, pasando la instancia persona1 (o cualquier otra instancia) como contexto. Esto se hace usando call, ya que saludar en el prototipo no tiene un contexto de this por sí mismo; necesita que se le proporcione uno.
+function Persona(nombre, edad) {
+  this.nombre = nombre;
+  this.edad = edad;
+}
+
+Object.defineProperty(Persona.prototype, 'saludar', {
+  value: function() {
+    console.log(`¡Hola!, soy ${this.nombre}`);
+  },
+  writable: false,
+  enumerable: true,
+  configurable: true
+});
+
+const persona1 = new Persona("Obdulio", 35);
+
+// Llamar al método del prototipo directamente
+Persona.prototype.saludar.call(persona1); // Salida: ¡Hola!, soy Obdulio
+
+ 
+ */
 //example 2. Calling this from prototype
 const padre = {
     nombre: "Padre",
