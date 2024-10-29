@@ -131,12 +131,12 @@ const persona2 = crearPersona("Homobona", 25);
 /*use it when...
   -...you need to create complex objects
   -...You need to create multiple instances of an object that share the same structure and methods.
-  -...You want to use prototypical inheritance.
+  -...You want to use prototypical inheritance. (only if the methods are defined in the prototype)
 */
 function Persona(nombre, edad) {
   this.nombre = nombre;
   this.edad = edad;
-  this.saludar = function() {   //saludar method defined inside constructor function
+  this.saludar = function() {   //By defining inside, each object has its own copy of saludar, it is not shared in memory
       console.log(`Hola, soy ${this.nombre}`);
   };
 }
@@ -174,7 +174,7 @@ class Persona {
       this.edad = edad;
   }
 
-  saludar() {
+  saludar() {   //shared in memory
       console.log(`Hola, soy ${this.nombre}`);
   }
 }
@@ -243,9 +243,9 @@ let diHola2=function (saludo){
 persona.saluda=diHola2;
 persona.saluda("hola, estimado usuario");
 
-//Example 4: defining a property by using defineProperty. The three properties can be omitted. Their default value is false
+//Example 4:  using defineProperty to define a property in the prototype of a constructor. The three properties can be omitted. Their default value is false
 //it allows more control over this property 
-Object.defineProperty(persona, 'nombre', {
+Object.defineProperty(Persona.prototype, 'nombre', { 
   value: 'Ursicino',
   writable: false,  // El valor no se puede cambiar
   enumerable: true,  // Se puede listar en bucles
@@ -256,7 +256,7 @@ console.log(persona.nombre);  // "Ursicino"
 persona.nombre = 'Venancio';  // No tiene efecto
 console.log(persona.nombre);  // Sigue siendo "Ursicino"
 
-//Example 5: defining a new method by using defineProperty
+//Example 5: using defineProperty to define a new method in the literal object
 let objeto = {};
 Object.defineProperty(objeto, 'saludar', {
     value: function() {
@@ -282,17 +282,31 @@ objeto.saludar();  // undefined, el método ya no existe
 /////////////////////////////////////
 ////checking if a property exists////
 /////////////////////////////////////
-//Example 1: checking if an object has a property with hasOwnProperties (older, not recommended)
-const obj3 = { a: 1 };
-console.log(obj3.hasOwnProperty('a')); // true
+//Example 1: using  hasOwnProperties (older, not recommended) to check if an object has a non inherited property
+const objeto = { a: 1 };
+console.log(objeto.hasOwnProperty('a')); // true
+console.log(objeto.hasOwnProperty('b')); // false
 
-//Example 2: checking if an object has a property with hasOwn
-let persona = { nombre: "Juan" };
-console.log(Object.hasOwn(persona, "nombre")); // true
+const objetoHeredado = Object.create(objeto);
+console.log(objetoHeredado.hasOwnProperty('a')); // false
 
-//Example 3: checking if an object has a property with in
-console.log ("hola" in persona);     //returns false, but no error
-console.log ("edad" in persona);   //returns true
+
+//Example 2: using hasOwn (ES13 or ECMAScript 2022), to check if an object has a property. Similar to hasOwnProperty
+const objeto = { a: 1 };
+console.log(Object.hasOwn(objeto, 'a')); // true
+console.log(Object.hasOwn(objeto, 'b')); // false
+
+const objetoHeredado = Object.create(objeto);
+console.log(Object.hasOwn(objetoHeredado, 'a')); // false
+
+
+//Example 3: using "in" to check if an object has a property, inherited or own
+const objeto = { a: 1 };
+console.log('a' in objeto); // true
+console.log('b' in objeto); // false
+
+const objetoHeredado = Object.create(objeto);
+console.log('a' in objetoHeredado); // true (heredada)
 
 
 ////////////////////////////////////////////
@@ -598,7 +612,15 @@ carrito.agregarProducto(producto2);
 console.log(`El total del carrito es: ${carrito.totalCarrito()}`);
 
 
-//Example 4: "this" doesn't work with arrow functions
+/*
+"this" doesn't work with arrow functions
+
+An arrow function does not create its own this context. Instead it inherits "this" from the context in which it was created.
+
+When you define an arrow function as a method inside an object, this does not point to the object itself, but to the this of the external context in which the object is created.
+
+*/
+//Example 4: the arrow function is defined in the global scope, so "this" inherits from the global context, not the user object. So when you call usuario.saluda(), this.name does not find the nombre property in the global scope, resulting in undefined.
 let usuario={nombre:"Sandalio"}
 usuario.saluda=()=>{
   console.log("Hola soy "+this.nombre);
@@ -610,7 +632,7 @@ usuario.despidete=function(){
 usuario.saluda();
 usuario.despidete();
 
-//solution
+//solution 1: define as a traditional function outside
 let usuario = { nombre: "Sandalio" };
 usuario.saluda = function() {
   console.log("Hola soy " + this.nombre);
@@ -622,11 +644,10 @@ usuario.despidete = function() {
 usuario.saluda();
 usuario.despidete();
 
-zzzzzzzzzzzzz TERMINAR DE EXPLICAR THIS EN FUNCIONES DE FLECHA
 
 //Example 5: "this" doesn't work in arrow functions. Its context its defined when the function is created (lexical context), not when is called like the rest of methods
 function Usuario(nombre) {
-  this.nombre = nombre; // Asignar el nombre a la propiedad del objeto
+  this.nombre = nombre;
   this.saluda = () => {
       console.log("Hola soy " + this.nombre); // 'this' se refiere al contexto léxico
   };
@@ -636,21 +657,21 @@ function Usuario(nombre) {
 }
 
 const usuario = new Usuario("Sandalio");
-usuario.saluda();   // Salida: Hola soy undefined (debido a la función de flecha)
-usuario.despidete(); // Salida: Adiós, soy Sandalio
+usuario.saluda();   // Hola soy undefined (debido a la función de flecha)
+usuario.despidete(); // Adiós, soy Sandalio
 
 
-//solution
+//solution: convert arrow function into a regular function
 function Usuario(nombre) {
-  this.nombre = nombre; // Asignar el nombre a la propiedad del objeto
+  this.nombre = nombre;
   this.saluda = function(){
       console.log("Hola soy " + this.nombre);
   };
   this.despidete = function() {
-      console.log(`Adiós, soy ${this.nombre}`); // 'this' se refiere al objeto 'Usuario'
+      console.log(`Adiós, soy ${this.nombre}`);
   };
 }
 
 const usuario = new Usuario("Sandalio");
-usuario.saluda();   // Salida: Hola soy undefined (debido a la función de flecha)
-usuario.despidete(); // Salida: Adiós, soy Sandalio
+usuario.saluda();
+usuario.despidete();
