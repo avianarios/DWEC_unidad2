@@ -415,6 +415,38 @@ console.log(vehiculo, coche);
   coche.creaMarcaModelo("ford fiesta");
 */
 
+zzzzzzzzzzzzzzzzzzzzzzzzzz
+PONER SETTER Y GETTER
+//Example 3: without "this" in producto object, its properties can't be accessed outside object. This could be solved by using getters
+
+function Producto(nombre, precio) {
+  this.nombre = nombre;
+  this.precio = precio;
+}
+
+function Carrito() {
+  this.productos = [];
+  this.agregarProducto = function(producto) {
+      this.productos.push(producto);
+  };
+  this.totalCarrito = function() {
+      let total = 0;
+      this.productos.forEach(prod => {
+          total += prod.precio; // It access to the property of instance price. If "this" weren't used at Producto, it wouldn't work and getters would be needed
+      });
+      return total;
+  };
+}
+
+const producto1 = new Producto("Zapatos", 100);
+const producto2 = new Producto("Camisa", 50);
+
+const carrito = new Carrito();
+carrito.agregarProducto(producto1);
+carrito.agregarProducto(producto2);
+
+console.log(`El total del carrito es: ${carrito.totalCarrito()}`);
+
 
 ////////////////////////////////
 ////prototypical inheritance////
