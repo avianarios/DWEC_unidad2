@@ -1,7 +1,8 @@
 "use strict";
-//Object "object" is the base of any other object in JS. It is where the other objects inherit
-/*built-in objects:
-
+/*
+Let's begin with some theory
+1.- Object "object" is the base of any other object in JS. It is where the other objects inherit
+2.- built-in objects:
     -Object: They contain data collections (pair key-value) and functionality (methods). All every object inherits from object "object"
     -Array: It is an ordered list of values of any type enclosed into brackets. Example: [1, 2, 3, “pepe”, “jose”, true]  
     -String: Represents a chain of text
@@ -15,7 +16,30 @@
     -JSON
     -Promise and AsyncFunction
     -Console
+
+3.- Execution context
+
+  The execution context in JavaScript refers to the environment in which code instructions are evaluated and executed. This concept is fundamental to understanding how variables, functions and the value of this in JavaScript work.
+
+  1. Scope. The execution context is closely related to the concept of scope, which defines the accessibility of variables and functions in a block of code. There are two main types of scope:
+    Global scope: all code that executes in the global environment, such as code outside any function or block.
+    Local scope: Any function has its own local execution context, where variables can be defined that are accessible only within that function.
+
+  2. Global Execution Context. When JavaScript starts, a global execution context is created. This context is the first context to be established and relates to the global object (such as window in browsers). In this context, declared variables and functions are accessible anywhere in the code.
+
+  3. Function Execution Context. Each time a function is invoked, a new execution context is created for this function, including:
+    -Its local variables
+    -Reference to "this" object: The value of "this" within the function depends on how the function is called.
+      -If it's a traditional function, if the function is invoked as a method of an object, "this" refers to that object. If invoked without an object, "this" refers to the global object (in the browser, this would be window).
+      -If it's an arrow function, the value of "this" does not depend on how is invoked, it's inherited from where it is defined. It only depends on where the function is defined (lexical scope). If it is defined inside a function, "this" will take the same value as the containing function. If defined at root level, "this" will be global object (non-strict mode) or undefined (strict mode)
+    -Its parameters: The arguments passed to the function when invoking.
+
+4.- This
+  "this" is a reserved word that refers to the current execution context. Its value is defined when the method or property is called, not when it's defined. It depends on its execution context
+
+  Using "this" permits to write methods that work for any object that calls them without having to specify the name of the object. Instead of relying on the object name, which may or may not be the same in all cases, "this" always refers to the actual object, making your code more flexible, reusable and dynamic.
 */
+
 //////////////////////////////
 //////Creating objects////////
 //////////////////////////////
@@ -28,12 +52,7 @@ Ways of creating objects:
 */
 //Example 1: using object literal
 //defines a single, specific object at the time it is created.
-
-//"this" is a reserved word that refers to the current execution context. Its value is defined when the method or property is called, not when it's defined. It depends on its execution context and it is different depending on how the function is called, whether as a method on an object, globally, as a callback function, or using call, apply, or bind.
-
-//Using "this" allows you to write methods that work for any object that calls them. Instead of relying on the object name, which may or may not be the same in all cases, this always refers to the actual object, making your code more flexible, reusable and dynamic.
-
-//When defining literal objects, there's no need to use "this" when defining the object's properties, because properties are created directly on the object. However, methods needs to  use "this" to access the object's properties.
+//  When defining literal objects, there's no need to use "this" when defining the object's properties, because properties are created directly on the object. However, methods needs to  use "this" to access the object's properties.
 
 const persona={
     id:1,
@@ -534,7 +553,7 @@ console.log(areObjectsEqual(obj4, obj5)); // true
 ////Common mistakes regarding "this"////
 ////////////////////////////////////////
 /*
-Remember: "this" is a reserved word that refers to the current execution context. Its value depends on its execution context and it is different depending on how the function is called: a method on an object, globally, as a callback function, or using call, apply, or bind.
+Remember: "this" is a reserved word that refers to the current execution context.
 
 Remember: Using "this" binds properties and methods to the object that calls them (except in an arrow function), allowing to work with them outside the object. If not used, properties and methods would be local variables and getters and setters would be needed to access and modify them (we'll cover later)
 */
@@ -648,17 +667,41 @@ usuario.saluda();   // Hola soy undefined
 usuario.despidete(); // Adiós, soy Sandalio
 
 
-//solution: convert arrow function into a regular function
+//solution nº1: convert arrow function into a regular function
 function Usuario(nombre) {
   this.nombre = nombre;
-  this.saluda = function(){
-      console.log("Hola soy " + this.nombre);
-  };
-  this.despidete = function() {
-      console.log(`Adiós, soy ${this.nombre}`);
-  };
 }
+
+Usuario.prototype.saluda=function(){
+  console.log("Hola soy " + this.nombre); // 'this' refers to the object that invokes the method
+};
+Usuario.prototype.despidete=function() {
+  console.log(`Adiós, soy ${this.nombre}`); // 'this' refers to the object that invokes the method
+};
+
 
 const usuario = new Usuario("Sandalio");
 usuario.saluda();
 usuario.despidete();
+
+
+//solution nº2: wrap arrow function within a traditional function (arrow functions take their context from the function they are defined in)
+function Usuario(nombre) {
+  this.nombre = nombre;
+}
+
+Usuario.prototype.saluda = function() {
+  // Aquí estamos dentro de una función normal, por lo que `this` se refiere al objeto de la instancia
+  const funcionFlecha = () => {
+    console.log("Hola soy " + this.nombre); // Ahora `this` se refiere a la instancia de Usuario
+  };
+  funcionFlecha(); // Llamamos a la función de flecha
+};
+
+Usuario.prototype.despidete = function() {
+  console.log(`Adiós, soy ${this.nombre}`); // `this` se refiere al objeto que invoca el método
+};
+
+const usuario = new Usuario("Sandalio");
+usuario.saluda();   // Hola soy Sandalio
+usuario.despidete(); // Adiós, soy Sandalio
