@@ -31,10 +31,9 @@ Ways of creating objects:
 
 //"this" is a reserved word that refers to the current execution context. Its value is defined when the method or property is called, not when it's defined. It depends on its execution context and it is different depending on how the function is called, whether as a method on an object, globally, as a callback function, or using call, apply, or bind.
 
-//you do not need to use "this" when defining the object's properties, because you are creating the properties directly on the object. However, you do need to use "this" inside the methods to access the object's properties.
+//Using "this" allows you to write methods that work for any object that calls them. Instead of relying on the object name, which may or may not be the same in all cases, this always refers to the actual object, making your code more flexible, reusable and dynamic.
 
-
-//Talking about objects, it references the object that called the method and it's a way of binding properties and methods to the object instance.
+//When defining literal objects, there's no need to use "this" when defining the object's properties, because properties are created directly on the object. However, methods needs to  use "this" to access the object's properties.
 
 const persona={
     id:1,
