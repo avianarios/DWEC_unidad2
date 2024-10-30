@@ -705,3 +705,33 @@ Usuario.prototype.despidete = function() {
 const usuario = new Usuario("Sandalio");
 usuario.saluda();   // Hola soy Sandalio
 usuario.despidete(); // Adiós, soy Sandalio
+
+
+//Example 4: Wrapping an arrow function makes "this" work
+let grupo = {
+  nombre: "Los amigos",
+  habitantes: ["Máximo", "Higinio", "Salustiano"],
+  localidades: ["Jódar", "Guarromán", "La cabra del santo cristo"],
+
+  muestraLista() {
+      this.habitantes.forEach(
+          //arrow functions have no "this", so here "this" references muestraLista's context which is grupo. That's why it works
+          persona => console.log(this.nombre + ': ' + persona)   
+      );
+  },
+
+  muestraLocalidades() {
+      //nested function are not called with their parent's context. They lose their context. "This" references to global object (non-strict) or undefined (strict mode)
+      this.habitantes.forEach(function(persona) {
+        console.log(persona+" es de:"+ this.localidades);     // Undefined
+      });
+  },
+
+  muestraNombre(){
+    console.log(this.nombre);
+  }
+};
+
+grupo.muestraLista();
+grupo.muestraLocalidades();
+grupo.muestraNombre();
