@@ -599,7 +599,7 @@ const producto2 = new Producto("Camisa", 50);
 producto1.aplicarDescuento(20); // El precio con descuento es: 80
 producto2.aplicarDescuento(10); // El precio con descuento es: 45
 
-//solution 2: not using when declaring properties and using getters and setters (we'll cover later)
+//solution 2: not using "this" when declaring properties and using getters and setters (we'll cover later)
 
 
 //Example 3: mistake nº3: working with "this" in arrow functions
