@@ -549,6 +549,38 @@ console.log(areObjectsEqual(obj4, obj5)); // true
 //next solution, using an external library like lodash with specific methods for comparing, will be discussed it in a later unit
 
 
+////////////////////
+////"This" usage////
+////////////////////
+//Example 1: by using this.nombre, this property can be used outside the object (like totalCarrito)
+function Producto(nombre, precio) {
+  this.nombre = nombre;
+  this.precio = precio;
+}
+
+function Carrito() {
+  this.productos = [];
+  this.agregarProducto = function(producto) {
+      this.productos.push(producto);
+  };
+  this.totalCarrito = function() {
+      let total = 0;
+      this.productos.forEach(prod => {
+          total += prod.precio; // It access to the property of instance precio. If "this" weren't used at Producto, it wouldn't work and getters would be needed
+      });
+      return total;
+  };
+}
+
+const producto1 = new Producto("Zapatos", 100);
+const producto2 = new Producto("Camisa", 50);
+
+const carrito = new Carrito();
+carrito.agregarProducto(producto1);
+carrito.agregarProducto(producto2);
+console.log(`El total del carrito es: ${carrito.totalCarrito()}`);
+
+
 ////////////////////////////////////////
 ////Common mistakes regarding "this"////
 ////////////////////////////////////////
