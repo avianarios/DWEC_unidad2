@@ -3,25 +3,8 @@
 ////stablishing a context////
 /////////////////////////////
 //bind, call and apply (similar to call, but receives arguments in an array)
-//Example 1: BIND stablishes a context. It returns a function with "this" referencing the specified object 
-//it has been used a literal object as we are creating only one instance
-const obj = {
-  nombre: "Gervasio",
-  saludar: function() {
-    console.log("Hola soy "+this.nombre);
-    //console.log (this.navigator);   will work in a non strict mode
-  }
-};
 
-obj.saludar();    //"this" context is obj
-const saludarFuera = obj.saludar;    //method reference is copied into saludarFuera, but without persona1 object as context. Context is lost, so is "this"
-saludarFuera();  //"this" value is determined when a function is invoked. saludarFuera is called with no object as a reference. Therefore, when using strict mode will return error and when using non strict mode it will reference global object. And as it has no "nombre" property, it will return undefined
-
-const saludarBind = obj.saludar.bind(obj); // bind stablishes "this" context to obj
-saludarBind(); //now, "this" inside "saludar" always refers to obj
-
-
-//Example 2: BIND can provide a value to a parameter in a function
+//Example 1: BIND can provide a value to a parameter in a function
 function multiplicar(a, b) {
   return a * b;
 }
@@ -30,7 +13,49 @@ const duplicar = multiplicar.bind(null, 2); // Fija el primer argumento a 2
 console.log(duplicar(5));
 
 
-//Example 3: BIND allows "this" to operate within a nested function
+//Example 2: BIND stablishes a context. It returns a function with "this" referencing the specified object 
+//it has been used a literal object as we are creating only one instance
+const persona = {
+  nombre: "Gervasio",
+  saludar: function() {
+    console.log("Hola soy "+this.nombre);
+    //console.log (this.navigator);   will work in a non strict mode
+  }
+};
+
+persona.saludar();    //"this" context is obj
+const saludarFuera = persona.saludar;    //method reference is copied into saludarFuera, but without persona object as context. Context is lost, so is "this"
+saludarFuera();  //"this" value is determined when a function is invoked. saludarFuera is called with no object as a reference. Therefore, when using strict mode will return error and when using non strict mode it will reference global object. And as it has no "nombre" property, it will return undefined
+
+const saludarBind = persona.saludar.bind(persona); // bind stablishes "this" context to obj
+saludarBind(); //now, "this" inside "saludar" always refers to obj
+
+
+//Example 3: BIND can provide context when calling a function
+const persona = {
+  nombre: "gervasio",
+  saludar: function() {
+      // Esta es una función regular, 'this' se refiere a 'objeto'
+      //a little tricky creating an arrow function within a function, but it is intended to demonstrate concepts
+      const funcionFlecha = () => {
+        console.log("Hola soy "+this.nombre); // 'this' se refiere a 'objeto'
+      };
+      funcionFlecha();
+  }
+};
+
+persona.saludar();
+
+const funcionExterna = function() {
+  console.log(this.nombre); // Aquí 'this' no se refiere a 'objeto' si se llama fuera de su contexto
+};
+
+//const nuevaFuncion = funcionExterna;  //won't work
+const nuevaFuncion = funcionExterna.bind(objeto);
+nuevaFuncion();
+
+
+//Example 4: BIND allows "this" to operate within a nested function
 const obj3 = {
   nombre: "Recaredo",
   saludar: function() {
@@ -47,7 +72,7 @@ const obj3 = {
 obj3.saludar();     //saludar context is obj3
 
 
-//Example 4: CALL stablishes a context and parameters and inmediately executes the function
+//Example 5: CALL stablishes a context and parameters and inmediately executes the function
 const usuario = {
   nombre: "Sandalio"
 };
@@ -59,7 +84,7 @@ function saludar(saludo) {
 saludar.call(usuario, "Hola"); //Summons saludar whit "this" pointing to obj and a parameter
 
 
-//Example 5: CALL summons the method in prototype directly
+//Example 6: CALL summons the method in prototype directly
 function Persona(nombre, edad) {
   this.nombre = nombre;
   this.edad = edad;
@@ -78,7 +103,7 @@ const persona1 = new Persona("Obdulio", 35);
 Persona.prototype.saludar.call(persona1); // Call the prototype method directly passing persona1 as context. It'll do the same as persona1.saludar();
 
 
-//Example 6: CALL provides a context to a function
+//Example 7: CALL provides a context to a function
 //this may not be a good programming practice. there sould be a constructor function and a prototype with saludar. This code is just for demonstrating call function
 const obj1 = { nombre: "Nepomuceno" };
 const obj2 = { nombre: "Nicanora" };
@@ -95,15 +120,13 @@ saludar.call(obj2);
 ////Encapsulation////
 /////////////////////
 /*
-Encapsulation is a key concept in object-oriented programming that consists of restricting direct access to certain data and behaviours of an object and allowing interaction with them only through defined methods. This is achieved by keeping internal data protected (e.g. with private properties in JavaScript) and providing public functions (getters and setters) to manipulate this data in a controlled way.
-when creating an object, it's desirable to encapsulate its information avoiding users to access it from outside. Therefore, methods to access an consult its properties must be provided
-  getters: allow to access the value of a property
-  setters: allow to set a value to a property
+Encapsulation is a key concept in object-oriented programming that consists of restricting direct access to certain data and behaviours of an object and allowing interaction with them only through defined methods. This is achieved by keeping internal data protected and providing public functions to manipulate this data in a controlled way. Two kind of functions:
+  -getters: allow to access the value of a property
+  -setters: allow to set a value to a property
 
-  they are better than using regular functions due to:
+they are better than using regular functions due to:
   -better encapsulation
   -legibility
-  -easy to change implementations
 */
 
 
