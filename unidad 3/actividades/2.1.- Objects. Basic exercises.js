@@ -17,3 +17,18 @@
 // Exercise 15: Create a function that compares two objects and returns true if they are equal, false otherwise.
 // Exercise 16: Write a function that destructures an object and returns its properties as variables.
 // Exercise 17: Create an object that uses 'this' in a method and show how to call it correctly.
+
+/*Extra 1:
+Having the following object, write a function that gets the total amount of kg that the fruit shop has. Create two pieces of code solving the problem. In one of them, Object.values must appear and in the other one, for...of must be present. Prepare the function for the case that there is no fruit at all
+
+let frutas={
+    "manzanas golden": 25,
+    "manzanas fuji": 20,
+    "pera conferencia": 17,
+    "pera ercolina": 12
+}
+*/
+
+/*Extra 2:
+ Take the Extra 1 exercise and write a function that returns an object containing the name of the fruit (including all varieties) and the total number of kgs
+ */
