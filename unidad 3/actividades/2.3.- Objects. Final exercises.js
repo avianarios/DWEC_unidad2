@@ -161,7 +161,7 @@ Description: Create an event system that simulates a calendar with inheritance, 
 
 Expected Result: A calendar event structure that includes encapsulation, inheritance, and property verification in an event calendar context with important events.*/
 
-/*Extra 1
+/*Extra 1:
 There’s a number object that allows to add and subtract:
 let number = {
     current: 0,
@@ -187,4 +187,14 @@ ladder.showNumber();
 
 Modify the code to make the calls chainable, like this:
     number.add().add().subtract().add().subtract().showNumber();
+*/
+
+
+/*Extra 2:
+Create an object that represents a to-do list. The object must allow the following functionality:
+    -Add a task to the list.
+    -Remove a task from the list.
+    -Show all tasks in the list.
+    -Mark a task as completed.
+    -Show completed tasks.
 */
