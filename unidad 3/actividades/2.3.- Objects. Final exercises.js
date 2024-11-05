@@ -1,40 +1,190 @@
-//Exercise 1: Create a person object with properties name and age. Define a greet method that prints a greeting to the console. Then, create a function that changes the context of this to greet from another object.
+/*Exercise 1
 
-//Exercise 2: Define a book object with properties title, author and year. Use destructuring to print each of these properties to the console.
+Description: Simulate a user authentication system that uses several JavaScript object concepts.
 
-//Exercise 3: Create a product object with properties name, price and discount. Implement a method that returns the final price after the discount and another method that validates that the price and discount are positive.
+    Object Creation and Encapsulation:
+        Define a constructor function User that takes username, email, and password.
+        Make password a private property and add methods getPassword and setPassword to access and modify it.
 
-//Exercise 4: Create a company object with an employee property, which is an array of person objects. Access the name property of a specific employee and display a message in the console if it exists.
+    Property Verification and Protection:
+        Add a lastLogin property to User with a default value of null, and a method updateLoginTime to update this property with the current date.
+        Ensure email cannot be modified after the object is created.
 
-//Exercise 5: Define an animal object with a method makeSound. Create a cat object that inherits from animal and override the method to return ‘Meow’. Then, create a dog object that also inherits from animal and override the method to return ‘Woof’.
+    Inheritance and Method Overriding:
+        Define a constructor function Admin that inherits from User and adds a permissions array.
+        Override the updateLoginTime method in Admin to log a custom message when the admin logs in.
 
-//Exercise 6: Create a function that accepts two objects and returns true if they have at least one property in common, or false if they do not.
+    Context and Iteration:
+        Add an external function printPermissions that uses call to print the permissions of an admin object.
+        Iterate through the properties of a User instance, displaying only those that are not private.
 
-//Exercise 7: Create a car object with properties make and model. Define a method that uses these properties and displays a message on the console.
+    Copying and Optional Chaining:
+        Create a copy of the user object, excluding private properties and lastLogin.
+        Use optional chaining to access properties like permissions in the copied object.
 
-//Exercise 8: Define a student object with properties name and grades. Implement a method that calculates and returns the average grade of the students.
+Expected Result: An object structure representing a user system with encapsulation, inheritance, protected properties, and optional chaining.*/
 
-//Exercise 9: Create a book object with a review property that can be null. Make sure to display the review in the console only if it exists.
 
-//Exercise 10: Create a university object with a faculties property, which is an array of objects. Use the appropriate syntax to access a specific faculty and display its name in the console.
+/*Exercise 2
 
-//Exercise 11: Define a house object with properties colour and number of rooms. Use a getter to return a description of the house and a setter to validate the colour before assigning it.
+Description: Create a library book management system using JavaScript objects and multiple concepts.
 
-//Exercise 12: Create a counter object with methods to increment and display the value. Make sure the value is updated correctly.
+    Object Creation and Encapsulation:
+        Define a constructor function Book that takes title, author, and pages.
+        Make pages private and add get and set methods to access and modify it.
 
-//Exercise 13: Create a game object that contains information about a board game. Implement a method that displays the description of the game and its number of players.
+    Inheritance and Method Overriding:
+        Create a DigitalBook constructor that inherits from Book and adds a format property (e.g., PDF, EPUB).
+        Override the getPageCount method in DigitalBook to indicate that the page count may vary depending on the format.
 
-//Exercise 14: Define an employee object with properties name, age and position. Implement a getter that returns a description of the employee.
+    Protection and Property Existence:
+        Ensure title cannot be deleted once it is created.
+        Add a property available that is set dynamically and check for its existence before accessing it.
 
-//Exercise 15: Create a food object with properties name and calories. Implement a method that determines if the food is healthy based on its calorie count.
+    Copy and Iteration:
+        Create a copy of a Book instance without private properties.
+        Iterate over all public properties of a DigitalBook object, excluding those inherited from Book.
 
-//Exercise 16: Create a user object with properties name, email and a method to display the user's information in the console.
+    Context and Optional Chaining:
+        Define an external function displayBookInfo that takes a context and displays the title, author, and availability using call.
+        Use optional chaining to safely access properties like format.
 
-//Exercise 17: Define a movie object with properties title, director and year. Implement a method to return the synopsis of the movie.
+Expected Result: A library book system where Book and DigitalBook objects represent physical and digital books, including encapsulation, inheritance, and optional chaining.*/
 
-//Exercise 18: Create a vehicle object with properties make, model and year. Implement a method that returns a string describing the vehicle.
 
-//Exercise 19: Define a fruit object with properties name and colour. Implement a method that returns a message about the fruit.
+/*Exercise 3
 
-//Exercise 20: Create a device object with properties type, make and model. Implement a method that prints the device information to the console.
+Description: Simulate a task management system with objects that use multiple concepts.
 
+    Object Creation and Encapsulation:
+        Define a constructor function Task that takes title, description, and completed (initialized to false).
+        Make completed a private property, with its corresponding get and set methods to change its value.
+
+    Instance Methods and Dynamic Modification:
+        Add a completeTask method that changes completed to true.
+        Add a dynamic completionDate property to the task when it is completed, with a check to prevent it from being changed more than once.
+
+    Inheritance and Overriding:
+        Create a constructor function ImportantTask that inherits from Task and includes a priority property.
+        Override the completeTask method to send a priority alert when the task is completed.
+
+    Iteration and Protection:
+        Ensure that title cannot be modified once the task is created.
+        Iterate over the public properties of an instance of ImportantTask and print only those that are configurable and enumerable.
+
+    Copying and Context:
+        Create a copy of the task without the private completed property.
+        Add an external function showDetails that uses call to execute in a specific task context and displays its details.
+
+Expected Result: A structure of objects representing a list of tasks with priorities, encapsulation, and property protection.*/
+
+
+/*Exercise 4
+
+Description: Implement an inventory system with a hierarchy and protected properties.
+
+    Object Creation and Encapsulation:
+        Define a constructor function Product that takes name, price, and stock.
+        Encapsulate stock as a private property and add increaseStock and decreaseStock methods.
+
+    Instance Methods and Existence Check:
+        Implement a checkStock method that returns true or false depending on whether stock is greater than 0.
+        Add an available property that uses a getter to return the value of checkStock.
+
+    Inheritance and Overriding:
+        Define a constructor function DigitalProduct that inherits from Product and does not depend on stock.
+        Override the checkStock method in DigitalProduct to always return true.
+
+    Protection and Copies:
+        Ensure that price cannot be modified once assigned.
+        Make a copy of the object, excluding private properties and allowing modifications.
+
+    Iteration and Context:
+        Create an external function displayAvailability that uses call to access available and returns a message based on stock.
+        Use for...in to iterate through the properties of a Product instance, displaying only public ones.
+
+Expected Result: An object structure that represents an inventory system with inheritance, encapsulation, and protected properties.
+
+
+
+/*Exercise 5
+
+Description: Implement a user and admin structure with access control and property protection.
+
+    User Creation and Encapsulation:
+        Define a constructor function User that takes name and email.
+        Make email a private property with getEmail and setEmail methods to access and modify its value.
+
+    Inheritance and Method Overriding:
+        Define a constructor function Admin that inherits from User and adds the permissions array.
+        Override the getEmail method in Admin to include an additional message if the user is an admin.
+
+    Dynamic Modification and Protection:
+        Dynamically add an active property to the user and prevent it from being deleted.
+        Add a modifyPermissions method in Admin to add or remove permissions.
+
+    Context and Iteration:
+        Add an external function printPermissions that uses call to print the permissions of an Admin object.
+        Use for...in to iterate through the properties of User, excluding email.
+
+    Copies and Optional Chaining:
+        Create a copy of an Admin object without private properties.
+        Use optional chaining to access properties like permissions and other methods of User and Admin.
+
+Expected Result: A structure of users and admins with encapsulation, access control, inheritance, and property protection.*/
+
+
+
+/*Exercise 6
+
+Description: Create an event system that simulates a calendar with inheritance, protection, and advanced methods.
+
+    Event Creation and Initialization:
+        Define a constructor function Event that takes title, date, and location.
+        Make location a private property with get and set methods.
+
+    Methods and Inheritance:
+        Add a postpone method in Event that accepts a new date and updates the event.
+        Define a constructor function ImportantEvent that inherits from Event and overrides postpone to also log the original date.
+
+    Property Protection and Existence Check:
+        Ensure title cannot be modified or deleted once created.
+        Check if location exists before accessing or changing it, displaying a message if it doesn’t.
+
+    Copy and Iteration:
+        Create a copy of an Event instance, excluding private properties.
+        Iterate over all properties of ImportantEvent, excluding those from Event.
+
+    Context and Optional Chaining:
+        Create an external function showEventDetails that takes an event context and accesses date and location using optional chaining.
+        Use call to execute this function on an ImportantEvent instance.
+
+Expected Result: A calendar event structure that includes encapsulation, inheritance, and property verification in an event calendar context with important events.*/
+
+/*Extra 1
+There’s a number object that allows to add and subtract:
+let number = {
+    current: 0,
+    add() {
+        this.current++;
+    },
+    subtract() {
+        this.current--;
+    },
+    showNumber: function() {
+        console.log( this.current );
+    }
+};
+
+Now, if we need to make several calls in sequence, can do it like this:
+
+number.add();
+ladder.add();
+ladder.subtract();
+ladder.add();
+ladder.subtract();
+ladder.showNumber();
+
+Modify the code to make the calls chainable, like this:
+    number.add().add().subtract().add().subtract().showNumber();
+*/
