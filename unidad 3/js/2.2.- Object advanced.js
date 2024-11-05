@@ -91,28 +91,6 @@ saludar.call(obj1);
 saludar.call(obj2);
 
 
-//Example 7. CALL provides a context at a prototype
-const padre = {
-    nombre: "Sisenando",
-    saludar: function() {
-      console.log(`${this.nombre} desde el padre`);
-    }
-};
-  
-const hijo = Object.create(padre);
-hijo.nombre = "Salustiana";
-hijo.saludar();
-//hijo inherits from its prototype, padre. When calling hijo.saludar(), this refers to hijo, not padre
-
-//saludar method can be overriden in the child, but it still can call its parent method
-hijo.saludar = function() {
-  console.log(`${this.nombre} desde el hijo`);
-  Object.getPrototypeOf(this).saludar.call(this);  // Llama al método del padre con `this` refiriéndose a `hijo`
-};
-hijo.saludar();
-
-
-
 /////////////////////
 ////Encapsulation////
 /////////////////////
@@ -650,17 +628,18 @@ vehiculo.iniciar.call(coche); // Salida: Iniciando el vehículo Ford Fiesta del 
 
 
 //Example 2: Overriding child method and calling its parent method by using Object.getPrototypeOf
+//call provides a context at prototype
 const padre = {
   saludar() {
-    console.log(`Hola desde el padre, soy ${this.nombre}`);
+    console.log(`Saludos desde el padre, soy ${this.nombre}`);
   }
 };
 
 const hijo = Object.create(padre);    //hijo is inheriting from padre
-hijo.nombre = "Carlos";
+hijo.nombre = "Sisenando";
 
 hijo.saludar = function() {
-  console.log("Hola desde el hijo");
+  console.log(`Saludos desde el hijo, soy ${this.nombre}`);
   //this value inside saludar method could be unexpected, depending on how method is invoked. saludar.call(this) forces this to point to the child
   Object.getPrototypeOf(this).saludar.call(this);  // calls father method but this points to the child
   //padre.saludar.call(this);
