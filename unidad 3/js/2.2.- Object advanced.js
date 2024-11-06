@@ -9,7 +9,8 @@ function multiplicar(a, b) {
   return a * b;
 }
 
-const duplicar = multiplicar.bind(null, 2); // Fija el primer argumento a 2
+const duplicar = multiplicar.bind(null, 2); // The first argument of bind is "this". If unused, it must be set to "null". The second one matches the first one at the function
+//we could set all parameters by using bind(null, 2, 3)
 console.log(duplicar(5));
 
 
@@ -391,7 +392,7 @@ Prototypical inheritance:
 
 //JavaScript uses a prototype-based inheritance model instead of the traditional class-based inheritance of other languages such as Java or C++. All objects have a prototype (accessed via __proto__ or Object.getPrototypeOf()), and if a property or method is not in the object, JavaScript looks in the prototype string.
 
-//Example 1. Using Object.create to inherit
+//Example 1. chained inheritance in literal objects by using Object.create
 const animal = {
     hacerSonido() {
       console.log('Sonido de animal');
@@ -399,197 +400,159 @@ const animal = {
 };
   
 const perro = Object.create(animal);
-perro.hacerSonido = () => { console.log('Guau guau') };
-  
 const bulldog = Object.create(perro);
-bulldog.hacerSonido();  // 'Guau guau' (heredado de `perro`)
+bulldog.hacerSonido();
   
 
-//Example 2: Stablishing inheritance chain by using Object.create
-const abuelo = {
-  edad: 70
+//Example 2: chained inheritance in constructor functions by using Object.create and prototypes
+// When creating a constructor function, there's an implicit constructor method called..."constructor"
+function Animal() {}
+
+Animal.prototype.hacerSonido = function() {
+    console.log('Sonido de animal');
 };
 
-const padre2 = Object.create(abuelo);
-padre.nombre = "Carlos";
-
-const hijo = Object.create(padre);
-console.log(hijo.nombre);  // "Carlos" (se encuentra en el prototipo 'padre')
-console.log(hijo.edad);    // 70 (se encuentra en el prototipo 'abuelo')
-
-
-//Example 3: use prototype property to define methods in the prototype, from which object inherits
-function Persona(nombre) {
-  this.nombre = nombre;
+// Función para crear una nueva clase que herede de otra
+function crearClase(ClaseHija, ClasePadre) {
+    ClaseHija.prototype = Object.create(ClasePadre.prototype);    //now ClaseHija inherits from ClasePadre, but the former's constructor now points to the latter's one
+    ClaseHija.prototype.constructor = ClaseHija;    //This way, ClaseHija constructor points to its real constructor
 }
 
-Persona.prototype.saludar = function() {
-  console.log(`Hola, soy ${this.nombre}`);
-};
+// Creación de las clases Perro y Bulldog
+function Perro() {}
+crearClase(Perro, Animal);
 
-const persona1 = new Persona("Viriato");
-persona1.saludar();
+function Bulldog() {}
+crearClase(Bulldog, Perro);
 
-
-//Example 4: Stablishing inheritance by using Object.setPrototypeOf to, once created the object, stablish its father
-//less efficient than Object.create
-let vehiculo = {
-  marca: "",
-  modelo: "",
-  saluda(){
-    console.log (`hola desde vehículo ${this.marca} ${this.modelo}`);
-  }
-};
-
-let coche = { };
-vehiculo.marca="seat";
-Object.setPrototypeOf(coche, vehiculo);   //prototypical inheritance
-console.log(coche.marca);
+// Creación de una instancia de Bulldog
+const miBulldog = new Bulldog();
+miBulldog.hacerSonido(); // 'Sonido de animal'
 
 
-//Example 4: Another example of stablishing inheritance by using Object.setPrototypeOf
-const animal={
-  come: true,
-  desplazate(){
-      return "voy andando";
-  }
-};
-
-let conejo={
-  salta: true,
-  desplazate(){
-     return "voy saltando";
-  }
-};
-
-let perro={
-  ladra: true
-};
-
-let conejito={};
-conejito.desplazate=()=>("voy dando saltitos");  //overrides prototype's method
-
-//Object.setPrototype (object, prototype)
-Object.setPrototypeOf(conejo, animal);  //animal is the prototype of conejo. The latter inherits from the former
-Object.setPrototypeOf(perro, animal);
-Object.setPrototypeOf(conejito, conejo);
-
-console.log(conejo.come, perro.come, conejito.come);
-console.log (perro.desplazate(), conejo.desplazate());
-
-
-//Example 6: chained inheritance using constructor function
-function Vehiculo(tipo) {
+//Example 3: chained inheritance in constructor function by using object.create
+//same as before but a little bit more complicated
+function Animal(tipo) {
   this.tipo = tipo;
 }
 
-Vehiculo.prototype.mover = function() {
+Animal.prototype.mover = function() {
   console.log(`El ${this.tipo} se está moviendo`);
 };
 
-function coche(marca) {
-  Vehiculo.call(this, "automóvil");
-  this.marca = marca;
+// Función para crear una nueva clase que herede de otra
+function crearClase(ClaseHija, ClasePadre) {
+  ClaseHija.prototype = Object.create(ClasePadre.prototype);    // La ClaseHija hereda de ClasePadre, pero el constructor de la ClaseHija apunta al de la ClasePadre
+  ClaseHija.prototype.constructor = ClaseHija;    // De esta manera, el constructor de ClaseHija apunta a su verdadero constructor
 }
 
-// Heredamos de Vehiculo
-coche.prototype = Object.create(Vehiculo.prototype);
-coche.prototype.constructor = coche;
-
-//Alternative prototypical inheritance. Less recommended, as it is less efficient than Object.create
-/*Object.setPrototypeOf(Coche.prototype, Vehiculo.prototype);
-Coche.prototype.constructor = Coche;*/
-
-coche.prototype.acelerar = function() {
-  console.log(`El ${this.marca} está acelerando`);
-};
-
-/*alternative:
-Object.defineProperty(coche.prototype, 'acelerar', {
-  value: function() {
-    console.log(`El ${this.marca} está acelerando`);
-  },
-  writable: true,      // Permite que el método se pueda sobrescribir
-  enumerable: false,   // Hace que el método no aparezca en iteraciones como for...in
-  configurable: true   // Permite borrar el método o modificar sus propiedades
-});*/
-
-function Camioneta(marca, traccion) {
-  coche.call(this, marca);
-  this.traccion = traccion;
-}
-
-// Heredamos de coche
-Camioneta.prototype = Object.create(coche.prototype);
-Camioneta.prototype.constructor = Camioneta;
-
-Camioneta.prototype.atravesarTerreno = function() {
-  console.log(`La ${this.marca} con tracción ${this.traccion} atraviesa el terreno`);
-};
-
-// Crear una instancia de Camioneta
-let miCamioneta = new Camioneta("Toyota", "4x4");
-miCamioneta.mover(); // "El automóvil se está moviendo"
-miCamioneta.acelerar(); // "El Toyota está acelerando"
-miCamioneta.atravesarTerreno(); // "La Toyota con tracción 4x4 atraviesa el terreno"
-
-
-//Example 7: another example of prototypical inheritance by using constructor function
-// Función constructora para la clase base Animal
-function Animal(nombre, tipo) {
+// Creando Mamífero y heredando de Animal
+function Mamifero(nombre) {
+  Animal.call(this, "mamífero"); // Llamamos al constructor de Animal con el contexto de Mamífero
   this.nombre = nombre;
-  this.tipo = tipo;
 }
-
-// Método para saludar en el prototipo de Animal
-Animal.prototype.saludar = function() {
-  console.log(`Hola, soy un ${this.tipo} llamado ${this.nombre}.`);
+crearClase(Mamifero, Animal);
+Mamifero.prototype.comer = function() {
+  console.log(`${this.nombre} está mamando`);
 };
 
-// Función constructora para la clase derivada Perro
-function Perro(nombre, raza) {
-  // Llama al constructor de Animal
-  Animal.call(this, nombre, 'Perro'); // Llama al constructor de Animal con tipo 'Perro'
-  this.raza = raza;
+// Creando Gato y heredando de Mamífero
+function Gato(nombre) {
+  Mamifero.call(this, nombre); // Llamamos al constructor de Mamífero para heredar la inicialización de nombre
 }
-
-// Establece la herencia prototípica
-Perro.prototype = Object.create(Animal.prototype);
-Perro.prototype.constructor = Perro;
-
-// Método específico para Perro
-Perro.prototype.ladrar = function() {
-  console.log(`${this.nombre} dice: ¡Guau!`);
+crearClase(Gato, Mamifero);
+Gato.prototype.maullar = function() {
+  console.log(`${this.nombre} está maullando`);
 };
 
-// Ejemplo de uso
-const miPerro = new Perro("Rex", "Pastor Alemán");
-miPerro.saludar(); // "Hola, soy un Perro llamado Rex."
-miPerro.ladrar();  // "Rex dice: ¡Guau!"
+// Crear una instancia de Gato
+let miGato = new Gato("Tizón");
+miGato.mover();   // "El mamífero se está moviendo" (heredado de Animal)
+miGato.comer();   // "Tizón está comiendo" (heredado de Mamífero)
+miGato.maullar(); // "Tizón está maullando" (específico de Gato)
 
 
-//Example 8: Inheritance using class syntax
+
+//Example 4: chained inheritance in literal objects by using Object.setPrototypeOf to, once created the object, stablish its father
+//allows to change object prototype anytime
+const animal = {
+  hacerSonido() {
+      console.log('Sonido de animal');
+  }
+};
+
+const perro = {};
+Object.setPrototypeOf(perro, animal);
+
+const bulldog = {};
+Object.setPrototypeOf(bulldog, perro);
+
+bulldog.hacerSonido();
+
+
+//Example 5: chained inheritance in constructor functions by using Object.setPrototypeOf to, once created the object, stablish its father
+function Animal() {}
+
+Animal.prototype.hacerSonido = function() {
+    console.log('Sonido de animal');
+};
+
+// Función para crear una nueva clase que herede de otra
+function crearClase(ClaseHija, ClasePadre) {
+    Object.setPrototypeOf(ClaseHija.prototype, ClasePadre.prototype);
+    ClaseHija.prototype.constructor = ClaseHija;
+}
+
+// Creación de las clases Perro y Bulldog
+function Perro() {}
+crearClase(Perro, Animal);
+
+function Bulldog() {}
+crearClase(Bulldog, Perro);
+
+// Creación de una instancia de Bulldog
+const miBulldog = new Bulldog();
+miBulldog.hacerSonido(); // 'Sonido de animal'
+
+
+//Example 6: Inheritance using class syntax
 //under the hood, it is prototypical inheritance. Methods in the class are assigned to prototype
 //there's an implicit constructor in class that creates the object with no initialization
-class Vehiculo {
-  acelerar() {
-    console.log("El vehículo está acelerando.");
+class Animal {
+  mover() {
+    console.log("El animal se está moviendo");
   }
 }
 
-class Coche extends Vehiculo {
-  constructor(marca) {
-    super();    //calls parent's constructor
-    this.marca = marca;
-  }
-  acelerar(){
-    super.acelerar(); //calls parent's method "acelerar"
-    console.log(`El modelo ${this.modelo} acelera más rápido!`);
+class Mamifero extends Animal {
+  //needless to call super() because it does not have a constructor, and the constructor of the parent class (Animal) is invoked automatically by default.
+  comer() {
+    console.log(`${this.nombre} está comiendo`);
   }
 }
 
-const coche = new Coche("Toyota");
-coche.acelerar();  // "El vehículo está acelerando."
+class Gato extends Mamifero {
+  constructor(nombre) {
+    //gato class has its own constructor that initialises the name of the cat. For that constructor to work correctly, it needs to make sure that the inheritance chain (between gato and mamifero, which inherits from Animal) is well established.
+
+    //super is needed in the constructor of the child class when the child class extends from another class and has its own constructor
+    //it it hadn't its own constructor, JavaScript will call its father constructor automatically
+
+    super(); // Llamada al constructor de Mamifero, que a su vez hereda de Animal
+    this.nombre = nombre; // Inicializa la propiedad 'nombre'
+  }
+
+  maullar() {
+    console.log(`${this.nombre} está maullando`);
+  }
+}
+
+// Crear una instancia de Gato
+let miGato = new Gato("Tizón");
+miGato.mover();   // "El animal se está moviendo" (heredado de Animal)
+miGato.comer();   // "Tizón está comiendo" (heredado de Mamífero)
+miGato.maullar(); // "Tizón está maullando" (específico de Gato)
+
 
 
 //////////////////////////
@@ -600,9 +563,8 @@ coche.acelerar();  // "El vehículo está acelerando."
 let vehiculo = {
   _marca: "",
   _modelo: "",
-  _año: 0,
   iniciar: function() {
-    console.log(`Iniciando el vehículo ${this._marca} ${this._modelo} del año ${this._año}`);
+    console.log(`Iniciando el vehículo ${this._marca} ${this._modelo}`);
   },
 
   set marca(marca){
@@ -613,21 +575,14 @@ let vehiculo = {
     this._modelo=modelo;
   },
 
-  set año(año){
-    this._año=año;
-  },
-
   get marca(){
     return this._marca;
   },
 
   get modelo(){
     return this._modelo;
-  },
-
-  get año(){
-    return this._año;
   }
+
 };
 
 // "Constructor" para coche
@@ -636,21 +591,20 @@ let coche = Object.create(vehiculo); // Crea un nuevo objeto que hereda de vehic
 //setting some properties of coche object
 coche.marca = "Ford";
 coche.modelo = "Fiesta";
-coche.año = 2022;
 
 // Sobreescribir el método iniciar
 coche.iniciar = function() {
-  console.log(`Iniciando el coche ${this._marca} ${this._modelo} (${this._año})`);
+  console.log(`Iniciando el coche ${this._marca} ${this._modelo}`);
 };
 
 // Usar el constructor
-coche.iniciar(); // Salida: Iniciando el coche Ford Fiesta (2022)
+coche.iniciar(); // Salida: Iniciando el coche Ford Fiesta
 
 // Probar el método del "constructor" original
-vehiculo.iniciar.call(coche); // Salida: Iniciando el vehículo Ford Fiesta del año 2022
+vehiculo.iniciar.call(coche); // Salida: Iniciando el vehículo Ford Fiesta
 
 
-//Example 2: Overriding child method and calling its parent method by using Object.getPrototypeOf
+//Example 2: Overriding child method in literal object and calling its parent method by using Object.getPrototypeOf and call
 //call provides a context at prototype
 const padre = {
   saludar() {
@@ -663,15 +617,17 @@ hijo.nombre = "Sisenando";
 
 hijo.saludar = function() {
   console.log(`Saludos desde el hijo, soy ${this.nombre}`);
-  //this value inside saludar method could be unexpected, depending on how method is invoked. saludar.call(this) forces this to point to the child
-  Object.getPrototypeOf(this).saludar.call(this);  // calls father method but this points to the child
-  //padre.saludar.call(this);
+};
+
+hijo.saludarDesdePadre = function() {
+  Object.getPrototypeOf(this).saludar.call(this);  // calls padre.saludar method but with hijo context "padre.saludar.call(this);" would've been the same
 };
 
 hijo.saludar();
+hijo.saludarDesdePadre();
 
 
-//Example 3: Overriding child method and calling parent's method in constructor function by using call
+//Example 3: Overriding child method in constructor function and calling parent's method in constructor function by using Object.getPrototypeOf and call
 function Vehiculo() {}
 
 Vehiculo.prototype.acelerar = function() {
@@ -680,7 +636,7 @@ Vehiculo.prototype.acelerar = function() {
 
 // Constructor para Coche, que hereda de Vehiculo
 function Coche(marca) {
-  Vehiculo.call(this); // Llama al constructor de Vehiculo
+  Vehiculo.call(this); // Llama al constructor de Vehiculo. same as Vehiculo.constructor.call(this)
   this.marca = marca;
 }
 
@@ -688,41 +644,37 @@ function Coche(marca) {
 Coche.prototype = Object.create(Vehiculo.prototype);
 Coche.prototype.constructor = Coche;
 
-// Sobrescribe el método acelerar en Coche
+// Sobrescribe el método acelerar en el prototipo de Coche
 Coche.prototype.acelerar = function() {
   // Llama al método acelerar de Vehiculo
   Vehiculo.prototype.acelerar.call(this);
   console.log(`El modelo ${this.marca} acelera más rápido!`);
 };
 
-// Ejemplo de uso
 const coche = new Coche("Toyota");
 coche.acelerar();  
-// Output:
-// "El vehículo está acelerando."
-// "El modelo Toyota acelera más rápido!"
 
-
-//Example 4: Overriding child method and calling parent's method in class by using super
-class Vehiculo {
-  acelerar() {
-    console.log("El vehículo está acelerando.");
+//Example 4: Overriding child method in class and calling parent's method in class by using super
+class Animal {
+  hacerSonido() {
+    console.log("El animal hace un sonido.");
   }
 }
 
-class Coche extends Vehiculo {
-  constructor(marca) {
-    super();    //calls parent's constructor
-    this.marca = marca;
+class Perro extends Animal {
+  constructor(nombre) {
+    super();    // Llama al constructor del padre (Animal)
+    this.nombre = nombre;
   }
-  acelerar(){
-    super.acelerar(); //calls parent's method "acelerar"
-    console.log(`El modelo ${this.modelo} acelera más rápido!`);
+
+  hacerSonido() {
+    super.hacerSonido(); // Llama al método "hacerSonido" del padre (Animal)
+    console.log(`${this.nombre} ladra más fuerte!`);
   }
 }
 
-const coche = new Coche("Toyota");
-coche.acelerar();  // "El vehículo está acelerando."
+const perro = new Perro("Roque");
+perro.hacerSonido();  
 
 
 /////////////////////////////
