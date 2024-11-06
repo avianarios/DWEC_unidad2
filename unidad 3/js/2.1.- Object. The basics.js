@@ -171,7 +171,7 @@ function Persona(nombre, edad) {
   this.edad = edad;
 }
 
-Persona.prototype.saludar = function() {    //saludar method defined at prototype
+Persona.prototype.saludar = function() {    //saludar method defined at prototype. Any instance of Persona will have saludar method
   console.log(`Hola, soy ${this.nombre}`);
 };
 
