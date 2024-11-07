@@ -134,9 +134,9 @@ they are better than using regular functions due to:
 //Example 1: private properties in literal object
 //There's a convention of using _ at the beginning of the name to indicate private property, but it's just a convention that indicates you not to use this property outside the object. Despite that, you can do it. It is not a real encapsulation.
 let vehiculo = {
-  _marca,
-  _modelo,
-  _circulando,
+  _marca:"",
+  _modelo:"",
+  _circulando:"",
 };
 
 let coche = Object.create(vehiculo);
@@ -241,7 +241,7 @@ console.log(coche);               // { marca: "Ford", modelo: "Escort", circulan
   2.- Create getters (accesador) and setters (configurador) to access internal properties from outside
 */
 function Persona(nombre, edad) {
-  //local variables
+  //local variables. They exists only inside Persona
   let _nombre = nombre;
   let _edad = edad;
 
@@ -273,7 +273,7 @@ mamerto.saludar(); // "Yo, Mamertín, te saludo"
 //Example 6: defining getters and setters to get real encapsulation in construction functions by using defineProperty
 //It doesn't solve the former problem, it's just another way that provides more control
 function Persona(nombre, edad) {
-  // Variables privadas
+  // Variables locales
   let _nombre = nombre;
   let _edad = edad;
 
