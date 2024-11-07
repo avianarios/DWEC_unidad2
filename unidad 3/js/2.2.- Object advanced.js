@@ -559,7 +559,7 @@ miGato.maullar(); // "Tizón está maullando" (específico de Gato)
 ////overriding methods////
 //////////////////////////
 
-//Example 1: override constructor iniciar and call parent's constructor from child with call
+//Example 1: overriding child method in literal object and use call to invoke parent's constructor from child
 let vehiculo = {
   _marca: "",
   _modelo: "",
@@ -585,10 +585,7 @@ let vehiculo = {
 
 };
 
-// "Constructor" para coche
 let coche = Object.create(vehiculo); // Crea un nuevo objeto que hereda de vehiculo
-
-//setting some properties of coche object
 coche.marca = "Ford";
 coche.modelo = "Fiesta";
 
@@ -597,10 +594,7 @@ coche.iniciar = function() {
   console.log(`Iniciando el coche ${this._marca} ${this._modelo}`);
 };
 
-// Usar el constructor
 coche.iniciar(); // Salida: Iniciando el coche Ford Fiesta
-
-// Probar el método del "constructor" original
 vehiculo.iniciar.call(coche); // Salida: Iniciando el vehículo Ford Fiesta
 
 
@@ -683,23 +677,25 @@ perro.hacerSonido();
 //instead of brackets, braces are needed 
 //example 1
 const persona = {
-  nombre: 'Carlos',
+  nombre: 'Bartolo',
   edad: 25,
-  ciudad: 'Barcelona'
+  ciudad: 'Cercedilla del monte'
 };
 
-const { nombre, edad, altura=150 } = persona; //unstructuring. Default value
+const { nombre, edad, altura=150 } = persona;
 
-console.log(nombre); // Carlos
-console.log(edad);   // 25
+console.log(nombre);
+console.log(edad);
 console.log(altura);
 
-//example 2. Changing name besides unstructuring
+
+//example 2. Renaming properties when unstructuring
 const { nombre: nombreCompleto, ciudad: localizacion } = persona;
 
-console.log(nombreCompleto); // Ana
-console.log(localizacion);   // Madrid
+console.log(nombreCompleto);
+console.log(localizacion);
   
+
 //example 3. nested unstructuration
 const producto = {
     nombre: 'Portátil',
@@ -711,17 +707,24 @@ const producto = {
   
 const { especificaciones: { peso, almacenamiento } } = producto;
   
-console.log(peso);           // 1,5kg
-console.log(almacenamiento); // 512GB
+console.log(peso);
+console.log(almacenamiento);
   
+
 //example 4. unstructuring objects passed as arguments to a function
+const persona2 = {
+  nombre: 'Bartolo',
+  edad: 25,
+  ciudad: 'Cercedilla del monte'
+};
+
 const mostrarInfo = ({ nombre, edad }) => {
     console.log(`Nombre: ${nombre}, Edad: ${edad}`);
 };
   
-const persona2 = { nombre: 'Pedro', edad: 40 };
-mostrarInfo(persona2);  // Nombre: Pedro, Edad: 40
+mostrarInfo(persona2);
   
+
 //example 5. Unstructuring a function that returns an object
 const crearUsuario=()=>({
     id: 'Marta123',
@@ -733,10 +736,11 @@ const { id, puesto } = crearUsuario();
 console.log(id); // Marta123
 console.log(rol);    // admin
 
+
 //example 6: combining unstructuration with rest operator
 const persona3 = {
-    nombre: 'Laura',
-    profesion: 'diseñadora',
+    nombre: 'Blacina',
+    profesion: 'Diseñadora',
     edad: 28,
     ciudad: 'Sevilla'
 };
@@ -749,10 +753,10 @@ console.log(otrosDatos);  // { edad: 28, ciudad: 'Sevilla' }
 
 
 ///////////////////////////////////
-////?. special syntax construct////
+////optional chaining (?.)////
 ///////////////////////////////////
 //it's been recently added. Allows to return undefined instead of error if a property doesn't exist.
-//appliable to nested properties from declared objects
+
 let user3 = {}; // a user without properties
 //console.log(user.address.street); // Throws an error
 
@@ -782,7 +786,7 @@ userAdmin.isAdmin?.(); // I am admin
 userGuest.isAdmin?.(); // nothing happens (although no such method)
 
 
-//?.[] allows to safely read a property from an object that may not exist
+//?. allows to safely read a property from an object that may not exist
 let clave = "nombre";
 
 let personal1 = {
@@ -792,5 +796,5 @@ let personal1 = {
 let personal2 = null;
 
 console.log( personal1?.[clave] ); // Felipe
-//console.log( personal2[clave] ); // throws an error as it doesn't exist
-console.log( personal2?.[clave] ); // undefined
+//console.log( personal2.clave ); // throws an error as it doesn't exist
+console.log( personal2?.clave ); // undefined
