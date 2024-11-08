@@ -515,6 +515,56 @@ const miBulldog = new Bulldog();
 miBulldog.hacerSonido(); // 'Sonido de animal'
 
 
+zzzzzzzzzzzzzzzzzzzzzzzz
+function Animal(tipo){
+  this._tipo=tipo;
+};
+
+Animal.prototype.hacerSonido=function(){
+  console.log(`soy un ${this._tipo} y hago un sonido`);
+};
+
+/*function crearObjeto(hijo, padre){
+  hijo.prototype=Object.create(padre.prototype);
+  hijo.prototype.constructor=hijo;  
+}*/
+
+
+/////////zzzzzzzzzzzz////////
+function Perro(nombre){
+  Animal.call(this,"mamifero");
+  this._nombre=nombre;
+};
+Object.setPrototypeOf(Perro, Animal);
+//Perro.prototype.constructor=Perro;
+/*function comer(){
+  console.log (`soy ${this._nombre} y voy a comer`);
+}*/
+
+//crearObjeto(Perro, Animal);
+Perro.prototype.comer=function(){
+  console.log (`soy ${this._nombre} y voy a comer`);
+};
+const miPerro=new Perro("roque");
+miPerro.hacerSonido();
+miPerro.comer();
+
+Object.setPrototypeOf(Bulldog, Perro);
+//Bulldog.prototype.constructor=Bulldog;
+
+
+function Bulldog(nombre){
+ Perro.call(this,nombre);
+};
+//crearObjeto(Bulldog, Perro);
+Bulldog.prototype.correr=function(){
+  console.log(`soy ${this._nombre} y estoy corriendo`);
+};
+const miBulldog=new Bulldog("perico");
+miBulldog.correr();
+zzzzzzzzzzzzzzzzzzzzzzzzzzz
+
+
 //Example 6: Inheritance using class syntax
 //under the hood, it is prototypical inheritance. Methods in the class are assigned to prototype
 //there's an implicit constructor in class that creates the object with no initialization
@@ -554,6 +604,52 @@ miGato.comer();   // "Tizón está comiendo" (heredado de Mamífero)
 miGato.maullar(); // "Tizón está maullando" (específico de Gato)
 
 
+//Example 8: Inheritance using class syntax
+class Animal{
+  mover(){
+    console.log("me estoy moviendo");
+  }
+  comer(){
+    console.log("estoy comiendo");
+  }
+};
+
+class Mamifero extends Animal{
+  #tipo;
+  constructor(nuevoTipo){
+    super();
+    this.#tipo=nuevoTipo;
+  }
+  set tipo(nuevoTipo){
+    this.#tipo=nuevoTipo;
+  }
+  get tipo(){
+    return this.#tipo;
+  }
+}
+const aux=new Mamifero("Can");
+aux.tipo;
+
+
+class Perro extends Mamifero{
+  #nombre;
+  edad;
+  constructor(nuevoTipo, nuevoNombre){
+    super(nuevoTipo);
+    this.#nombre=nuevoNombre;
+  }
+  set nombre(nuevoNombre){
+    this.#nombre=nuevoNombre;
+  }
+  get nombre(){
+    return this.#nombre;
+  }
+}
+
+const miPerro=new Perro("canis lupus","roque");
+miPerro.tipo;
+miPerro.mover();
+console.log(miPerro); //only shows edad, the only unprotected property
 
 //////////////////////////
 ////overriding methods////
