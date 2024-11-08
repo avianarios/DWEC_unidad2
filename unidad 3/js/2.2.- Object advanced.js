@@ -453,7 +453,7 @@ function Mamifero(nombre) {
 }
 crearClase(Mamifero, Animal);
 Mamifero.prototype.comer = function() {
-  console.log(`${this.nombre} está mamando`);
+  console.log(`${this.nombre} está comiendo`);
 };
 
 // Creando Gato y heredando de Mamífero
