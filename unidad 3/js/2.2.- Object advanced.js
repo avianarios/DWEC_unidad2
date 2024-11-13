@@ -122,8 +122,8 @@ saludar.call(obj2);
 /////////////////////
 /*
 Encapsulation is a key concept in object-oriented programming that consists of restricting direct access to certain data and behaviours of an object and allowing interaction with them only through defined methods. This is achieved by keeping internal data protected and providing public functions to manipulate this data in a controlled way. Two kind of functions:
-  -getters: allow to access the value of a property
-  -setters: allow to set a value to a property
+  -getters (modificador): allow to access the value of a property
+  -setters (accesador): allow to set a value to a property
 
 they are better than using regular functions due to:
   -better encapsulation
