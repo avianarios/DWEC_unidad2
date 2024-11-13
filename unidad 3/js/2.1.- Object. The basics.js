@@ -180,7 +180,7 @@ const persona2 = new Persona("Homobona", 25);
 
 
 //Example 5: using classes (ES6)
-/*Same functionality that constructor function, but with modern sintax
+/*Same functionality that constructor function, but with a more modern sintax
 Advantages:
   -Easier syntax
   -no need to manually create methods in prototype
@@ -188,17 +188,14 @@ Advantages:
   -use of "new" to create new classes is a must. With constructors, it can be bypassed, resulting in this refering to the global object or to undefined in strict mode.
 */
 
+//when declaring an object as a constructor function (like previous examples), there's no need to declare a constructor. JavaScript engine does it by itself. 
+//When declaring an object as a class, it has to be declared if something is to be initialized
+//this method is automatically invoked when instantiating class
 class Persona {
-  //A constructor function is needed in order to initialize properties. If user doesn't declare it, so it does JavaScript engine
-  this.nombre = nombre;
-  this.edad = edad;
-
-  /*the latter is equivalent to...
   constructor(nombre, edad) {
     this.nombre = nombre;
     this.edad = edad;
   }
-  */
 
   saludar() {   //shared in memory
       console.log(`Hola, soy ${this.nombre}`);
@@ -208,6 +205,30 @@ class Persona {
 const persona1 = new Persona("Eufrasio", 30);
 const persona2 = new Persona("Homobona", 25);
 
+
+//Example 6: classes are just "sintactic sugar". At the end, they are just functions
+class Persona {
+  constructor(nombre) {
+    this.nombre = nombre;
+  }
+}
+console.log(typeof Persona);  // "function"
+
+
+//Example 7: Classes as an expression
+let lechoncillo=class lechon{
+  constructor (nombre, anyos){
+    this.nombre=nombre;
+    this.anyos=anyos;
+  }
+
+  gruñir(){
+    console.log ("gruñí,gruñíííííííí");
+  }
+}
+
+let marranillo=new lechoncillo("pipas", 2);
+marranillo.gruñir();
 
 ///////////////////////////////////////////////
 ////accessing object properties and methods////
