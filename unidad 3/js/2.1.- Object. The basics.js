@@ -189,10 +189,16 @@ Advantages:
 */
 
 class Persona {
+  //A constructor function is needed in order to initialize properties. If user doesn't declare it, so it does JavaScript engine
+  this.nombre = nombre;
+  this.edad = edad;
+
+  /*the latter is equivalent to...
   constructor(nombre, edad) {
-      this.nombre = nombre;
-      this.edad = edad;
+    this.nombre = nombre;
+    this.edad = edad;
   }
+  */
 
   saludar() {   //shared in memory
       console.log(`Hola, soy ${this.nombre}`);
