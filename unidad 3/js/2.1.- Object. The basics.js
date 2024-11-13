@@ -217,6 +217,7 @@ console.log(typeof Persona);  // "function"
 
 //Example 7: Classes as an expression
 let lechoncillo=class lechon{
+  //lechon can only be utilized inside the class
   constructor (nombre, anyos){
     this.nombre=nombre;
     this.anyos=anyos;
