@@ -117,260 +117,6 @@ saludar.call(obj1);
 saludar.call(obj2);
 
 
-/////////////////////
-////Encapsulation////
-/////////////////////
-/*
-Encapsulation is a key concept in object-oriented programming that consists of restricting direct access to certain data and behaviours of an object and allowing interaction with them only through defined methods. This is achieved by keeping internal data protected and providing public functions to manipulate this data in a controlled way. Two kind of functions:
-  -getters (modificador): allow to access the value of a property
-  -setters (accesador): allow to set a value to a property
-
-they are better than using regular functions due to:
-  -better encapsulation
-  -legibility
-*/
-
-
-//Example 1: private properties in literal object
-//There's a convention of using _ at the beginning of the name to indicate private property, but it's just a convention that indicates you not to use this property outside the object. Despite that, you can do it. It is not a real encapsulation.
-let vehiculo = {
-  _marca:"",
-  _modelo:"",
-  _circulando:"",
-};
-
-let coche = Object.create(vehiculo);
-coche._marca="Ford";  
-coche._modelo="Escort";
-coche._circulando="true";
-console.log(vehiculo, coche);
-
-
-//Example 2: private properties in constructor function
-function Persona(nombre, edad) {
-  this._nombre = nombre;  // private property (convention)
-  this._edad = edad;      //By using "this", _edad is accessible from outside the object
-}
-
-Persona.prototype.saludar=function(){
-  console.log(`yo, ${this._nombre}, te saludo`);
-}
-
-const Mamerto = new Persona("Mamerto", 30);
-
-console.log(Mamerto._edad); //30
-Mamerto._edad = 40;
-console.log(Mamerto._edad); //40
-Mamerto.saludar();
-
-
-//Example 3: private properties in classes (from ECMAScript 2022)
-//it's a real encapsulation. It can't be changed from outside the object
-class Persona {
-  #nombre; // Real private property. can't be changed nor accessed from outside the object
-  #edad;   
-
-  constructor(nombre, edad) {
-      this.#nombre = nombre;
-      this.#edad = edad;
-  }
-}
-
-const persona2 = new Persona("Saturnino", 40);
-console.log(persona2.#nombre);     // Error: propiedad privada
-
-
-//Example 4: defining getters and setters to get real encapsulation in literal objects
-//Getters (accesador) and setters (configurador) must be used to access internal properties from outside
-//be careful not to use the same name for the property and the parameter of the setter
-let vehiculo = {
-  _marca: "",
-  _modelo: "",
-  _circulando: false,
-
-  // Getter para _marca
-  get marca() {
-    return this._marca;
-  },
-
-  // Setter para _marca
-  set marca(nuevaMarca) {
-    this._marca = nuevaMarca;
-  },
-
-  // Getter para _modelo
-  get modelo() {
-    return this._modelo;
-  },
-
-  // Setter para _modelo
-  set modelo(nuevoModelo) {
-    this._modelo = nuevoModelo;
-  },
-
-  // Getter para _circulando
-  get circulando() {
-    return this._circulando;
-  },
-
-  // Setter para _circulando
-  set circulando(enCirculacion) {
-    this._circulando = enCirculacion;
-  }
-};
-
-// Crear un objeto coche que hereda de vehiculo
-let coche = Object.create(vehiculo);
-
-// Usar los setters para definir valores
-coche.marca = "Ford";
-coche.modelo = "Escort";
-coche.circulando = true;
-
-// Mostrar el valor de los getters
-console.log(coche.marca);         // "Ford"
-console.log(coche.modelo);        // "Escort"
-console.log(coche.circulando);    // true
-console.log(vehiculo);            // { _marca: "", _modelo: "", _circulando: false }
-console.log(coche);               // { marca: "Ford", modelo: "Escort", circulando: true }
-
-
-//Example 5: defining getters and setters to get real encapsulation in construction functions
-/*
-  1- Convert properties into local variables by removing "this". Thus, properties are prevented from being accessed from outside
-  2.- Create getters (accesador) and setters (configurador) to access internal properties from outside
-*/
-function Persona(nombre, edad) {
-  //local variables. They exists only inside Persona
-  let _nombre = nombre;
-  let _edad = edad;
-
-  //getter
-  //Remember: By using this, properties and methods belong to the instance of the object that is created with new Persona(...). Without this, variables and functions are defined in the local context of the constructor function and will not be accessible from outside it. 
-  this.getNombre = function() {
-    return _nombre;
-  };
-
-  //setter
-  this.setNombre = function(nuevoNombre) {
-    _nombre = nuevoNombre;
-  };
-
-  this.saludar = function() {
-    console.log(`Yo, ${_nombre}, te saludo`);
-  };
-}
-
-const mamerto = new Persona("Mamerto", 30);
-
-console.log(mamerto.getNombre()); // "Mamerto"
-mamerto.setNombre("Mamertín");
-console.log(mamerto.getNombre()); // "Mamertín"
-mamerto.saludar(); // "Yo, Mamertín, te saludo"
-
-//Problem: methods are replicated at every instance
-
-//Example 6: defining getters and setters to get real encapsulation in construction functions by using defineProperty
-//It doesn't solve the former problem, it's just another way that provides more control
-function Persona(nombre, edad) {
-  // Variables locales
-  let _nombre = nombre;
-  let _edad = edad;
-
-  //Defining getter and setter this way permits using them as if they were a property (persona1.nombre would be the getter)
-  //The only way of being able to use local properties is defining methods inside the object, implying they are replicated in every instance
-  Object.defineProperty(this, 'nombre', {
-    get: function() {
-      return _nombre;
-    },
-    set: function(nuevoNombre) {
-      _nombre = nuevoNombre;
-    }
-/*    ,
-    writable: true,      // Permite que se cambie la propiedad
-    enumerable: true,    // La propiedad será enumerable en un bucle
-    configurable: true    // Permite modificar la propiedad más tarde*/
-  });
-
-  Object.defineProperty(this, 'edad', {
-    get: function() {
-      return _edad;
-    },
-    set: function(nuevaEdad) {
-      _edad = nuevaEdad;
-    }
-  });
-}
-
-Persona.prototype.saludar = function() {
-  console.log(`Yo, ${this.nombre}, te saludo.`);
-};
-
-const mamerto = new Persona("Mamerto", 30);
-
-// getters are used like if they were properties
-console.log(mamerto.nombre); // "Mamerto"
-mamerto.nombre = "Mamertín";
-console.log(mamerto.nombre); // "Mamertín"
-mamerto.saludar(); // "Yo, Mamertín, te saludo."
-
-
-//Example 7: defining getters and setters to get real encapsulation in classes
-class Persona {
-  #nombre; // Propiedad privada real
-  #edad;   
-
-  constructor(nombre, edad) {
-      this.#nombre = nombre;
-      this.#edad = edad;
-  }
-
-  // Getter para #nombre
-  get nombre() {
-    return this.#nombre;
-  }
-
-  // Setter para #nombre
-  set nombre(nuevoNombre) {
-    if (typeof nuevoNombre === "string" && nuevoNombre.length > 0) {
-      this.#nombre = nuevoNombre;
-    } else {
-      console.error("Nombre inválido");
-    }
-  }
-
-  // Getter para #edad
-  get edad() {
-    return this.#edad;
-  }
-
-  // Setter para #edad
-  set edad(nuevaEdad) {
-    if (Number.isInteger(nuevaEdad) && nuevaEdad > 0) {
-      this.#edad = nuevaEdad;
-    } else {
-      console.error("Edad inválida");
-    }
-  }
-}
-
-// Uso de la clase con getters y setters
-const persona2 = new Persona("Saturnino", 40);
-
-// Obtener valores mediante los getters
-console.log(persona2.nombre); // "Saturnino"
-console.log(persona2.edad);   // 40
-
-// Modificar valores mediante los setters
-persona2.nombre = "Herminio";
-persona2.edad = 45;
-
-console.log(persona2.nombre); // "Herminio"
-console.log(persona2.edad);   // 45
-
-// Intentar acceder directamente a propiedades privadas genera un error
-// console.log(persona2.#nombre); // Error
-
 
 ////////////////////////////////
 ////prototypical inheritance////
@@ -394,44 +140,41 @@ Prototypical inheritance:
 
 //Example 1. chained inheritance in literal objects by using Object.create
 const animal = {
-    hacerSonido() {
-      console.log('Sonido de animal');
-    }
+  hacerSonido() {
+    console.log('Sonido de animal');
+  }
 };
-  
+
 const perro = Object.create(animal);
 const bulldog = Object.create(perro);
 bulldog.hacerSonido();
-  
 
-//Example 2: chained inheritance in constructor functions by using Object.create and prototypes
-// When creating a constructor function, there's an implicit constructor method called..."constructor"
-function Animal() {}
 
-Animal.prototype.hacerSonido = function() {
-    console.log('Sonido de animal');
-};
-
-// Función para crear una nueva clase que herede de otra
-function crearClase(ClaseHija, ClasePadre) {
-    ClaseHija.prototype = Object.create(ClasePadre.prototype);    //now ClaseHija inherits from ClasePadre, but the former's constructor now points to the latter's one
-    ClaseHija.prototype.constructor = ClaseHija;    //This way, ClaseHija constructor points to its real constructor
+//Example 2: inheriting from a class created with a function
+function creaClase() {
+  return class {
+    constructor(nombre) {
+      this.velocidad = 0;
+      this.nombre = nombre;
+    }
+    corre(velocidad) {
+      this.velocidad = velocidad;
+      console.log(`${this.nombre} corre a una velocidad de ${this.velocidad}.`);
+    }
+  };
 }
 
-// Creación de las clases Perro y Bulldog
-function Perro() {}
-crearClase(Perro, Animal);
-
-function Bulldog() {}
-crearClase(Bulldog, Perro);
-
-// Creación de una instancia de Bulldog
-const miBulldog = new Bulldog();
-miBulldog.hacerSonido(); // 'Sonido de animal'
+class animal extends creaClase() {};
+new animal("pelusa").corre(4); 
+a=new animal("mancha");
+a.corre(3);
 
 
-//Example 3: chained inheritance in constructor function by using object.create
-//same as before but a little bit more complicated
+//Example 3: chained inheritance in constructor function
+/*Two methods can be used:
+  -Object.create allows you to create a new object with a specific prototype. This is useful when you want to establish the prototype of an object from the moment of its creation.
+  -Object.setPrototypeOf allows you to change the prototype of an existing object at runtime. It is used when you want to modify the prototype of an object after it has already been created.
+*/
 function Animal(tipo) {
   this.tipo = tipo;
 }
@@ -442,9 +185,16 @@ Animal.prototype.mover = function() {
 
 // Función para crear una nueva clase que herede de otra
 function crearClase(ClaseHija, ClasePadre) {
-  ClaseHija.prototype = Object.create(ClasePadre.prototype);    // La ClaseHija hereda de ClasePadre, pero el constructor de la ClaseHija apunta al de la ClasePadre
-  ClaseHija.prototype.constructor = ClaseHija;    // De esta manera, el constructor de ClaseHija apunta a su verdadero constructor
+  ClaseHija.prototype = Object.create(ClasePadre.prototype);    // La ClaseHija hereda de ClasePadre, incluido su constructor
+  ClaseHija.prototype.constructor = ClaseHija;    // El constructor de ClaseHija apunta a su verdadero constructor
 }
+
+/*
+// Alternative to crearClase: setPrototypeOf. It allows to change prototype even if the object has been created
+function crearClase(ClaseHija, ClasePadre) {
+  Object.setPrototypeOf(ClaseHija.prototype, ClasePadre.prototype);
+  ClaseHija.prototype.constructor = ClaseHija;
+}*/
 
 // Creando Mamífero y heredando de Animal
 function Mamifero(nombre) {
@@ -472,102 +222,38 @@ miGato.comer();   // "Tizón está comiendo" (heredado de Mamífero)
 miGato.maullar(); // "Tizón está maullando" (específico de Gato)
 
 
-
-//Example 4: chained inheritance in literal objects by using Object.setPrototypeOf to, once created the object, stablish its father
-//allows to change object prototype anytime
-const animal = {
-  hacerSonido() {
-      console.log('Sonido de animal');
+//Example 4: basic inheritance using class
+class Animal {
+  constructor(nombre) {
+    this.velocidad = 0;
+    this.nombre = nombre;
   }
-};
-
-const perro = {};
-Object.setPrototypeOf(perro, animal);
-
-const bulldog = {};
-Object.setPrototypeOf(bulldog, perro);
-
-bulldog.hacerSonido();
-
-
-//Example 5: chained inheritance in constructor functions by using Object.setPrototypeOf to, once created the object, stablish its father
-function Animal() {}
-
-Animal.prototype.hacerSonido = function() {
-    console.log('Sonido de animal');
-};
-
-// Función para crear una nueva clase que herede de otra
-function crearClase(ClaseHija, ClasePadre) {
-    Object.setPrototypeOf(ClaseHija.prototype, ClasePadre.prototype);
-    ClaseHija.prototype.constructor = ClaseHija;
+  corre(velocidad) {
+    this.velocidad = velocidad;
+    console.log(`${this.nombre} corre a una velocidad de ${this.velocidad}.`);
+  }
+  para() {
+    this.velocidad = 0;
+    console.log(`${this.nombre} se queda quieto.`);
+  }
 }
 
-// Creación de las clases Perro y Bulldog
-function Perro() {}
-crearClase(Perro, Animal);
+class Conejo extends Animal{
+  salta(distancia){
+    this.distancia = distancia;
+    console.log(`${this.nombre} salta a una distancia de ${this.distancia}.`);
+  }
+}
 
-function Bulldog() {}
-crearClase(Bulldog, Perro);
-
-// Creación de una instancia de Bulldog
-const miBulldog = new Bulldog();
-miBulldog.hacerSonido(); // 'Sonido de animal'
-
-
-zzzzzzzzzzzzzzzzzzzzzzzz
-function Animal(tipo){
-  this._tipo=tipo;
-};
-
-Animal.prototype.hacerSonido=function(){
-  console.log(`soy un ${this._tipo} y hago un sonido`);
-};
-
-/*function crearObjeto(hijo, padre){
-  hijo.prototype=Object.create(padre.prototype);
-  hijo.prototype.constructor=hijo;  
-}*/
+let conejo= new Conejo("Fufo");
+conejo.corre();
+conejo.salta(5);
 
 
-/////////zzzzzzzzzzzz////////
-function Perro(nombre){
-  Animal.call(this,"mamifero");
-  this._nombre=nombre;
-};
-Object.setPrototypeOf(Perro, Animal);
-//Perro.prototype.constructor=Perro;
-/*function comer(){
-  console.log (`soy ${this._nombre} y voy a comer`);
-}*/
-
-//crearObjeto(Perro, Animal);
-Perro.prototype.comer=function(){
-  console.log (`soy ${this._nombre} y voy a comer`);
-};
-const miPerro=new Perro("roque");
-miPerro.hacerSonido();
-miPerro.comer();
-
-Object.setPrototypeOf(Bulldog, Perro);
-//Bulldog.prototype.constructor=Bulldog;
-
-
-function Bulldog(nombre){
- Perro.call(this,nombre);
-};
-//crearObjeto(Bulldog, Perro);
-Bulldog.prototype.correr=function(){
-  console.log(`soy ${this._nombre} y estoy corriendo`);
-};
-const miBulldog=new Bulldog("perico");
-miBulldog.correr();
-zzzzzzzzzzzzzzzzzzzzzzzzzzz
-
-
-//Example 6: Inheritance using class syntax
+//Example 5: Chained inheritance using class
 //under the hood, it is prototypical inheritance. Methods in the class are assigned to prototype
 //there's an implicit constructor in class that creates the object with no initialization
+//parent constructor needs to be invoked at child constructor when the latter initializes any property
 class Animal {
   mover() {
     console.log("El animal se está moviendo");
@@ -575,21 +261,18 @@ class Animal {
 }
 
 class Mamifero extends Animal {
-  //needless to call super() because it does not have a constructor, and the constructor of the parent class (Animal) is invoked automatically by default.
   comer() {
     console.log(`${this.nombre} está comiendo`);
   }
 }
 
 class Gato extends Mamifero {
+  // The Gato class has its own constructor that initializes the cat's name. For this constructor to work correctly, it needs to ensure that the inheritance chain (between Gato and Mamífero, which inherits from Animal) is properly established.
+  
   constructor(nombre) {
-    //gato class has its own constructor that initialises the name of the cat. For that constructor to work correctly, it needs to make sure that the inheritance chain (between gato and mamifero, which inherits from Animal) is well established.
-
-    //super is needed in the constructor of the child class when the child class extends from another class and has its own constructor
-    //it it hadn't its own constructor, JavaScript will call its father constructor automatically
-
-    super(); // Llamada al constructor de Mamifero, que a su vez hereda de Animal
-    this.nombre = nombre; // Inicializa la propiedad 'nombre'
+    // The super keyword calls the parent's constructor and is necessary when the child class has its own constructor. If it didn't, JavaScript would automatically call the parent constructor.
+    super();
+    this.nombre = nombre;
   }
 
   maullar() {
@@ -604,7 +287,150 @@ miGato.comer();   // "Tizón está comiendo" (heredado de Mamífero)
 miGato.maullar(); // "Tizón está maullando" (específico de Gato)
 
 
-//Example 8: Inheritance using class syntax
+/////////////////////
+////Encapsulation////
+/////////////////////
+/*
+Encapsulation is about limiting direct access to certain properties and methods of an object. Its benefits are:
+  -protecting internal data
+  -ensuring the object is used in a controlled way
+  -allowing internal code to be modified without affecting the external interface
+  -hiding complexity
+
+Interaction with the object is allowed only through specific methods, and it is achieved by using:
+  -private properties and methods: these are not accessible from outside the object instance
+  -getters (accessors): allow access to the value of a property
+  -setters (mutators): allow setting a value to a property
+
+Getters and setters are preferable to regular functions because they provide:
+  -better encapsulation
+  -improved readability
+*/
+
+//Example 1: Encapsulation in literal objects
+//Using _ at the beginning of the name indicates private property, but it's just a convention that indicates you not to use this property outside the object. Despite that, you can do it. It is not a real encapsulation.
+
+//be careful not to use the same name for the property and the parameter of the setter
+let vehiculo = {
+  _marca:"",
+  _modelo:"",
+  _circulando:false,
+
+  get marca() {
+    return this._marca;
+  },
+  set marca(nuevaMarca) {
+    this._marca = nuevaMarca;
+  },
+  get modelo() {
+    return this._modelo;
+  },
+  set modelo(nuevoModelo) {
+    this._modelo = nuevoModelo;
+  },
+  get circulando() {
+    return this._circulando;
+  },
+  set circulando(enCirculacion) {
+    this._circulando = enCirculacion;
+  }
+
+};
+
+// Crear un objeto coche que hereda de vehiculo
+let coche = Object.create(vehiculo);
+
+//I can modify "private" properties
+coche._marca="Ford";  
+coche._modelo="Escort";
+coche._circulando=false;
+console.log(coche._marca);
+
+// Using setters to spefify values
+coche.marca = "Volkswagen";
+coche.modelo = "Golf";
+coche.circulando = true;
+
+// Using getters to show property values
+console.log(coche.marca);
+console.log(coche.modelo);
+console.log(coche.circulando);
+console.log(vehiculo);            // { _marca: "", _modelo: "", _circulando: false }
+console.log(coche);               // { marca: "Volkswagen", modelo: "Golf", circulando: true }
+
+
+//Example 2: encapsulation in construction functions
+/*Remember:
+  -By using "this", properties and methods belong to the instance of the object that is created with new Persona(...).
+  -By declaring local properties and methods instead of using "this", any access from outside is prevented
+  -The only way of being able to use local properties is defining methods inside the object, implying they are replicated in every object instance
+*/
+
+function Persona(nombre, edad) {
+  let _nombre = nombre;
+  let _edad = edad;
+  this._direccion="calle pez";  //despite being marked as private, it can be reached from outside
+
+  //Defining getter and setter this way permits using them as if they were a property (persona1.nombre would be the getter)
+  //writable, enumerable an configurable can't be used here, as it would collide with set behaviour
+  Object.defineProperty(this, 'nombre', {
+    get: function() {
+      return _nombre;
+    },
+    set: function(nuevoNombre) {
+      _nombre = nuevoNombre;
+    }
+  });
+
+/*ugly alternative: defining them as regular functions
+  this.getNombre = function() {
+    return _nombre;
+  };
+
+  this.setNombre = function(nuevoNombre) {
+    _nombre = nuevoNombre;
+  };
+
+  outside: mamerto.getNombre();
+*/
+
+  Object.defineProperty(this, 'edad', {
+    get: function() {
+      return _edad;
+    },
+    set: function(nuevaEdad) {
+      _edad = nuevaEdad;
+    }
+  });
+
+  //public method, as it's defined with "this"
+  this.despedirse=function(){
+    console.log(`Adiós, soy ${_nombre} y tengo ${calcularEdad()} años.`);
+  };
+
+  //Private method. Can't be invoked from outside
+  function calcularEdad() {
+    return _edad;
+  }
+}
+
+//public method that can be invoked by any instance of Persona
+Persona.prototype.saludar = function() {
+  console.log(`Yo, ${this.nombre}, te saludo.`);
+};
+
+const mamerto = new Persona("Mamerto", 30);
+
+// getters are used like if they were properties
+console.log(mamerto.nombre);
+mamerto.nombre = "Mamertín";
+console.log(mamerto.nombre);
+mamerto.saludar();
+mamerto.despedirse();
+mamerto.calcularEdad(); //Error
+
+
+//Example 3: Chained inheritance using class and private properties
 class Animal{
   mover(){
     console.log("me estoy moviendo");
@@ -617,7 +443,7 @@ class Animal{
 class Mamifero extends Animal{
   #tipo;
   constructor(nuevoTipo){
-    super();
+    super();  //super must be called in order for the parent constructor to create an object for "this"
     this.#tipo=nuevoTipo;
   }
   set tipo(nuevoTipo){
@@ -651,50 +477,106 @@ miPerro.tipo;
 miPerro.mover();
 console.log(miPerro); //only shows edad, the only unprotected property
 
+
+//Example 4: encapsulation in classes (from ECMAScript 2022)
+class Electrodomestico {
+  #fabricante;
+  #marca;
+
+  constructor(fabricante, marca, modelo, potencia) {
+    this.#fabricante = fabricante;
+    this.#marca = marca;
+    this.modelo = modelo;
+    this.potencia = potencia;
+  }
+
+  get fabricante() {
+    return this.#fabricante;
+  }
+
+  set fabricante(nuevoFabricante) {
+    this.#fabricante = nuevoFabricante;
+  }
+
+  get marca() {
+    return this.#marca;
+  }
+
+  set marca(nuevaMarca) {
+    this.#marca = nuevaMarca;
+  }
+
+  // Método público para mostrar la información pública del electrodoméstico
+  mostrarInfo() {
+    console.log(`Marca: ${this.#marca}, Modelo: ${this.modelo}, Potencia: ${this.potencia}W`);
+    this.#logInfo(); // Llamada al método privado desde un método público
+  }
+
+  // Método privado
+  #logInfo() {
+    console.log(`Información privada: Fabricante: ${this.#fabricante}, Marca: ${this.#marca}`);
+  }
+}
+
+class Tostadora extends Electrodomestico {
+  #tamanyoDelPan; // Propiedad privada
+
+  constructor(fabricante, marca, modelo, potencia, tamanyoDelPan) {
+    super(fabricante, marca, modelo, potencia); // Llamada al constructor de la clase base
+    this.#tamanyoDelPan = tamanyoDelPan; // Inicializamos la propiedad privada
+  }
+
+  // Getter para #tamanyoDelPan
+  get tamanyoDelPan() {
+    return this.#tamanyoDelPan;
+  }
+
+  // Setter para #tamanyoDelPan
+  set tamanyoDelPan(tamano) {
+    if (tamano > 0 && tamano <= 20) {
+      this.#tamanyoDelPan = tamano;
+    } else {
+      console.log("Tamaño del pan no válido.");
+    }
+  }
+
+  // Método para mostrar información sobre la tostadora
+  mostrarInfoTostadora() {
+    this.mostrarInfo(); // Llamada al método de la clase base
+    console.log(`Tamaño del pan: ${this.#tamanyoDelPan} cm`);
+  }
+
+  // Método privado específico de la tostadora
+  #prepararPan() {
+    console.log(`Preparando pan de ${this.#tamanyoDelPan} cm.`);
+  }
+
+  // Método público que invoca al método privado
+  tostar() {
+    this.#prepararPan(); // Llamada al método privado
+    console.log(`La tostadora está tostando un pan de ${this.#tamanyoDelPan} cm.`);
+  }
+}
+
+// Crear una instancia de Tostadora
+const miTostadora = new Tostadora("Ufesa", "Tosteria", "X1000", 800, 10);
+
+// Usar los accesores y modificadores
+console.log(miTostadora.fabricante);
+console.log(miTostadora.marca);
+miTostadora.marca = "SuperToster";
+console.log(miTostadora.marca);
+
+miTostadora.tostar();
+miTostadora.mostrarInfoTostadora();
+miTostadora.#prepararPan(); // Error: private method not accessible from outside class
+
+
 //////////////////////////
 ////overriding methods////
 //////////////////////////
 
-//Example 1: overriding child method in literal object and use call to invoke parent's constructor from child
-let vehiculo = {
-  _marca: "",
-  _modelo: "",
-  iniciar: function() {
-    console.log(`Iniciando el vehículo ${this._marca} ${this._modelo}`);
-  },
-
-  set marca(marca){
-    this._marca=marca;
-  },
-
-  set modelo(modelo){
-    this._modelo=modelo;
-  },
-
-  get marca(){
-    return this._marca;
-  },
-
-  get modelo(){
-    return this._modelo;
-  }
-
-};
-
-let coche = Object.create(vehiculo); // Crea un nuevo objeto que hereda de vehiculo
-coche.marca = "Ford";
-coche.modelo = "Fiesta";
-
-// Sobreescribir el método iniciar
-coche.iniciar = function() {
-  console.log(`Iniciando el coche ${this._marca} ${this._modelo}`);
-};
-
-coche.iniciar(); // Salida: Iniciando el coche Ford Fiesta
-vehiculo.iniciar.call(coche); // Salida: Iniciando el vehículo Ford Fiesta
-
-
-//Example 2: Overriding child method in literal object and calling its parent method by using Object.getPrototypeOf and call
+//Example 1: Overriding child method in literal object and calling its parent method by using Object.getPrototypeOf and call
 //call provides a context at prototype
 const padre = {
   saludar() {
@@ -710,14 +592,15 @@ hijo.saludar = function() {
 };
 
 hijo.saludarDesdePadre = function() {
-  Object.getPrototypeOf(this).saludar.call(this);  // calls padre.saludar method but with hijo context "padre.saludar.call(this);" would've been the same
+  Object.getPrototypeOf(this).saludar.call(this);  // calls padre.saludar method but with hijo's context.
+  //padre.saludar.call(this); //Alternative
 };
 
 hijo.saludar();
 hijo.saludarDesdePadre();
 
 
-//Example 3: Overriding child method in constructor function and calling parent's method in constructor function by using Object.getPrototypeOf and call
+//Example 3: Overriding child method in prototype in constructor function and calling parent's method in constructor function by using Object.getPrototypeOf and call
 function Vehiculo() {}
 
 Vehiculo.prototype.acelerar = function() {
@@ -744,7 +627,8 @@ Coche.prototype.acelerar = function() {
 const coche = new Coche("Toyota");
 coche.acelerar();  
 
-//Example 4: Overriding child method in class and calling parent's method in class by using super
+
+//Example 3: Overriding child method in class and calling parent's method by using super
 class Animal {
   hacerSonido() {
     console.log("El animal hace un sonido.");
@@ -765,6 +649,182 @@ class Perro extends Animal {
 
 const perro = new Perro("Roque");
 perro.hacerSonido();  
+
+
+//Example 4:Overriding methods
+class Animal {
+  constructor(nombre) {
+    this.velocidad = 0;
+    this.nombre = nombre;
+  }
+  corre(velocidad) {
+    this.velocidad = velocidad;
+    console.log(`${this.nombre} corre a una velocidad de ${this.velocidad}.`);
+  }
+  para() {
+    this.velocidad = 0;
+    console.log(`${this.nombre} se queda quieto.`);
+  }
+}
+
+class Conejo extends Animal{
+  para(msg=2000){ //will override parent's method "para"
+    super.para(); //references parent's method "para"
+    this.escondete(msg);
+  }
+  escondete(msg=2000){
+    //setTimeout(function() { super.stop() }, msg);   //error, super only works with arrow functions when using it inside functions
+    setTimeout(() => {
+       super.para();
+       console.log(`${this.nombre} se esconde en su madriguera durante ${msg/1000} segundos`)
+     },msg); // call parent "para" after 1sec
+  }
+  salta(distancia){
+    this.distancia = distancia;
+    console.log(`${this.nombre} salta a una distancia de ${this.distancia}.`);
+  }
+}
+
+let conejo= new Conejo("Fufo");
+conejo.para();  //method from conejo, not animal
+conejo.corre(6);
+conejo.salta(5);
+
+
+/////////////////////////////////////
+////static methods and properties////
+/////////////////////////////////////
+/* Two types of methods and properties:
+  - Instance: Associated with instances of an object (i.e., objects created from a constructor function or a class). 
+    -These methods are defined in the prototype of the constructor function or class.
+    -They are invoked using the name of the instance (e.g., `instance.method()`).
+    -Instance properties are created within the constructor function or class using `this.propertyName`.
+
+  - Static: Associated with the constructor function or class itself, not with its instances.
+    -They are invoked directly from the constructor function or class (e.g., `ClassName.method()`), without creating an instance.
+    -Static methods and properties are prefixed with `static` in a class definition and do not appear on instances.
+    -Static properties are unique to the class. Although they are not directly available on every instance, the value of a static property is consistent and ‘shared’ across all instances, since it comes from the same class.
+*/
+
+
+//Example 1: static methods and properties at constructor functions
+//A static method or property is not replicated at every instance of Mamifero (it is not defined in the constructor function) and not inherited (it is not defined in prototype)
+function Mamifero(nombre, velocidad = 0) {
+  this.nombre = nombre;
+  this.velocidad = velocidad;
+  Mamifero.numeroInstancias++;
+}
+
+Mamifero.prototype.corre = function(velocidad) {
+  this.velocidad = velocidad;
+  console.log(`${this.nombre} corre a una velocidad de ${this.velocidad}.`);
+};
+
+// Static method. If defined within the object, it would be a local method
+Mamifero.comparaVelocidad = function(animal1, animal2) {
+  if (animal1.velocidad - animal2.velocidad < 0)
+    return "corre más " + animal2.nombre;
+  else
+    return "corre más " + animal1.nombre;
+};
+
+//static property. If defined within the object, it could be local, global or instance, depending on how it would be defined
+Mamifero.numeroPatas=4;
+Mamifero.numeroInstancias=0;
+
+function crearClase(ClaseHija, ClasePadre) {
+  Object.setPrototypeOf(ClaseHija.prototype, ClasePadre.prototype);
+  ClaseHija.prototype.constructor = ClaseHija;
+}
+
+function Conejo(nombre, velocidad) {
+  Mamifero.call(this, nombre, velocidad);  // Llamar al constructor de Mamifero
+}
+crearClase(Conejo, Mamifero);
+
+function Perro(nombre, velocidad) {
+  Mamifero.call(this, nombre, velocidad);  // Llamar al constructor de Mamifero
+}
+crearClase(Perro, Mamifero);
+
+let conejito = new Conejo("achuchao", 7);
+let perrito = new Perro("cibeles", 3);
+
+console.log(Mamifero.comparaVelocidad(conejito, perrito));
+console.log (Mamifero.numeroPatas, Mamifero.numeroInstancias);
+// conejito.comparaVelocidad(conejito, perrito);  // Error, no es una función válida
+
+
+//Example 2: by using classes
+//comparaVelocidad does not belong to any object. It belongs to the parent class
+//comparaVelocidad can only be called from the class, not the instantiated objects
+class Animal {
+  static numeroInstancias=0;
+
+  constructor(nombre, velocidad=0) {
+    this.velocidad = velocidad;
+    this.nombre = nombre;
+    Animal.numeroInstancias++;
+  }
+  corre(velocidad) {
+    this.velocidad = velocidad;
+    console.log(`${this.nombre} corre a una velocidad de ${this.velocidad}.`);
+  }
+  static comparaVelocidad(animal1, animal2){
+    if (animal1.velocidad-animal2.velocidad<0)
+      return "corre más "+animal2.nombre;
+    else
+      return "corre más "+animal1.nombre;
+  }
+}
+
+class conejo extends Animal{};
+class perro extends Animal{};
+
+let conejito=new conejo("achuchao",7);
+let perrito=new perro("cibeles",3);
+console.log(Animal.comparaVelocidad(conejito, perrito));
+console.log(Animal.numeroInstancias);
+//conejito.comparaVelocidad(conejito, perrito); //Error, is not a valid function
+
+
+//Example 3: using classes and an array of objects
+class Vehiculo {
+  static numeroRuedas = 4; // Propiedad estática que representa el número de ruedas
+
+  constructor(modelo, maxVelocidad) {
+    this.maxVelocidad = maxVelocidad; // Propiedad de instancia
+    this.modelo = modelo;
+  }
+
+  desplaza(velocidad) {
+    this.velocidad = velocidad;
+    console.log(`${this.modelo} se desplaza a una velocidad de ${this.velocidad} km/h.`);
+  }
+
+  static comparaMaxVelocidad(vehiculo1, vehiculo2) {
+    return vehiculo1.maxVelocidad - vehiculo2.maxVelocidad;
+  }
+}
+
+class Auto extends Vehiculo {};
+class Moto extends Vehiculo {};
+
+let vehiculos = [
+  new Auto("Sedán", 200),
+  new Moto("Scooter", 80),
+  new Auto("Camioneta", 160)
+];
+
+console.log(Vehiculo.numeroRuedas, vehiculos[0].numeroRuedas); // El primero funciona, el segundo no
+
+Vehiculo.modelo = "Genérico"; // No funciona, no es una propiedad estática
+
+vehiculos.sort(Vehiculo.comparaMaxVelocidad);
+
+vehiculos.forEach((vehiculo) => {
+  console.log(vehiculo.modelo);
+});
 
 
 /////////////////////////////
@@ -848,11 +908,31 @@ console.log(otrosDatos);  // { edad: 28, ciudad: 'Sevilla' }
 
 
 
-///////////////////////////////////
-////optional chaining (?.)////
-///////////////////////////////////
-//it's been recently added. Allows to return undefined instead of error if a property doesn't exist.
+////////////////////////
+////Object operators////
+////////////////////////
+/*
+instanceOf checks not only whether an object was created directly from a class, but also whether there is a reference in the prototype chain of that object to the prototype of the class being checked.
+?. (optional chaining) allows to return undefined instead of error if a property doesn't exist (in strict mode). It should be used only to check properties that it’s fine for them not to exist. Thus, if some object must exist, but a property is optional, then it should be written object.property?.subproperty, but not object?.property?.subproperty
+because, if object happens to be undefined, we’ll see a programming error about it and fix it. Otherwise, if we overuse ?., coding errors can be silenced where not appropriate, and become more difficult to debug.
+*/
 
+//Example 1: instanceOf
+class Electrodomestico{};
+let electro=new Electrodomestico();
+
+// ¿Es un objeto de la clase Electrodoméstico?
+console.log( electro instanceof Electrodomestico );
+
+
+//Example 2: instanceOf
+let matriz = [1, 2, 3];
+console.log( matriz instanceof Array ); // verdadero
+console.log( matriz instanceof Object ); // verdadero
+//la clase Array hereda de Object
+
+
+//Example 3: optional chaining with properties
 let user3 = {}; // a user without properties
 //console.log(user.address.street); // Throws an error
 
@@ -864,12 +944,8 @@ console.log(user3.address && user3.address.street && user3.address.street.name )
 let user = {}; // user has no address
 console.log( user?.address?.street ); // returns undefined (no error)
 
-/* ?. should be used only to check properties that it’s fine for them not to exist.
-Thus, if some object must exist, but a property is optional, then it should be written object.property?.subproperty, but not object?.property?.subproperty
-because, if object happens to be undefined, we’ll see a programming error about it and fix it. Otherwise, if we overuse ?., coding errors can be silenced where not appropriate, and become more difficult to debug.*/
 
-
-//?.() works with methods
+//Example 4: optional chaining with methods
 let userAdmin = {
     isAdmin() {
       console.log("I am admin");
@@ -882,7 +958,7 @@ userAdmin.isAdmin?.(); // I am admin
 userGuest.isAdmin?.(); // nothing happens (although no such method)
 
 
-//?. allows to safely read a property from an object that may not exist
+//Example 5: ?. allows to safely read a property from an object that may not exist
 let clave = "nombre";
 
 let personal1 = {
@@ -894,3 +970,45 @@ let personal2 = null;
 console.log( personal1?.[clave] ); // Felipe
 //console.log( personal2.clave ); // throws an error as it doesn't exist
 console.log( personal2?.clave ); // undefined
+
+
+/////////////////////
+///////mixins////////
+/////////////////////
+//In JavaScript, a class can't inherit from two classes
+//Solution: inherit and copy methods
+class Base1 {
+  constructor() {
+    this.contador = 0;
+  }
+  aumenta() {
+    this.contador++;
+    return this;
+  }
+  muestra(){
+    console.log(this.contador);
+    return this;
+  }
+}
+
+//function that takes a base class as argument and returns a new class with additional methods
+let miMixin = (claseBase) => class extends claseBase {
+  constructor() {
+    super();
+  }
+  resta() {
+    this.contador--;
+    return this;
+  }
+}
+
+//mixin is used to extend the functionality of Base1
+class Extendida extends miMixin(Base1) {
+  reinicia() {
+    this.contador = 0;
+    return this;
+  }
+}
+
+let miObjeto = new Extendida();
+miObjeto.aumenta().aumenta().muestra().resta().reinicia().muestra();
