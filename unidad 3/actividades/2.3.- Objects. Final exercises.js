@@ -161,6 +161,49 @@ Description: Create an event system that simulates a calendar with inheritance, 
 
 Expected Result: A calendar event structure that includes encapsulation, inheritance, and property verification in an event calendar context with important events.*/
 
+
+/*Exercise 7. Object Creation and Initialization + Access to Methods and Properties + Dynamic Modification of Object
+
+Create an object user with properties: firstName, lastName, age, and a method getFullName that returns the full name. Then, dynamically add a gender property and update the age to a new value. Finally, log the result of calling getFullName() and the updated object.*/
+
+
+/*Exercise 8. Iteration and Copying + Destructuring + Encapsulation
+
+Create an object book with properties: title, author, and chapters (an array of strings).
+Iterate over the properties of the object and create a shallow copy of the object, excluding the chapters property. Then, destructure the copied object to extract the title and author. Finally, encapsulate the chapters array by making it a private property and creating a way to access it.*/
+
+
+/*Exercise 9. Correct Use of Context (this) + Setting Context with call and bind + Overriding
+
+Create an object person with properties name and city, and a method describe that uses this to return a string with the person's name and city.
+    -Change the context and invoke describe with a new person object and a different city.
+    -Then, create a subclass Employee with an overridden describe method that includes the job title. Use a technique to bind the describe method to a specific context and log the result.*/
+
+
+/*Exercise 10. Inheritance + Static Methods and Properties + Mixins
+
+Create a class Shape with properties x and y (coordinates), and a method area (returns a default value of 0).
+Create a subclass Rectangle that inherits from Shape and has properties width and height, and overrides the area method to return the area of the rectangle.
+Then, create a mixin Colorable with a method setColor to assign a color to the shape. Use the mixin in the Rectangle class and log the color of a Rectangle instance.
+Add a static method getShapeType in the Shape class that returns the string "Shape", and use it in the Rectangle class./*
+
+
+/*Exercise 11. Encapsulation + Destructuring + Overriding
+
+Create a class BankAccount with private properties for balance (using an appropriate technique) and a method getBalance. Add a method deposit that adds to the balance and withdraw that subtracts from it.
+
+    -Override the deposit method in a subclass PremiumAccount to add a bonus to the deposited amount.
+    -Use destructuring to extract the balance after a transaction and log the final amount.*/
+
+
+/*Exercise 12. ?. Operator + instanceOf + Mixins + Setting Context with call and bind
+
+Create a mixin Logger with a method log that logs a message to the console.
+Create a class Person with properties name and age. Use the Logger mixin to add logging capabilities to the Person class.
+Create an instance of Person and check if the log method exists before calling it.
+Then, check if the instance is of type Person. Additionally, invoke the log method with a specific context, such as a name argument.*/
+
+
 /*Extra 1:
 There’s a number object that allows to add and subtract:
 let number = {
