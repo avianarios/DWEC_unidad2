@@ -913,8 +913,12 @@ console.log(otrosDatos);  // { edad: 28, ciudad: 'Sevilla' }
 ////////////////////////
 /*
 instanceOf checks not only whether an object was created directly from a class, but also whether there is a reference in the prototype chain of that object to the prototype of the class being checked.
-?. (optional chaining) allows to return undefined instead of error if a property doesn't exist (in strict mode). It should be used only to check properties that it’s fine for them not to exist. Thus, if some object must exist, but a property is optional, then it should be written object.property?.subproperty, but not object?.property?.subproperty
-because, if object happens to be undefined, we’ll see a programming error about it and fix it. Otherwise, if we overuse ?., coding errors can be silenced where not appropriate, and become more difficult to debug.
+
+?. operator (optional chaining)
+  -checks if the expression to its left is null or undefined. If it is, it stops the evaluation and returns undefined instead of throwing an error. If it is neither null nor undefined, it continues with normal evaluation.
+  -Overusing ?. can suppress coding errors inappropriately, making them harder to debug. For instance, object?.property?.subproperty will result in undefined if object don't exist
+  -It should only be used for properties that are optional and can be absent without causing an issue. If an object itself is required, but a property within it is optional, it’s preferable to write object.property?.subproperty instead of object?.property?.subproperty. This way, if object happens to be undefined, a programming error will alert us, allowing us to fix it.
+  -only works if the variable is declared but is undefined or null
 */
 
 //Example 1: instanceOf
@@ -933,16 +937,16 @@ console.log( matriz instanceof Object ); // verdadero
 
 
 //Example 3: optional chaining with properties
-let user3 = {}; // a user without properties
-//console.log(user.address.street); // Throws an error
+let persona = {};
+console.log(persona.direccion);  //undefined
+//console.log(persona.direccion.calle);   //error. You're trying to access a property (calle) of undefined (direccion doesn't exist)
 
 //could be solved by checking before with ? or &&. Not very elegant
-console.log(user3.address ? user3.address.street : undefined);
-console.log(user3.address && user3.address.street && user3.address.street.name ); // undefined (no error)
+console.log(persona.direccion ? persona.direccion.calle : undefined);
+console.log(persona.direccion && persona.direccion.calle && persona.direccion.calle.nombre ); //if all properties exist, nombre si printed. Otherwise, undefined is returned
 
 //The optional chaining ?. stops the evaluation if the value before ?. is undefined or null and returns undefined.
-let user = {}; // user has no address
-console.log( user?.address?.street ); // returns undefined (no error)
+console.log( persona.direccion?.calle ); // undefined
 
 
 //Example 4: optional chaining with methods
@@ -954,23 +958,29 @@ let userAdmin = {
   
 let userGuest = {};
 userAdmin.isAdmin?.(); // I am admin
-//userGuest.isAdmin(); // throws an error (method doesn't exist)
-userGuest.isAdmin?.(); // nothing happens (although no such method)
+//userGuest.isAdmin(); // error (method doesn't exist)
+userGuest.isAdmin?.(); // undefined
 
 
-//Example 5: ?. allows to safely read a property from an object that may not exist
+//Example 5: avoiding overuse of ?.
 let clave = "nombre";
 
 let personal1 = {
-  nombre: "Felipe"
+  nombre: "Felipe",
+  direccion: {
+    calle: "pez",
+    numero: 2
+  }
 };
 
-let personal2 = null;
+let persona2=null;
 
-console.log( personal1?.[clave] ); // Felipe
-//console.log( personal2.clave ); // throws an error as it doesn't exist
-console.log( personal2?.clave ); // undefined
-
+console.log (persona1.[clave] ); // Felipe
+console.log (persona1.direccion.localidad) //error
+console.log (persona1.direccion?.localidad) //undefined
+console.log (persona2?.nombre ); // Not recommended. It can hide the fact that persona2 doesn't exist
+console.log (persona2.nombre ); // Recommended. It throws an error as it doesn't exist
+console.log (persona3?.nombre); //Error. ?.only works if the variable is declared but is undefined or null
 
 /////////////////////
 ///////mixins////////
