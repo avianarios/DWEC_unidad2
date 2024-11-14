@@ -162,6 +162,8 @@ const persona2 = crearPersona("Homobona", 25);
 function Persona(nombre, edad) {
   this.nombre = nombre;
   this.edad = edad;
+  let direccion;    //local variable, not accesible from the any instance of Persona
+  trabajo="operador"; //global variable (non-strict mode) or error (strict mode)
   this.saludar = function() {   //By defining this way, each instance of Persona has its own copy of saludar, it is not shared in memory
     console.log(`Hola, soy ${this.nombre}`);
   };
@@ -244,9 +246,9 @@ let lechoncillo=class lechon{
 let marranillo=new lechoncillo("pipas", 2);
 
 
-///////////////////////////////////////////////
-////accessing object properties and methods////
-///////////////////////////////////////////////
+////////////////////////////////////////////////////////
+////accessing object properties and invoking methods////
+////////////////////////////////////////////////////////
 //Example 1: by using dot
 console.log (persona.nombre);    //returns value of nombre
 console.log (persona.noExiste);    //returns undefined (non-strict mode) or error (strict-mode)
@@ -295,12 +297,13 @@ console.log(persona);
 ///////////////////////////////////////////////////////////////////////
 ////defining new properties and methods after the object is created////
 ///////////////////////////////////////////////////////////////////////
-//Example 1: defining a property directly
+//Example 1: assigning a new a property
+const persona={};
 persona.licenciado=false;
 persona['lugar de nacimiento']="Roma";  //this name is only possible by using brackets
 console.log(persona);
 
-//Example 2: external assignment of an arrow function to a property
+//Example 2: assigning an arrow function
 persona.saluda=()=>console.log ("hola a todos");
 persona.saluda();
 
