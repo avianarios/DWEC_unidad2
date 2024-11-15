@@ -29,14 +29,15 @@ Let's begin with some theory
 
   3. Function Execution Context. Each time a function or method is invoked, a new execution context is created for this function, including:
     -Its local variables
+    -Its parameters: The arguments passed to the function or method when invoking.
     -Reference to "this" object: The value of "this" within the function or method depends on how it is called.
       -For traditional functions:
-        -If the function is invoked as a method of an object (e.g., object.method()), this refers to the object itself.
-        -If the function is invoked as a standalone function (e.g., function()), this refers to the global object (in the browser, this would be window).  
-      -For arrow functions: The value of this does not depend on how the function is invoked; it is lexically inherited from the context where the arrow function is defined.
-        -If defined inside a method, this will inherit the value from the containing object or function.
-        -If defined at the root level, this will refer to the global object (in non-strict mode) or undefined (in strict mode).
-    -Its parameters: The arguments passed to the function or method when invoking.
+        -If the function is invoked as a method of an object (e.g., object.method()), "this" refers to the object itself.
+        -If the function is invoked as a standalone function (e.g., function()), "this" refers to the global object (in the browser, this would be window) in non-strict mode and undefined in strict mode.  
+      -For arrow functions: The value of "this" does not depend on how the function is invoked; it is lexically inherited from the context where the arrow function is defined.
+        -If defined inside a method, "this" will inherit the value from the containing object or function.
+        -If defined at the root level, "this" will refer to the global object (in non-strict mode) or undefined (in strict mode).
+
 
 4.- This
   "this" is a reserved word that refers to the current execution context. Its value is defined when the method or property is called, not when it's defined. It depends on its execution context
