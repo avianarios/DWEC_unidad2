@@ -30,19 +30,15 @@ Let's begin with some theory
   3. Function Execution Context. Each time a function or method is invoked, a new execution context is created for this function, including:
     -Its local variables
     -Its parameters: The arguments passed to the function or method when invoking.
-    -Reference to "this" object: The value of "this" within the function or method depends on how it is called.
+    -Reference to "this", which is a reserved word that references the current execution context. It allows methods to work dynamically for any object without relying on a specific name. Instead of hardcoding the object name, which might vary in different cases, "this" refers to the object that the method or function is currently being executed on, depending on how it is invoked. "This" makes your code more flexible, reusable, and dynamic.
+
+    The value of "this" within the function or method depends on how it is called.
       -For traditional functions:
         -If the function is invoked as a method of an object (e.g., object.method()), "this" refers to the object itself.
         -If the function is invoked as a standalone function (e.g., function()), "this" refers to the global object (in the browser, this would be window) in non-strict mode and undefined in strict mode.  
       -For arrow functions: The value of "this" does not depend on how the function is invoked; it is lexically inherited from the context where the arrow function is defined.
         -If defined inside a method, "this" will inherit the value from the containing object or function.
         -If defined at the root level, "this" will refer to the global object (in non-strict mode) or undefined (in strict mode).
-
-
-4.- This
-  "this" is a reserved word that refers to the current execution context. Its value is defined when the method or property is called, not when it's defined. It depends on its execution context
-
-  Using "this" permits to write methods that work for any object that calls them without having to specify the name of the object. Instead of relying on the object name, which may or may not be the same in all cases, "this" always refers to the actual object, making your code more flexible, reusable and dynamic.
 */
 
 //////////////////////////////
@@ -714,7 +710,7 @@ function Usuario(nombre) {
   };
 }
 
-Usuario.prototype.saluda = () => {
+Usuario.prototype.saluda=()=>{
   console.log("Hola soy " + this.nombre); // `saluda` is an arrow function in the prototype, so `this` refers to the lexical context where it was defined, which is the global context, not the instance of `Usuario`.
 };
 
@@ -723,10 +719,10 @@ Usuario.prototype.despidete = function() {
 };
 
 // Wrapping an arrow function within a traditional function fixes its context
-Usuario.prototype.grita = function() {
+Usuario.prototype.habla = function() {
   // Here, we are inside a traditional function, so `this` refers to the instance of Usuario that called the `grita` method
   const funcionFlecha = () => {
-    console.log("AAAAAAAAAAAA " + this.nombre); // `this` refers to the context of the `grita` function, which is the Usuario instance
+    console.log(`Soy ${this.nombre} y te voy a contar la historia del negro bembón`); // `this` refers to the context of the `grita` function, which is the Usuario instance
   };
   funcionFlecha(); // Call the arrow function
 };
@@ -737,7 +733,7 @@ usuario.despedir(); //it works
 
 usuario.saluda();   // undefined or error. saluda is an arrow function defined at global context. The context of saluda is global
 usuario.despidete();  //it works. context of despidete is usuario
-usuario.grita();  //it works. 
+usuario.habla();  //it works. 
 
 
 //Example 6: when a function is passed as a reference to another function, it loses its context
