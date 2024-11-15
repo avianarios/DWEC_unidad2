@@ -430,7 +430,7 @@ mamerto.despedirse();
 mamerto.calcularEdad(); //Error
 
 
-//Example 3: Chained inheritance using class and private properties
+//Example 3: Encapsulation and chained inheritance using class
 class Animal{
   mover(){
     console.log("me estoy moviendo");
@@ -651,7 +651,7 @@ const perro = new Perro("Roque");
 perro.hacerSonido();  
 
 
-//Example 4:Overriding methods
+//Example 4:Overriding methods in class
 class Animal {
   constructor(nombre) {
     this.velocidad = 0;
