@@ -609,7 +609,8 @@ Vehiculo.prototype.acelerar = function() {
 
 // Constructor para Coche, que hereda de Vehiculo
 function Coche(marca) {
-  Vehiculo.call(this); // Llama al constructor de Vehiculo. same as Vehiculo.constructor.call(this)
+  Vehiculo.call(this); // Calling Vehiculo constructor to ensure that the context of the current object (i.e. this in the Coche constructor) is correctly set to the properties defined in the Vehiculo constructor..
+  //same as Vehiculo.constructor.call(this)
   this.marca = marca;
 }
 
@@ -957,9 +958,9 @@ let userAdmin = {
   };
   
 let userGuest = {};
-userAdmin.isAdmin?.(); // I am admin
+console.log(userAdmin.isAdmin?.()); // I am admin
 //userGuest.isAdmin(); // error (method doesn't exist)
-userGuest.isAdmin?.(); // undefined
+console.log(userGuest.isAdmin?.()); // undefined
 
 
 //Example 5: avoiding overuse of ?.
