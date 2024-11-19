@@ -159,7 +159,7 @@ const persona2 = crearPersona("Homobona", 25);
 function Persona(nombre, edad) {
   this.nombre = nombre;
   this.edad = edad;
-  let direccion;    //local variable, not accesible from the any instance of Persona
+  let direccion = "";    //local variable, not accesible from the any instance of Persona
   trabajo="operador"; //global variable (non-strict mode) or error (strict mode)
   this.saludar = function() {   //By defining this way, each instance of Persona has its own copy of saludar, it is not shared in memory
     console.log(`Hola, soy ${this.nombre}`);
@@ -203,6 +203,10 @@ class Perro {
   constructor(nombre, edad) {
     this.nombre = nombre;
     this.edad = edad;
+    this.direccion = {  // Propiedad anidada
+      calle: '',
+      ciudad: ''
+    };
   }
 
   ladrar() {   //shared in memory
