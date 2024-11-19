@@ -4,24 +4,38 @@ Primitive type is lighter, more efficient in terms of being stored in memory and
     -Store additional properties
     -Interoperability with APIs expecting objects
     -Using some methods and properties of Number object like Number.MAX_VALUE...
-    -Objects can mutate, change their value and they are still the same object, pointing to the same memory location. Primitive types, can't. You can assign a new value to the same variable, but this is a new reference although it keeps the same variable name.
-*/
-/////////////////////////
-////creating a number////
-/////////////////////////
+    -Objects can mutate, change their value and they are still the same object, pointing to the same memory location. Primitive types, can't. You can assign a new value to the same variable, but this is a new reference although it keeps the same variable name. Advantage: saves memory and allows to share values
 
-let numero_primitivo1=5;   //primitive type
-let numero_primitivo2=10;
-let numero_objeto1=new Number(5);   //object
-let numero_objeto2=new Number(10);
-let numero_no_valido=new Number("hola");    //NaN
+
+Number object is focused on representation of numbers and individual operations on them like verification, conversion or access
+
+Some properties:
+    Number.MAX_VALUE: El valor numérico más grande representable en JavaScript (~1.7976931348623157e+308).
+    Number.MIN_VALUE: El valor numérico más pequeño representable (~5e-324).
+    Number.NaN: Representa el valor "Not-A-Number" (NaN).
+    Number.NEGATIVE_INFINITY: Representa el valor de infinito negativo.
+    Number.POSITIVE_INFINITY: Representa el valor de infinito positivo.
+    Number.MAX_SAFE_INTEGAER: Máximo número entero positivo que se puede representar de manera segura utilizando el tipo de dato Number.
+*/
+
+//////////////////
+////properties////
+//////////////////
+console.log("Number.MAX_VALUE:", Number.MAX_VALUE); // The largest representable number in JavaScript
+console.log("Number.MIN_VALUE:", Number.MIN_VALUE); // The smallest representable number in JavaScript
+console.log("Number.NaN:", Number.NaN); // Represents the "Not-A-Number" value
+console.log("Number.NEGATIVE_INFINITY:", Number.NEGATIVE_INFINITY); // Negative infinity
+console.log("Number.POSITIVE_INFINITY:", Number.POSITIVE_INFINITY); // Positive infinity
+console.log("Number.MAX_SAFE_INTEGER:", Number.MAX_SAFE_INTEGER); // The largest integer that can be safely represented using the Number type
+
 
 
 ///////////////////////////////
 ////JavaScript is imprecise////
 ///////////////////////////////
-//Javascript uses IEEE754 DP to storage real numbers: 1 bit for sign, 52 for number and 11 for exponent
+//Javascript uses IEEE754 DP to storage real numbers: 1 bit for sign, 52 for mantissa and 11 for exponent
 //integer number rank: -2^53+1 to 2^53-1
+//Despite being able to work with big numbers, it has problems with small, extra big numbers or certain fractions
 
 //example 1: not enoght room for such a big number
 console.log (1e500); //not enough room for storing such a big number. Returns Infinity
@@ -42,6 +56,74 @@ console.log ( sum == 0.3 ); // false
 //toFixed rounds the result using n digits after the point and returns it as a string
 console.log( sum.toFixed(2)==0.3 ); // true 
 
+//example 5: using BigInt
+//BigInt doesn't represent numbers by using FP. Therefore, its limit when representing a number is the system memory
+//it represents only integer numbers. an "n" has to be appended at the end of the number
+const maxSafeNumber = Number.MAX_SAFE_INTEGER; // 9007199254740991
+
+// Trabajando con Number (fuera del rango seguro)
+const num1 = maxSafeNumber + 1; // 9007199254740992
+const num2 = num1 + 1; // ¿Debería ser 9007199254740993?
+const num3 = num2 + 1; // ¿Debería ser 9007199254740994?
+
+// Trabajando con BigInt (precisión absoluta)
+const big1 = BigInt(maxSafeNumber) + 1n; // 9007199254740992n
+const big2 = big1 + 1n; // 9007199254740993n
+const big3 = big2 + 1n; // 9007199254740994n
+
+console.log("Con Number:");
+console.log("Primer número (MAX_SAFE_INTEGER + 1):", num1); // 9007199254740992
+console.log("Siguiente número:", num2); // 9007199254740992 (incorrecto)
+console.log("Otro más:", num3); // 9007199254740992 (incorrecto)
+
+console.log("\nCon BigInt:");
+console.log("Primer número (MAX_SAFE_INTEGER + 1n):", big1); // 9007199254740992n
+console.log("Siguiente número:", big2); // 9007199254740993n (correcto)
+console.log("Otro más:", big3); // 9007199254740994n (correcto)
+
+
+/////////////////////////
+////creating a number////
+/////////////////////////
+//Number object utilizes DP representation  
+//Example 1: primitive types
+let numero_primitivo1=5;
+let numero_primitivo2=10;
+
+//Example 2: Creating a Number Object
+let numero_objeto1=new Number(5);   //object
+let numero_objeto2=new Number(10);
+let numero_no_valido=new Number("hola");    //NaN
+
+//Example 3: a Number Object allows to define properties. Impossible with primitive types
+numero_objeto1.maximo=4;
+
+//Example 4: a Number Object allows to share its value
+//valueOf extracts the primitive value of the object
+let numObj1 = new Number(42);
+let numObj2 = numObj1;
+
+numObj2.valueOf() += 1;  // Cambia el valor de numObj1 y numObj2
+
+console.log(numObj1);
+console.log(numObj2);
+
+//Example 5: What would happen if not using valueOf?
+let numObj1 = new Number(42);
+let numObj2 = numObj1;
+
+numObj2++;  // numObj2 is converted to primitive value
+console.log(numObj1, typeof numObj1);
+console.log(numObj2, typeof numObj2);
+
+//Example 6: performing operations with objects
+let numObj1 = new Number(42);
+let numObj2 = numObj1;
+
+console.log(numObj1+numObj2);   //equivalent to numObj1.valueOf()+numObj2.valueOf()
+console.log (numObj1+4);    //equivalent to numObj1.valueOf()+4
+
+
 
 //////////////////
 ////comparison////
@@ -59,15 +141,6 @@ console.log (b==c); //false. They point to different memory locations, although 
 console.log (b.valueOf()==c.valueOf());     //true
 
 
-//Number object is focused on representation of numbers and individual operations on them like verification, conversion or access
-
-/*some properties:
-    Number.MAX_VALUE: El valor numérico más grande representable en JavaScript (~1.7976931348623157e+308).
-    Number.MIN_VALUE: El valor numérico más pequeño representable (~5e-324).
-    Number.NaN: Representa el valor "Not-A-Number" (NaN).
-    Number.NEGATIVE_INFINITY: Representa el valor de infinito negativo.
-    Number.POSITIVE_INFINITY: Representa el valor de infinito positivo.*/
-
 
 ////////////////////////////
 ////checking information////
@@ -79,8 +152,11 @@ console.log (b.valueOf()==c.valueOf());     //true
 
 
 //example 1: isFinite returns true if it's a finite number
+//Performs automatic type conversions. If the argument is not a number, it attempts to convert it to a number before checking.
+//It is more permissive than Number.isFinite() because it accepts other data types (such as strings or booleans) and implicitly converts them to numbers before checking if they are finite.
 console.log(isFinite(5),
             isFinite(new Number(5)),
+            isFinite(new Number(5).valueOf()),
             isFinite(Infinity), 
             isFinite(NaN), 
             isFinite(null), 
@@ -88,8 +164,11 @@ console.log(isFinite(5),
             isFinite(false),
             isFinite("Pepito piscinas"));
 
+//Does not perform automatic type conversions. Only returns true if the argument is a finite primitive number. 
+//It is stricter than the global version, as it only considers a value as finite if it is a number.
 console.log(Number.isFinite(5),
             Number.isFinite(new Number(5)),
+            Number.isFinite(new Number(5).valueOf()),
             Number.isFinite(Infinity), 
             Number.isFinite(NaN), 
             Number.isFinite(null), 
@@ -97,8 +176,11 @@ console.log(Number.isFinite(5),
             Number.isFinite(false),
             Number.isFinite("Pepito piscinas"));
 
-//Example 2: isNaN tries to convert argument to a number and returns true if the argument is not a number
+//Example 2: It checks if the argument is the value "NaN". It doesn't check if it is not a number.
+//isNaN tries to convert argument to a number and returns true if the argument is "NaN"
 console.log (isNaN(5), 
+            isNaN(new Number(5)),
+            isNaN(new Number(5).valueOf()),
             isNaN(Infinity), 
             isNaN(NaN), 
             isNaN(null), 
@@ -106,8 +188,10 @@ console.log (isNaN(5),
             isNaN(false), 
             isNaN("Pepito piscinas"));
 
-//It just checks if its argument is Not a number, but it doesn't try to convert it to number
+//It doesn't try to convert it to number
 console.log (Number.isNaN(5),
+            Number.isNaN(new Number(5)),
+            Number.isNaN(new Number(5).valueOf()),
             Number.isNaN(Infinity),
             Number.isNaN(NaN),
             Number.isNaN(null),
