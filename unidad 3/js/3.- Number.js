@@ -1,21 +1,15 @@
 "use sctrict";
 /*JavaScript provides a Number primitive type and a Number object
 Primitive type is lighter, more efficient in terms of being stored in memory and easier to use. However, sometimes it is recommended to use an object: 
-    -Store additional properties
-    -Interoperability with APIs expecting objects
-    -Using some methods and properties of Number object like Number.MAX_VALUE...
-    -Objects can mutate, change their value and they are still the same object, pointing to the same memory location. Primitive types, can't. You can assign a new value to the same variable, but this is a new reference although it keeps the same variable name. Advantage: saves memory and allows to share values
-
+    -Objects can create properties and store additional information
+    -Objects have predefined methods and properties like Number.MAX_VALUE, etc.
+    -Objects can change their value and they are still the same object, pointing to the same memory location. Primitive types, can't. You can assign a new value to the same variable, but this is a new reference although it keeps the same variable name. Advantage: saves memory and allows to share values
+    -Interoperability with APIs expecting objects. Remember an API is a set of functions, methods or access points that a program or system makes available for others to interact with it. These functions define:
+        -What can be done: For example, obtaining information, sending data or performing specific operations.
+        -How it is to be done: Including the parameters to be sent, the data structures to be accepted and the format of the responses.
+        -What is returned: As data in a defined format (e.g. JSON or XML) or even error messages in case something does not work as expected.
 
 Number object is focused on representation of numbers and individual operations on them like verification, conversion or access
-
-Some properties:
-    Number.MAX_VALUE: El valor numérico más grande representable en JavaScript (~1.7976931348623157e+308).
-    Number.MIN_VALUE: El valor numérico más pequeño representable (~5e-324).
-    Number.NaN: Representa el valor "Not-A-Number" (NaN).
-    Number.NEGATIVE_INFINITY: Representa el valor de infinito negativo.
-    Number.POSITIVE_INFINITY: Representa el valor de infinito positivo.
-    Number.MAX_SAFE_INTEGAER: Máximo número entero positivo que se puede representar de manera segura utilizando el tipo de dato Number.
 */
 
 //////////////////
@@ -24,8 +18,8 @@ Some properties:
 console.log("Number.MAX_VALUE:", Number.MAX_VALUE); // The largest representable number in JavaScript
 console.log("Number.MIN_VALUE:", Number.MIN_VALUE); // The smallest representable number in JavaScript
 console.log("Number.NaN:", Number.NaN); // Represents the "Not-A-Number" value
-console.log("Number.NEGATIVE_INFINITY:", Number.NEGATIVE_INFINITY); // Negative infinity
-console.log("Number.POSITIVE_INFINITY:", Number.POSITIVE_INFINITY); // Positive infinity
+console.log("Number.NEGATIVE_INFINITY:", Number.NEGATIVE_INFINITY); // Negative infinity. Used when an operation produces a negative number that exceeds the range of finite numbers
+console.log("Number.POSITIVE_INFINITY:", Number.POSITIVE_INFINITY); // Positive infinity. Used when an operation produces a number that exceeds the range of finite numbers
 console.log("Number.MAX_SAFE_INTEGER:", Number.MAX_SAFE_INTEGER); // The largest integer that can be safely represented using the Number type
 
 
@@ -103,7 +97,7 @@ numero_objeto1.maximo=4;
 let numObj1 = new Number(42);
 let numObj2 = numObj1;
 
-numObj2.valueOf() += 1;  // Cambia el valor de numObj1 y numObj2
+let obj2=new Number(numObj2.valueOf()+1);  // Cambia el valor de numObj1 y numObj2
 
 console.log(numObj1);
 console.log(numObj2);
