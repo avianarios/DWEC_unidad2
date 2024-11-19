@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading a JavaScript code</title>
+
+  <!--
+    Scripts in the header block the rendering of the page. This means that the browser will stop building the DOM (the structure of the page) while the script is being downloaded and executed UNLESS async or defer is used.
+    -->
+
+    <!--The following options can be used at header or at body, but it's recommended at header-->
+    <!--Option 1: Not recommended. It's better in a separate file-->
+    <script>
+      setTimeout(()=>{
+        console.log("hola")
+      }, 3000);
+    </script>
+
+    <!--Option 2: Loading external resources from a CDN (content delivery network)
+        Be careful about what you charge, it could be dangerous
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" integrity="sha512-wvHm8W2YdFx27tNwpYwOHKeglkIjG3CXMR1JLcEUQU9zI/hzP6UtWk4fNN0kfi32dT8Xq2a7rfFSJi5VpY2VwA==" crossorigin="anonymous" referrerpolicy="no-referrer" async></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js" async></script>
+    -->
+
+    <!--Option 3: Loading an own external JS file. 3 options:
+      <script src="../js/1.-script.js"></script>  -> HTML rendering is blocked until the script is donwloaded and executed
+
+      <script src="../js/1.-script.js" defer></script> -> script is loaded at background while HTML is being rendered and is executed only when HTML is rendered. Order is maintained
+
+      <script src="../js/1.-script.js" async></script>  -> script is loaded at background while HTML is being rendered but it is executed as soon as it is available, blocking HTML rendering. Order is not maintained
+
+
+    -->
+    <link rel="stylesheet" type="text/css" href="../css/estilos.css">
+  </head>
+  
+  <body>
+    <section>
+      <article>
+        <p>hola mundo</p>
+      </article>
+    </section>
+  </body>
+</html>
