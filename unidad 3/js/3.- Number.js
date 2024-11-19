@@ -17,6 +17,48 @@ let numero_objeto2=new Number(10);
 let numero_no_valido=new Number("hola");    //NaN
 
 
+///////////////////////////////
+////JavaScript is imprecise////
+///////////////////////////////
+//Javascript uses IEEE754 DP to storage real numbers: 1 bit for sign, 52 for number and 11 for exponent
+//integer number rank: -2^53+1 to 2^53-1
+
+//example 1: not enoght room for such a big number
+console.log (1e500); //not enough room for storing such a big number. Returns Infinity
+
+//example 2: problems representing some real numbers
+//due to the way JS represents real numbers, some of them can't be accurately represented in floating point
+//9999999999999999 is just over 2^53-1, so it can't be accurately represented. Number is rounded to the next one that can be represented
+console.log(9999999999999999);  //returns 10000000000000000
+
+//example 3: problems representing some real numbers
+//for better precision, libraries like Decimal.js, Big.js or bignumber.js should be used
+//translation 0.1 and 0.2 into binary gives infinite decimals
+let sum = 0.1 + 0.2; 
+console.log (sum)   //0.30000000000000004
+console.log ( sum == 0.3 ); // false
+
+//example 4: how to fix unaccurately real number representation
+//toFixed rounds the result using n digits after the point and returns it as a string
+console.log( sum.toFixed(2)==0.3 ); // true 
+
+
+//////////////////
+////comparison////
+//////////////////
+
+//primitive values can be directly compared among them. Object Number can't. They are compared as references meaning they are equal only if they point to the same memory location
+let a=42;
+let b=new Number(42);
+let c=new Number(42);
+
+console.log (a === 42);       // true, comparación directa de primitivos
+console.log (b === 42);       // false, b es un objeto, no un primitivo
+console.log (b == 42);        // true, el valor de `b` se convierte para la comparación
+console.log (b==c); //false. They point to different memory locations, although they have the same value
+console.log (b.valueOf()==c.valueOf());     //true
+
+
 //Number object is focused on representation of numbers and individual operations on them like verification, conversion or access
 
 /*some properties:
@@ -30,10 +72,11 @@ let numero_no_valido=new Number("hola");    //NaN
 ////////////////////////////
 ////checking information////
 ////////////////////////////
-/*there global functions and Number object methods that perform the same operation
-    -global functions -> work on primitive number. They convert the argument to number before performing the operation
-    -Number object static methods (they are invoked from Number itself, doesn't need to instantiate number object)-> work on number objects. They are stricter than global functions, as they do not convert the argument into numbers
+/* There are global functions and Number object methods that perform similar operations:
+    - Global functions -> Work on all types of values. They convert the argument to a number before performing the operation. Example: isFinite(), isNaN().
+    - Number object static methods -> Work strictly on primitive numbers. They do not convert the argument into a number and are stricter than global functions. Example: Number.isFinite(), Number.isNaN().
 */
+
 
 //example 1: isFinite returns true if it's a finite number
 console.log(isFinite(5),
@@ -45,8 +88,6 @@ console.log(isFinite(5),
             isFinite(false),
             isFinite("Pepito piscinas"));
 
-//JavaScript converts a primitive type into a Number Object (autoboxing) before checking if it's a number
-//It checks if its argument is a number, but it doesn't convert to number
 console.log(Number.isFinite(5),
             Number.isFinite(new Number(5)),
             Number.isFinite(Infinity), 
@@ -173,44 +214,5 @@ console.log(Number.parseInt('100px'), // 100
 
 //For clarity sake, if some methods or properties of Number object are in use, it's better to use Number static methods instead of global functions
 
-//////////////////////////////
-////IMPRECISE CALCULATIONS////
-//////////////////////////////
-//Javascript uses IEEE754 DP to storage real numbers: 1 bit for sign, 52 for number and 11 for exponent
-//integer number rank: -2^53+1 to 2^53-1
 
-//example 1: not enoght room for such a big number
-console.log (1e500); //not enough room for storing such a big number. Returns Infinity
-
-//example 2: problems representing some real numbers
-//due to the way JS represents real numbers, some of them can't be accurately represented in floating point
-//9999999999999999 is just over 2^53-1, so it can't be accurately represented. Number is rounded to the next one that can be represented
-console.log(9999999999999999);  //returns 10000000000000000
-
-//example 3: problems representing some real numbers
-//for better precision, libraries like Decimal.js, Big.js or bignumber.js should be used
-//translation 0.1 and 0.2 into binary gives infinite decimals
-let sum = 0.1 + 0.2; 
-console.log (sum)   //0.30000000000000004
-console.log ( sum == 0.3 ); // false
-
-//example 4: how to fix unaccurately real number representation
-//toFixed rounds the result using n digits after the point and returns it as a string
-console.log( sum.toFixed(2)==0.3 ); // true 
-
-
-//////////////////
-////comparison////
-//////////////////
-
-//primitive values can be directly compared among them. Object Number can't. They are compared as references meaning they are equal only if they point to the same memory location
-let a=42;
-let b=new Number(42);
-let c=new Number(42);
-
-console.log (a === 42);       // true, comparación directa de primitivos
-console.log (b === 42);       // false, b es un objeto, no un primitivo
-console.log (b == 42);        // true, el valor de `b` se convierte para la comparación
-console.log (b==c); //false. They point to different memory locations, although they have the same value
-console.log (b.valueOf()==c.valueOf());     //true
 
