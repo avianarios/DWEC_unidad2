@@ -298,7 +298,7 @@ Encapsulation is about limiting direct access to certain properties and methods 
   -hiding complexity
 
 Interaction with the object is allowed only through specific methods, and it is achieved by using:
-  -private properties and methods: these are not accessible from outside the object instance
+  -private properties and methods: these are not accessible from outside the object instance. They can't even be listed by using Object.keys
   -getters (accessors): allow access to the value of a property
   -setters (mutators): allow setting a value to a property
 
