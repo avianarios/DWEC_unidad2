@@ -214,29 +214,31 @@ let objNum2 = new Number(10.5);     // Objeto Number con valor 10.5 (no entero)
 console.log(objNum1.valueOf(), typeof(objNum1.valueOf()));
 console.log(objNum2.valueOf(),  typeof(objNum2.valueOf()));
 
-//example 2: conversion to string by using toString method and String global function. Numeric system base can be specified
-//using toString with a Number object, it first converts to a number and then applies toString.
+//example 2: conversion to string by using toString method and String global function. Numeric system base can be specified toString(2) -> binary
+//Number.toString converts the internal numeric value of the object to a string.
 console.log (new Number(Infinity).toString(),
             new Number(NaN).toString(),
+            new Number(undefined).toString(),
             new Number(null).toString(),
             new Number(false).toString(),
             new Number(5).toString()
 );
 
-//toString ca be used this way due to the autoboxing (envoltura). JavaScript temporary creates this primitive value to an equivalent object
-console.log(Infinity.toString(),  // "Infinity"
-            NaN.toString(),       // "NaN"
-            String(null),         // "null"
-            false.toString(),     // "false"
-            (5).toString()        // "5"
-);
-
-//string is a global function that converts correctly undefined and null
 console.log (String(Infinity),
             String(NaN),
+            String(undefined),
             String(null),
             String(false),
             String(5)
+);
+
+//toString ca be used this way due to the autoboxing (envoltura). JavaScript temporary converts this primitive value to an equivalent object
+console.log(Infinity.toString(),  // "Infinity"
+            NaN.toString(),       // "NaN"
+            undefined.toString(),
+            String(null),         // "null"
+            false.toString(),     // "false"
+            (5).toString()        // "5"
 );
 
 
