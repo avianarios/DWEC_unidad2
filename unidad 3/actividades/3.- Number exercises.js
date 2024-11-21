@@ -1,41 +1,54 @@
-//1. Creation and Conversion of Numbers
+//1.-JavaScript Precision
 
-    //Exercise 1: Create a variable num1 as a primitive number and a variable num2 as a Number object with the same value. Compare their values using == and ===. What do you observe?
+/* Exercise 1.- In JavaScript, 0.1 + 0.2 does not result in exactly 0.3 due to floating-point precision issues.
+        a) Write a program that adds 0.1 + 0.2 and compares the result with 0.3.
+        b) Round the result to two decimal places to verify if it matches 0.3.*/
 
-    //Exercise 2: Convert a string that represents a decimal number (e.g., "12.34") into a number. Print the result.
+//2.-Creating a Number Object
 
-    //Exercise 3: Convert a string that contains a hexadecimal number (e.g., "0x1A") into a number. Print the result.
+/* Exercise 2.- Create a Number object from the following values:
+    - An integer.
+    - A decimal number.
+    - A string containing a valid number.
+     Check and explain the type of each resulting object.*/
 
-//2. Value Verification
+//Exercise 3.- Use the Number constructor to attempt creating an object with invalid values, such as "Hello", undefined, and null.
 
-    //Exercise 4: Check if several values are finite. Test with the following: Infinity, NaN, 100, -200, 0.
+//3.-Getting the Value of a Number Object
 
-    //Exercise 5: Check if several values are NaN. Test with the following: NaN, 0/0, undefined, Number("foo").
+// Exercise 4.- Create a Number object with the value 42. Use the appropriate method to get its primitive value and verify its type.
 
-    //Exercise 6: Convert several strings into integers. Test with the following: "42", "42.5", "0x1F", and "not a number".
+//4.- Checking if a Number is Finite
+/* Exercise 5.- Write a function that takes a number as a parameter and checks if it is finite or infinite. Test the function with the following values:
+    - 42
+    - Infinity
+    - -Infinity
+    - NaN*/
 
-    //Exercise 7: Convert several strings into floating-point numbers. Test with the following: "42.5", "0.1", and "3.14abc".
 
-//3. Comparison and Precision
 
-    //Exercise 8: Compare the results of 0.1 + 0.2 and 0.3 using a comparison with tolerance. Print true or false depending on the result.
+//5.- Checking for NaN
+/* Exercise 6.- Create a function that determines if a value is NaN. Test it with:
+    - The result of 0 / 0.
+    - The result of 42 / "Hello".
+    - A valid number.*/
 
-    //Exercise 9: Create a function called areNumbersEqual(a, b) that compares two numbers to determine if they are practically equal. Test the function with various pairs of numbers.
 
-//4. Method Usage
+//6.- Checking if a Number is an Integer
+/* Exercise 7.- Write a function that takes a number and returns true if it is an integer or false otherwise. Test it with the following values:
+    - 3
+    - 3.14
+    - -42
+    - NaN*/
 
-    //Exercise 10: Create a Number object and convert its value to a string in different bases (2, 8, 10, 16). Print the results.
+// 7. Conversion to String
+/* Exercise 8.- Convert the following numbers to strings using different methods and analyze the results:
+    - 42
+    - 3.14159
+    - Infinity
+    - NaN*/
 
-    //Exercise 11: Create a Number object and obtain its primitive value. Print the result.
 
-//5. Floating Point Numbers and Representation
+// Exercise 8.- Given the number 1234567º.89, convert it into a string formatted with thousands separators. For example: "1,234,567.89".
 
-    //Exercise 12: Print the maximum and minimum values that can be represented in the Number object. Explain what they represent.
 
-    //Exercise 13: Print the value of NaN and check if it is a number. What is the result?
-
-//6. Application Exercises
-
-    //Exercise 14: Write a function called convertToBinary(num) that receives a number and returns its binary representation as a string.
-
-    //Exercise 15: Write a function called sumNumbers(a, b) that takes two numbers, sums them, and returns the result. Ensure to correctly handle cases where the numbers are decimal.
