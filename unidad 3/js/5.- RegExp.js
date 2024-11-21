@@ -40,6 +40,108 @@ console.log(regex.exec(cadena)); //null
 console.log(regex2.exec(cadena)) //Array["JavaScript"]
 
 
+/////////////////
+////modifiers////
+/////////////////
+/*
+  /g: looks for all occurrences, not only the first one
+  /i: case insensitive
+  /m: Multiline (makes ^ and $ match at the beginning and end of each line).
+  /s: Allows . to match line breaks.
+  /y: Sticky search (match from last found position).
+  /u: Without the u modifier, regular expressions in JavaScript can handle characters beyond basic ASCII (such as accented characters), because JavaScript uses UTF-16 to represent strings. However, it does not correctly recognise certain Unicode characters that require multiple code points (such as emojis or some international symbols).
+*/
+
+//example 1: i flag
+const cadena='JavaScript es divertido y no es difícil. Te gustará JavaScript';
+regex=/javascript/i;
+console.log(regex.test(cadena));
+
+
+//Example 3: combining flags
+const cadena='JavaScript es divertido y no es difícil. Te gustará JavaScript';
+regex=/javascript/ig;
+console.log(regex.lastIndex, 
+            regex.exec(cadena),
+            regex.lastIndex);
+
+
+//Example 2: iterating through results
+//exec returns an array with only the first occurrence after lastIndex. In order to get the rest of them, you must iterate as it keeps an index
+const cadena='JavaScript es divertido y no es difícil. Te gustará JavaScript';
+regex=/JavaScript/gi;
+let resultado;
+console.log regex.lastIndex;
+while ((resultado = regex.exec(cadena)) !== null) {
+  console.log(regex.lastIndex, resultado[0]);
+}
+
+
+//Example 4: dinamic patterns
+const palabrasClave = ['JavaScript', 'Python', 'Ruby'];
+const patronDinamico = new RegExp(palabrasClave.join('|'), 'ig');   //logic OR with i and g flags
+const texto = 'Me encanta programar en JavaScript y Python';
+
+while ((resultado = patronDinamico.exec(texto)) !== null) {
+  console.log(patronDinamico.lastIndex, resultado[0]);
+}
+
+
+//Example 5: sticky modifier gives you much more control
+const texto = "hola hola.hola";
+const regexY = /hola/y;   //it'll look for hola. If it's not placed EXACTLYat lastIndex position, it'll not be found
+const regexG = /hola/g;   //it'll look for hola STARTING at lastIndex position
+
+let resultado;
+while ((resultado = regexY.exec(texto)) !== null) {
+    console .log(`Coincidencia encontrada con y: ${resultado[0]} en la posición ${regexY.lastIndex - resultado[0].length}`);
+}
+
+//if we wanted to search regexY again from the beginnig, we would have to restart regexY.lastIndex=0
+
+while ((resultado = regexG.exec(texto)) !== null) {
+    console .log(`Coincidencia encontrada con g: ${resultado[0]} en la posición ${regexG.lastIndex - resultado[0].length}`);
+}
+
+
+//Example 6: m flag
+//m makes ^ and $ match at the beginning and end of each line
+const texto = `Hola mundo
+JavaScript es genial
+¡Aprender es divertido!`;
+
+const regexSinM=/^JavaScript/; // Coincide con "JavaScript" al inicio de la cadena
+console.log(regexSinM.test(texto)); // false
+
+const regexConM=/^JavaScript/m; // Coincide con "JavaScript" al inicio de cualquier línea
+console.log(regexConM.test(texto)); // true
+
+const regexFinalLinea=/divertido!$/;  //Coincide con "divertido!" al final de la cadena
+console.log(regexFinalLinea.test(texto)); // false
+
+const regexFinalLineaConM=/divertido!$/m; // Coincide con "divertido!" al final de cualquier línea
+console.log(regexFinalLineaConM.test(texto)); // true
+
+
+//Example 7: s flag
+//allow . to match line breaks
+const texto = `Hola mundo.
+JavaScript es genial.`;
+
+// Sin el modificador s
+const regexSinS = /Hola.*genial/;
+console.log(regexSinS.test(texto)); // false
+
+
+//Example 8: u flag
+const texto = "El símbolo Ω representa ohmios.";
+const regexSinU = /\w/; // Busca caracteres alfanuméricos
+const regexConU = /\w/u;
+
+console.log(regexSinU.test("Ω")); // false (Sin soporte Unicode)
+console.log(regexConU.test("Ω")); // true (Con soporte Unicode)
+
+
 ////////////////////////////////////////
 ////properties of regular expression////
 ////////////////////////////////////////
@@ -64,79 +166,8 @@ console.log(regex.global); // false
 //Example 2: lastIndex and iterating through results
 const texto='JavaScript es divertido y no es difícil. Te gustará JavaScript';
 const regexG = /javascript/ig; // Coincide con números (modificador global)
-
-let resultado;
-while ((resultado = regexG.exec(texto)) !== null) {
-//  console.log(`Coincidencia encontrada con g: ${resultado[0]} en la posición ${regexG.lastIndex - resultado[0].length}`);
-  console.log(`index is now at ${regexG.lastIndex} position`);
-}
-
-
-/////////////////
-////modifiers////
-/////////////////
-/*
-  /g: looks for all occurrences, not only the first one
-  /i: case insensitive
-  /m: Multiline (makes ^ and $ match at the beginning and end of each line).
-  /s: Allows . to match line breaks.
-  /y: Sticky search (match from last found position).
-  /u: Unicode support, allowing to work with non ASCII characters, like emojis or special characters
-*/
-
-//example 1: testing using modifiers
-const cadena='JavaScript es divertido y no es difícil. Te gustará JavaScript';
-regex=/javascript/i;
-console.log(regex.test(cadena));
-
-
-//Example 2: combining modifiers
-regex2=new RegExp('javascript', 'ig');
-console.log (regex.exec(cadena));
-
-
-//Example 3: create dinamic patterns (only possible by using object)
-//  The symbol | acts as an OR operator. For example, cat|dog matches ‘cat’ or ‘dog’.
-const palabrasClave = ['JavaScript', 'Python', 'Ruby'];
-// Creating a dynamic pattern
-const patronDinamico = new RegExp(palabrasClave.join('|'), 'ig');   //logic OR with i and g flags
-const texto = 'Me encanta programar en JavaScript y Python';
-
-console.log(patronDinamico.exec(texto));    //it only returns the first occurrence
-
-//Example 4: sticky modifier gives you much more control
-const texto = "hola hola.hola";
-const regexY = /hola/y;   //it'll look for hola strictly at lastIndex position
-const regexG = /hola/g;   //it'll look for hola starting at lastIndex position
-
-let resultado;
-while ((resultado = regexY.exec(texto)) !== null) {
-    console .log(`Coincidencia encontrada con y: ${resultado[0]} en la posición ${regexY.lastIndex - resultado[0].length}`);
-}
-
-//if we wanted to search regexY again from the beginnig, we would have to restart regexY.lastIndex=0
-
-while ((resultado = regexG.exec(texto)) !== null) {
-    console .log(`Coincidencia encontrada con g: ${resultado[0]} en la posición ${regexG.lastIndex - resultado[0].length}`);
-}
-
-
-
-
-
-///////////////////////////////
-////looking for occurrences////
-///////////////////////////////
-//exec returns an array with only the first occurrence even if a global flag is utilized. In order to get the rest of them, you must iterate as it keeps an index
-//Example 1: getting the first occurrence
-regex=/javascript/ig;
-console.log(regex.exec(cadena));  // ["JavaScript"]
-
-//Example 2: iterating to get all the occurrences
-let resultado;
-while ((resultado = regex.exec(cadena)) !== null) {
-  console.log(resultado[0]); // "JavaScript", luego "JavaScript"
-}
+regexG.exec(texto)
+console.log(regexG.lastIndex);
 
 
 ///////////////////
@@ -189,10 +220,11 @@ const greedyRegex = /<div>.*<\/div>/g;  // Codicioso. Obtiene tanta información
 console.log(greedyRegex.exec(cadena));	// ['<div>Texto 1</div><div>Texto 2</div>']
 
 //non greedy
+const cadena = "<div>Texto 1</div><div>Texto 2</div>";
 const nonGreedyRegex = /<div>(.*?)<\/div>/g;  //non-greedy. It gets as less information as it can
 const resultado = [];
 let match;
-while ((match = regex.exec(cadena)) !== null) {
+while ((match = nonGreedyRegex.exec(cadena)) !== null) {
     resultado.push(match[1]); // Capturamos el contenido dentro de las etiquetas
 }
 console.log(resultado); // ['Texto 1', 'Texto 2']
@@ -202,6 +234,41 @@ let texto = "a123b456b";
 let resultadoCodicioso=texto.match(/a.*b/);
 let resultadoNoCodicioso=texto.match(/a.*?b/);
 console.log(resultadoCodicioso, resultadoNoCodicioso);  // ["a123b456b"] ["a123b"]
+
+
+/////////////////////////
+////groups and ranges////
+/////////////////////////
+//() allows apply quantifiers to a group of characters
+//Important: exec will return the full coincidence AND the last captured group
+
+
+//Example 1: grouping with ()
+//(ab)+ -> will try to capture groups of (ab) repeated one or more times
+//as + is greedy by default, it'll find the longest amount of (ab) it can put together
+regex = /(ab)+/;
+console.log(regex.exec('abababc')); // ["ababab", "ab"] 
+
+//Example 2: grouping with ()  
+const regex = /(ho){2,3}/;  // "ho" repetido 2 o 3 veces
+const texto = "ho hohoho";
+console.log(regex.exec(texto)); // ["hohoho"]
+//console.log(texto.match(regex)); // ["hohoho", "ho"] "ho" is the last captured group
+
+//Example 3: ranges with []. Just one character
+const regex = /[a-c]/; // Coincide con "a", "b" o "c"
+const texto = "adceba";
+console.log(regex.exec(texto)); // ["a"] is the first element it finds
+//console.log(texto.match(regex)); // ["a"]
+
+//Example 4: combining groups and ranges
+const regex = /([a-c]{2})[0-9]+/g;
+const texto = "ab123 cd456 bc789";
+let resultado;
+
+while ((resultado = regex.exec(texto)) !== null) {
+    console.log(resultado); ["ab123", "ab"] and ["bc789", "ac"]
+}
 
 
 /////////////////////////
@@ -230,20 +297,28 @@ console.log(regex.exec('ab'));     // null
 regex = /\d/;
 console.log(regex.exec('abc123')); // ["1"]
 
-zzzzzzzzz
-const texto = "123.456 789"; // Números con un punto entre ellos
-const regexG = /\d+/g; // Coincide con números (modificador global)
-
+//Example 3: working with \d and groups
+const regex = /(\d{2})-(\d{2})-(\d{4})/g;  // Fecha en formato dd-mm-yyyy
+const texto = "La fecha de hoy es 21-11-2024, y mañana será 22-11-2024.";
 let resultado;
-regexG.lastIndex = 0; // Inicia desde el principio de la cadena
-
-while ((resultado = regexG.exec(texto)) !== null) {
-    console.log(`Coincidencia encontrada con g: ${resultado[0]} en la posición ${regexG.lastIndex - resultado[0].length}`);
+while ((resultado = regex.exec(texto)) !== null) {
+    console.log(resultado);
 }
 
+//Example 3: combining classes: \d and +
+//also difference between g and y
+const texto = "123.456 789"; // Números con un punto entre ellos
+const regexG = /\d+/g; // Coincide con números (modificador global)
+const regexY = /\d+/y; // Coincide con números (modificador global)
 
+let resultado;
+while ((resultado = regexY.exec(texto)) !== null) {
+    console.log(`Coincidencia encontrada con y: ${resultado[0]} en la posición ${regexY.lastIndex - resultado[0].length}`);
+}
 
-
+while ((resultado = regexG.exec(texto)) !== null) {
+  console.log(`Coincidencia encontrada con g: ${resultado[0]} en la posición ${regexG.lastIndex - resultado[0].length}`);
+}
 
 //Example 3: \D, no digit
 regex = /\D/;
@@ -278,15 +353,6 @@ console.log(regex.exec('Hola')); // ["H"]
 //Example 10: \
 regex=/\//;  //regular expression to look for "/"
 console.log(regex.exec('/hola/'));  //["\"]
-
-
-/////////////////////////
-////groups and ranges////
-/////////////////////////
-//() allow parts of a regular expression to be grouped together.
-//Example 1: ()
-regex = /(abc)+/;
-console.log(regex.exec('abcabcabc')); // ["abcabcabc"]
 
 
 //////////////
