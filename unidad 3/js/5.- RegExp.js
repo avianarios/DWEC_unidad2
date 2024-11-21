@@ -2,11 +2,28 @@
 ////creation////
 ////////////////
 //example 1: literal expresion
+//useful when you know the expression at writing time
 const exp1=/gato/;
 
 //example 2: by using object creator
+//useful to create dynamic regular expressions taken from user inputs
 const exp2=new RegExp('perro');
 
+//Example 3: Creating a dynamic regexp and combining with modifiers
+const palabraUsuario = prompt("¿Qué palabra quieres buscar?");
+const regexDinamico = new RegExp(palabraUsuario, 'ig');
+
+/*
+Use literal syntax (/pattern/) when:
+    The pattern is fixed and known in advance.
+    You are looking for simpler, more readable code.
+    You want the best performance in static situations.
+
+Use the RegExp(‘pattern’) constructor when:
+    You need a dynamic pattern that can change at runtime.
+    The pattern depends on a variable or user input.
+    You work with special characters that can be difficult to handle with literal syntax.
+*/  
 
 ///////////////
 ////testing////
@@ -15,8 +32,44 @@ const exp2=new RegExp('perro');
 const regex=/javascript/;
 const regex2=/JavaScript/;
 const cadena='JavaScript es divertido y no es difícil. Te gustará JavaScript';
-console.log(regex.exec(cadena)); //false
-console.log(regex2.texto(cadena)) //true
+console.log(regex.test(cadena)); //false
+console.log(regex2.test(cadena)) //true
+
+//Example 2: get an array with coincidence
+console.log(regex.exec(cadena)); //null
+console.log(regex2.exec(cadena)) //Array["JavaScript"]
+
+
+////////////////////////////////////////
+////properties of regular expression////
+////////////////////////////////////////
+/*
+  -source: The pattern of the regular expression as a string.
+  -flags: The flags used in the regular expression.
+  -lastIndex: position in the string from which the next search for a match will start when using a method with a g (global) or y (sticky) modifier. This property is automatically updated after each match, being its value the position right after the last letter of the last coincidence. Its value is essential to control the progress of the search through the string.
+  -global: if global flag (g) is set
+  -ignoreCase: if ignorecase flag (i) is set
+  -sticky: if sticky flag (y) is set
+  -multiline: if multiline flag (m) is set
+  -unicode: if unicode flag (u) is set
+*/
+
+//Example 1: some properties
+const regex = /javascript/i;
+console.log(regex.source); // "javascript"
+console.log(regex.sticky); // false
+console.log(regex.ignoreCase); // true
+console.log(regex.global); // false
+
+//Example 2: lastIndex and iterating through results
+const texto='JavaScript es divertido y no es difícil. Te gustará JavaScript';
+const regexG = /javascript/ig; // Coincide con números (modificador global)
+
+let resultado;
+while ((resultado = regexG.exec(texto)) !== null) {
+//  console.log(`Coincidencia encontrada con g: ${resultado[0]} en la posición ${regexG.lastIndex - resultado[0].length}`);
+  console.log(`index is now at ${regexG.lastIndex} position`);
+}
 
 
 /////////////////
@@ -32,40 +85,43 @@ console.log(regex2.texto(cadena)) //true
 */
 
 //example 1: testing using modifiers
+const cadena='JavaScript es divertido y no es difícil. Te gustará JavaScript';
 regex=/javascript/i;
-console.log(regex.exec(cadena));  //true
+console.log(regex.test(cadena));
 
 
-/*
-Use literal syntax (/pattern/) when:
-    The pattern is fixed and known in advance.
-    You are looking for simpler, more readable code.
-    You want the best performance in static situations.
+//Example 2: combining modifiers
+regex2=new RegExp('javascript', 'ig');
+console.log (regex.exec(cadena));
 
-Use the RegExp(‘pattern’) constructor when:
-    You need a dynamic pattern that can change at runtime.
-    The pattern depends on a variable or user input.
-    You work with special characters that can be difficult to handle with literal syntax.
-*/    
 
+//Example 3: create dinamic patterns (only possible by using object)
 //  The symbol | acts as an OR operator. For example, cat|dog matches ‘cat’ or ‘dog’.
-
-//example 3: create dinamic patterns (only possible by using object)
-// Lista de palabras clave que el usuario puede ingresar
 const palabrasClave = ['JavaScript', 'Python', 'Ruby'];
-
-// Crear un patrón dinámico que busque cualquiera de las palabras clave
+// Creating a dynamic pattern
 const patronDinamico = new RegExp(palabrasClave.join('|'), 'ig');   //logic OR with i and g flags
-
-// Cadena de texto en la que se buscarán las palabras clave
 const texto = 'Me encanta programar en JavaScript y Python';
 
-// Usamos el patrón dinámico para buscar coincidencias en el texto
-console.log(patronDinamico.exec(texto));  //true
+console.log(patronDinamico.exec(texto));    //it only returns the first occurrence
 
-// También podemos usarlo para encontrar todas las coincidencias
-const coincidencias = texto.match(patronDinamico);
-console.log(coincidencias); // ["JavaScript"]
+//Example 4: sticky modifier gives you much more control
+const texto = "hola hola.hola";
+const regexY = /hola/y;   //it'll look for hola strictly at lastIndex position
+const regexG = /hola/g;   //it'll look for hola starting at lastIndex position
+
+let resultado;
+while ((resultado = regexY.exec(texto)) !== null) {
+    console .log(`Coincidencia encontrada con y: ${resultado[0]} en la posición ${regexY.lastIndex - resultado[0].length}`);
+}
+
+//if we wanted to search regexY again from the beginnig, we would have to restart regexY.lastIndex=0
+
+while ((resultado = regexG.exec(texto)) !== null) {
+    console .log(`Coincidencia encontrada con g: ${resultado[0]} en la posición ${regexG.lastIndex - resultado[0].length}`);
+}
+
+
+
 
 
 ///////////////////////////////
@@ -81,22 +137,6 @@ let resultado;
 while ((resultado = regex.exec(cadena)) !== null) {
   console.log(resultado[0]); // "JavaScript", luego "JavaScript"
 }
-
-
-///////////////////////////////////////////////////////////
-////getting information about regular expression itself////
-///////////////////////////////////////////////////////////
-/*Properties:
-
-    source: The pattern of the regular expression as a string.
-    flags: The flags used in the regular expression.
-    lastIndex: Index where the next search with exec() will start.
-    global, ignoreCase, multiline, sticky, unicode: Indicate whether certain flags are active.*/
-//Example 1:
-regex = /javascript/ig;
-console.log(regex.source); // "javascript"
-console.log(regex.sticky); // false
-console.log(regex.ignoreCase); // true
 
 
 ///////////////////
@@ -189,6 +229,21 @@ console.log(regex.exec('ab'));     // null
 //Example 2: \d, digit
 regex = /\d/;
 console.log(regex.exec('abc123')); // ["1"]
+
+zzzzzzzzz
+const texto = "123.456 789"; // Números con un punto entre ellos
+const regexG = /\d+/g; // Coincide con números (modificador global)
+
+let resultado;
+regexG.lastIndex = 0; // Inicia desde el principio de la cadena
+
+while ((resultado = regexG.exec(texto)) !== null) {
+    console.log(`Coincidencia encontrada con g: ${resultado[0]} en la posición ${regexG.lastIndex - resultado[0].length}`);
+}
+
+
+
+
 
 //Example 3: \D, no digit
 regex = /\D/;
