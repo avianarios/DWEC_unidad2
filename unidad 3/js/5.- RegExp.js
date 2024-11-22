@@ -71,7 +71,7 @@ console.log(regex.lastIndex,
 const cadena='JavaScript es divertido y no es difícil. Te gustará JavaScript';
 regex=/JavaScript/gi;
 let resultado;
-console.log regex.lastIndex;
+console.log(regex.lastIndex);
 while ((resultado = regex.exec(cadena)) !== null) {
   console.log(regex.lastIndex, resultado[0]);
 }
