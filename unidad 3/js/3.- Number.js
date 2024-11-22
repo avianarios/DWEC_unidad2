@@ -92,31 +92,46 @@ let numero_no_valido=new Number("hola");    //NaN
 //Example 3: a Number Object allows to define properties. Impossible with primitive types
 numero_objeto1.maximo=4;
 
-//Example 4: a Number Object allows to share its value
-//valueOf extracts the primitive value of the object
-let numObj1 = new Number(42);
-let numObj2 = numObj1;
 
-let obj2=new Number(numObj2.valueOf()+1);  // Cambia el valor de numObj1 y numObj2
+/////////////////////////////
+////changing object value////
+/////////////////////////////
+//Objects are inmutable
+// valueOf extracts the primitive value of the object
 
-console.log(numObj1);
-console.log(numObj2);
+//Example 1: trying to change object value
+let numObj = new Number(10);
+console.log(numObj.valueOf()); // 10
 
-//Example 5: What would happen if not using valueOf?
-let numObj1 = new Number(42);
-let numObj2 = numObj1;
+// Intento de cambiar el valor (no funciona)
+numObj.valueOf = 20;  // It doesn't change internal value of object. It just creates a new object property called "valueOf"
+console.log(numObj); //10
+
+//Example 2: trying to change object value
+const numObj1 = new Number(42);
+const numObj2 = numObj1;
+console.log(typeof numObj2, numObj2);
+numObj2=numObj1.valueOf()+1;       //this way, numObj2 is converted to a primitive number
+console.log(typeof numObj2, numObj2, numObj2.valueOf());        //valueOf also works with primitive numbers
+
+numObj2=new Number(numObj2.valueOf()+1);
+console.log(typeof numObj2, numObj2);
+
+//Example 3: if an arithmetic operation is performed, the object is converted into a primitive value
+const numObj1 = new Number(42);
+const numObj2 = numObj1;
 
 numObj2++;  // numObj2 is converted to primitive value
 console.log(numObj1, typeof numObj1);
 console.log(numObj2, typeof numObj2);
 
-//Example 6: performing operations with objects
-let numObj1 = new Number(42);
-let numObj2 = numObj1;
+//Example 4: performing operations with objects
+const numObj1 = new Number(42);
+const numObj2 = numObj1;
+const tmp=numObj1+numObj2;  ////equivalent to const tmp=numObj1.valueOf()+numObj2.valueOf();
 
-console.log(numObj1+numObj2);   //equivalent to numObj1.valueOf()+numObj2.valueOf()
+console.log(tmp, typeof tmp);   //tmp is a primitive number
 console.log (numObj1+4);    //equivalent to numObj1.valueOf()+4
-
 
 
 //////////////////
