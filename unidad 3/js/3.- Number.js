@@ -93,11 +93,11 @@ let numero_no_valido=new Number("hola");    //NaN
 numero_objeto1.maximo=4;
 
 
-/////////////////////////////
-////changing object value////
-/////////////////////////////
+//////////////////////////////////////////////
+////modifying the value of a Number Object////
+//////////////////////////////////////////////
 //Objects are inmutable. If their value has to be changed, a new object has to be created
-//any arithmetic operation make an object to be converted into a primitive value
+//any operation converts an object into a primitive value
 //valueOf extracts the primitive value of the object. If not used, JavaScript invokes it by default
 
 //Example 1: trying to change object value
@@ -106,7 +106,7 @@ console.log(numObj.valueOf()); // 10
 
 // Intento de cambiar el valor (no funciona)
 numObj.valueOf = 20;  // It doesn't change internal value of object. It just creates a new object property called "valueOf"
-console.log(numObj); //10
+console.log(numObj); //equivalent to numObj.valueOf()
 
 //Example 2: trying to change object value by using an arithmetic operation
 const numObj1 = new Number(42);
