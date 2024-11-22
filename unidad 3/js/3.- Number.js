@@ -96,8 +96,9 @@ numero_objeto1.maximo=4;
 /////////////////////////////
 ////changing object value////
 /////////////////////////////
-//Objects are inmutable
-// valueOf extracts the primitive value of the object
+//Objects are inmutable. If their value has to be changed, a new object has to be created
+//any arithmetic operation make an object to be converted into a primitive value
+//valueOf extracts the primitive value of the object. If not used, JavaScript invokes it by default
 
 //Example 1: trying to change object value
 let numObj = new Number(10);
@@ -107,7 +108,7 @@ console.log(numObj.valueOf()); // 10
 numObj.valueOf = 20;  // It doesn't change internal value of object. It just creates a new object property called "valueOf"
 console.log(numObj); //10
 
-//Example 2: trying to change object value
+//Example 2: trying to change object value by using an arithmetic operation
 const numObj1 = new Number(42);
 const numObj2 = numObj1;
 console.log(typeof numObj2, numObj2);
