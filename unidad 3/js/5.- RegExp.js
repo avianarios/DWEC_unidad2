@@ -31,7 +31,7 @@ Use the RegExp(‘pattern’) constructor when:
 //Example 1: test if a regular expression works
 const regex=/javascript/;
 const regex2=/JavaScript/;
-const cadena='JavaScript es divertido y no es difícil. Te gustará JavaScript';
+const cadena='JavaScript es divertido y no es difícil. Es seguro que te gustará JavaScript';
 console.log(regex.test(cadena)); //false
 console.log(regex2.test(cadena)) //true
 
