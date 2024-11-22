@@ -1,3 +1,14 @@
+/*JavaScript provides a string primitive type and a String object
+Primitive type is lighter, more efficient in terms of being stored in memory and easier to use. However, sometimes it is recommended to use an object: 
+    -Objects can create properties and store additional information
+    -Objects have predefined methods and properties
+    -Objects can change their value and they are still the same object, pointing to the same memory location. Primitive types, can't. You can assign a new value to the same variable, but this is a new reference although it keeps the same variable name. Advantage: saves memory and allows to share values
+    -Interoperability with APIs expecting objects. Remember an API is a set of functions, methods or access points that a program or system makes available for others to interact with it. These functions define:
+        -What can be done: For example, obtaining information, sending data or performing specific operations.
+        -How it is to be done: Including the parameters to be sent, the data structures to be accepted and the format of the responses.
+        -What is returned: As data in a defined format (e.g. JSON or XML) or even error messages in case something does not work as expected.
+*/
+
 /////////////////////////
 ////creating a string////
 /////////////////////////
@@ -17,7 +28,15 @@ let texto = "JavaScript es divertido y no es difícil";
 let cad3="SOME CHARACTERS need to be protected in order to be printed: \" \\";  
 
 //example 2: creating as an object
-let cadena_Objeto=new String("Una Cadena Objeto");
+let cadObj1=new String("Una Cadena Objeto");
+
+/////////////////////////////
+////changing string value////
+/////////////////////////////
+//Example 
+let cadObj2=cadObj1;
+cadObj2="hola";
+console.log(typeof(cadObj2), typeof(cadObj1));
 
 
 //////////////////////////////////
