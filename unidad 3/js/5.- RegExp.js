@@ -283,7 +283,7 @@ while ((resultado = regex.exec(texto)) !== null) {
   \s: Matches any whitespace (spaces, tabs, line breaks).
   \S: Matches any character that is not a whitespace.
   []: allow  to define a set of characters that can be matched. For example, [aeiou] matches any vowel.
-  ^: (negation) [^abc] matches any character other than a, b or c.
+  ^: (negation if it's inside brackets) [^abc] matches any character other than a, b or c.
   // \ is used to escape character for using any special character in the regular expression
 */
 
@@ -362,7 +362,10 @@ console.log(regex.exec('/hola/'));  //["\"]
   ^: Matches the beginning of a string.
   $: Matches the end of a string.
   \b (word boundary): It matches the position where a word character (such as letters and numbers) meets a non-word character (such as spaces, punctuation, etc.). It does not consume any characters, it simply marks the position.
-  \B (non-word boundary): Matches a position that is not a word boundary. That is, it is used to find a match between two word characters or two non-word characters.
+  \B (non-word boundary): Refers to a position within a word, ie:
+    -Not at the beginning (between a character and the beginning of the word).
+    -Not at the end (between a character and the end of the word).
+
 */
 
 //Example 1: ^, line start
@@ -379,12 +382,39 @@ console.log(regex.exec('mundo Hola'));  // null
 regex = /\bHola\b/;
 console.log(regex.exec('Hola mundo')); // ["Hola"]
 console.log(regex.exec('Holanda'));    // null
+/*
+Inicio (H): \b (límite de palabra) porque marca el comienzo de la palabra.
+Entre H y o: \B (no-límite de palabra).
+Entre o y l: \B (no-límite de palabra).
+Entre l y a: \B (no-límite de palabra).
+Después de a: \b (límite de palabra) porque marca el final de la palabra.*/
+
 
 //Example 4: \B, not word boundary
 regex = /\Bola/;
 console.log(regex.exec('Hola')); // ["ola"]
+console.log(regex.exec('Holanda'));    // ["ola"]
+/*
+Inicio (H): \b (límite de palabra) porque marca el comienzo de la palabra.
+Entre H y o: \B (no-límite de palabra).
+Entre o y l: \B (no-límite de palabra).
+Entre l y a: \B (no-límite de palabra).
+Después de a: \b (límite de palabra) porque marca el final de la palabra.*/
 
 //Example 5: check if a string is an email
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+/*
+Regular expression explanation:
+  -At the beginning (^)
+  -A username that does not contain spaces or @. ([^\s@])
+  -At least one character (+)
+  -An @ symbol.
+  -A domain name that does not contain spaces or @. ([^\s@]))
+  -At least one character (+)
+  -A dot (.).
+  -A domain extension. that does not contain spaces or @. ([^\s@]))
+  -At least one charater (+)
+  -the whole entire string must match the regular expression, with no additional characters after it ($). Without it, would match hola@dominio.com.otro.mas.com
+  */
 const email = "ejemplo@dominio.com";
 console.log(emailRegex.exec(email)); // true
