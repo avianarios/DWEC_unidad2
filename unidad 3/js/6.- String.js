@@ -36,7 +36,7 @@ const cadObj1=new String("Una Cadena Objeto");
 //////////////////////////////////
 //example 1: getting string length
 const cadObj1=new String("Una Cadena Objeto");
-console.log (cadObj1.length);
+console.log (cadObj1.length, cadObj1.valueOf());
 
 //example 2: getting the character located at certain position
 const cadObj1=new String("Una Cadena Objeto");
@@ -105,48 +105,65 @@ console.log(cad3,typeof cad3);
 //////////////////////////////
 ////Operation over strings////
 //////////////////////////////
+//any method returns a primitive value, not an object
 //The following methods belongs to String object, but can be applied also to primitive values due to autoboxing (JS temporarily converts a primitive value into an object in order to apply the method)
 
-//Example 1: changing case to capital letters and small letters
-const cadObj1=new String("Una Cadena Objeto");
-let mayusculas=cadObj1.toUpperCase();   //autoboxing
-let minusculas=cadObj1.toLowerCase();
-let cadObj1May=new String(cadObj1.toUpperCase());
-let cadObj1Min=new String(cadObj1.toLowerCase());
+//Example 1: concatenating strings
+const obj1 = new String("Hola");
+const obj2 = new String(" ");
+const obj3 = new String("Mundo");
 
-console.log(mayusculas, typeof mayusculas, cadObj1May, typeof cadObj1May);
+let resultado = obj1.concat("¡", obj2, obj3, "!");
+console.log(resultado, typeof resultado);
 
-//Example 3: replacing the first occurrence of a substring
-texto="Hola Hola Hola";
-console.log(texto.replace("Hola", "Adiós"));  // 'Adiós Hola Hola'
-
-//Example 4: replace can be used with regular expressions
-texto = "La casa es azul y azul se va a quedar";
-console.log(texto.replace(/azul/g, "verde")); // "La casa es verde y verde se va a quedar"
-
-//Example 5: replacing all occurrences of a substring
-texto="Hola Hola Hola";
-console.log(texto.replaceAll("Hola", "Adiós")); // 'Adiós Adiós Adiós'
-
-//Example 6: removing empty spaces from the beginning and ending of a string
-texto="   hola   hola   hola   ";
-console.log (texto.trim());
-
-//Example 7: removing empty spaces only from the beginning of a string
-texto="   hola   hola   hola   ";
-console.log (texto.trimStart());
-
-//Example 8: removing empty spaces only from the ending of a string
-texto="   hola   hola   hola   ";
-console.log (texto.trimEnd());
-
-//example 9: padStart (total_length, character) adding characters at the beginning until length is reached. If length is less than string's length, it does nothing
+//example 2: padStart (total_length, character) adding characters at the beginning until length is reached. If length is less than string's length, it does nothing
 texto="   hola   hola   hola   ";
 console.log (texto.padStart(texto.length+5,"a")); //adds as many "a" at the beginning as necessary so string's size is increased by 5
 
-//example 10: padEnd. Same as padStart but at the end
+const obj1=new String("   hola   hola   hola   ");
+console.log(obj1.padStart(obj1.length+5,"a"), typeof obj1.padStart(obj1.length+5,"a"));
+const obj2=new String(obj1.padStart(obj1.length+5,"a"));
+console.log (obj2.valueOf(), typeof obj2);
+
+//example 3: padEnd. Same as padStart but at the end
 texto="   hola   hola   hola   ";
 console.log (texto.padEnd(texto.length+5, 0));
+
+//Example 4: changing case to capital letters and small letters
+const cadObj1=new String("Una Cadena Objeto");
+let mayusculas=cadObj1.toUpperCase();   //autoboxing
+let minusculas=cadObj1.toLowerCase();
+console.log(mayusculas, typeof mayusculas);
+let cadObj1May=new String(cadObj1.toUpperCase());
+let cadObj1Min=new String(cadObj1.toLowerCase());
+console.log (cadObj1May, typeof cadObj1May);
+
+//Example 5: replacing substrings
+const cadObj1=new String ("JavaScript es divertido y no es difícil. Te gustará JavaScript");
+let resultado=cadObj1.replace(/javascript/gi, "Python");
+console.log (resultado, typeof resultado);
+const cadObj2=new String (resultado);
+console.log (cadObj2.valueOf(), typeof(cadObj2));
+
+//Example 6: removing empty spaces from the beginning and ending of a string
+const cadena = "   Espacios   ";
+console.log (cadena.trim().concat("a"));
+console.log (cadena.replace (/^\s+|\s+$/g, "").concat("a"));
+
+//Example 7: replacing all occurrences of a substring. Similar to use replace with regular expression with /g
+const cadObj1=new String("JavaScript es divertido y no es difícil. Te gustará JavaScript");
+console.log(cadObj1.replaceAll("JavaScript", "Python"));
+console.log (cadObj1.replace(/JavaScript/g,"Phyton"));
+
+//Example 8: removing empty spaces only from the beginning of a string
+const texto = "    Espacios    ";
+console.log (texto.trimStart().concat("a"));
+console.log(texto.replace(/^\s+/, "").concat("a"));
+
+//Example 9: removing empty spaces only from the ending of a string
+const texto = "    Espacios    ";
+console.log (texto.trimEnd().concat("a"));
+console.log(texto.replace(/\s+$/, "").concat("a"));
 
 
 //////////////////////////////
@@ -184,8 +201,12 @@ console.log(texto.search(/JAVASCRIPT/i));
 const texto='JavaScript es divertido y no es difícil. Es seguro que te gustará JavaScript';
 console.log(texto.match("aburrido"));   //"aburrido" is a string and it's converted to /aburrido/
 console.log(texto.match(/javascript/i));
-console.log(texto.match(/ES/gi));
-console.log(texto.match(/\b[J]\w+/gi)); 
+texto.match(/ES/gi).forEach(coincidencia=>{
+  console.log(coincidencia);
+});
+texto.match(/\b[J]\w+/gi).forEach(coincidencia=>{
+  console.log(coincidencia);
+});
 
 //Example 9: looking for all occurrences by using regular expressions
 //matchAll can only be used with regular expressions
@@ -216,13 +237,16 @@ console.log (cad3.slice(25));  //returns substring from position 25 to the end
 console.log (cad3.slice(-10,-5));  //returns substring from 10th to the end until 5th to the end
 
 //Example 4: split returns an array of substrings separated by the argument without changing original
-console.log (cad3.split(" "));
+const cadObj1=new String ("JavaScript es divertido y no es difícil. Te gustará JavaScript");
+cadObj1.split(" ").forEach(elemento=>{
+  console.log(elemento);
+})
 
 //Example 5: split can be used with regular expressions
-let cadena = "Juan Pérez, Calle Falsa 123. María López, Avenida Siempre Viva 456; Pedro Gómez: Calle de la Amargura 789";
-let partes = cadena.split(/[,.;:\s]+/);
-console.log(partes);
-// Output: ["Juan", "Pérez", "", "Calle", "Falsa", "123", "María", "López", "", "Avenida", "Siempre", "Viva", "456", "Pedro", "Gómez", "", "Calle", "de", "la", "Amargura", "789"]
+const cadObj1= new String("Juan Pérez, Calle Falsa 123. María López, Avenida Siempre Viva 456; Pedro Gómez: Calle de la Amargura 789");
+cadObj1.split(/[,.;:\s]+/).forEach(elemento=>{
+  console.log(elemento);
+})
 
 
 ///////////////////////////
@@ -232,6 +256,9 @@ console.log(partes);
 let razasGato="pelo corto, pelo largo, angora, callejero";
 let matrizRazasGato=razasGato.split(",");
 console.log (matrizRazasGato, typeof(matrizRazasGato));
+matrizRazasGato.forEach(elemento=>{
+  console.log(elemento);
+})
 
 
 //////////////////////////
@@ -246,12 +273,12 @@ console.log (cadObj1.repeat(3));
 ////comparing strings////
 /////////////////////////
 //Example 1: by using double equal
-console.log ("adiós"==new String("adiós"));  //true
+console.log ("adiós"==new String("adiós").valueOf());  //true
 
 //Example 2: by using comparison operators based on unicode value of each letter. Capital letters are placed first
 console.log ("ADIÓS"<"adiós");  //true
 
-//Example 3: by using localeCompare, that allows to specify comparison conditions. It returns -1, 0 or 1 depending on a string being less, equal or greater than another
+//Example 3: by using localeCompare, allows to specify comparison conditions. It returns -1, 0 or 1 depending on a string being less, equal or greater than another
 /*
 using the standard comparison operators like <, >, or === to compare strings in JavaScript does not take into account language-specific (locale) rules, so the behaviour may be incorrect or unexpected when you are working with accents, special characters or capital letters in languages that are not the default language of your computer.
 
