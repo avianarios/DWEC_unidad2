@@ -223,8 +223,8 @@ for (const match of matches) {
 //////////////////////////
 //Example 1:String is an iterable object, so it works with spread operator
 let cad="hola";
-let a,b,c,d=console.log(...cad);    //returns every letter separately 
-console.log([...cad]);  //returns an array of letters
+let [a,b,c,d]=[...cad];
+console.log(`a vale ${a}\nb vale ${b}\nc vale ${c}\nd vale ${d}`);
 
 //Example 2: using substring to extract a substring. It doesn't modify original string
 console.log (cad1.substring(0,4));  //extracts a substring from position 0 to 4
