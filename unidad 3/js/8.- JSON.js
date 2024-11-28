@@ -10,6 +10,8 @@ Basic rules:
 ////converting a object into a string////
 /////////////////////////////////////////
 //stringify Converts a JavaScript value (such as an object or array) into a JSON string. This is useful when you need to send data to a server in JSON format or store it somewhere as a string.
+//JSON.stringify(valor, reemplazador, espacio);
+
 //Example 1: stringify
 const persona = { nombre: "Ana", edad: 25 };
 const personaJSON = JSON.stringify(persona);
@@ -27,9 +29,58 @@ let student = {
 let json = JSON.stringify(student);
 console.log(typeof(json), json);
 
+
+//Example 3: using JSON.stringify with replacer function
+//Replacers allows to remove or to replace properties from the resulting JSON string
+const persona = {
+  nombre: "Juan",
+  edad: 30,
+  contraseña: "secreta"
+};
+
+//new clave is "undefined" if its value was "contraseña"
+const json = JSON.stringify(persona, (clave, valor) => {
+  if (clave === "contraseña") {
+    return undefined;
+  }
+  return valor;
+});
+
+console.log(json); // {"nombre":"Juan","edad":30}
+
+//Example 4: using JSON.stringify with replacer function
+const persona = {
+  nombre: "Juan",
+  edad: 30,
+  contraseña: "secreta"
+};
+
+const json = JSON.stringify(persona, ["nombre", "edad"]);
+
+console.log(json); // {"nombre":"Juan","edad":30}
+
+
+//Example 4: using JSON.stringify with space parameter
+//controls how many spaces to leave in indentation for readability
+const persona = {
+  nombre: "Juan",
+  edad: 30,
+  direccion: {
+    ciudad: "Madrid",
+    pais: "España"
+  }
+};
+
+//const json = JSON.stringify(persona, null, 2);
+const json = JSON.stringify(persona, null, "\t");
+console.log(json);
+
+
+
 //////////////////////////////////////////
 ////converting a string into an object////
 //////////////////////////////////////////
+//parse convert a string into an object
 //Example 1: transform a string into an object
 const personaJSON = '{"nombre":"Ana","edad":25}'; //it's a string
 const persona = JSON.parse(personaJSON);
@@ -51,8 +102,23 @@ const jsonText = `{
         }
       }
     }
-  }`;
-    console.log(JSON.parse(jsonText));
+}`;
+const objeto=JSON.parse(jsonText);
+console.log(objeto, typeof(objeto));
+
+//Example 3: using a replacer function
+const json = '{"nombre": "Juan", "edad": 30, "direccion": "Madrid"}';
+
+const objeto = JSON.parse(json, (clave, valor) => {
+  if (clave === "direccion") {
+    return undefined;  // Elimina la propiedad "direccion"
+  }
+  return valor;  // Mantiene el resto de las propiedades
+});
+
+console.log(objeto);
+
+
 
 //////////////////////////////////////////////
 ///using JSON to compare objects or arrays////
