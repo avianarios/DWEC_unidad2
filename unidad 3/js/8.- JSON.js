@@ -81,6 +81,7 @@ console.log(json);
 ////converting a string into an object////
 //////////////////////////////////////////
 //parse convert a string into an object
+//two parameters: string and reviver
 //Example 1: transform a string into an object
 const personaJSON = '{"nombre":"Ana","edad":25}'; //it's a string
 const persona = JSON.parse(personaJSON);
@@ -103,14 +104,14 @@ const jsonText = `{
       }
     }
 }`;
-const objeto=JSON.parse(jsonText);
+const objeto=JSON.parse(jsonText, null, 15);
 console.log(objeto, typeof(objeto));
 
 //Example 3: using a replacer function
 const json = '{"nombre": "Juan", "edad": 30, "direccion": "Madrid"}';
 
 const objeto = JSON.parse(json, (clave, valor) => {
-  if (clave === "direccion") {
+  if (clave == "direccion") {
     return undefined;  // Elimina la propiedad "direccion"
   }
   return valor;  // Mantiene el resto de las propiedades
