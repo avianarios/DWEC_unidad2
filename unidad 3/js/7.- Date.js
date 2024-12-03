@@ -190,9 +190,9 @@ const ahora=new Date();
 console.log(ahora);
 ahora.setFullYear(2022);
 ahora.setMonth(ahora.getMonth()-2);
-ahora.setDate(-1);  //can use negative numbers meaning one day before the last one of the previous month
+ahora.setDate(-1);  //one day before the last one of the previous month
 ahora.setMinutes(68);   //adds minutes to current hour, beginning at 0
-ahora.setMinutes(-10);  //returns ten minutes to the current hour. if the current hour is 21:45, returns 20:50
+ahora.setMinutes(-10);  // ten minutes to the current hour. if the current hour is 21:45, returns 20:50
 console.log(ahora);
 
 
