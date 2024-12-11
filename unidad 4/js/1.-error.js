@@ -1,7 +1,11 @@
 /*
+Types of errors:
+  -predictable: They arise from conditions that we know could occur and can therefore be anticipated. Examples: Try to divide by zero, Passing an invalid value to a function or Look for a file that does not exist 
+  -unpredictable. They arise from external or unforeseen factors so they cannot be easily anticipated. These errors may be related to the system environment (such as hardware failures or network problems) or to unexpected circumstances within the code that we cannot foresee during development. Examples: Network failure or loss of connection to external servers, Stack overflow due to unexpected data or too big data or Hardware failures, like a faulty hard disk drive
+
 How to control errors?
-    -Predictable errors, like input validations: "if" sentence
-    -Unpredictable errors, such as problems with file access, network operations or data parsing errors: try...catch 
+    -Predictable errors: conditional sentences
+    -Unpredictable errors: try...catch 
 
 When to use "if" statement?
     -To treat expected or common errors.
