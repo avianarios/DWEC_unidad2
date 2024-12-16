@@ -2,6 +2,20 @@
 https://jsdoc3.vercel.app/tags/module
 https://jsdoc.app/about-getting-started
 
+JSDoc is only available as a node package. Therefore, 
+    -node must be installed
+    -A node project must be initialized: npm init
+    -JSDoc package must be installed: npm i jsdoc --save-dev
+        -"npm install paquete --save-dev" is used when dependencies are only needed during project development, not production. They are stored under "devDependencies" section in package.json
+        -"npm install paquete" is used when dependencies are needed for project production. They are stored under "dependencies" section in package.json
+    -To execute jsdoc: 
+        -npx jsdoc fichero_o_directorio
+        -node_modules/js/jsdoc fichero_o_directorio
+        -jsdoc fichero_o_directorio (if node_modules/bin is in PATH variable)
+
+jsdoc parameters:
+    jsdoc ficheros_js -d documentacion
+
 Despide variable and method names should be descriptive, documenting is a really good practice. Documenting is an uncomfortable yet very important process. No one likes to document, but everybody likes to understand someone else's code.
 
 It is especially important in larger projects where multiple developers work together
@@ -28,7 +42,7 @@ const nombre="Furanio";
  * @type {string}
  * @type {number}
  */
-const nombre="Obsidio"
+const nombre2="Obsidio"
 const edad=23;
 
 //Example 3: it also works with arrays
@@ -38,7 +52,7 @@ const edad=23;
 const numeros=[1,2,3,4];
 
 /**
- * @type {(number|string)[]}
+ * @type {Array<number|string>}
  */
 const mixto=[1,2,3,"hola","adios"];
 
