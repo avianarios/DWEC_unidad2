@@ -1,3 +1,16 @@
 {
-    "type": "module"
-  }
+    "type": "module",
+    "name": "unidad-4",
+    "version": "1.0.0",
+    "description": "1. Handling errors\r 2. Degubbing code\r 3. Documenting code\r 4. Organizing code",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "jsdoc": "^4.0.4"
+    }
+}
