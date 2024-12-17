@@ -1,4 +1,24 @@
 /*
+
+1. Mala práctica de diseño y legibilidad
+  Meter todo el código en un bloque try...catch hace que el programa sea difícil de leer y mantener. El propósito del try...catch es atrapar y manejar errores específicos donde podrían ocurrir. Si todo el programa está dentro de un try, se pierde la claridad sobre qué parte del código podría fallar realmente.
+2. Difícil diagnóstico de errores
+  Si un try...catch envuelve demasiado código, será difícil determinar qué parte específica provocó el error. Por ejemplo, si el try contiene muchas líneas, no sabrás si el fallo proviene de una operación de red, un cálculo matemático o una función externa.
+
+  En cambio, lo correcto es delimitar el bloque try solo a las secciones críticas donde pueden ocurrir errores.
+3. Pérdida de rendimiento
+  El try...catch no es gratuito en términos de rendimiento. Los navegadores y motores de JavaScript (como V8) no optimizan el código dentro de un bloque try. Esto significa que envolver grandes porciones del código puede ralentizar la ejecución sin necesidad.
+
+  Si solo una parte pequeña del código es propensa a errores, no tiene sentido meter todo en un try...catch y pagar el coste de rendimiento.
+4. Enmascara errores inesperados
+  Cuando metes todo el código en un try...catch, corres el riesgo de capturar errores inesperados que quizás no deberían manejarse de esa forma. Esto puede ocultar fallos importantes y hacer que el programa siga ejecutándose en un estado inconsistente.
+5. Mala separación de responsabilidades
+  El manejo de errores debería ser específico y depender del contexto. Si usas un solo try...catch general, estás mezclando la lógica de error con la lógica funcional del programa, rompiendo el principio de separación de responsabilidades.
+6. No fomenta la prevención de errores
+  Si todo el código está en un try...catch, te apoyas demasiado en manejar errores después de que ocurran, en lugar de prevenirlos. Es mejor validar entradas, verificar condiciones y evitar errores antes de que ocurran.
+
+
+
 Types of errors:
   -predictable: They arise from conditions that we know could occur and can therefore be anticipated. Examples: Try to divide by zero, Passing an invalid value to a function or Look for a file that does not exist 
   -unpredictable. They arise from external or unforeseen factors so they cannot be easily anticipated. These errors may be related to the system environment (such as hardware failures or network problems) or to unexpected circumstances within the code that we cannot foresee during development. Examples: Network failure or loss of connection to external servers, Stack overflow due to unexpected data or too big data or Hardware failures, like a faulty hard disk drive
