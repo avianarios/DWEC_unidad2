@@ -1,0 +1,23 @@
+{
+    "source": {
+      "include": ["src"],
+      "exclude": ["node_modules"],
+      "includePattern": ".*\\.js$",
+      "excludePattern": ".*\\.test\\.js$"
+    },
+    "opts": {
+      "destination": "./docs",
+      "template": "node_modules/minami",
+      "recurse": true
+    },
+    "templates": {
+      //allows intelligent linking (avoids http://)
+      "cleverLinks": true,
+      "monospaceLinks": true
+    },
+    {
+      //advanced use of markdown. Basic use is already included
+      "plugins": ["plugins/markdown"]
+    }
+  }
+  

@@ -14,7 +14,34 @@ JSDoc is only available as a node package. Therefore,
         -jsdoc fichero_o_directorio (if node_modules/bin is in PATH variable)
 
 jsdoc parameters:
-    jsdoc ficheros_js -d documentacion
+    -output directory (-d). if not, "out": jsdoc ficheros_js -d documentacion
+    -template (-t): jsdoc ficheros_js -t template-name
+        It takes a template to generate the documentation. Default template is "jsdoc" but other templates can be utilized as "minami" or "docdash". They are installed with npm i minami docdash and they also need some dependencies to be installed like taffydb and handlebars
+    -configure file (-c): jsdoc ficheros_js -c fichero_configuracion
+    -verbose: jsdoc ficheros_js -v
+    -recurse: jsdoc directorio -r
+    -Ignoring files (by using .jsignore file): jsdoc ficheros_js -i .jsignore
+    -config file (usually by usind jsdoc.json file): jsdoc ficheros_js -c jsdoc.json
+        using a configuration file is recommended for larger projects. It avoids entering the same parameters every time jsdoc is executed
+    -plugins (-p or --plugins): jsdoc ficheros_js -p plugin-name
+        All of them need to be installed with npm i --save-dev plugin-name
+        Some interesting plugins:
+            -markdown. markdwon is a lightweight markup language with plain text formatting syntax. It is used to write documentation in a more readable way. It is recommended to use markdown plugin to generate documentation in markdown format. Some examples:
+                # Encabezado nivel 1
+                ## Encabezado nivel 2
+                ### Encabezado nivel 3
+                Negrita: Rodear el texto con ** o __.
+                Cursiva: Rodear el texto con * o _.
+                Listas no ordenadas: Usar -, * o +.
+                Listas ordenadas: Usar números seguidos de un punto.
+                Enlaces: [Texto del enlace](https://ejemplo.com)
+                Imágenes: ![Texto alternativo](https://ejemplo.com/imagen.png)
+                code blocks: Usar tres acentos graves (```) antes y después del bloque de código. Se puede especificar el lenguaje de programación después de los tres acentos graves iniciales para resaltar la sintaxis.
+            -jsdoc-to-markdown. It converts jsdoc comments to markdown format. It is useful when you want to generate documentation in markdown format
+            -jsdoc-babel. It allows you to use babel to transpile code and yet keep jsdoc working 
+            -jsdoc-export-default. It allows you to export the default export of a module in ES6 syntax
+            -jsdoc-coverage. It generates a coverage report of the documentation telling you which parts of the code are documented and which are not
+
 
 Despide variable and method names should be descriptive, documenting is a really good practice. Documenting is an uncomfortable yet very important process. No one likes to document, but everybody likes to understand someone else's code.
 
