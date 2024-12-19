@@ -7,7 +7,7 @@ Objective: Use try...catch to handle errors.*/
 /*Exercise 3: Using the TypeError type of error. Create a function called checkString that takes a parameter str. If the parameter is not a string, throw a TypeError with the message "The value is not a string". If it's a string, the function should return the length of the string.
 Objective: Understand how to use specific error types like TypeError.*/
 
-/*Exercise 4: Error properties. Create a function called processFile that takes a file path. If the file does not exist, throw an error with the message "File not found". Catch the error and display the message, name, and stack trace in the console.
+/*Exercise 4 (nodejs): Error properties. Create a function called processFile that takes a file path. If the file does not exist, throw an error with the message "File not found". Catch the error and display the message, name, and stack trace in the console.
 Objective: Access the name, message, and stack properties of an error.*/
 
 /*Exercise 5: Creating custom errors. Create a class ValidationError that extends Error. This class should accept a custom message when instantiated. Then, create a function called validateAge that takes an age. If the age is less than 18, throw a ValidationError with the message "Invalid age, must be 18 or older".
