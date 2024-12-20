@@ -21,7 +21,17 @@ How to debug?
 Output is located at "Consola de depuración"
 
 */
-
+/////////////////////////////////
+////Example to test debugging////
+/////////////////////////////////
+//place a breakpoint at the "if" sentence of factorial function
+// watch how n changes its value at section "variables"
+// add the expression n==0 to inspect and look the result of this evaluation
+// Iterate by using:
+    // Continue (F5): Resumes the program execution until the next breakpoint. 
+    // Step over (F10): Executes the code line by line, but without stepping into called functions (i.e., it executes the code at the current level). 
+    // Step into (F11): Executes the code line by line, but if it encounters a function, it steps into it to debug as well. 
+    // Exit debugging (Shift+F11): Ends the debugging session and exits the current process, stopping the program execution.
 
 // Función que suma dos números
 function suma(a, b) {
@@ -30,7 +40,7 @@ function suma(a, b) {
 
 // Función que calcula el factorial de un número
 function factorial(n) {
-    if (n === 0) return 1; // Caso base
+    if (n == 0) return 1; // Caso base
     return n * factorial(n - 1); // Llamada recursiva
 }
 
