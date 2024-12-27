@@ -13,7 +13,7 @@
       },
     "browserslist": "> 0.25%, not dead",
     "keywords": [],
-    "author": "",
+    "author": "Alejandro Viana Ríos",
     "license": "ISC",
     "devDependencies": {
         "@babel/preset-env": "^7.26.0",
