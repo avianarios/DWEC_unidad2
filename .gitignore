@@ -5,6 +5,7 @@ fuente
 *.pptx
 documentacion
 node_modules
+dist
 fuente
 *español*
 *soluciones*
