@@ -3,10 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exporting example</title>
+    <title>Modules example</title>
     <script type="module" src="../js/4.-modules.js"></script>
 </head>
 <body>
-    
+    <script>
+        if ('noModule' in HTMLScriptElement.prototype) {
+          document.write('<script src="dist/bundle.modern.js"><\/script>');
+        } else {
+          document.write('<script src="dist/bundle.legacy.js"><\/script>');
+        }
+      </script>      
 </body>
 </html>
