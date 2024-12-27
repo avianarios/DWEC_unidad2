@@ -1,18 +1,35 @@
 {
     "type": "module",
-    "name": "unidad-4",
+    "name": "Polyfilling and transpiling",
     "version": "1.0.0",
-    "description": "1. Handling errors\r 2. Degubbing code\r 3. Documenting code\r 4. Organizing code",
+    "description": "Code to show how to polyfill and transpile code",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
+        "build:modern": "webpack --config webpack.modern.js --mode $modo",
+        "build:legacy": "webpack --config webpack.legacy.js --mode $modo",
+        "des": "cross-env modo=development npm-run-all --serial build:modern build:legacy",
+        "prod": "cross-env modo=production npm-run-all --serial build:modern build:legacy",
+        "limpia": "rimraf dist"
+      },
+    "browserslist": "> 0.25%, not dead",
     "keywords": [],
     "author": "",
     "license": "ISC",
     "devDependencies": {
+        "@babel/preset-env": "^7.26.0",
+        "core-js": "^3.39.0",
+        "cross-env": "^7.0.3",
+        "css-loader": "^7.1.2",
+        "html-webpack-plugin": "^5.6.3",
         "jsdoc": "^4.0.4",
-        "minami": "^1.2.3"
+        "minami": "^1.2.3",
+        "mini-css-extract-plugin": "^2.9.2",
+        "npm-run-all": "^4.1.5",
+        "regenerator-runtime": "^0.14.1",
+        "rimraf": "^6.0.1",
+        "webpack": "^5.97.1",
+        "webpack-cli": "^5.1.4",
+        "webpack-merge": "^6.0.1"
     },
     "dependencies": {
         "handlebars": "^4.7.8",
