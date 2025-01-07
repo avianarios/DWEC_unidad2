@@ -14,12 +14,10 @@ Errors can be controlled by using two methods: "if" sentences or "try..catch..fi
 
   -When to use try...catch statement?
     -To treat severe, exceptional or unpredictable errors.
-    -If you want to force the code to immediately handle the error before continuing the execution of the code beneath it (execution is interrupted until the error is handled):
-    -If you want to offer a centralized error handler.
+    -If you want to force the code to immediately handle the error before continuing the execution of the code beneath it (execution is interrupted until the error is handled)
     
 Advantages of using try..catch:
     -It interrupts the flow completely, forcing you to deal with the problem.
-    -It allows for centralised error handling when used in conjunction with a log system or a global error handler.
     -Serious errors are easier to identify and handle globally.
     -Facilitates debugging and error logging.
 
