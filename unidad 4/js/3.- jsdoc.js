@@ -1,6 +1,13 @@
 /*
-https://jsdoc3.vercel.app/tags/module
-https://jsdoc.app/about-getting-started
+Despide variable and method names should be descriptive, documenting is a really good practice. Documenting is an uncomfortable yet very important process. No one likes to document, but everybody likes to understand someone else's code.
+
+It is especially important in larger projects where multiple developers work together
+
+Documentation helps you remember what a method does long after you’ve written it, or understand what a method coded by a colleague does.
+
+VS Code has basic jsdoc integration. Just type "/** intro" and VS Code will create a basic structure. It does not create all the labels JSdoc has
+
+JSDoc comments must be placed before function in order to VS Code properly detect it
 
 JSDoc is only available as a node package. Therefore, 
     -node must be installed
@@ -13,12 +20,13 @@ JSDoc is only available as a node package. Therefore,
         -node_modules/js/jsdoc fichero_o_directorio
         -jsdoc fichero_o_directorio (if node_modules/bin is in PATH variable)
 
-jsdoc parameters:
+some jsdoc interesting parameters:
     -output directory (-d). if not, "out": jsdoc ficheros_js -d documentacion
     -template (-t): jsdoc ficheros_js -t template-name
         JSDoc utilizes a template to adjust the visual aspect of the documentation. If not provided, default "jsdoc" template is used. Examples: minami, docdash
         They need to be installed with npm i --save-dev template-name (and also their dependencies) and included in jsdoc.json file by typing "node_modules/minami" under "templates" section
-    -configure file (-c): jsdoc ficheros_js -c fichero_configuracion
+    -configure file (-c): jsdoc ficheros_js -c jsdoc.json
+        Allows to use a configuration file to avoid entering the same parameters every time jsdoc is executed. It is recommended for larger projects
     -verbose: jsdoc ficheros_js -v
     -recurse: jsdoc directorio -r
     -Ignoring files (by using .jsignore file): jsdoc ficheros_js -i .jsignore
@@ -54,19 +62,7 @@ jsdoc parameters:
             
 //cleverlinks: Creates automatic links within the same documentation, meaning that if you mention the name of a function, class, data type, or any other symbol that is documented within the same generated documentation, JSDoc will automatically create a link to that reference
 //monosPaceLinks: makes internal links to documentation code look like code, using a monospace typeface)
-
-
-
-Despide variable and method names should be descriptive, documenting is a really good practice. Documenting is an uncomfortable yet very important process. No one likes to document, but everybody likes to understand someone else's code.
-
-It is especially important in larger projects where multiple developers work together
-
-Documentation helps you remember what a method does long after you’ve written it, or understand what a method coded by a colleague does.
-
-
-VS Code has basic jsdoc integration. Just type "/** intro" and VS Code will create a basic structure. It does not create all the labels JSdoc has
-
-JSDoc comments must be placed before function in order to VS Code properly detect it*/
+*/
 
 
 //@type describes the type of an parameter or variable. VS Code uses it to suggest methods when . is typed
@@ -185,9 +181,27 @@ function sumaVieja(a, b) {
     return a + b;
 }
 
+
+//Example 11: using markdown
+/**
+ * Calcula la suma de dos números.
+ *
+ * **Ejemplo de uso**:
+ * ```javascript
+ * const resultado = sumar(2, 3); // Devuelve 5
+ * ```
+ * @param {number} a - Primer número.
+ * @param {number} b - Segundo número.
+ * @returns {number} La suma de `a` y `b`.
+ */
+function sumar(a, b) {
+    return a + b;
+}
+
+
 //@see allows you to refer to another symbol or resource that may be related to the one being documented
 //@link creates a link to the namepath or URL that you specify
-//Example 11: @see and @link
+//Example 12: @see and @link
 /**
  * Calcula el perímetro de un rectángulo.
  * @param {number} base - La base del rectángulo.
@@ -200,7 +214,7 @@ function calcularPerimetro(base, altura) {
     return 2 * (base + altura);
 }
 
-//Example 12: @todo desribes what is left to do
+//Example 13: @todo desribes what is left to do
 /**
  * Filtra una lista de números impares.
  * @param {number[]} numeros - Lista de números.
@@ -211,7 +225,7 @@ function filtrarImpares(numeros) {
     return numeros.filter(num => num % 2 !== 0);
 }
 
-//Example 13: @default describes the default value of a parameter
+//Example 14: @default describes the default value of a parameter
 /**
  * Saluda a una persona.
  * @param {string} [nombre="amigo"] - El nombre de la persona. Por defecto "amigo".
@@ -221,7 +235,7 @@ function saludar(nombre = "amigo") {
     return `Hola, ${nombre}!`;
 }
 
-//Example 14: @module describes the current file as being a module. It has to be placed at the top of the file
+//Example 15: @module describes the current file as being a module. It has to be placed at the top of the file
 /**
  * @module Matematicas
  */
@@ -236,7 +250,7 @@ export function sumar(a, b) {
     return a + b;
 }
 
-//Example 15: @async describes that a function is asynchronous
+//Example 16: @async describes that a function is asynchronous
 /**
  * Obtiene la lista de usuarios desde la API de JSONPlaceholder.
  * @async
@@ -259,7 +273,7 @@ async function obtenerUsuarios() {
     -functions inside literal objects
     -functions inside objects with dynamic names*/
 
-//Example 15: usage of @function with an anonymous function
+//Example 17: usage of @function with an anonymous function
 /**
  * @function
  */
@@ -267,7 +281,7 @@ const saludo = function() {
     console.log("Hola");
 };
 
-//Example 16: usage of @function with an arrow function
+//Example 18: usage of @function with an arrow function
 /**
  * @function
  * @param {number} x
@@ -276,7 +290,7 @@ const saludo = function() {
  */
 const sumar = (x, y) => x + y;
 
-//Example 17: usage of @function with a function inside a literal object
+//Example 19: usage of @function with a function inside a literal object
 const obj = {
     /**
      * Método que hace algo.
@@ -288,7 +302,7 @@ const obj = {
     }
 };
 
-//Example 18: usage of @function with a static function inside an object
+//Example 20: usage of @function with a static function inside an object
 class MiClase {
     /**
      * Método que multiplica una variable por 3.
@@ -301,7 +315,7 @@ class MiClase {
     };
 }
 
-//Example 19: usage of @function with a function inside an object with a dynamic name
+//Example 21: usage of @function with a function inside an object with a dynamic name
 const obj = {};
 /**
  * Función que multiplica una variable por 2.
@@ -314,7 +328,7 @@ obj["hacerAlgo" + "ConNombre"] = function(x) {
 };
 
 // The @callback tag is used to document a function that will be passed as an argument to another function, often referred to as a callback, and executed when the latter completes.
-//Example 20: @callback
+//Example 22: @callback
 /**
  * Procesa datos y ejecuta un callback con el resultado al finalizar.
  * @param {number[]} datos - Datos a procesar.
@@ -339,7 +353,7 @@ procesarDatos([1, 2, 3], (resultado) => {
 });
 
 
-//Example 21: @typedef is used to define a custom object that will be reused
+//Example 23: @typedef is used to define a custom object that will be reused
 /**
  * @typedef {Object} Person
  * @property {string} name - El nombre de la persona.
@@ -361,7 +375,7 @@ function createPerson(name, age) {
     -Private or irrelevant code: Functions used only internally or that don't need to be documented.
     -Incomplete or experimental code: Functions still under development.
     -Avoiding documentation overload: To keep the documentation clean and focused on the most important parts.*/
-//Example 22: ignoring a function
+//Example 24: ignoring a function
 
 /**
  * @ignore
@@ -372,7 +386,7 @@ function privateFunction() {
 }
 
 /*Namespaces are used when you just want to group related functions and properties without the need to instantiate them. They are useful for keeping the code organized and avoiding name collisions in a large project.*/
-//Example 23: @namespace
+//Example 25: @namespace
 /**
  * @namespace MathLibrary
  */
