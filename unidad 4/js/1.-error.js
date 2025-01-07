@@ -2,6 +2,8 @@
 ////handling errors////
 ///////////////////////
 /*
+When an error occurrs, it keeps propagating to the parent functions that called it, until it is handled or until it reaches the global function (window object in a web browser or global object in node), where it ends up stopping the program.
+
 Types of errors:
   -predictable: They arise from conditions that we know could occur and can therefore be anticipated. Examples: Try to divide by zero, Passing an invalid value to a function or Look for a file that does not exist 
   -unpredictable. They arise from external or unforeseen factors so they cannot be easily anticipated. These errors may be related to the system environment or to unexpected circumstances within the code that we cannot foresee during development. Examples: Network failure or loss of connection to external servers, Stack overflow due to unexpected data or too big data or hardware failures, like a faulty hard disk drive
@@ -320,13 +322,15 @@ But in other cases, we might need to throw errors by ourselves:
     -When JavaScript engine is not automatically detecting an error
     -When we want to create our own custom error objects
 
-If any error, custom or not, is not caught (there is no try...catch around), the error propagates to the higher functions that called it, until it reaches the global function (window object in a web browser or global object in node), where it ends up stopping the program if not handled.
-
 Custom errors can be thrown anywhere in our code and they stops the program right at the point where the error is thrown.
-
-"throw" can throw any value, not only error objects. Despite possible, it's not recommended as, once catched in a catch block, the error will be treated as a that value (string for instance), losing information about the error
+Ways of throwing custom errors:
+  -by using any Error object (Error, SyntaxError, TypeError or ReferenceError) with a customized message
+  -by creating a handling error class and extending from Error object
 */
-//Example 1: try...catch is not needed. Instead an "if" statement could be used
+
+
+//Example 1: throwing strings instead of errors it's not recommended as, once catched in a catch block, the error will be treated as a that value (string for instance), losing information about the error
+//try...catch is not needed. Instead, an "if" statement could be used
 function procesarEntrada(edad) {
     try {
         if (typeof edad !== "number" || edad < 0) {
@@ -345,7 +349,20 @@ procesarEntrada("25"); // Error
 procesarEntrada(-5); // Error
 
 
-//Example 2: throwing a custom error by using the Error object 
+//Example 2: throwing a syntax error
+//when there's a syntax error in the code, a SyntaxError can be thrown
+let JSON_usuario='{"nombre":"perico"}';
+try{
+    let usuario=JSON.parse(JSON_usuario);       //If I use "address" field, an error would occur
+    if (!usuario.direccion) {
+        throw new SyntaxError("No tengo la dirección");
+      }
+}catch(err){
+    console.error(err.message);
+}
+
+
+//Example 3: throwing a custom error by using the generic Error object 
 //try...catch is not needed, it should be used "if" as it's a predictable and simple error
 function dividir(a, b) {
     if (b==0) {
@@ -363,7 +380,7 @@ try {
 }
 
 
-//Example 3: throwing an Error object
+//Example 4: throwing a custom error by using the generic Error object 
 //dealing with asynchronous code.
 //Why try...catch instead of if? Asynchronous code is unexpected by definition. They can't be dealt with if because they are not executed synchronously
 async function obtenerDatosUsuario() {
@@ -411,7 +428,7 @@ async function ejecutar() {
 ejecutar();
   
 
-//Example 4: throwing an Error object
+//Example 5: throwing a custom error by using the generic Error object 
 //loading a node.js module to deal with file system operations
 //why try...catch?-> We don't know if the file exists or not at runtime
 const fs = require('fs');
@@ -431,29 +448,13 @@ try {
   console.log("Error al leer el archivo:", error.message); // Captura el error si el archivo no existe
 }
 
+//Example 6: Creating a handler error function. NOT RECOMMENDED
+/*Not recommended, as you are throwing an object (a function) that doesn't extend from the Error object. Therefore...
+  -The stack trace, which is useful for debugging.
+  -The ability to identify the error type using instanceof (e.g., err instanceof TypeError).
+  -Interoperability with tools and libraries that assume thrown errors are instances of Error.
+*/    
 
-//Example 5: throwing a syntax error
-//when there's a syntax error in the code, a SyntaxError can be thrown
-let JSON_usuario='{"nombre":"perico"}';
-try{
-    let usuario=JSON.parse(JSON_usuario);       //If I use "address" field, an error would occur
-    if (!usuario.direccion) {
-        throw new SyntaxError("No tengo la dirección");
-      }
-}catch(err){
-    console.error(err.message);
-}
-
-
-
-
-//////////////////////////////////////
-////Creating custom error handlers////
-//////////////////////////////////////
-//Example 1: Simple error handler
-/*Not recommended as you are not using Error object, but an object with some properties. Therefore...
-    -You lose information about the error like stack traces.
-    -You can't create specific error handlers for different types of errors either*/
 function manejadorError(error){
     console.error(error.cod, error.mensaje);
 }
@@ -465,7 +466,7 @@ try{
 }
 
 
-//Example 2: creating a custom ValidationError class extending Error class
+//Example 7: creating a custom ValidationError class extending Error class
 //Recommended
 class ValidationError extends Error {
     constructor(message) {
@@ -497,14 +498,39 @@ function manejarDatosUsuario(usuario) {
       }
     }
 }
-  
-// Ejemplo de uso con datos no válidos
+
+//Example 8: 
 const usuarioInvalido = null;
 manejarDatosUsuario(usuarioInvalido);  // Esto lanza un ValidationError
 
 // Ejemplo de uso con datos válidos
 const usuarioValido = { nombre: 'Juan' };
 manejarDatosUsuario(usuarioValido);  // Esto imprime el mensaje de bienvenida
+
+
+class ErrorPersonalizado extends Error {
+  constructor(codigo, mensaje, causa) {
+    super(mensaje); // Llama al constructor de Error
+    this.name = "ErrorPersonalizado"; // Nombre del error
+    this.codigo = codigo; // Código de error personalizado
+    this.causa = causa; // Error original
+  }
+}
+
+function manejadorError(error) {
+  console.error(`Código: ${error.codigo}, Mensaje: ${error.message}`);
+  if (error.causa) {
+    console.error("Error original:", error.causa.stack); // Muestra el stack trace original
+  }
+}
+
+try {
+  funcion_erronea(); // Generará un ReferenceError porque no está definida
+} catch (err) {
+  const errorPersonalizado = new ErrorPersonalizado(1, "Error personalizado", err);
+  manejadorError(errorPersonalizado);
+}
+
 
 /*
 ////////////////////////////
