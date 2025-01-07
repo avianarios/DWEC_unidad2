@@ -241,13 +241,13 @@ function saludar(nombre = "amigo") {
  */
 
 /**
- * Suma dos números.
+ * Resta dos números.
  * @param {number} a 
  * @param {number} b 
- * @returns {number} La suma de los dos números.
+ * @returns {number} La resta de los dos números.
  */
-export function sumar(a, b) {
-    return a + b;
+export function restar(a, b) {
+    return a - b;
 }
 
 //Example 16: @async describes that a function is asynchronous
@@ -288,7 +288,7 @@ const saludo = function() {
  * @param {number} y
  * @returns {number}
  */
-const sumar = (x, y) => x + y;
+const multiplicar = (x, y) => x * y;
 
 //Example 19: usage of @function with a function inside a literal object
 const obj = {
@@ -316,14 +316,14 @@ class MiClase {
 }
 
 //Example 21: usage of @function with a function inside an object with a dynamic name
-const obj = {};
+const obj2 = {};
 /**
  * Función que multiplica una variable por 2.
  * @function
  * @param {number} x 
- * @returns 
+ * @returns {number}
  */
-obj["hacerAlgo" + "ConNombre"] = function(x) {
+obj2["hacerAlgo" + "ConNombre"] = function(x) {
     return x * 2;
 };
 
@@ -378,8 +378,7 @@ function createPerson(name, age) {
 //Example 24: ignoring a function
 
 /**
- * @ignore
- * Esta función no será documentada.
+ * @ignore 
  */
 function privateFunction() {
     // código privado

@@ -1,0 +1,19 @@
+{
+    "type": "module",
+    "name": "Documenting with JSdoc",
+    "version": "1.0.0",
+    "description": "Examples on how to document with JSdoc",
+    "main": "JSdoc.js",
+    "scripts": {
+        "documenta": "npx jsdoc -c jsdoc.json",
+        "limpia": "rimraf documenta"
+      },
+    "keywords": [],
+    "author": "Alejandro Viana Ríos",
+    "license": "ISC",
+    "devDependencies": {
+        "jsdoc": "^4.0.4",
+        "rimraf": "^6.0.1",
+        "minami": "^1.2.3"
+    }
+}

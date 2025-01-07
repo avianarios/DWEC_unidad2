@@ -44,9 +44,9 @@ If I don't use "type": "module" in package.json, node.js will use CommonJS modul
 
 
 //Example 1: CommonJS modules
-const { sumar: adding, restar: substracting } = require('./4.-exported-functions1.js'); // Importación de funciones nombradas
-const multiplicar = require('./4.-exported-functions1.js'); // Importación de la función por defecto
-const operaciones = require('./4.-exported-functions2.js'); // Importación de todas las funciones nombradas
+const { sumar: adding, restar: substracting } = require('./functions1.js'); // Importación de funciones nombradas
+const multiplicar = require('./functions1.js'); // Importación de la función por defecto
+const operaciones = require('../4.-organizing code/js/functions2.js'); // Importación de todas las funciones nombradas
 
 console.log(adding(5, 3));
 console.log(substracting(10, 7));
@@ -65,9 +65,9 @@ console.log(operaciones.module(15, 3));
 
 //Example 2: ES6 modules
 //Recommended when code is related and is big enough to be divided into smaller parts
-import { sumar as adding, restar as substracting } from './4.-exported-functions1.js';  //importing named functions
-import multiplicar from './4.-exported-functions1.js';    //importing the default function
-import * as operaciones from './4.-exported-functions2.js';    //importing all named functions
+import { sumar as adding, restar as substracting } from './functions1.js';  //importing named functions
+import multiplicar from './functions1.js';    //importing the default function
+import * as operaciones from '../4.-organizing code/js/functions2.js';    //importing all named functions
 
 console.log(adding(5, 3));
 console.log(substracting(10, 7));
