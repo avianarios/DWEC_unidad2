@@ -48,7 +48,7 @@ some jsdoc interesting parameters:
                 code blocks: Usar tres acentos graves (```) antes y después del bloque de código. Se puede especificar el lenguaje de programación después de los tres acentos graves iniciales para resaltar la sintaxis.
             -markdown-plugin. It converts jsdoc comments to markdown format instead of HTML
             -jsdoc-babel. It allows you to use babel to transpile code and yet keep jsdoc working 
-            -jsdoc-export-default. It allows you to export the default export of a module in ES6 syntax
+            -jsdoc-export-default. It improves the documentation of functions, classes, or objects exported as default in JavaScript modules. Without this plugin, JSDoc sometimes fails to properly process default exports
             -jsdoc-coverage. It generates a coverage report of the documentation telling you which parts of the code are documented and which are not
             -jdsoc-vue. It allows you to document vue components
             -eslint-plugin-jsdoc. It is a plugin for eslint that checks if jsdoc comments are correct. Rules must be set at .eslintrc.json file
