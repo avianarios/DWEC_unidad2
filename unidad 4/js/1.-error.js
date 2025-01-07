@@ -69,7 +69,7 @@ function procesarJSON(datos) {
 }
   
 // Test de validación con JSON mal formado
-procesarJSON('{"nombre": "Ana", edad: 30}');  // Error al procesar el JSON: Unexpected string in JSON at position 22
+procesarJSON('{"nombre": "Ana", edad: 30}');  // Error al procesar el JSON (comillas en el campo nombre)
 
 
 /////////////////////////
@@ -287,20 +287,20 @@ function procesarNombre(nombre) {
 }
 
 function procesarDatos(usuario) {
-  try {
     let nombre = obtenerPropiedad(usuario, 'nombre'); // Obtener el nombre del usuario
     let longitud = procesarNombre(nombre); // Procesar el nombre
     console.log("Longitud del nombre:", longitud); // Mostrar la longitud
-  } catch (error) {
-    console.error("Error en el flujo de trabajo:", error); // Captura cualquier error sin importar su origen
-  }
 }
 
-let usuario = { nombre: "Juan" }; // Usuario con nombre
-procesarDatos(usuario); // Llamamos a procesarDatos
-
-let usuarioInvalido = null; // Usuario nulo
-procesarDatos(usuarioInvalido); // Llamada con usuario nulo
+try{
+  let usuario = { nombre: "Juan" }; // Usuario con nombre
+  procesarDatos(usuario); // Llamamos a procesarDatos
+  
+  let usuarioInvalido = null; // Usuario nulo
+  procesarDatos(usuarioInvalido); // Llamada con usuario nulo
+} catch (error) {
+  console.error("Error en el flujo de trabajo:", error); // Captura cualquier error sin importar su origen
+}
 
 
 //////////////////////////////
@@ -321,9 +321,8 @@ In some other cases, we might need to throw errors by ourselves:
 If any error, custom or not, is not caught (there is no try...catch around), the error propagates to the higher functions that called it, until it reaches the global function (window object in a web browser or global object in node), where it ends up stopping the program if not handled.
 
 Custom errors can be thrown anywhere in our code and they stops the program right at the point where the error is thrown.
-*/
 
-/*"throw" can throw any value, not only error objects. Despite possible, it's not recommended as, once catched in a catch block, the error will be treated as a that value (string for instance), losing information about the error
+"throw" can throw any value, not only error objects. Despite possible, it's not recommended as, once catched in a catch block, the error will be treated as a that value (string for instance), losing information about the error
 */
 //Example 1: try...catch is not needed. Instead an "if" statement could be used
 function procesarEntrada(edad) {
