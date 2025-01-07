@@ -306,7 +306,9 @@ try{
 //////////////////////////////
 ////throwing custom errors////
 //////////////////////////////
-/*In some ocasions, JavaScript engine automatically throws errors:
+/*There is a Error class from which SyntaxError, ReferenceError and TypeError classes extends
+
+JavaScript engine usually automatically detects and throws errors:
     -Syntactic errors when code is not properly written (SyntaxError). Example:  let a=;
     -Reference errors when an undefined variable is accessed (ReferenceError). Example: console.log(x) with x not being declared
     -Type error when trying to access a null or undefined property, try to invoke something that is not a function or try to perform an operation with incompatible data types (TypeError). Examples:
@@ -314,7 +316,7 @@ try{
         -let saludo=5; saludo();
         -let a="z"; let b=5; console.log(a*b);
 
-In some other cases, we might need to throw errors by ourselves:
+But in other cases, we might need to throw errors by ourselves:
     -When JavaScript engine is not automatically detecting an error
     -When we want to create our own custom error objects
 
