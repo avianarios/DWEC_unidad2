@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading a JavaScript code</title>
+    <!--
+
+/*
+How to insert JavaScript code into an HTML file? by using <script> tag
+
+How does it work?
+    -when browser finds a script tag, it stops rendering HTML and starts downloading and executing code
+    -scripts are executed in the order they appear in the HTML code
+
+Where to place the script tag? 
+    -at head. the script is downloaded and executed and after that, the html is rendered
+    -at the end of the body. html is rendered and after that, the script is downloaded and executed
+
+Three ways of inserting JavaScript code:
+  1.- Embedding script code
+  2.- Loading external resources from a CDN
+  3.- Loading your own external JS file. Two ways of importing and exporting code:
+        -Option 1: Load every js file in the same html file. Only recommended when code is not related.
+        -Option 2: Organize the content into modules and import the main module. Only possible when code is related.
+
+When loading external files, traditional blocking behaviour can be modified by using async and defer:
+  -async: <script src="file1.js" async></script>
+      -The rendering of the page is not blocked while the scripts are being loaded.
+      -Scripts are executed as soon as they are loaded, so the order of execution is not guaranteed.
+  -defer: <script src="file1.js" defer></script>
+      -The rendering of the page is not blocked while the scripts are being loaded.
+      -Scripts are executed in the order they are placed in the HTML code, but only after the entire page (DOM) has been parsed.
+*/    
+    
+    Option 1: Not recommended. Embedded script into HTML code. It's better in a separate file-->
+    <script>
+      setTimeout(()=>{
+        console.log("hola")
+      }, 3000);
+    </script>
+
+    <!--Option 2: Loading external resources from a CDN (content delivery network). Be careful about what you charge, it could be dangerous
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" integrity="sha512-wvHm8W2YdFx27tNwpYwOHKeglkIjG3CXMR1JLcEUQU9zI/hzP6UtWk4fNN0kfi32dT8Xq2a7rfFSJi5VpY2VwA==" crossorigin="anonymous" referrerpolicy="no-referrer" async></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js" async></script>
+
+      Option 3: Loading an own external JS file. 3 options:
+        <script src="../js/1.-script.js"></script>  -> HTML rendering is blocked until the script is donwloaded and executed
+        <script src="../js/1.-script.js" defer></script> -> script is loaded at background while HTML is being rendered and is executed only when HTML is rendered. Order is maintained
+        <script src="../js/1.-script.js" async></script>  -> script is loaded at background while HTML is being rendered but it is executed as soon as it is available, blocking HTML rendering. Order is not maintained
+    -->
+    <link rel="stylesheet" type="text/css" href="../css/estilos.css">
+    <script src="../js/1.-principal.js" type="module" defer></script>
+  </head>
+  <body>
+    <button id="cargarCadenas">Cargar funciones de cadena</button>
+    <button id="cargarJQuery">Cargar JQuery</button>
+    <article id="resultados"></article>
+  </body>
+</html>
