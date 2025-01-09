@@ -30,8 +30,6 @@ some jsdoc interesting parameters:
     -verbose: jsdoc ficheros_js -v
     -recurse: jsdoc directorio -r
     -Ignoring files (by using .jsignore file): jsdoc ficheros_js -i .jsignore
-    -config file (usually by usind jsdoc.json file): jsdoc ficheros_js -c jsdoc.json
-        using a configuration file is recommended for larger projects. It avoids entering the same parameters every time jsdoc is executed
     -plugins (-p or --plugins): jsdoc ficheros_js -p plugin-name
         All of them need to be installed with npm i --save-dev plugin-name
         Some interesting plugins:
