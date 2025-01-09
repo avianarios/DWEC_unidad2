@@ -1,6 +1,6 @@
 {
     "type": "module",
-    "name": "Documenting with JSdoc",
+    "name": "documenting-with-jsdoc",
     "version": "1.0.0",
     "description": "Examples on how to document with JSdoc",
     "main": "JSdoc.js",
