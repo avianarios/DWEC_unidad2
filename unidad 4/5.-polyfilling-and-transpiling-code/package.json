@@ -16,7 +16,8 @@
         "webpack",
         "polyfill",
         "transpile"
-      ],    "author": "Alejandro Viana Ríos",
+      ],
+    "author": "Alejandro Viana Ríos",
     "license": "ISC",
     "devDependencies": {
         "@babel/preset-env": "^7.26.0",
