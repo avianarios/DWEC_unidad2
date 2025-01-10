@@ -16,13 +16,10 @@ Criteria for dividing into modules:
     1.-Single Responsibility Principle. Each module should have a well-defined responsibility. This means that a module should handle a single part of the system.
     2.-High Cohesion. The elements within a module should be closely related to each other.
     3.-Loose Coupling. Modules should be independent of each other, so that changes in one module do not affect the others. This helps avoiding circular dependencies.
-    4.-Reusability. Modules should be designed to be reusable in other parts of the system. If a function is used in several modules, consider moving it to a separate module.
-    5.-Scalability. Modules should be easy to modify or extended. If a module is too big, consider dividing it into smaller ones.
-    6.-Readability. Each module should have a clear API, exporting only what is necessary
-    7.-Testability. Modules should be easy to test. Unit tests are easier to perform in small modules.
-    8.-Having a third party modules that handles interaction with third party services, like a database, an API, or a library, is a good practice. This way, you can easily replace the third party service without affecting the rest of the application.
-    9.-Adapting to business logic. Make sure the structure is understandable from the business or application domain perspective. This way, the code is easier to understand and maintain.
-    10.-Size and complexity. Don't do modules too small or too big. A module should be big enough to be useful, but not so big that it becomes difficult to understand or maintain.
+    4.-Reusability. Modules should be designed to be reusable in other parts of the system providing a clear API. Besides, if a function is used in several modules, consider moving it to a separate module.
+    5.-Consider having a third party modules that handles interaction with third party services, like a database, an API, or a library. This way, you can easily replace the third party service without affecting the rest of the application.
+    6.-Adapt to business logic. Each module should represent a logical and significant part of the system according to business needs. For instance: products, providers and requests could be appropiate modules.
+    7.-Size and complexity. Modules shouldn't be too small or too big. A module should be big enough to be useful, but small enough to be easy to understand, maintain, test and scalate.
 
 There are two ways of importing and exporting functions in JavaScript:
     -CommonJS modules: It's used in Node.js and some bundlers for compatibility reasons and due to the fact that in earlier versions, ES6 modules were not supported in Node.js. The syntax is:
@@ -45,7 +42,11 @@ If I don't use "type": "module" in package.json, node.js will use CommonJS modul
 
 //Example 1: CommonJS modules
 //CommonJS is a standard for structuring modules in JavaScript, originally designed for non-browser environments like Node.js. It was one of the first widely adopted solutions for handling modules in JavaScript before the introduction of ES6 modules.
-/*const fs = require('fs'); // Importar el módulo de sistema de archivos
+
+/*
+IMPORTING:
+
+const fs = require('fs'); // Importar el módulo de sistema de archivos
 const { sumar: adding, restar: substracting } = require('./functions1.js'); // Importación de funciones nombradas
 const multiplicar = require('./functions1.js'); // Importación de la función por defecto
 const operaciones = require('../4.-organizing code/js/functions2.js'); // Importación de todas las funciones nombradas
@@ -62,19 +63,26 @@ try {
 }
 
 console.log(operaciones.power(2, 3));
-console.log(operaciones.module(15, 3));*/
+console.log(operaciones.module(15, 3));
+
+
+EXPORTING:
+module.exports={
+    sumar,
+    restar
+}
+*/
 
 
 //Example 2: ES6 modules
 //Recommended when code is related and is big enough to be divided into smaller parts
-import { sumar as adding, restar as substracting } from './functions1.js';  //importing named functions
-import multiplicar from './functions1.js';    //importing the default function
-import * as operaciones from '../4.-organizing code/js/functions2.js';    //importing all named functions
+import elNombreQueYoQuiera, { sumar as adding, restar, PI } from './1.-functions1.js';  //importing named functions and default function as elNombreQueYoQuiera
+import * as operaciones from './1.-functions2.js';    //importing all named functions
 
 console.log(adding(5, 3));
-console.log(substracting(10, 7));
-console.log(multiplicar(4, 5));
-console.log("hola");
+console.log(restar(10, 7));
+console.log(PI);
+console.log(elNombreQueYoQuiera(4, 5));
 
 try{
     console.log (operaciones.division(10, 2));        //wont work as division is not exported

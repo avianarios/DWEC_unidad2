@@ -19,6 +19,14 @@ function modulo(dividendo, divisor) {
     }
     return dividendo % divisor;
 }
+
+//default exporting an arrow function
+export default (a)=>Math.sqrt(a);
+
+/*another way of doing it is previously define the arrow function
+const raiz=(a)=>Math.sqrt(a);
+Export default raiz;
+*/
   
 //////////////////////////////////////////////////
 ////Exporting functions at the end of the file////
