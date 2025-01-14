@@ -6,7 +6,7 @@
       "excludePattern": ".*\\.test\\.js$"
     },
     "opts": {
-      "destination": "./docs",
+      "destination": "./documentacion",
       "template": "node_modules/minami",
       "recurse": true
     },
@@ -14,8 +14,6 @@
       "cleverLinks": true,
       "monospaceLinks": true
     },
-    {
-      "plugins": ["plugins/markdown"]
-    }
-  }
+    "plugins": ["plugins/markdown"]
+}
   
