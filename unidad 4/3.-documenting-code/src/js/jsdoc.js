@@ -182,6 +182,7 @@ function sumaVieja(a, b) {
 
 
 //Example 11: using markdown
+//be careful as some templates may not be compatible with markdown
 /**
  * Calcula la suma de dos números.
  *
@@ -191,7 +192,8 @@ function sumaVieja(a, b) {
  * ```
  *  * ### Retorno
  * Devuelve la suma de dos números.
- *
+ * 
+ * 
  * @param {number} a - Primer número.
  * @param {number} b - Segundo número.
  * @returns {number} La suma de `a` y `b`.
@@ -269,7 +271,6 @@ export function restar(a, b) {
 /**
  * Obtiene la lista de usuarios desde la API de JSONPlaceholder.
  * @async
- * @function
  * @returns {Promise<Object[]>} Promesa que resuelve en un array de usuarios.
  * @throws {Error} Si no se pueden obtener los usuarios.
  */
@@ -427,9 +428,10 @@ function subtract(a, b) {
     return a - b;
 }
 
-// Uso del "espacio de nombres"
-MathLibrary.sum(5, 3);  // 8
-MathLibrary.subtract(5, 3);  // 2
+// Uso de las funciones (sin MathLibrary como objeto)
+sum(5, 3);  // 8
+subtract(5, 3);  // 2
+
 
 
 //Example: optional parameter
