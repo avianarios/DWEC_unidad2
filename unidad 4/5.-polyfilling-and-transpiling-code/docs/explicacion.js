@@ -8,16 +8,36 @@ Web browsers starting from 2017 fully support JS modules. For older browsers, po
 ////Polyfilling////
 ///////////////////
 /*
-Polyfills are pieces of code that translate newer methods, structures, or objects, which are only understandable by modern JavaScript engines, into code that older JavaScript engines can understand. Therefore, they allow older browsers to work with new JavaScript features that are not natively supported. Polyfills do not modify the syntax; instead, they implement missing functionality, such as creating a method that mimics the behavior of Array.includes() in environments where it is not available.
+Polyfills are pieces of code that translate newer methods, structures, or objects—understandable only by modern JavaScript engines—into code that older JavaScript engines can comprehend. They allow older browsers to work with new JavaScript features that are not natively supported. Polyfills do not modify the syntax; instead, they implement missing functionality, such as creating a method that mimics the behavior of Array.includes() in environments where it is not available.
 
 Options:
-    -To write your own polyfills 
-    -To use external libraries like corejs, regenerator-runtime or es6-shim, 
-        -either installing (usually in node.js) and configuring alongside babel or webpack
+
+    Write your own polyfills.
+    Use external libraries like core-js, regenerator-runtime, or es6-shim:
+        -These can be installed (usually in Node.js) and configured alongside a module bundler.
         -or by using a CDN like jsdelivr (<script src="https://cdn.jsdelivr.net/npm/core-js/stable/index.js"></script>) or unpkg
     -To use web services like polyfill.io that automatically detect the browser and serve the appropriate polyfills. No need for configuration, just include an script tag in the HTML file:
         <script src="https://cdn.polyfill.io/v3/polyfill.min.js?features=es2015,es2016"></script>
         it is easy to use, it is always updated and no need for configuration, but it's less customizable that core-js and you need always an internet connection to use it.
+
+What is a module bundler?
+    Un empaquetador (bundler) es una herramienta que toma los archivos de un proyecto, los procesa y los combina en uno o varios archivos más eficientes y optimizados para ser utilizados en producción. Los empaquetadores permiten que los desarrolladores trabajen con módulos y recursos de manera más eficiente, y facilitan la gestión de dependencias, la optimización del rendimiento y la integración de funcionalidades adicionales.
+    Funciones principales de un empaquetador:
+        -Gestión de dependencias: resuelven y gestionan las dependencias de tu proyecto, es decir, identifican qué archivos requieren otros archivos para funcionar y combinar todo en un único paquete (o varios paquetes si es necesario).
+        -Transformación de código: mediante herramientas como babel, transpilan código, es decir, convierten JavaScript moderno (ES6+ o JSX) en código compatible con navegadores más antiguos.
+        -Optimización de código y de recursos (como imágenes y archivos CSS) para hacerlos más pequeños y rápidos de cargar. Esto puede incluir la minimización de JavaScript y CSS, y la optimización de imágenes.
+        -Manejo de módulos: Permiten la importación y exportación de módulos, siguiendo el sistema de módulos de JavaScript (ESModules, CommonJS, etc.) y asegurando que solo se carguen los módulos necesarios.
+        -Cargar recursos estáticos: Gestionan la inclusión de archivos estáticos (como imágenes, fuentes y otros activos) y permiten importar estos archivos en el código JavaScript para que sean procesados y empaquetados correctamente. Manejan rutas, pueden hacer carga dinámica, etc.
+        -Generación de archivos de salida optimizados, como archivos JavaScript, CSS, y otros recursos que pueden ser utilizados en producción. Estos archivos suelen estar minificados para mejorar el rendimiento.
+        -Soporte para extensiones (plugins), que amplían la funcionalidad (por ejemplo optimizar la salida, inyectar variables de entorno o generar archivos HTML.), y loaders (cargadores), que transforman el código de archivos específicos antes de ser empaquetados (por ejemplo, convertir Sass a CSS o procesar archivos de imágenes).
+        -división de código (Code splitting) en fragmentos más pequeños que se cargan sólo cuando son necesarios, mejorando así la carga inicial de la página y reduciendo el tamaño de los archivos descargados.
+        -Hot Module Replacement (HMR):
+        Algunas herramientas como Webpack permiten la reemplazo de módulos en caliente durante el desarrollo, lo que significa que solo los módulos modificados se actualizan sin necesidad de recargar toda la página, acelerando el flujo de trabajo de desarrollo.
+        -Renombrado de ficheros para evitar cacheo. Esto significa que los archivos se renombrarán (por ejemplo, con un hash en el nombre del archivo) para evitar que los usuarios vean versiones antiguas del archivo debido al almacenamiento en caché del navegador.
+    Ejemplos de empaquetadores: webpack, parcel, vite
+
+What is a transpiler?
+Permite transformar código JavaScript de versiones más recientes a versiones más antiguas para garantizar que el código sea compatible con navegadores que no soportan las últimas características del lenguaje. Ejemplos: babel, esbuild
 
 */
 
@@ -177,16 +197,17 @@ How to dectect if a browser is modern or legacy?
 
 
 Process of transpiling and polyfilling:
+We are going to use webpack (module bundler) with babel (transpiler) in a node environment
     1.- Install node and start off a project
         npm init -y
     2.- Install webpack, babel and core-js
-        npm install --save-dev webpack webpack-cli webpack-merge babel-loader @babel/core @babel/preset-env core-js
+        npm install --save-dev webpack webpack-cli webpack-merge @babel/core @babel/preset-env babel-loader core-js regenerator-runtime
 
         webpack: A module bundler that allows you to bundle and minimize your JavaScript files.
         webpack-cli: Allows you to run Webpack from the command line.
         webpack-merge:Permite combinar configuraciones de Webpack para crear diferentes configuraciones (moderno/antiguo).
-        babel-loader: Loads babel in webpack for transpiling
         @babel/core y @babel/preset-env: Configure babel to transpile modern code.
+        babel-loader: Loads babel in webpack for transpiling
         core-js: A library that provides polyfills for new JavaScript features.
         regenerator-runtime: Provides polyfills for async/await functions.
 
