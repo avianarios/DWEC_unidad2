@@ -6,6 +6,7 @@
     "main": "JSdoc.js",
     "scripts": {
         "documenta": "npx jsdoc -c jsdoc.json",
+        "documenta-log": "npx jsdoc -c jsdoc.json -X",
         "limpia": "rimraf documentacion",
         "todo": "npm-run-all limpia documenta"
     },
