@@ -1,17 +1,18 @@
 {
     "type": "module",
-    "name": "Polyfilling and transpiling",
+    "name": "polyfill-and-transpile",
     "version": "1.0.0",
     "description": "Code to show how to polyfill and transpile code",
     "main": "src/index.js",
     "scripts": {
-        "build:modern": "webpack --config webpack.modern.js --mode $modo",
-        "build:legacy": "webpack --config webpack.legacy.js --mode $modo",
-        "des": "cross-env modo=development npm-run-all --serial build:modern build:legacy",
-        "prod": "cross-env modo=production npm-run-all --serial build:modern build:legacy",
-        "limpia": "rimraf dist"
-      },
-    "browserslist": "> 0.25%, not dead",
+        "compilar:moderno": "webpack --config webpack.modern.js --mode $modo",
+        "compilar:antiguo": "webpack --config webpack.legacy.js --mode $modo",
+        "desarrollo": "cross-env modo=development npm-run-all --serial compilar:moderno compilar:antiguo",
+        "produccion": "cross-env modo=production npm-run-all --serial compilar:moderno compilar:antiguo",
+        "limpia": "rimraf compilado",
+        "todo:des": "npm-run-all limpia des",
+        "todo:prod": "npm-run-all limpia des"
+    },
     "keywords": [
         "webpack",
         "polyfill",
@@ -23,19 +24,14 @@
         "@babel/preset-env": "^7.26.0",
         "core-js": "^3.39.0",
         "cross-env": "^7.0.3",
-        "css-loader": "^7.1.2",
-        "html-webpack-plugin": "^5.6.3",
-        "jsdoc": "^4.0.4",
-        "mini-css-extract-plugin": "^2.9.2",
         "npm-run-all": "^4.1.5",
         "regenerator-runtime": "^0.14.1",
         "rimraf": "^6.0.1",
         "webpack": "^5.97.1",
         "webpack-cli": "^5.1.4",
-        "webpack-merge": "^6.0.1"
-    },
-    "dependencies": {
-        "handlebars": "^4.7.8",
-        "taffydb": "^2.7.3"
+        "webpack-merge": "^6.0.1",
+        "css-loader": "^7.1.2",
+        "html-webpack-plugin": "^5.6.3",
+        "mini-css-extract-plugin": "^2.9.2"
     }
 }
