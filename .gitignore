@@ -1,11 +1,10 @@
 tmp*
 _*
 .
-fuente
 *.pptx
 documentacion
 node_modules
-dist
+compilado
 fuente
 *español*
 *soluciones*
