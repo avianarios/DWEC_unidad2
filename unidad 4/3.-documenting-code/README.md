@@ -8,7 +8,7 @@ Los pasos para echar a andar este proyecto con Node.js son los siguientes:
 
 2. **Iniciar el proyecto desde su directorio con `npm init`**.  
    Responde a las preguntas para generar el archivo `package.json`, que es el fichero de configuración de Node.js.
-   No uses mayúsculas ni espacios en el campo "name"
+   No uses mayúsculas, espacios ni caracteres especiales en el campo "name"
 
 3. **Instalar paquetes y sus dependencias**
    -`npm install --save-dev <nombre_paquete>` para instalar paquetes en el proyecto actual que solo se necesitan para desarrollo
