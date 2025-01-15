@@ -1,24 +1,10 @@
-/*import path from 'path';
-
-export default {
-  mode: process.env.modo,
-  target: ['web', 'es5'],
-  output: {
-    path: path.resolve(process.cwd(), 'dist'),
-    filename: 'bundle.legacy.js',
-  },
-  entry: './src/index.js',
-};
-
-
-
-*/
 import path from 'path';
 import { merge } from 'webpack-merge';
 import common from './webpack.common.js';
 
 export default merge(common, {
-  target: ['web', 'es5'],
+//  Not necessary as webpack just invokes babel to transpile.
+//   target: ['web', 'es5'],
   output: {
     filename: 'bundle.legacy.js',
   },
@@ -28,7 +14,7 @@ export default merge(common, {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader', // Solo para el legacy
+          loader: 'babel-loader', // Se llama para transpilar. Por tanto, sólo lo llama el legacy
         },
       },
     ],
