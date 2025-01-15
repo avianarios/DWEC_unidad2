@@ -1,20 +1,22 @@
-# Ejemplo del uso de JSDoc con Node.js
+# Proyecto de uso de JSDoc con Node.js
+
+JSDoc es una herramienta y un estándar de documentación para JavaScript que permite agregar comentarios en el código con un formato especial para describir funciones, variables, clases, y otros elementos del código. Estos comentarios se procesan para generar automáticamente documentación legible en formato HTML o en otros formatos.
 
 Los pasos para echar a andar este proyecto con Node.js son los siguientes:
 
-1. **Instalar Node.js** en el directorio del proyecto.
+1. **Instalar Node.js** en el equipo
 
-2. **Iniciar el proyecto con `npm init`**.  
+2. **Iniciar el proyecto desde su directorio con `npm init`**.  
    Responde a las preguntas para generar el archivo `package.json`, que es el fichero de configuración de Node.js.
+   No uses mayúsculas ni espacios en el campo "name"
 
-3. **Instalar paquetes y sus dependencias** con `npm install --save-dev <nombre_paquete>`.  
-   - Recuerda que con `--save-dev` se instalan los paquetes que solo se necesitan para desarrollo, no para producción.  
-   - Para producción, se usaría: `npm install <nombre_paquete>`.
+3. **Instalar paquetes y sus dependencias**
+   -`npm install --save-dev <nombre_paquete>` para instalar paquetes en el proyecto actual que solo se necesitan para desarrollo
+   -`npm install <nombre_paquete>` para instalar paquetes en el proyecto actual que se necesitan para producción
+   -`npm install -g <nombre_paquete>` para instalar paquetes de forma global, no sólo para el proyecto actual
 
-   Ejemplos:
-   - `npm install --save-dev jsdoc`
-   - `npm install --save-dev rimraf`
-   - `npm install --save-dev minami`
+   Paquetes para este proyecto:
+   - `npm install --save-dev jsdoc rimraf minami npm-run-all taffydb`
 
 4. **Crear un fichero de configuración de JSDoc** llamado `jsdoc.json`.  
    Este archivo contendrá los parámetros necesarios para generar la documentación automáticamente, evitando tener que ingresarlos manualmente cada vez que se ejecute. *(Consulta el archivo `jsdoc.json` para más detalles.)*
