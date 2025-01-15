@@ -26,7 +26,7 @@ export default {
         '@babel/preset-env',
         {
           targets: '> 0.25%, not dead', // Especifica los navegadores a los que debe apuntar Babel
-          useBuiltIns: 'usage',        // Incluir los polyfills según el uso en tu código
+          useBuiltIns: 'usage',        // Incluir los polyfills estrictamente necesarios según el código, no todos
           corejs: 3                    // Utilizar CoreJS 3 para los polyfills
         }
       ]
