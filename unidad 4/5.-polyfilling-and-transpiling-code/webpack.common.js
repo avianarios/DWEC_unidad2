@@ -1,15 +1,15 @@
 import path from 'path';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
+//import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 export default {
-  entry: './src/index.js',
+  entry: './fuente/index.js',
   output: {
-    path: path.resolve(process.cwd(), 'dist', process.env.modo),
+    path: path.resolve(process.cwd(), 'compilado', process.env.modo),
   },
   mode: process.env.modo,
-  plugins: [
+/*  plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      template: './fuente/index.html',
     }),
-  ],
+  ],*/
 };
