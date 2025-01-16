@@ -2,7 +2,12 @@
 ////nodetype////
 ////////////////
 //it gets the type of node
-//most common: 1->element, 3->text, 9->document
+/*most common:
+    1->element-> etiquetas de nodo
+    2->text. texto dentro del nodo
+    3->atributo. atributos de un elemento
+    4->comentario-> comentarios de HTML que no son visibles, pero existen
+    9->document*/
 console.log (document.getElementById("titulo1").nodeType,
             document.body.firstChild.nodeType,  //the first child of body is a comment because there is no space between them. If there were a space, DOM would've created an empty #text node
             document.body.getElementsByTagName("section")[0].firstChild.nodeType, //the fist child of the section tag is an empty text node

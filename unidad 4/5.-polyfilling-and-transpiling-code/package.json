@@ -7,11 +7,11 @@
     "scripts": {
         "compilar:moderno": "webpack --config webpack.modern.js --mode $modo",
         "compilar:antiguo": "webpack --config webpack.legacy.js --mode $modo",
-        "desarrollo": "cross-env modo=development npm-run-all --serial compilar:moderno compilar:antiguo",
-        "produccion": "cross-env modo=production npm-run-all --serial compilar:moderno compilar:antiguo",
+        "desarrollo": "cross-env modo=development run-s compilar:moderno compilar:antiguo",
+        "produccion": "cross-env modo=production run-s compilar:moderno compilar:antiguo",
         "limpia": "rimraf compilado",
-        "todo:des": "npm-run-all limpia desarrollo",
-        "todo:prod": "npm-run-all limpia produccion"
+        "todo:des": "run-s limpia desarrollo",
+        "todo:prod": "run-s limpia produccion"
     },
     "keywords": [
         "webpack",
