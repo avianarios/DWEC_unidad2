@@ -53,7 +53,7 @@ console.log(parrafo);
 /*body and head have their own shortctus making
 document.querySelector("body") is equivalent to document.body
 document.querySelector("head") is equivalent to document.head
-document.querySelector("html") is equivalent to document.documentElement
+document.querySelector("html") is equivalent to document.documentElement*/
 
 
 ////querySelectorAll////
@@ -69,6 +69,4 @@ console.log (elements.length, elements[0].innerHTML);   //although there is only
 /*a NodeList is not an Array. Main differences might be:
     -array methods, like push, pop, slice, join, shift... can't be used
     -NodeList can be live or static. Arrays are always static. Live collections allow to interact with their new members even after being selected
-    - 
-
 */

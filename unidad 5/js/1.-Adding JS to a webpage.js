@@ -1,7 +1,7 @@
 // principal.js
-import { add, multiply } from './1.-mates.js';
-import { getCurrentDate, getCurrentTime } from './1.-fecha.js';
-import { createParagraph, createHeading } from './1.-dom.js';
+import { add, multiply } from './1.-modulo-mates.js';
+import { getCurrentDate, getCurrentTime } from './1.-modulo-fecha.js';
+import { createParagraph, createHeading } from './1.-modulo-dom.js';
 
 // Operaciones con números
 const sum = add(5, 10);
@@ -22,7 +22,7 @@ createParagraph(`Hora actual: ${currentTime}`);
 //Dynamic loading
 document.getElementById('cargarCadenas').addEventListener('click', () => {
     // Importar el módulo cuando se haga clic en el botón
-    import('./1.-cadenas.js')
+    import('./1.-modulo-cadenas.js')
         .then((module) => {
             // Usar las funciones del módulo importado
             const str = "Hola Mundo";
