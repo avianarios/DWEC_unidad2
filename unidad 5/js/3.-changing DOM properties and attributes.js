@@ -1,44 +1,63 @@
-////////////////
-////nodetype////
-////////////////
-//it gets the type of node
-/*most common:
+////////////////////////////////
+////getting node information////
+////////////////////////////////
+/*There most common types of node are:
     1->element-> etiquetas de nodo
     2->atributo-> atributos de un elemento
     3->text-> texto dentro del nodo
     8->comentario-> comentarios de HTML que no son visibles, pero existen
-    9->document -> todos los elementos descienden del nodo document, es la raíz*/
-console.log (document.getElementById("titulo1").nodeType,
-            document.body.firstChild.nodeType,  //the first child of body is a comment because there is no space between them. If there were a space, DOM would've created an empty #text node
-            document.body.getElementsByTagName("section")[0].firstChild.nodeType, //the fist child of the section tag is an empty text node
-            document.getElementById("titulo1").firstChild.nodeType,
-            document.nodeType);
+    9->document -> todos los elementos descienden del nodo document, es la raíz
+
+How to get node information?
+    1.- Select one node
+    2.- Check nodeType, nodeName and nodeValue properties
+    
+*/
 
 
-////////////////
-////nodename////
-////////////////
-console.log (document.getElementById("titulo1").nodeName,
-            document.body.firstChild.nodeName,  //the first child of body is a comment because there is no space between them. If there were a space, DOM would've created an empty #text node
-            document.body.getElementsByTagName("section")[0].firstChild.nodeName, //the fist child of the section tag is an empty text node
-            document.getElementById("titulo1").firstChild.nodeName,
-            document.nodeName);
+
+//Example 1: element nodes
+let titulo1=document.getElementById("titulo1");
+console.log (titulo1.nodeType, titulo1.nodeName, titulo1.nodeValue);    //1 H1 null
+console.log (document.body.nodeType, document.body.nodeName, document.body.nodeValue);
+
+//Example 2: text nodes (type 3)
+console.log (titulo1.firstChild.nodeType, titulo1.firstChild.nodeName, titulo1.firstChild.nodeValue);
+let secciones=document.body.getElementsByTagName("section");
+//The name of a text node is always #text
+//Why there's an empty node after section? Because there's an empty space or a newline after seccion
+console.log (secciones[0], secciones[0].firstChild.nodeType, secciones[0].firstChild.nodeName, secciones[0].firstChild.nodeValue);
+
+//Example 3: comment nodes (type 8)
+console.log (document.body.firstChild.nodeType, document.body.firstChild.nodeName, document.body.firstChild.nodeValue);
+//there's a comment before body tag, despite it is not visible at the rendered webpage
+
+console.log (document.nodeType, document.nodeName, document.nodeValue);
+//by definition, document.nodeValue==null
+
 
 
 ///////////////////////////////////
 ////getting and setting content////
 ///////////////////////////////////
 
+/*
+-innerHTML
+    -Returns or sets the internal content of an HTML element, i.e. everything inside the opening and closing tags of the element. 
+    -It affects to all childs of the HTML tag (in <h1>hola</h1>, hola is the child of <h1> tag), but not to the TAG itself
+-outerHTML
+    -Returns or sets the entire contents of an HTML element, including the element itself (its opening and closing tags) and its inner content.
+    -It affects to ALL CHILDS of the HTML tag, INCLUDING the TAG itself
+*/
 
-///////innerHTML and outerHTML///////
-//both includes HTML tags
-//1:Gets the elements within the selected element, including HTML tags and text spaces
-//2:Gets the elements within the selected element and the element itself, including HTML tags but no text spaces
+//example 1: Substituting a text 
+seccion=document.body.getElementsByTagName("section")[0];
+console.log ("innerHTML:"+seccion.innerHTML);
+console.log ("outterHTML:"+seccion.outerHTML);
 
-//example 1: substitute a text
-document.getElementById("titulo1").innerHTML="<p>Animales que viven con nosotros (modificado tras haber sido renderizado)</p>";
-console.log ("innerHTML:"+document.getElementById("titulo1").innerHTML);
-console.log ("outterHTML:"+document.getElementById("titulo1").outerHTML);
+seccion.innerHTML="<p>Animales que viven con nosotros (modificado tras haber sido renderizado)</p>";
+console.log(seccion.innerHTML);
+
 
 
 //example 2: adds a text to a list of elements
