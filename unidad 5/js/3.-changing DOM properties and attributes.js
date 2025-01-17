@@ -1,18 +1,18 @@
 ////////////////////////////////
 ////getting node information////
 ////////////////////////////////
-/*There most common types of node are:
-    1->element-> etiquetas de nodo
-    2->atributo-> atributos de un elemento
-    3->text-> texto dentro del nodo
-    8->comentario-> comentarios de HTML que no son visibles, pero existen
-    9->document -> todos los elementos descienden del nodo document, es la raíz
+// There most common types of node are:
+//     1->element-> etiquetas de nodo
+//     2->atributo-> atributos de un elemento
+//     3->text-> texto dentro del nodo
+//     8->comentario-> comentarios de HTML que no son visibles, pero existen
+//     9->document -> todos los elementos descienden del nodo document, es la raíz
 
-How to get node information?
-    1.- Select one node
-    2.- Check nodeType, nodeName and nodeValue properties
+// How to get node information?
+//     1.- Select one node
+//     2.- Check nodeType, nodeName and nodeValue properties
     
-*/
+
 
 
 
@@ -40,16 +40,15 @@ console.log (document.nodeType, document.nodeName, document.nodeValue);
 ///////////////////////////////////
 ////getting and setting content////
 ///////////////////////////////////
-/*
--innerHTML
-    -Returns or sets the internal content of an HTML element, i.e. everything inside the opening and closing tags of the element. 
-    -It affects to all childs of the HTML tag (in <h1>hola</h1>, hola is the child of <h1> tag), but not to the TAG itself
--outerHTML
-    -Returns or sets the entire content of an HTML element and the element itself (its opening and closing tags).
-    -It affects to ALL CHILDS of the HTML tag, INCLUDING the TAG itself
+// -innerHTML
+//     -Returns or sets the internal content of an HTML element, i.e. everything inside the opening and closing tags of the element. 
+//     -It affects to all childs of the HTML tag (in <h1>hola</h1>, hola is the child of <h1> tag), but not to the TAG itself
+// -outerHTML
+//     -Returns or sets the entire content of an HTML element and the element itself (its opening and closing tags).
+//     -It affects to ALL CHILDS of the HTML tag, INCLUDING the TAG itself
 
-Be careful!: When assigning strings to innerHTML, be sure to sanitise the content if it comes from untrusted sources, as it is vulnerable to HTML or JavaScript injection attacks.
-*/
+// Be careful!: When assigning strings to innerHTML, be sure to sanitise the content if it comes from untrusted sources, as it is vulnerable to HTML or JavaScript injection attacks.
+
 //Example 1: Getting content
 let inHTML=document.getElementById("inHTML");
 let outHTML=document.getElementById("outHTML");
@@ -72,20 +71,20 @@ let h3=document.querySelector("h3");
 h3.outerHTML="<h2>Este es el nuevo encabezado de nivel 2 que ha sustituido al de nivel 3</h2>";
 
 
-/*innerText, outerText and textContent
+// innerText, outerText and textContent
 
-outerText is similiar to outerHTML: 
-    -Devuelve el texto del nodo y sus descendientes, ignorando las etiquetas HTML y sólo si el texto es visible (si no está oculto con visibility:hidden o display:none). 
-    -Inserta el texto tratando a las etiquetas HTML como texto plano y sin reemplazar el nodo seleccinado (no pisa la etiqueta HTML)
+// outerText is similiar to outerHTML: 
+//     -Devuelve el texto del nodo y sus descendientes, ignorando las etiquetas HTML y sólo si el texto es visible (si no está oculto con visibility:hidden o display:none). 
+//     -Inserta el texto tratando a las etiquetas HTML como texto plano y sin reemplazar el nodo seleccinado (no pisa la etiqueta HTML)
 
-innerText es parecido a innerHTML:
-    -Devuelve el texto del nodo y sus descendientes, ignorando las etiquetas HTML y sólo si el texto es visible (si no está oculto con visibility:hidden o display:none). 
-    -Inserta el texto tratando a las etiquetas HTML como texto plano y reemplazando el nodo seleccinado (sí pisa la etiqueta HTML)
+// innerText es parecido a innerHTML:
+//     -Devuelve el texto del nodo y sus descendientes, ignorando las etiquetas HTML y sólo si el texto es visible (si no está oculto con visibility:hidden o display:none). 
+//     -Inserta el texto tratando a las etiquetas HTML como texto plano y reemplazando el nodo seleccinado (sí pisa la etiqueta HTML)
 
-textContent
-    -Devuelve el texto del nodo y sus descendientes, ignorando las etiquetas HTML, sin importar si el texto es visible o no.
-    -Inserta el texto como innerText
-*/
+// textContent
+//     -Devuelve el texto del nodo y sus descendientes, ignorando las etiquetas HTML, sin importar si el texto es visible o no.
+//     -Inserta el texto como innerText
+
 
 //Example 5: innerText, outerText and textContent
 let inTxt=document.getElementById("inTxt");
@@ -119,20 +118,19 @@ setTimeout(()=>{
 ////////////////////////////////////
 ////manipulating node attributes////
 ////////////////////////////////////
-/*
-Two types of atributes
-    -standard. They have DOM properties with the same name, case insensitive
-    -Non standard. They can be created. They are useful to pass custom data from HTML to JavaScrip or to mark HTML elements to do something with them in JavaScript. User doesn't get affected
+// Two types of atributes
+//     -standard. They have DOM properties with the same name, case insensitive
+//     -Non standard. They can be created. They are useful to pass custom data from HTML to JavaScrip or to mark HTML elements to do something with them in JavaScript. User doesn't get affected
 
-Example:
-    <section class="container" data-attr="value"></div>
-    -class -> standard
-    -data-attr -> non standard
+// Example:
+//     <section class="container" data-attr="value"></div>
+//     -class -> standard
+//     -data-attr -> non standard
 
-Manipulating...
-    -standard attributes-> setAttribute or the name of the attribute preceeded by a dot
-    -custom attributes -> only setAttribute
-*/
+// Manipulating...
+//     -standard attributes-> setAttribute or the name of the attribute preceeded by a dot
+//     -custom attributes -> only setAttribute
+
 
 //Example 1: checking element's attribute with attributes property and hasAttributes() method
 let imagen=document.querySelector("img");
@@ -196,19 +194,19 @@ for (let atributo of imagen.attributes){
     console.log (`nombre: ${atributo.name}, valor: ${atributo.value}`);
 }
 
-/*in order to use forEach, an array has to be created in any of the three following ways
-Array.from (imagen.attributes).forEach((atributo)=>{
-    console.log (atributo);
-});
+// in order to use forEach, an array has to be created in any of the three following ways
+// Array.from (imagen.attributes).forEach((atributo)=>{
+//     console.log (atributo);
+// });
   
-[...imagen.attributes].forEach((atributo)=>{
-    console.log (atributo);
-});
+// [...imagen.attributes].forEach((atributo)=>{
+//     console.log (atributo);
+// });
   
-Array.prototype.forEach.call(
-    imagen.attributes,
-    (atributo)=>{ console.log (atributo); }
-);*/
+// Array.prototype.forEach.call(
+//     imagen.attributes,
+//     (atributo)=>{ console.log (atributo); }
+// );
 
 //Example 10: removing attributes
 parrafo=document.querySelector("section#modificarClases>p#idPorEliminar");
@@ -217,14 +215,14 @@ imagen.removeAttribute("autor");
 
 
 //Example 11: getting classes information
-/*class is an attribute than can store many values separated by spaces. Thus, it needs to be treated differently
-    classList -> returns a DOMTokenList of classes (similar to an Array)
-    classList.length -> returns the number of classes
-    classList.value  -> returns the list of classes as a string
-    classList.name -> returns all classes as a string
-    classList.item(0) -> item is a method that returns the class located at position indicated as argument
-    classList.contains("class") -> returns true if element has "class"
-*/
+// class is an attribute than can store many values separated by spaces. Thus, it needs to be treated differently
+//     classList -> returns a DOMTokenList of classes (similar to an Array)
+//     classList.length -> returns the number of classes
+//     classList.value  -> returns the list of classes as a string
+//     classList.name -> returns all classes as a string
+//     classList.item(0) -> item is a method that returns the class located at position indicated as argument
+//     classList.contains("class") -> returns true if element has "class"
+
 listaParrafos=document.body.querySelectorAll("section#modificarClases>p");
 listaParrafos.forEach(parrafo=>{
     parrafo.classList.forEach(clase=>{
