@@ -134,12 +134,12 @@ Manipulating...
     -custom attributes -> only setAttribute
 */
 
-//Example 1: checking element's attribute
+//Example 1: checking element's attribute with attributes property and hasAttributes() method
 let imagen=document.querySelector("img");
+console.log(imagen.attributes);
 console.log("¿La imagen tiene atributos?:"+imagen.hasAttributes());
 console.log("¿La imagen tiene el atributo src?:"+imagen.hasAttribute("src"));
 console.log("¿La imagen tiene el atributo cámara?:"+imagen.hasAttribute("camara"));
-
 
 //Example 2: setting non-standard attributes
 //custom attributes don't become properties so they can only be accessed by using getAttribute
@@ -177,7 +177,7 @@ if (imagen.hasAttribute('src')){
 
 
 //Example 7: adding id to the first paragraph of any section as long as it is a direct child
-let parrafo = document.querySelector("section.atributos > p:first-of-type");
+let parrafo = document.querySelector("section#ponerID > p:first-of-type");
 parrafo.setAttribute("id", "especial");
 console.log(parrafo.getAttribute("id")); // Debe devolver "especial"
 console.log(parrafo.id); // También debe devolver "especial"
@@ -210,76 +210,74 @@ Array.prototype.forEach.call(
     (atributo)=>{ console.log (atributo); }
 );*/
 
-
 //Example 10: removing attributes
-/*let parrafos=Array.from (document.getElementsByTagName("p"));
-parrafos.forEach(element => {
-        if (element.hasAttribute('id')){
-            element.removeAttribute('id');
-        }
-});*/
-ZZZZZZZZZZZZZZZZZZ
-seleccionar el segundo section con .atributos y cambiarle el id a sus párrafos
-let parrafos=Array.from (document.querySelectorAll("p.parrafoDestacado"));
-parrafos.forEach(element => {
-        if (element.hasAttribute('id')){
-            element.removeAttribute('id');
-        }
+parrafo=document.querySelector("section#modificarClases>p#idPorEliminar");
+parrafo.removeAttribute("id");
+imagen.removeAttribute("autor");
+
+
+//Example 11: getting classes information
+/*class is an attribute than can store many values separated by spaces. Thus, it needs to be treated differently
+    classList -> returns a DOMTokenList of classes (similar to an Array)
+    classList.length -> returns the number of classes
+    classList.value  -> returns the list of classes as a string
+    classList.name -> returns all classes as a string
+    classList.item(0) -> item is a method that returns the class located at position indicated as argument
+    classList.contains("class") -> returns true if element has "class"
+*/
+listaParrafos=document.body.querySelectorAll("section#modificarClases>p");
+listaParrafos.forEach(parrafo=>{
+    parrafo.classList.forEach(clase=>{
+        console.log (clase);
+    });
+});
+console.log (parrafo.classList.length);
+console.log (parrafo.classList.value);
+console.log (parrafo.classList.name);
+console.log(parrafo.classList.item(0));
+console.log (parrafo.classList.contains("una_clase"));   
+
+
+//Example 12: removing a class with classList.remove
+listaParrafos.forEach(parrafo=>{
+    parrafo.classList.remove("rojo");
 });
 
 
+//Example 13: removing the last class of the first paragraph
+parrafo=listaParrafos[0];
+parrafo.classList.remove(parrafo.classList.item(parrafo.classList.length-1)); 
 
-////////Special attribute: class////////
-//class is an attribute than can store many values separated by spaces. Thus, it needs to be treated differently
-//aux=document.body.querySelector("#parrafos p.normal");  //I get the first paragraph with any class defined
 
-//getting classes information
-//classlist -> returns a list of classes
-//classlist.value  -> returns the list of classes as a string
-//classlist.length
-//classlist.contains("class") -> returns true if element has "class"
-
-let enlaces=document.body.querySelectorAll("a");    //I get the links
-for (let enlace of enlaces){
-    if (enlace.classList.length>0){
-        console.log (enlace.classList.length,
-                     enlace.classList.value); 
-        console.log(enlace.classList.item(enlace.classList.length-1)); //Returns a specific class
-        console.log (enlace.classList.contains("una_clase"));   
-    }
+//Example 14: adding a class with classlist.add
+for (let parrafo of listaParrafos){
+    parrafo.classList.add("clase_nueva1","clase_nueva2");
 }
 
-
-//performing operation with classes
-//classlist.add -> adds a class
-//enlaces=document.body.querySelectorAll("a");    //I get the links
-for (let enlace of enlaces){
-    enlace.classList.add("clase_nueva1","clase_nueva2");        //Adds classes
-}
-
+//Example 16: setting a class with classList.className
 //classname gets and set the class attribute
-console.log(enlaces[0].className);      //gets all classes
-enlaces[0].className="una_clase";       //sets classes
-
-//classlist.replace(old, new)
-enlace=enlaces[0].classList;    //Selecting the first link
-enlace.replace("clase_nueva1", "clase_mas_nueva1");
-
-//classlist.remove -> removes a class
-enlace.remove("clase_nueva2");
-enlace=enlaces[1].classList;    //Selecting the first link
-enlace.remove(enlace.item(enlace.length-1));    //removes the last class
+console.log (listaParrafos[2].className);
+listaParrafos[2].className="unaClase";
 
 
-//classlist.toggle("clase") -> remove "clase" if exists, creates if not
-enlace.toggle("clase_nueva");
+//Example 17: replacing classes with classList.replace(old, new)
+parrafo=listaParrafos[3];    //Selecting the first link
+parrafo.classList.replace("clase_nueva1", "clase_mas_nueva1");
 
 
-/////////toggling boolean attribute's value/////////
+//Example 18: removing a class if it exists or creating if not with classList.toggle("clase")
+parrafo.classList.toggle("clase_guadiana");
+
+//////////////////////////////////////////
+////toggling boolean attribute's value////
+//////////////////////////////////////////
 //Boolean values are tricky in HTML. If they exists, they are true. Otherwise, they are false. They have no value, just exists or no. If they are assigned to true, they are treated as an string
 let boton=document.getElementById("enviar");
-boton.setAttribute("disabled", "");     //it's a boolean attribute with true value.
-boton.toggleAttribute("disabled");  //if it doesn't exist, it is created (in a boolean attribute, means true). If it exists, it is removed (in a boolean attribute, means false)
+boton.toggleAttribute("disabled");     //if it doesn't exist, it is created (in a boolean attribute, means true). If it exists, it is removed (in a boolean attribute, means false)
+setTimeout(()=>{
+    boton.toggleAttribute("disabled");  
+}, 5000); 
+
 
 
 //more complex example
