@@ -1,17 +1,11 @@
-//////////////////////////////
-////manipulating CSS nodes////
-//////////////////////////////
-
-
-////createElement, createTextNode, createComment, appendChild////
-//1: creates a node
-//2: creates a text element
-//3: creates a comment
-//4: makes a node to be child of another one
-
-//When trying to insert the same element twice, any method (appendChild, before, after...) just MOVES it, so it is inserted just once. The solution is cloning it
-
-//example 1: creates a new section with a comment and a paragraph on it
+//////////////////////////////////
+////creating and cloning nodes////
+//////////////////////////////////
+//Example 1: creates a new section with a comment and a paragraph on it
+/*createElement -> creates a node
+createTextNode -> creates a text element
+createComment -> creates a comment
+appendChild -> makes a node to be child of another one*/
 let seccion=document.createElement("section");
 let comentario=document.createComment("Comentario creado con JS para insertarlo en el DOM dinámicamente");
 let nodo=document.createElement("p");
@@ -21,72 +15,85 @@ seccion.appendChild(nodo);
 nodo.appendChild(texto);
 document.body.appendChild(seccion);
 
-////cloneNode(arg), isConnected////
-//if arg=true, it also clones children
-//After cloning, connecting the node to the DOM is needed. isConnected returns true when the node is connected to DOM
+
+//Example 2: cloning a node and checking if it is connected with cloneNode and isConnected
+/*You can't insert the same element twice into the DOM. If you try, the element is moved so, at the end, you have it only once. The solution is cloning it.
+cloneNode(arg) -> if arg=true, it also clones children. After cloning, connecting the node to the DOM is needed
+isConnected -> returns true if the node is connected to the DOM.
+*/
 let seccion_clonada=seccion.cloneNode(true);
 console.log (seccion_clonada.isConnected);  //false
 document.body.appendChild(seccion_clonada);
 console.log (seccion_clonada.isConnected);  //true
 
-////createDocumentFragment////
-//creates a temporary DOM, disconnected from the real one, avoiding having to make recurrent changes into the real DOM and boosting performance
+
+//Example 3: create a temporary DOM with createDocumentFragment
+//createDocumentFragment
+//why? to avoid forcing web browser to renderize the DOM with each change, avoiding a loss of performance. You make all the changes at temporary DOM and then connect to the real one
 let estructura_temporal=document.createDocumentFragment();
-let tmp=seccion.cloneNode(true);    //In order to reuse content and as the same element can't be inserted twice. Clonation must be utilized.
+let tmp=seccion.cloneNode(true);
 estructura_temporal.appendChild(tmp);
 setTimeout(()=>{
     document.body.appendChild(estructura_temporal);
 },3000);
 
-////remove and removeChild////
-//removing does not erases the element. It is just disconnected from the DOM, but still exists (until web browser's garbage collector removes it from memory)
-//1: Needs only a reference to the node being removed
-//2: Needs a reference to the parent and the node being removed (the child). Returns a reference to the removed node so it can be connected to the DOM again
+//////////////////////
+////Removing nodes////
+//////////////////////
+//Example 1: Removing elements from the DOM with remove and remmoveChild
+//removing does not erases the element. It just disconnects it from the DOM, but still exists (until web browser's garbage collector removes it from memory)
+//remove (node_to_remove) 
+//removeChild -> Needs a reference to the parent and the node being removed (the child). Returns a reference to the removed node so it can be connected to the DOM again
 let borrar=document.querySelector("#lista_compra");
 borrar.isConnected ? console.log ("El elemento está conectado al DOM") : console.log ("El elemento no está conectado al DOM");
 let referencia=document.querySelector("#lista").removeChild(borrar);
 borrar.isConnected ? console.log ("El elemento está conectado al DOM") : console.log ("El elemento no está conectado al DOM");
-document.body.appendChild(referencia);  //voilá, the "removed" element is back!
+document.body.appendChild(referencia);  //the "removed" element is back!
 //borrar.remove();    //remove does not returns a reference to the recently removed element, so it's unrecoverable
 
-
-////replaceChild////
+///////////////////////
+////Replacing nodes////
+///////////////////////
+//Example 1: replacing a child with replaceChild
+//replaceChild
 let sustituido=document.querySelector("#parrafos p:first-of-type");
 let sustituto=document.querySelector("#parrafos p:last-of-type");
 let padre=document.querySelector("#parrafos>article");
 padre.replaceChild(sustituto, sustituido);
 
-
-////insertBefore////
-//parent element must be specified
-let parrafo_temporal=document.createDocumentFragment();
+///////////////////////
+////Inserting nodes////
+///////////////////////
+//Example 1: Insert a node before another one with insertBefore
+//insertBefore(node, reference_node) -> inserts before reference_node or after the last child if null
+let nuevo_parrafo=document.createDocumentFragment();
 nodo=document.createElement("p");
 texto=document.createTextNode("Texto creado con JS para insertalo en el DOM dinámicamente"); //equivalent to nodo.textContent("texto....");
 nodo.appendChild(texto);
-parrafo_temporal.appendChild(nodo);
+nuevo_parrafo.appendChild(nodo);
 
-padre=document.querySelector("#parrafos>article");
-lugar_insercion1=document.querySelector("#parrafos>article:first-of-type>p:nth-of-type(3)");
+nodo_referencia=document.querySelector("#parrafos p:nth-of-type(3)");
+padre.insertBefore(nuevo_parrafo, nodo_referencia);
 
-padre.insertBefore(parrafo_temporal, lugar_insercion1);
 
-////before and after////
+//Example 2: Insert a node before another one with before
 //before is similar to insertBefore method, but needless to specify parent element
-//example 1
-let parrafo_temporal2=parrafo_temporal.cloneNode(true);
-let parrafo_temporal3=parrafo_temporal.cloneNode(true);
-lugar_insercion2=document.querySelector("#parrafos>article:first-of-type>p:last-of-type");
-lugar_insercion1.before(parrafo_temporal2);
-lugar_insercion2.after(parrafo_temporal3);
+let nuevo_parrafo2=nuevo_parrafo.cloneNode(true);
+nodo_referencia.before(nuevo_parrafo2);
 
-//example 2
+
+//Example 3: Clone a node and insert it after another one with after
+let nuevo_parrafo3=nuevo_parrafo.cloneNode(true);
+document.querySelector("#parrafos p:last-of-type").after(nuevo_parrafo3);
+
+
+//Example 4: Create a node and insert it before another one with after
 dir = document.createElement("input");
 dir.type="text";
 dir.name="direccion";
 dir.placeholder = "direccion";
 dir.id = "direccion";
-boton = document.getElementById("enviar");
-boton.before(dir);
+document.getElementById("enviar").before(dir);
 
 
 ////append and prepend////
@@ -152,14 +159,14 @@ punto_insercion.insertAdjacentElement("afterend", ae);
 
 //no need to create an element before inserting. 
 punto_insercion.insertAdjacentHTML("beforeend", "<article><p>un párrafo insertado</p></article>");
-/*Warning! Do not insert HTML obtained from untrusted sources like database, forms or user input. It could lead to security risks
-const codigoMaligo=prompt("dame el elemento a añadir");
-document.body.insertAdjacentHTML('beforeend', codigoMaligno);
+// Warning! Do not insert HTML obtained from untrusted sources like database, forms or user input. It could lead to security risks
+// const codigoMaligo=prompt("dame el elemento a añadir");
+// document.body.insertAdjacentHTML('beforeend', codigoMaligno);
 
-User could have inserted `<img src onerror="(()=>{console.log('hago algo malo');})();">`;
-Thus, having provided no src, img will throw an error and onerror event will be triggered, launching a function
-*/
+// User could have inserted `<img src onerror="(()=>{console.log('hago algo malo');})();">`;
+// Thus, having provided no src, img will throw an error and onerror event will be triggered, launching a function
+
 
 const titulo = document.getElementById("titulo1");
 let text = "Un texto nuevo";
-titulo.insertAdjacentText("afterbegin", text);
+titulo.insertAdjacentText("afterbegin", text);*/
