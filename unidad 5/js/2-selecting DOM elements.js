@@ -4,22 +4,14 @@
 //Browser API//
 /*
 window is the global object. It represents the web browser window
-document is a property of the window object representing the web page loaded. It is the DOM entry point to access any element
+document is a property of the window object representing the web page loaded. It is the DOM entry point to access any element.
 document has properties as well, representing the elements in the web page:
-    -documentElement
     -html
     -head
     -body
-*/
-
-console.log(window); // Objeto global
-console.log(window.document); // Objeto document
-console.log(document.documentElement); // <html>
-console.log(document.head); // <head>
-console.log(document.body); // <body>
 
 
-/*Los siguientes métodos devuelven los siguientes tipos de objetos:
+Los métodos de selección de etiquetas devuelven los siguientes tipos de objetos:
     -HTMLElement
     -HTMLCollection
         -Se actualiza dinámicamente si se hacen cambios en el DOM

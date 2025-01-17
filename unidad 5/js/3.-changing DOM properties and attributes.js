@@ -40,29 +40,26 @@ console.log (document.nodeType, document.nodeName, document.nodeValue);
 ///////////////////////////////////
 ////getting and setting content////
 ///////////////////////////////////
-
 /*
 -innerHTML
     -Returns or sets the internal content of an HTML element, i.e. everything inside the opening and closing tags of the element. 
     -It affects to all childs of the HTML tag (in <h1>hola</h1>, hola is the child of <h1> tag), but not to the TAG itself
 -outerHTML
-    -Returns or sets the entire contents of an HTML element, including the element itself (its opening and closing tags) and its inner content.
+    -Returns or sets the entire content of an HTML element and the element itself (its opening and closing tags).
     -It affects to ALL CHILDS of the HTML tag, INCLUDING the TAG itself
+
+Be careful!: When assigning strings to innerHTML, be sure to sanitise the content if it comes from untrusted sources, as it is vulnerable to HTML or JavaScript injection attacks.
 */
+//Example 1: Getting content
+let inHTML=document.getElementById("inHTML");
+let outHTML=document.getElementById("outHTML");
+console.log(`inHTML ${inHTML}\nouterHTML:${outHTML}`);
 
-//example 1: Substituting a text 
-seccion=document.body.getElementsByTagName("section")[0];
-console.log ("innerHTML:"+seccion.innerHTML);
-console.log ("outterHTML:"+seccion.outerHTML);
+//Example 2: Replacing content
+inHTML.innerHTML="<strong>este texto ha sido añadido tras crear el DOM usando innerHTML</strong>";
+outHTML.outerHTML="<strong>este texto ha sido añadido tras crear el DOM usando outerHTML</strong>";
 
-seccion.innerHTML="<p>Animales que viven con nosotros (modificado tras haber sido renderizado)</p>";
-console.log(seccion.innerHTML);
-
-
-
-//example 2: adds a text to a list of elements
-//const parrafos=document.getElementsByTagName("p");
-//let listaParrafos=Array.prototype.slice.call(parrafos);
+//Example 3: using innerHTML to add text to a list of elements
 let listaParrafos=Array.from (document.querySelectorAll("p.normal"));
 listaParrafos.forEach(elemento => {
     setTimeout(()=>{
@@ -70,25 +67,41 @@ listaParrafos.forEach(elemento => {
     }, 3000);
 });
 
-//example 3
-let aux=document.querySelector("h3");
-aux.outerHTML="<h2>Este es el nuevo encabezado de nivel 2 que ha sustituido al de nivel 3</h2>";
-console.log (aux.outerHTML);        //be carefull, aux still holds a reference to the former element altough it doesn't exist anymore!!
-console.log (document.querySelector("h2"));     //undefined (h2 no longer exists and there were only one h2 header)
-
-///////innerText and outerText ///////
-//Both gets ONLY the visible text of the element and its children, without HTML tags or text spacing
-//1:If overriding it doesn't override selected HTML element
-//2:If overriding it overrides selected HTML element
-document.querySelector("h2").innerHTML="<h3>nuevo encabezado de nivel 2<h3>";
-setTimeout(()=>{
-    document.querySelector("h2").outerHTML="<h3>ahora el encabezado de nivel 2 pasa a ser de nivel 3</h3>";
-    }, 10000);
+//Example 4: using outerHTML to turn h3 into h2
+let h3=document.querySelector("h3");
+h3.outerHTML="<h2>Este es el nuevo encabezado de nivel 2 que ha sustituido al de nivel 3</h2>";
 
 
-///////textContent///////
-//Gets all the text of the element and its descendants, including invisible, with spacing. Doesn't get HTML tags and doesn't interpret them --> Should be used
-//example 1
+/*innerText, outerText and textContent
+
+outerText is similiar to outerHTML: 
+    -Devuelve el texto del nodo y sus descendientes, ignorando las etiquetas HTML y sólo si el texto es visible (si no está oculto con visibility:hidden o display:none). 
+    -Inserta el texto tratando a las etiquetas HTML como texto plano y sin reemplazar el nodo seleccinado (no pisa la etiqueta HTML)
+
+innerText es parecido a innerHTML:
+    -Devuelve el texto del nodo y sus descendientes, ignorando las etiquetas HTML y sólo si el texto es visible (si no está oculto con visibility:hidden o display:none). 
+    -Inserta el texto tratando a las etiquetas HTML como texto plano y reemplazando el nodo seleccinado (sí pisa la etiqueta HTML)
+
+textContent
+    -Devuelve el texto del nodo y sus descendientes, ignorando las etiquetas HTML, sin importar si el texto es visible o no.
+    -Inserta el texto como innerText
+*/
+
+//Example 5: innerText, outerText and textContent
+let inTxt=document.getElementById("inTxt");
+let ouTxt=document.getElementById("outTxt");
+let contTxt=document.getElementById("contTxt");
+
+console.log(inTxt.innerText);
+console.log(ouTxt.outerText);
+console.log(contTxt.textContent);
+
+inTxt.innerText="<strong>este texto ha sido añadido tras crear el DOM usando innerText</strong>";
+ouTxt.outerText="<strong>este texto ha sido añadido tras crear el DOM usando outerText</strong>";
+contTxt.textContent="<strong>este texto ha sido añadido tras crear el DOM usando contentText</strong>";
+
+
+//Example 8: textContent
 let seleccionado=Array.from(document.getElementsByClassName("especial"));
 seleccionado.forEach(elemento=>{
     setTimeout(()=>{
@@ -96,78 +109,94 @@ seleccionado.forEach(elemento=>{
     }, 3000);
 });
 
-//example 2
+
+//Example 9: textContent
 setTimeout(()=>{
     document.getElementById("enviar").textContent="Texto cambiado";
 }, 2000);
 
 
-//////////////////////////////////
-///manipulating node attributes///
-//////////////////////////////////
+////////////////////////////////////
+////manipulating node attributes////
+////////////////////////////////////
+/*
+Two types of atributes
+    -standard. They have DOM properties with the same name, case insensitive
+    -Non standard. They can be created. They are useful to pass custom data from HTML to JavaScrip or to mark HTML elements to do something with them in JavaScript. User doesn't get affected
 
-//HTML standard attributes have the DOM properties counterparts. They're case insensitive
-//Non standard attributes can be created. they are useful to pass custom data from HTML to JavaScrip or to mark HTML elements to do something with them in JavaScript. User doesn't get affected
+Example:
+    <section class="container" data-attr="value"></div>
+    -class -> standard
+    -data-attr -> non standard
 
-/*Example of standard and non-standard attributes:
-<section class="container" data-attr="value"></div>
-class and data-attr are attributes. the former is standard, the latter is not
+Manipulating...
+    -standard attributes-> setAttribute or the name of the attribute preceeded by a dot
+    -custom attributes -> only setAttribute
 */
 
-//first of all, I select the element I'll be working with
+//Example 1: checking element's attribute
 let imagen=document.querySelector("img");
+console.log("¿La imagen tiene atributos?:"+imagen.hasAttributes());
+console.log("¿La imagen tiene el atributo src?:"+imagen.hasAttribute("src"));
+console.log("¿La imagen tiene el atributo cámara?:"+imagen.hasAttribute("camara"));
 
 
-/////////Creating and setting attributes/////////
-//with standard attributes, setAttribute or the name of the attribute preceeded by a dot can be used
-//with custom attributes, only setAttribute
-
-//remember: document.body is equivalent to document.querySelector("body")
-document.body.myData = {        //it works, but DOM is not modified, so it can't be used
-    name: 'Cesar',
-    title: 'Emperador'
-  };
-  //this is the way of creating non-standard attributes
-document.body.setAttribute('fecha','11/1/2024');  //it works
-imagen.alt="el nuevo texto de la imagen";
-imagen.src="https://picsum.photos/300";
-imagen.derechos_de_autor="no";  //it doesn't work
+//Example 2: setting non-standard attributes
+//custom attributes don't become properties so they can only be accessed by using getAttribute
+document.body.autor="Alejandro Viana";  //doesn't work. Use setAttribute
+document.body.setAttribute('fecha','11/1/2024');
+imagen.autor="Procopio Máximo";     //doesn't work. Use setAttribute
 imagen.setAttribute("derechos_de_autor", "no");
 
 
-/////////Checking element's attributes/////////
-//example 1: changing src attribute from images
-console.log("¿La imagen tiene atributos?:"+imagen.hasAttributes());
-console.log("¿La imagen tiene el atributo derechos de autor?:"+imagen.hasAttribute("derechos_de_autor"));
-console.log("¿La imagen tiene el atributo cámara?:"+imagen.hasAttribute("camara"));
+//Example 3: setting standard attributes
+//both setAttribute and dot, works
+imagen.loading="lazy";
+imagen.setAttribute("alt","Una imagen aleatoria")
+imagen.src="https://picsum.photos/300";
+
+
+//Example 4: Getting non-standard attributes
+console.log (document.body.fecha)   //doesn't work. It is not a property, only a custom attribute. Use getAttribute
+console.log (document.body.getAttribute("fecha"));
+console.log (imagen.derechos_de_autor); //doesn't work. Use getAttribute
+console.log (imagen.getAttribute("derechos_de_autor"));
+
+
+//Example 5: Getting standard attributes
+//both getAttribute and dot, works
+console.log (imagen.src);   
+console.log (imagen.getAttribute("alt"));
+
+
+//Example 6: checking and changing standard attribute
 if (imagen.hasAttribute('src')){
     console.log ("El atributo src de la imagen es "+imagen.getAttribute('src'));
     imagen.setAttribute('src', 'https://picsum.photos/300');
 }
 
-//example 2: adding id to the first paragraph of any section, no matter if it's direct child or not
-aux=document.body.querySelectorAll("section p:first-of-type");
-let i=0;
-for (let parrafo of aux){
-	parrafo.setAttribute("id",`id_parrafo${i}`);
-    i++;
-}
+
+//Example 7: adding id to the first paragraph of any section as long as it is a direct child
+let parrafo = document.querySelector("section.atributos > p:first-of-type");
+parrafo.setAttribute("id", "especial");
+console.log(parrafo.getAttribute("id")); // Debe devolver "especial"
+console.log(parrafo.id); // También debe devolver "especial"
 
 
-/////////Getting attribute names/////////
+//Example 8: Getting attribute names
 console.log("Nombres de los atributos de la imagen:"+imagen.getAttributeNames());
 imagen.getAttributeNames().forEach((atributo)=>{
     console.log(atributo);
 });
 
-//attributes can also be obtained with document.querySelector("img").attributes
-//but this way an NamedNodeMap is returned, not an Array and, besides, attributes values are returned as well
-//it can be iterated by using for...of
+//Example 9: iterating through attributes
+//querySelector returns a NamedNodeMap, not an Array
+//let imagen=document.querySelector("img");
 for (let atributo of imagen.attributes){
-    console.log (atributo);
+    console.log (`nombre: ${atributo.name}, valor: ${atributo.value}`);
 }
 
-//in order to use forEach, an array has to be created in any of the three following ways
+/*in order to use forEach, an array has to be created in any of the three following ways
 Array.from (imagen.attributes).forEach((atributo)=>{
     console.log (atributo);
 });
@@ -179,23 +208,25 @@ Array.from (imagen.attributes).forEach((atributo)=>{
 Array.prototype.forEach.call(
     imagen.attributes,
     (atributo)=>{ console.log (atributo); }
-);
+);*/
 
-//example creating non-standard attribute and iterating through them
-//attributes collection is iterable
-document.body.setAttribute('myData.age','25');
-for (let attr of document.body.attributes) { 
-    console.log( `${attr.name} = ${attr.value}` );
-}
 
-/////////Removing attributes/////////
-//Removing id from paragraphs
-let parrafos=Array.from (document.getElementsByTagName("p"));
+//Example 10: removing attributes
+/*let parrafos=Array.from (document.getElementsByTagName("p"));
+parrafos.forEach(element => {
+        if (element.hasAttribute('id')){
+            element.removeAttribute('id');
+        }
+});*/
+ZZZZZZZZZZZZZZZZZZ
+seleccionar el segundo section con .atributos y cambiarle el id a sus párrafos
+let parrafos=Array.from (document.querySelectorAll("p.parrafoDestacado"));
 parrafos.forEach(element => {
         if (element.hasAttribute('id')){
             element.removeAttribute('id');
         }
 });
+
 
 
 ////////Special attribute: class////////

@@ -159,8 +159,6 @@ td{
     visibility: hidden;
 }
 
-
-
 #error{
     position: absolute;
     top: -30px;
@@ -196,4 +194,20 @@ input:valid{
 
 fieldset{
     border:0px;
+}
+
+section{
+    border: 2px solid black;
+}
+
+.contenedor-flex{
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+}
+
+
+.parrafoDestacado, #especial {
+    color: red;
+    font-weight: bold;
 }
