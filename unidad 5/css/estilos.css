@@ -86,10 +86,10 @@ p{
     gap:20px;
 }
   
-ul:not(.lista_viñetas){
+/*ul:not(.lista_viñetas){
     list-style: none;
     padding: 0px;
-}
+}*/
 
 ul, ol{
     margin:0px;
@@ -198,7 +198,7 @@ fieldset{
 
 section{
     border: 2px solid black;
-}
+} 
 
 .contenedor-flex{
     display: flex;
@@ -211,3 +211,20 @@ section{
     color: red;
     font-weight: bold;
 }
+
+.insertado{
+    color: red;
+    font-size: 1.15rem;
+    font-weight: bold;
+}
+
+figure {
+    text-align: center;
+    margin: 20px;
+  }
+  
+  figcaption {
+    font-style: italic;
+    font-size: 14px;
+    color: #555;
+  }
