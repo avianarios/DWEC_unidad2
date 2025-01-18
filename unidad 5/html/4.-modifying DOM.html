@@ -7,26 +7,62 @@
     <script src="../js/4.-modifying DOM.js" defer></script>
     <link rel="stylesheet" type="text/css" href="../css/estilos.css">
   </head>
-  <body>
+  <body class="contenedor-flex">
         <!--Esto es un comentario sin ningún sentido-->
       <header>
-        <h1 id="titulo1">Animales de compañía</h1>
-        <h2>Ejemplo de manipulación de texto en DOM</h2>      
-        <h3>Encabezado de nivel 3</h3>
+        <h1 id="titulo1">Ejemplo de manipulación del DOM</h1>
       </header>
+
+      <section id="insertar1">
+        <p>Párrafo de relleno con un texto aleatorio</p>
+        <p>Párrafo de relleno con un texto aleatorio</p>
+        <p>Párrafo de relleno con un texto aleatorio</p>
+        <p>Párrafo de relleno con un texto aleatorio</p>
+        <p>Párrafo de relleno con un texto aleatorio</p>
+      </section>
+
+      <section id="lista">
+        <ul id="lista_compra">
+          <li class="verdura">cebollas</li>
+          <li class="verdura">patatas</li>
+          <ul>
+            <li>monalisa</li>
+            <li>gallega</li>
+          </ul>
+          <li class="verdura">cebollas</li>
+          <li class="fruta">manzanas</li>
+          <li class="fruta">peras</li>
+          <ul>
+            <li>blanquillas</li>
+            <li>conferencia</li>
+            <li>agua</li>
+          </ul>
+          <li class="fruta">plátanos</li>
+          <li class="fruta">aguacates</li>
+        </ul>
+      </section>
+
+      <section id="insertar2">
+        <p>Párrafo de relleno con un texto aleatorio</p>
+        <p>Párrafo de relleno con un texto aleatorio</p>
+        <p>Párrafo de relleno con un texto aleatorio</p>
+        <p>Párrafo de relleno con un texto aleatorio</p>
+        <p>Párrafo de relleno con un texto aleatorio</p>
+      </section>
+      
       <section id="animales">
-        <article id="gato">
+        <figure id="gato">
           <img src="../img/gato4.jpg" alt="Un lindo gatito">
+          <figcaption>Este es un lindo gatito <a href="/Felis_silvestris_catus" target="_blank">Felis silvestris catus</a></figcaption>
           <p muestra-info="nombre"></p>
           <p muestra-info="raza"></p>
-          <p class="parrafo_cuerpo" id="parrafo1">Esto es un enlace a <a href="https://es.wikipedia.org/wiki/Felis_silvestris_catus" target="_blank">Felis silvestris catus</a></p>
-        </article>
-        <article id="perro">
+        </figure>
+        <figure id="perro">
           <img src="../img/perro2.jpg" alt="Un lindo perrito">
+          <figcaption>Este es un lindo perrito <a href="https://es.wikipedia.org/wiki/Canis_familiaris"  target="_self">Canis familiaris</a></figcaption>
           <p muestra-info="nombre"></p>
           <p muestra-info="raza"></p>
-          <p class="parrafo_cuerpo" id="parrafo2">Esto es un enlace a <a href="https://es.wikipedia.org/wiki/Canis_familiaris"  target="_self">Canis familiaris</a></p>
-        </article>  
+        </figure>
       </section>
       <section>
         <form id="formulario-contacto" class="contenedor-flex-columna">
@@ -59,35 +95,23 @@
         </form>
 
       </section>
-      <section id="parrafos">
-        <article>
-          <p class="normal letra_grande fondo_rojo">esto es un párrafo normal</p>
-          <p class="especial">esto es un párrafo especial</p>
-          <p class="normal letra_pequeña fondo_verde">esto es un párrafo normal</p>
-          <p class="especial">esto es un párrafo especial</p>
-          <p class="normal letra_pequeña fondo_verde">esto es un párrafo normal</p>
-          <p>esto es un párrafo sin clase</p>
-        </article>
+
+      <section id="sustituir1">
+        <p class="normal letra_grande fondo_rojo">esto es un párrafo normal</p>
+        <p class="especial">esto es un párrafo especial</p>
+        <p class="normal letra_pequeña fondo_verde">esto es un párrafo normal</p>
+        <p class="especial">esto es un párrafo especial</p>
+        <p class="normal letra_pequeña fondo_verde">esto es un párrafo normal</p>
+        <p>esto es un párrafo sin clase</p>
+      </section>  
+      <section id="sustituir2">
+        <p class="normal letra_grande fondo_rojo">esto es un párrafo normal</p>
+        <p class="especial">esto es un párrafo especial</p>
+        <p class="normal letra_pequeña fondo_verde">esto es un párrafo normal</p>
+        <p class="especial">esto es un párrafo especial</p>
+        <p class="normal letra_pequeña fondo_verde">esto es un párrafo normal</p>
+        <p>esto es un párrafo sin clase</p>
       </section>    
-      <section id="lista">
-        <ul id="lista_compra">
-          <li class="verdura">cebollas</li>
-          <li class="verdura">patatas</li>
-          <ul>
-            <li>blanca</li>
-            <li>roja</li>
-          </ul>
-          <li class="verdura">cebollas</li>
-          <li class="fruta">manzanas</li>
-          <li class="fruta">peras</li>
-          <ul>
-            <li>blanquillas</li>
-            <li>conferencia</li>
-            <li>agua</li>
-          </ul>
-          <li class="fruta">plátanos</li>
-          <li class="fruta">aguacates</li>
-        </ul>
-      </section>
+      
   </body>
 </html>
