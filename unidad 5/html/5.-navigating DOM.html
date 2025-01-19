@@ -5,28 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple DOM example</title>
     <script src="../js/5.-navigating DOM.js" defer></script>
-    <link rel="stylesheet" type="text/css" href="../css/estilos.css">
+    <link rel="stylesheet" type="text/css" href="../css/principal.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">   
   </head>
   <body>
-      <!--Esto es un comentario sin ningún sentido-->
+      <!--Este comentario está aquí para ver cómo funcionan los distintos métodos del DOM con los distintos tipos de nodos. Recuerda que los comentarios son nodos de tipo 8, los espacios en blanco, retornos de carro y tabuladores son de tipo 3 y las etiquetas HTML son de tipo 1-->
       <header>
-        <h1 id="titulo1">Animales de compañía</h1>
-        <h2>Ejemplo de manipulación de texto en DOM</h2>      
-        <h3>Encabezado de nivel 3</h3>
+        <h1 id="titulo1">Ejemplo de navegación por el DOM</h1>
       </header>
-      <!--The blank space after section tag has been purposely removed-->
-      <section id="animales"><article id="gato">
-          <img src="../img/gato4.jpg" alt="Un lindo gatito">
-          <p muestra-info="nombre"></p>
-          <p muestra-info="raza"></p>
-          <p class="parrafo_cuerpo" id="parrafo1">Esto es un enlace a <a href="https://es.wikipedia.org/wiki/Felis_silvestris_catus" target="_blank">Felis silvestris catus</a></p>
-        </article><article id="perro">
-          <img src="../img/perro2.jpg" alt="Un lindo perrito">
-          <p muestra-info="nombre"></p>
-          <p muestra-info="raza"></p>
-          <p class="parrafo_cuerpo" id="parrafo2">Esto es un enlace a <a href="https://es.wikipedia.org/wiki/Canis_familiaris"  target="_self">Canis familiaris</a></p>
-        </article>
-      </section>
+      <!--Este comentario está aquí para ver cómo funcionan los distintos métodos del DOM con los distintos tipos de nodos. Recuerda que los comentarios son nodos de tipo 8, los espacios en blanco, retornos de carro y tabuladores son de tipo 3 y las etiquetas HTML son de tipo 1-->
+      <section id="animales" class="tarjeta"><!--Este comentario está aquí para ver cómo funcionan los distintos métodos del DOM con los distintos tipos de nodos. Recuerda que los comentarios son nodos de tipo 8, los espacios en blanco, retornos de carro y tabuladores son de tipo 3 y las etiquetas HTML son de tipo 1-->
+        <h2>Animales</h2>
+        <section class="contenedor-flex-horizontal">
+          <figure id="gato">
+            <img src="../img/gato4.jpg" alt="Un lindo gatito">
+            <figcaption>Este es un lindo gatito <a href="https://es.wikipedia.org/wiki/Felis_silvestris_catus" target="_blank">Felis silvestris catus</a></figcaption>
+            <p muestra-info="nombre"></p>
+            <p muestra-info="raza"></p>
+          </figure>
+          <figure id="perro">
+            <img src="../img/perro2.jpg" alt="Un lindo perrito">
+            <figcaption>Este es un lindo perrito <a href="https://es.wikipedia.org/wiki/Canis_familiaris"  target="_self">Canis familiaris</a></figcaption>
+            <p muestra-info="nombre"></p>
+            <p muestra-info="raza"></p>
+          </figure>
+        </section>
+      </section> 
       <section>
         <form id="formulario-contacto" class="contenedor-flex-columna">
           <fieldset>
@@ -88,5 +94,10 @@
           <li class="fruta">aguacates</li>
         </ul>
       </section>
+      <footer>
+        <p>&copy; 2025 Navegando por el DOM</p>
+        <p></p>
+        <p>Alejandro Viana Ríos</p>
+      </footer>
   </body>
 </html>
