@@ -4,32 +4,30 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple DOM example</title>
-    <script src="../js/2-selecting DOM elements.js" defer></script>
+    <script src="../js/3.-modifying DOM.js" defer></script>
     <link rel="stylesheet" type="text/css" href="../css/estilos.css">
   </head>
-  <body>
-      <!--Este comentario está aquí para ver cómo funcionan los distintos métodos del DOM con los distintos tipos de nodos. Recuerda que los comentarios son nodos de tipo 8, los espacios en blanco, retornos de carro y tabuladores son de tipo 3 y las etiquetas HTML son de tipo 1-->
+  <body class="contenedor-flex">
+        <!--Este comentario está aquí para ver cómo funcionan los distintos métodos del DOM con los distintos tipos de nodos. Recuerda que los comentarios son nodos de tipo 8, los espacios en blanco, retornos de carro y tabuladores son de tipo 3 y las etiquetas HTML son de tipo 1-->
       <header>
-        <h1 id="titulo1">Animales de compañía</h1>
-        <h2>Ejemplo de manipulación de texto en DOM</h2>      
+        <h1 id="titulo1">Ejemplo de manipulación del DOM</h1>
       </header>
-      <section id="parrafos">
-        <article>
-          <p class="normal letra_grande fondo_rojo">esto es un párrafo normal</p>
-          <p class="especial">esto es un párrafo especial</p>
-          <p class="normal letra_pequeña fondo_verde">esto es un párrafo normal</p>
-          <p class="especial">esto es un párrafo especial</p>
-          <p class="normal letra_pequeña fondo_verde">esto es un párrafo normal</p>
-          <p>esto es un párrafo sin clase</p>
-        </article>
-      </section> 
+
+      <section id="insertar1">
+        <p>Párrafo de relleno con un texto aleatorio</p>
+        <p>Párrafo de relleno con un texto aleatorio</p>
+        <p>Párrafo de relleno con un texto aleatorio</p>
+        <p>Párrafo de relleno con un texto aleatorio</p>
+        <p>Párrafo de relleno con un texto aleatorio</p>
+      </section>
+
       <section id="lista">
-        <ul id="listaCompra">
+        <ul id="lista_compra">
           <li class="verdura">cebollas</li>
           <li class="verdura">patatas</li>
           <ul>
-            <li>blanca</li>
-            <li>roja</li>
+            <li>monalisa</li>
+            <li>gallega</li>
           </ul>
           <li class="verdura">cebollas</li>
           <li class="fruta">manzanas</li>
@@ -42,12 +40,20 @@
           <li class="fruta">plátanos</li>
           <li class="fruta">aguacates</li>
         </ul>
-      </section>      
+      </section>
+
+      <section id="insertar2">
+        <p>Párrafo de relleno con un texto aleatorio</p>
+        <p>Párrafo de relleno con un texto aleatorio</p>
+        <p>Párrafo de relleno con un texto aleatorio</p>
+        <p>Párrafo de relleno con un texto aleatorio</p>
+        <p>Párrafo de relleno con un texto aleatorio</p>
+      </section>
       <!--Este comentario está aquí para ver cómo funcionan los distintos métodos del DOM con los distintos tipos de nodos. Recuerda que los comentarios son nodos de tipo 8, los espacios en blanco, retornos de carro y tabuladores son de tipo 3 y las etiquetas HTML son de tipo 1-->
       <section id="animales" class="tarjeta"><!--Este comentario está aquí para ver cómo funcionan los distintos métodos del DOM con los distintos tipos de nodos. Recuerda que los comentarios son nodos de tipo 8, los espacios en blanco, retornos de carro y tabuladores son de tipo 3 y las etiquetas HTML son de tipo 1-->
         <figure id="gato">
           <img src="../img/gato4.jpg" alt="Un lindo gatito">
-          <figcaption>Este es un lindo gatito <a href="https://es.wikipedia.org/wiki/Felis_silvestris_catus" target="_blank">Felis silvestris catus</a></figcaption>
+          <figcaption>Este es un lindo gatito <a href="/Felis_silvestris_catus" target="_blank">Felis silvestris catus</a></figcaption>
           <p muestra-info="nombre"></p>
           <p muestra-info="raza"></p>
         </figure>
@@ -57,7 +63,7 @@
           <p muestra-info="nombre"></p>
           <p muestra-info="raza"></p>
         </figure>
-      </section> 
+      </section>
       <section>
         <form id="formulario-contacto" class="contenedor-flex-columna">
           <fieldset>
@@ -87,6 +93,25 @@
           </fieldset>
           <button id="enviar">Enviar</button>
         </form>
+
       </section>
+
+      <section id="sustituir1">
+        <p class="normal letra_grande fondo_rojo">esto es un párrafo normal</p>
+        <p class="especial">esto es un párrafo especial</p>
+        <p class="normal letra_pequeña fondo_verde">esto es un párrafo normal</p>
+        <p class="especial">esto es un párrafo especial</p>
+        <p class="normal letra_pequeña fondo_verde">esto es un párrafo normal</p>
+        <p>esto es un párrafo sin clase</p>
+      </section>  
+      <section id="sustituir2">
+        <p class="normal letra_grande fondo_rojo">esto es un párrafo normal</p>
+        <p class="especial">esto es un párrafo especial</p>
+        <p class="normal letra_pequeña fondo_verde">esto es un párrafo normal</p>
+        <p class="especial">esto es un párrafo especial</p>
+        <p class="normal letra_pequeña fondo_verde">esto es un párrafo normal</p>
+        <p>esto es un párrafo sin clase</p>
+      </section>    
+      
   </body>
 </html>

@@ -4,39 +4,66 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple DOM example</title>
-    <script src="../js/6-DOM_CSS.js" defer></script>
-    <link rel="stylesheet" type="text/css" href="../css/principal.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;700&display=swap" rel="stylesheet">
+    <script src="../js/1-selecting DOM elements.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="../css/estilos.css">
   </head>
   <body>
-    <body>
       <!--Este comentario está aquí para ver cómo funcionan los distintos métodos del DOM con los distintos tipos de nodos. Recuerda que los comentarios son nodos de tipo 8, los espacios en blanco, retornos de carro y tabuladores son de tipo 3 y las etiquetas HTML son de tipo 1-->
       <header>
-        <h1 id="titulo1">Ejemplo de navegación por el DOM</h1>
+        <h1 id="titulo1">Animales de compañía</h1>
+        <h2>Ejemplo de manipulación de texto en DOM</h2>      
       </header>
+      <section id="parrafos">
+        <article>
+          <p class="normal letra_grande fondo_rojo">esto es un párrafo normal</p>
+          <p class="especial">esto es un párrafo especial</p>
+          <p class="normal letra_pequeña fondo_verde">esto es un párrafo normal</p>
+          <p class="especial">esto es un párrafo especial</p>
+          <p class="normal letra_pequeña fondo_verde">esto es un párrafo normal</p>
+          <p>esto es un párrafo sin clase</p>
+        </article>
+      </section> 
+      <section id="lista">
+        <ul id="listaCompra">
+          <li class="verdura">cebollas</li>
+          <li class="verdura">patatas</li>
+          <ul>
+            <li>blanca</li>
+            <li>roja</li>
+          </ul>
+          <li class="verdura">cebollas</li>
+          <li class="fruta">manzanas</li>
+          <li class="fruta">peras</li>
+          <ul>
+            <li>blanquillas</li>
+            <li>conferencia</li>
+            <li>agua</li>
+          </ul>
+          <li class="fruta">plátanos</li>
+          <li class="fruta">aguacates</li>
+        </ul>
+      </section>      
       <!--Este comentario está aquí para ver cómo funcionan los distintos métodos del DOM con los distintos tipos de nodos. Recuerda que los comentarios son nodos de tipo 8, los espacios en blanco, retornos de carro y tabuladores son de tipo 3 y las etiquetas HTML son de tipo 1-->
       <section id="animales" class="tarjeta"><!--Este comentario está aquí para ver cómo funcionan los distintos métodos del DOM con los distintos tipos de nodos. Recuerda que los comentarios son nodos de tipo 8, los espacios en blanco, retornos de carro y tabuladores son de tipo 3 y las etiquetas HTML son de tipo 1-->
-        <article id="gato">
+        <figure id="gato">
           <img src="../img/gato4.jpg" alt="Un lindo gatito">
+          <figcaption>Este es un lindo gatito <a href="https://es.wikipedia.org/wiki/Felis_silvestris_catus" target="_blank">Felis silvestris catus</a></figcaption>
           <p muestra-info="nombre"></p>
           <p muestra-info="raza"></p>
-          <p class="parrafo_cuerpo" id="parrafo1">Esto es un enlace a <a href="https://es.wikipedia.org/wiki/Felis_silvestris_catus" target="_blank">Felis silvestris catus</a></p>
-        </article>
-        <article id="perro">
+        </figure>
+        <figure id="perro">
           <img src="../img/perro2.jpg" alt="Un lindo perrito">
+          <figcaption>Este es un lindo perrito <a href="https://es.wikipedia.org/wiki/Canis_familiaris"  target="_self">Canis familiaris</a></figcaption>
           <p muestra-info="nombre"></p>
           <p muestra-info="raza"></p>
-          <p class="parrafo_cuerpo" id="parrafo2">Esto es un enlace a <a href="https://es.wikipedia.org/wiki/Canis_familiaris"  target="_self">Canis familiaris</a></p>
-        </article>  
-      </section>
+        </figure>
+      </section> 
       <section>
         <form id="formulario-contacto" class="contenedor-flex-columna">
           <fieldset>
               <label for="nombre">Nombre</label>
               <input type="text" id="nombre" name="nombre" placeholder="nombre" minlength="4" maxlength="15" required>
-            </fieldset>
+          </fieldset>
           <fieldset>
               <label for="apellidos">Apellidos</label>
               <input type="text" id="apellidos" name="apellidos" placeholder="apellidos">
@@ -60,36 +87,6 @@
           </fieldset>
           <button id="enviar">Enviar</button>
         </form>
-      </section>
-      <section id="parrafos">
-        <article>
-          <p class="normal letra_grande fondo_rojo">esto es un párrafo normal</p>
-          <p class="especial">esto es un párrafo especial</p>
-          <p class="normal letra_pequeña fondo_verde">esto es un párrafo normal</p>
-          <p class="especial">esto es un párrafo especial</p>
-          <p class="normal letra_pequeña fondo_verde">esto es un párrafo normal</p>
-          <p>esto es un párrafo sin clase</p>
-        </article>
-      </section>
-      <section>
-        <ul id="listaCompra">
-          <li class="verdura">cebollas</li>
-          <li class="verdura">patatas</li>
-          <ul>
-            <li>blanca</li>
-            <li>roja</li>
-          </ul>
-          <li class="verdura">cebollas</li>
-          <li class="fruta">manzanas</li>
-          <li class="fruta">peras</li>
-          <ul>
-            <li>blanquillas</li>
-            <li>conferencia</li>
-            <li>agua</li>
-          </ul>
-          <li class="fruta">plátanos</li>
-          <li class="fruta">aguacates</li>
-        </ul>
       </section>
   </body>
 </html>
