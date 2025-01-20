@@ -1,73 +1,99 @@
 /*
-An event is anything that occurs out of the blue, due to an user interaction or not, and we can associate an action to:
-    The page finishes loading
-    The user clicks a button
-    The user hovers over a dropdown
-    The user submits a form
-    The user presses a key on their keyboard
+### Eventos en JavaScript
+An **event** is an action or change that occurs on a web page or in the browser, either due to user interaction (such as a click) or by system processes (such as a page loading completely). We can associate actions with events such as:
+    - The page finishes loading
+    - The user clicks a button
+    - The user hovers over a dropdown
+    - The user submits a form
+    - The user presses a key on their keyboard
 
-Event hander-> a JavaScript function that runs when an event fires.
-Event listener-> attaches an interface to an element allowing it to “listen” for the given event in order to fire the event handler 
+#### Key concepts
+- **Event handler:** A JavaScript function that executes when an event occurs.
+- **Event listener:** An interface that ‘listens’ for a specific event on an element and executes the associated handler when it occurs.
 
+#### Ways of handling events in JavaScript
+Three ways of working with events:
 
-3 ways:
-    -Inline event handler. Embed code into HTML. DO NOT USE
-        <button onClick="console.log('¡Saludos, criatura!')">Saludar</button>
+1. **Inline event handlers (Manejadores en línea)**  
+   *Not recommended.* Mixing HTML and JavaScript makes maintenance difficult and does not allow multiple handlers to be added for the same event.
 
-        <button id="enviar" onclick="saludar()">Enviar</button>
-        <script>
-            let saludar = () => console.log ("¡Saludos, criatura!");
-        </script>
-
-        <button id="enviar" onclick="saludar()">Enviar</button>
-        <script src="codigo.js"></script>
-
-
-    -Event handler properties. Not recommended. Some events can't be assigned by using properties
-        let boton=document.querySelector("#formulario_contacto button");
-        boton.onclick=function (){ console.log ("¡Saludos, criatura!"); };
-        
-
-        let boton=document.querySelector("button");
+   ```html
+    <button onClick="console.log('¡Saludos, criatura!')">Saludar</button>
+    <button id="enviar" onclick="saludar()">Enviar</button>
+    <script>
         let saludar = () => console.log ("¡Saludos, criatura!");
-        boton.setAttribute("onclick", "saludar");
+    </script>
 
-    -Using event listeners. RECOMMENDED. It allows to attach more than one eventListener to the same element, it has control over when the event is triggered and it works even with no HTML elements
-        let boton=document.querySelector("#formulario_contacto button");
-        boton.addEventListener("click", function (){        //it's click, not onclick
-            console.log('¡Saludos, criatura!');
-        });
+    <button id="enviar" onclick="saludar()">Enviar</button>
+    <script src="codigo.js"></script>
+   ```
+
+2. **Event handler properties.** *Not recommended.* Some events can't be assigned by using properties and it only allows one handler per event
+   ```javascript
+    let boton = document.querySelector("#formulario_contacto button");
+    boton.onclick = function () { console.log("¡Saludos, criatura!"); };
+
+    let boton=document.querySelector("button");
+    let saludar = () => console.log ("¡Saludos, criatura!");
+    boton.setAttribute("onclick", "saludar");
+   ```
+
+3. **Using event listeners. *RECOMMENDED. It allows to attach more than one handler to the same event, it has control over when the event is triggered and it works even with no HTML elements
+    ```javascript
+    let boton=document.querySelector("#formulario_contacto button");
+    boton.addEventListener("click", function (){        //it's click, not onclick
+        console.log('¡Saludos, criatura!');
+    });
+    ```
+
+###Common types of events:
+    - Eventos de ratón:
+        - click: When the user clicks on an element.
+        - dblclick: When the user double clicks.
+        - mouseover: When the mouse passes over an element.
+        - mouseout: When the mouse leaves an element.
+        - mousemove: When the mouse moves inside an element.
+    - Keyboard events:
+        - keydown: When the user presses a key.
+        - keyup: When the user releases a key.
+        - keypress (deprecated): Similar to keydown, but only for keys that generate characters.
+    - Form events:
+        - submit: When a form is submitted.
+        - change: When the value of an input field changes.
+        - input: Similar to change, but occurs while the user is typing.
+        - focus: When an input field gains focus.
+        - blur: When a field loses focus.
+    - Document/window events:
+        - DOMContentLoaded: When the DOM is fully loaded.
+        - load: When all resources (images, scripts, etc.) are fully loaded.
+        - resize: When the browser window is resized.
+        - scroll: When the user scrolls the page.
 */
+////////////////////////////////
+////Attaching event handlers////
+////////////////////////////////
 
-
-
-////Attaching one or several event handlers////
+//Example 1: Attaching one event handler
+//node.addEventListener(event, callback); 
 let cambiaColor = document.getElementById("cambiaClase");
-const toggle = () => cambiaColor.classList.toggle("rojo");
-cambiaColor.addEventListener("click", toggle);         // Add/remove red CSS. 
+const toggle = () => cambiaColor.classList.toggle("fondo-rojo");
+cambiaColor.addEventListener("click", toggle);
 
 
-////Attaching one or several event handlers////
+//Example 2: Attaching two event handlers to the same element
 let cambiaTxt=document.getElementById("cambiaTexto");
 let contador=0;
-let cuenta_veces=()=>{
-    contador++;
-}
-let cambia_texto=()=>{
-    cambiaTxt.innerText="Veces pulsado:"+contador;
-}
-
-cambiaTxt.addEventListener("click", cuenta_veces);       //Beware of using cambiaTexto(). It is a function call!
-cambiaTxt.addEventListener("click", cambia_texto);
+cambiaTxt.addEventListener("click", ()=>{contador++});
+cambiaTxt.addEventListener("click", ()=>{cambiaTxt.innerText="Veces pulsado:"+contador;});
 
 
-////Attaching one or several event handlers////
+// Example 3: Attaching an event handler to the document wich will be triggered when clicking at any button (thanks to bubbling) because of the CSS selector used in the condition: evento.target.matches("button")
 document.addEventListener("click", evento => {
     if (evento.target.matches("button")) {   //CSS selector
       console.log("Clicked Button")
     }
 });
-//a new button is added before adding an event listener. Thanks the way it is coded, this newly created button has an event listener attached
+
 const li=document.createElement("li");
 const newButton = document.createElement("button")
 newButton.textContent="Attached button after creating event handlers";
@@ -75,24 +101,31 @@ li.appendChild(newButton);
 let lugar_insercion=document.getElementById("lista_botones1");
 lugar_insercion.insertAdjacentElement("beforeend", newButton);
 
-/*let lugar_insercion=document.getElementById("cambiaTexto").parentElement;
-lugar_insercion.insertAdjacentElement("afterend", newButton);*/
-
-
-
-
+//////////////////////////////////
 ////Reading event information ////
-//when an event occurs, the browser creates an event object, puts details into it and passes to the event handler
-//What information? Depends on the event
-//type, currentTarget, target, istrusted, timeStamp, clientX, clientY
+//////////////////////////////////
+// When an event occurs, the browser creates an event object, puts details into it and passes to the event handler
+// What information? Depends on the event
+
+//Example 1: Showing event information
+// type -> type of event (click, keydown, etc.)
+// target -> DOM element that triggered the event
+// currentTarget -> DOM element that the event handler was assigned to
+// istrusted -> true when the user triggered it, false if the event was generated programmatically (e.g. by the dispatchEvent method).
+// timeStamp -> provides the exact time (in milliseconds) at which the event occurred, since the execution of the web page started. It is useful to calculate the duration between two events or to manage events accurately.
+// clientX / clientY -> in case of a mouse event, contain the coordinates of the mouse
+// altKey -> returns true when alt key was pressed
+// ctrlKey -> returns true when crtl key was pressed
+// shiftKey -> returns true when shift key was pressed
+// metaKey -> returns true when meta key was pressed
+
 let infoEvento = document.getElementById("informacionEvento");
+let texto_explicativo=document.getElementById("texto_coordenadas");
+
 infoEvento.addEventListener("click", (evento) => {
-    //When using an ID, browser creates a property with the same name and attach to document. Thus, texto_coordenadas.innerHTML can be used besides document.getElementByID("texto_coordenadas"). The latter is much more recommended
-    //more info: https://stackoverflow.com/questions/3434278/do-dom-tree-elements-with-ids-become-global-properties
-    let texto_explicativo=document.getElementById("texto_coordenadas");
     if (texto_explicativo.classList.contains ("dp_none")){ texto_explicativo.classList.remove("dp_none"); }
     texto_explicativo.innerHTML="Button "+evento.button + " has been pressed<br>";
-    texto_explicativo.innerHTML+="An event of type: "+evento.type + " has occurred at:" + evento.currentTarget+"<br> at timestamp of "+evento.timeStamp +"<br> at coordinates X:"+evento.clientX+" Y:"+evento.clientY;
+    texto_explicativo.innerHTML+="An event of type: "+evento.type + " has occurred at:" + evento.target+"<br> but was generated at"+evento.target+" at timestamp of "+evento.timeStamp +"<br> at coordinates X:"+evento.clientX+" Y:"+evento.clientY;
     ( evento.isTrusted ) ? texto_explicativo.innerHTML+="<br>Is a trusted event (launched by web browser)" : texto_explicativo.innerHTML+="Is not a trusted event (launched by programmer)";
 
     if (evento.altKey) texto_explicativo.innerHTML+="<br>alt Key pressed";
@@ -102,6 +135,9 @@ infoEvento.addEventListener("click", (evento) => {
 });
 /*const { type, timeStamp, isTrusted } = event;
 console.log({ type, timeStamp, isTrusted });*/
+
+
+zzzzzzzzzzzzzz
 
 document.addEventListener('contextmenu', evento => {
     evento.preventDefault();        //removes default action when pressing right button

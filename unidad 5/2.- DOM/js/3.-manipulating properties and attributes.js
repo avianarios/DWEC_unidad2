@@ -216,6 +216,21 @@ imagen.src="https://picsum.photos/300"; //standard property
 console.log (imagen.src);   //standard property
 console.log (imagen.getAttribute("src"));   //standard attribute
 
+//Example 6: using getAttribute instead of . at id attribute
+// When defining an element with the id=‘text_coordinates’ attribute, the browser automatically creates a property on the document object called text_coordinates.
+// This allows the element to be accessed directly as document.text_coordinates.
+// This is not a recommended practice because it can cause conflicts if you declare a global variable with the same name as the id. 
+// Although document.id works, it's always better to use document.getElementById(‘id’) to keep the code clearer, safer, and more compliant with best practices.
+
+//<p id="miElemento">Texto inicial</p>
+// const elemento = document.getElementById("miElemento");
+// console.log(elemento.id); // "miElemento" (propiedad)
+// console.log(elemento.getAttribute("id")); // "miElemento" (atributo)
+
+// var miElemento = "Conflicto";
+// console.log(document.miElemento); // Puede ser ambiguo
+// console.log(elemento.getAttribute("id")); // "miElemento" (atributo)
+
 
 //Example 6: checking and changing standard attribute
 if (imagen.hasAttribute('src')){
@@ -377,4 +392,56 @@ for(let elemento of document.querySelectorAll('[muestra-info]')) {
     fila++;
     col=0;
   }
+}
+
+
+///////////////////////////////////
+////manipulating CSS Properties////
+///////////////////////////////////
+/*CSS property names are converted to JavaScript identifier with these rules:
+    If the property is made of one word, it remains as it is: height stays as is (in lowercase).
+    If the property is made of several words, separated by dashes, the dashes are removed and it is converted to camel case: background-attachment becomes backgroundAttachment.
+    The property float, being a reserved JavaScript keyword, is converted to cssFloat.*/
+
+//use elemento.style.CSSConvertedPropertyName, to modify or create inline styles. Not recommended though
+let elemento=document.getElementById("parrafo1");
+const miEstilo= `
+    width: 80%;
+    background-color: red;
+    border: 2px;
+    font-size: 2em;
+    color: white;
+    margin: 20px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    border: 2px solid black;
+`;
+elemento.style.cssText=miEstilo;
+
+
+setTimeout(()=>{
+  elemento.style.backgroundColor="#00ff00";
+  elemento.style.fontSize="1rem";
+  elemento.style.textAlign="center";
+  elemento.style.fontWeight="bold";
+}, 3000);
+
+
+
+//////////////////////////////////////////////
+////////////modify CSS stylesheets////////////
+//////////////////////////////////////////////
+//Reasons to modify CSS instead of inline stlye:
+//1-Apply the change to all elements with a certain selector. 
+//2-Apply the change to future elements that will be added dynamically later on.
+//3-Applying changes to a huge amount of elements sharing the selector would be extremely slow
+//////////////////////////////////////////////
+//these rules are temporary and they don't overwrite the css file
+const hoja_estilos = document.styleSheets[0];
+const reglaACambiar = Array.from(hoja_estilos.cssRules).find(
+  regla => regla.selectorText === '.tarjeta'
+);
+
+if (reglaACambiar) {
+  reglaACambiar.style.setProperty('background-color', 'red');
 }

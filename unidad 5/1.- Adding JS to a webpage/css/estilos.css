@@ -54,7 +54,7 @@ p{
     display:none;
 }
 
-.contenedor-flex-columna{
+.contenedor-flex-vertical{
     background-color: bisque;
     /*padding: 10px 50px 50px 50px;*/
     display: flex;
@@ -86,10 +86,10 @@ p{
     gap:20px;
 }
   
-/*ul:not(.lista_viñetas){
+ul:not(.lista_viñetas){
     list-style: none;
     padding: 0px;
-}*/
+}
 
 ul, ol{
     margin:0px;
@@ -221,10 +221,14 @@ section{
 figure {
     text-align: center;
     margin: 20px;
-  }
+}
   
-  figcaption {
+figcaption {
     font-style: italic;
     font-size: 14px;
     color: #555;
-  }
+}
+
+.fondo-rojo{
+    background-color: red;
+}

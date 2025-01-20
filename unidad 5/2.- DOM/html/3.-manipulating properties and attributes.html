@@ -15,13 +15,13 @@
       <header>
         <h1 id="titulo1">Ejemplo de manipulación de texto en DOM</h1>
       </header>
-      <section class="contenedor-flex-vertical tarjeta">
+        <section class="contenedor-flex-vertical tarjeta">
         <h2>innerHTML</h2>
         <section class="contenedor-flex-vertical">
           <section>
             <h2>Antes</h2>
             <article class="contenedor-flex-vertical">
-              <p>Este texto va a ser sustituido, mediante innerHTML, usando el siguiente código:</p>
+              <p>Este texto va a ser sustituido, mediante innerHTML. InnerHTML cambiará el todos los hijos del nodo seleccionado e interpretará las etiquetas HTML. El código es el siguiente:</p>
               <p class="codigo">let inHTML=document.getElementById("inHTML");
 inHTML.innerHTML="<strong>texto cambiado, mediante innerHTML, tras crear el DOM</strong>";</p>
             </article>
@@ -128,7 +128,6 @@ txtContent.textContent="<strong>texto cambiado, mediante contentText, tras crear
           </section>
         </section>
       </section>
-
       <!--Este comentario está aquí para ver cómo funcionan los distintos métodos del DOM con los distintos tipos de nodos. Recuerda que los comentarios son nodos de tipo 8, los espacios en blanco, retornos de carro y tabuladores son de tipo 3 y las etiquetas HTML son de tipo 1-->
       <section id="animales" class="tarjeta"><!--Este comentario está aquí para ver cómo funcionan los distintos métodos del DOM con los distintos tipos de nodos. Recuerda que los comentarios son nodos de tipo 8, los espacios en blanco, retornos de carro y tabuladores son de tipo 3 y las etiquetas HTML son de tipo 1-->
         <h3>Animales</h3>

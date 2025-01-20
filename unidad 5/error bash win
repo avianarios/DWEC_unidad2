@@ -1,5 +1,0 @@
-https://stackoverflow.com/questions/64981895/how-to-run-all-tests-with-node-by-specifying-asterisk
-
-Si el shell de windows no funciona bien con el asterisco al hacer jsdoc.js */*.js, hacer que trabaje con bash:
-
-npm config set script-shell "C:\\Program Files\\git\\bin\\bash.exe" 

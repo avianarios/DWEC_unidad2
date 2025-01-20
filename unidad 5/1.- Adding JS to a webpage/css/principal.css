@@ -128,7 +128,6 @@ footer {
   background: #f4f4f4;
   padding: 15px;
   border-left: 5px solid #007bff;
-  white-space: pre; /* Esto asegura que los saltos de línea se respeten */
   max-width: 90%;
   align-self: center;
 }
@@ -136,7 +135,19 @@ footer {
 .tarjeta{
   background-color: #dfefff;
   padding:10px;
+  border: 3px solid #007bff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  border-radius: 0.5rem;
 }
+
+.tarjeta:hover {
+  background-color: rgb(177, 215, 255); /* Color ligeramente más claro */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px); /* Un pequeño desplazamiento hacia arriba */
+  transition: all 0.3s ease;
+}
+
 
 .contenedor-flex-vertical {
   display: flex;
@@ -192,3 +203,6 @@ footer > p:nth-of-type(2) {
 /*# sourceMappingURL=principal.css.map */
 
 
+.fondo-rojo{
+  background-color: red;
+}

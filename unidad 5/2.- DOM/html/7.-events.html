@@ -7,20 +7,18 @@
     <link rel="stylesheet" type="text/css" href="../css/estilos.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500&family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;700&display=swap" rel="stylesheet">
     <script src="../js/7.-events.js" defer></script>
   </head>
   <body>
-
-    <section class="contenedor-flex-columna gap">
-
-      <section class="contenedor-flex-columna ai-center borde gap">
-        <header class="contenedor-flex-columna gap jc-center">
+    <section class="contenedor-flex-vertical gap">
+      <section class="contenedor-flex-vertical ai-center borde gap">
+        <header class="contenedor-flex-vertical gap jc-center">
           <h2>Handling events</h2>
           <h3>how to create and remove event handlers as well as how to get information about the event launched</h3>
         </header>
 
-        <article class="contenedor-flex-columna gap borde jc-center">
+        <article class="contenedor-flex-vertical gap borde jc-center">
           <h3>Attaching one or several event handlers</h3>
           <ul id="lista_botones1" class="contenedor-flex-fila gap jc-center">
             <li><button id="cambiaClase">Change button colour</button></li>
@@ -28,7 +26,7 @@
           </ul>
         </article>
 
-        <article class="contenedor-flex-columna gap borde jc-center">
+        <article class="contenedor-flex-vertical gap borde jc-center">
           <h3>Reading event information</h3>
           <p>Events are stored in an object which provides additional information. Different types of events provide different properties</p>
           <p>Here you can practice with mouse events getting information about: type, currentTarget, target, istrusted, timeStamp, clientX, clientY and buttons pressed</p>            
@@ -37,7 +35,7 @@
           <p id="texto_coordenadas" class="dp_none"></p>
         </article>
 
-        <article class="contenedor-flex-columna gap borde jc-center">
+        <article class="contenedor-flex-vertical gap borde jc-center">
           <h3>Defining an event handler using an object instead of a function</h3>
           <p>Create a class with a constructor that attaches eventhandlers</p>
           <ul class="contenedor-flex-fila gap jc-center">
@@ -46,7 +44,7 @@
           </ul>
         </article>
 
-        <article class="contenedor-flex-columna gap borde jc-center">
+        <article class="contenedor-flex-vertical gap borde jc-center">
           <h3>Using data attributes alongside objects to assign event handlers just once</h3>
           <p>There's no need to assign an event handler at each element. data attributes can be used to assign event handlers once</p>
           <ul id="botones_accion" class="contenedor-flex-fila gap jc-center">
@@ -57,7 +55,7 @@
           <p id="texto_botones_accion"></p>
         </article>
 
-        <article class="contenedor-flex-columna gap borde jc-center">
+        <article class="contenedor-flex-vertical gap borde jc-center">
           <h3>Using data attributes</h3>
           <p>they can be used alongside event handlers to perform actions</p>
           <ul id="botones_accion" class="contenedor-flex-fila gap jc-center">
@@ -70,7 +68,7 @@
           </form>
         </article>
 
-        <article class="contenedor-flex-columna borde jc-center">
+        <article class="contenedor-flex-vertical borde jc-center">
           <h3 id="hoverPara">Removing event listener (hover this text)</h3>
           <p id="caja_hover" hidden class="caja_mensajes"> </p>
           <button id="clickIt">Stop listening for events</button>
@@ -78,7 +76,7 @@
       </section>
 
 
-      <section id="bubbling_and_capturing" class="contenedor-flex-columna ai-center borde gap">
+      <section id="bubbling_and_capturing" class="contenedor-flex-vertical ai-center borde gap">
         <header>
           <h3>Event propagation</h3>
           <p>The standard DOM Events describes 3 phases of event propagation:</p>
@@ -93,7 +91,7 @@
           <h3>Bubbling</h3>
           <p>This is by default how events are handled by eventHandlers. Click at any place on this paragraph to console out how events are transmitted all the way up</p>
         </article>
-        <article id="capturing_phase" class="contenedor-flex-columna borde jc-center">
+        <article id="capturing_phase" class="contenedor-flex-vertical borde jc-center">
           <h3>Capturing</h3>
           <p>This is not standard way of capturing events. A third optional element in addEventListener is required to be true<br>
             Click on the paragraph to see how events are transmitted all the way down from where an event handler was defined to the element where it occurred</p>
@@ -104,7 +102,7 @@
         </article>
       </section>
   
-      <section class="contenedor-flex-columna ai-center borde gap" id="event_delegation">
+      <section class="contenedor-flex-vertical ai-center borde gap" id="event_delegation">
         <header>
           <h3>Event delegation</h3>
         </header>
@@ -113,7 +111,7 @@
           <p>An event handler on parent section has been previously defined, but there's no event handler at this section nor at this paragraph.<br>
               Click on the paragraph and watch console to see how this event is captured by the parent of its parent (section)</p>
         </article>
-        <article class="contenedor-flex-columna borde jc-center">
+        <article class="contenedor-flex-vertical borde jc-center">
           <h3>Capturing a click event at table level</h3>
           <p>There's a click event handler for the whole table, not every cell<br>
           Click on any cell</p>
@@ -142,12 +140,12 @@
 
 
       </section>
-      <section class="contenedor-flex-columna borde jc-center gap">
+      <section class="contenedor-flex-vertical borde jc-center gap">
         <header>
           <h3>UI Events</h3>
           <p>This section covers some of the most used events, but not all. click has already been discussed</p>
         </header>
-        <article class="contenedor-flex-columna borde jc-center">
+        <article class="contenedor-flex-vertical borde jc-center">
           <h3>Mouse: mouseover and mouseout</h3>
           <p>There's a click event handler for the whole table, not every cell<br>
           Click on any cell</p>
@@ -174,7 +172,7 @@
           </table>
         </article>
 
-        <article class="contenedor-flex-columna borde jc-center">
+        <article class="contenedor-flex-vertical borde jc-center">
           <header>
             <h3>Pointer devices</h3>
             <p>Allow dealing with events of any kind of pointing devices such as pens, fingers at touchscreens or even mice</p>
@@ -195,7 +193,7 @@
           <p id="caja_pointermove" class="caja_mensajes" data-accion="pointermove"> </p>
         </article>
 
-        <article class="contenedor-flex-columna borde jc-center">
+        <article class="contenedor-flex-vertical borde jc-center">
           <header>
             <h3>Keyboard events</h3>
             <p>Keyboard are not the only way of getting user inputs, so do not rely solely on them to react to users input</p>
@@ -209,7 +207,7 @@
           <p id="caja_keydown" class="caja_mensajes"> </p>
         </article>
         
-        <article class="contenedor-flex-columna borde jc-center">
+        <article class="contenedor-flex-vertical borde jc-center">
           <h3>Scroll</h3>
           <p>Window object has a scroll eventlistener attached that shows up </p>
           <p>Scroll is imprecise. Page end could be detected 50-100px away from the real page end. Small amounts of pixels are ignored</p>
@@ -218,7 +216,7 @@
           <p id="pixeles_desplazamiento" class="fijo oculto"></p>
         </article>
 
-        <article class="contenedor-flex-columna borde jc-center">
+        <article class="contenedor-flex-vertical borde jc-center">
           <h3>Forms</h3>
           <p>if more than one form is present, they can be referred:</p>
           <ul class="lista_viñetas">
@@ -229,7 +227,7 @@
           <p>grouped elements, as checkboxes or radio buttons, can be accessed with formulario.elements.nombre[0]</p>
           <p>select controls has 3 properties: options, value and selectedIndex</p>
           <p>remarcable events: focus (focusin), blur (focusout), change, input, cut, copy, paste, submit</p>
-          <form name="form1" class="contenedor-flex-columna gap relativo">
+          <form name="form1" class="contenedor-flex-vertical gap relativo">
             <input type="text" id="nombre" name="nombre" placeholder="nombre" minlength="4" maxlength="15" required>
             <p id="error" hidden>Usted se llama perico, corríjalo</p>
             <input type="text" id="apellidos" name="apellidos" placeholder="apellidos">
@@ -252,7 +250,7 @@
           <p id="caja_eventos_form" class="caja_mensajes"> </p>
         </article>
 
-        <article class="contenedor-flex-columna borde jc-center">
+        <article class="contenedor-flex-vertical borde jc-center">
           <header>
             <h3>Page events</h3>
             <ul>
