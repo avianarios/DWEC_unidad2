@@ -1,37 +1,6 @@
 ///////////////////////
 ////handling errors////
 ///////////////////////
-/*
-When an error occurrs, it keeps propagating to the parent functions that called it, until it is handled or until it reaches the global function (window object in a web browser or global object in node), where it ends up stopping the program.
-
-Types of errors:
-  -predictable: They arise from conditions that we know could occur and can therefore be anticipated. Examples: Try to divide by zero, Passing an invalid value to a function or Look for a file that does not exist 
-  -unpredictable. They arise from external or unforeseen factors so they cannot be easily anticipated. These errors may be related to the system environment or to unexpected circumstances within the code that we cannot foresee during development. Examples: Network failure or loss of connection to external servers, Stack overflow due to unexpected data or too big data or hardware failures, like a faulty hard disk drive
-
-Errors can be controlled by using two methods: "if" sentences or "try..catch..finally" blocks.
-  -When to use "if" statement?
-    -To treat expected or common errors.
-    -Programmer chooses whether to interrupt or not execution on "if" block.
-    -If you want to keep code simple
-
-  -When to use try...catch statement?
-    -To treat severe, exceptional or unpredictable errors.
-    -If you want to force the code to immediately handle the error before continuing the execution of the code beneath it (execution is interrupted until the error is handled)
-    
-Advantages of using try..catch:
-    -It interrupts the flow completely, forcing you to deal with the problem.
-    -Serious errors are easier to identify and handle globally.
-    -Facilitates debugging and error logging.
-
--How is a try...catch...finally block used?
-    1.- The code in try {...} is executed.
-    2.- If an error occurs
-        2.1.- The execution of the code inside the try block is halted
-        2.2.- An Error object is created (altough another value can be thrown, not recommended though)
-        2.3.- The control is passed to the catch block, where the error (or value) is handled.
-    3.- After handling the error, the program executes "finally" block and code outside try...catch normally 
-*/
-
 //Example 1: Expected error handling: "if" statement
 //The "if" statement is the best method here as a variable with a misleading value is not an unexpected error
 function procesarEntrada(edad) {
