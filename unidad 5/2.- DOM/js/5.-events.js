@@ -62,18 +62,27 @@ infoEvento.addEventListener("click", (evento) => {
     if (evento.shiftKey) texto_explicativo.innerHTML+="<br>shift Key pressed";
     if (evento.metaKey) texto_explicativo.innerHTML+="<br>meta Key pressed"; //MAC only
 });
-/*const { type, timeStamp, isTrusted } = event;
-console.log({ type, timeStamp, isTrusted });*/
 
 
-zzzzzzzzzzzzzz
+//////////////////////
+////preventDefault////
+//////////////////////
+//avoids the default action of an event. useful when you need to stop the behavior of the browser while the event keeps propagating
 
+//Example 1: Preventing the default action of a link
+document.querySelector("a").addEventListener("click", function(event) {
+    event.preventDefault();  // Evita que el enlace navegue
+    alert("Me niego a mandarte allí");
+});
+
+
+//Example 2: Preventing the default action of the mouse right-click button
+//this eventlistener is attached to the document, so it will be triggered when right-clicking anywhere in the document
 document.addEventListener('contextmenu', evento => {
     evento.preventDefault();        //removes default action when pressing right button
     let texto_explicativo=document.getElementById("texto_coordenadas");
     if (texto_explicativo.classList.contains ("dp_none")){ texto_explicativo.classList.remove("dp_none"); }
     texto_explicativo.innerHTML="Button "+evento.button + " has been pressed";
-
     /*
     if (texto_explicativo.textContent.includes ("Button 0")){
         texto_explicativo.innerHTML=texto_explicativo.innerHTML.replace("Button 0", "Button 2");
@@ -81,7 +90,6 @@ document.addEventListener('contextmenu', evento => {
         if (!texto_explicativo.textContent.includes("Button 2"))
             texto_explicativo.innerHTML+="<br>Button "+evento.button + " has been pressed";
     }*/
-   
 });
 
 
@@ -441,4 +449,26 @@ window.addEventListener("load", mensaje);
 function mensaje (evento){
     caja_texto_eventos.innerHTML+="<br>Event "+evento.type+" finished at "+evento.timeStamp+" ms";
     caja_texto_eventos.scrollTo(0, caja_texto_eventos.scrollHeight);
+};
+
+
+
+////////////////////////////////////
+////dynamic loading of an script////
+////////////////////////////////////
+function cargarScript(src, callback) {
+    var script = document.createElement('script');
+    script.src = src;
+    script.type = 'text/javascript';
+    script.onload = callback;  // Ejecutar el callback cuando se haya cargado el script
+    document.head.appendChild(script);  // Añadir el script al head
+}
+
+// Ejemplo de cómo cargar jQuery dinámicamente
+document.getElementById('cargarScript').onclick = function() {
+    cargarScript('https://code.jquery.com/jquery-3.6.0.min.js', function() {
+        console.log('jQuery ha sido cargado con éxito');
+        // Probar que jQuery funciona
+        $('body').css('background-color', 'lightblue');  // Cambiar el color de fondo como prueba
+    });
 };
