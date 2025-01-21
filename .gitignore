@@ -1,12 +1,5 @@
-tmp*
-_*
-.
-*.pptx
-documentacion
 node_modules
 compilado
-fuente
-*español*
-*soluciones*
-*antigua*
-NO*
+*.pptx
+tmp*
+.parcel-cache
