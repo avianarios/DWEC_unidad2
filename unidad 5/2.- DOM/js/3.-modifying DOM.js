@@ -37,7 +37,7 @@ let estructura_temporal=document.createDocumentFragment();
 ////Inserting nodes////
 ///////////////////////
 
-////Node API (older, supported by older browsers). Two methods:
+////Node API (older, supported by older browsers. Look for Node API: <method_name> in caniuse.com). Two methods:
 //  -appendChild
 //  -insertBefore
 
@@ -66,15 +66,15 @@ console.log (seccion_clonada.isConnected);  //true
 estructura_temporal=document.createDocumentFragment();
 for (let i = 0; i < 10; i++) {
     const nuevoElemento = document.createElement("p");
-    nuevoElement.textContent = `Elemento ${i}`;
-    estructura_temporal.appendChild(nuevoNodo); // Añade a la estructura temporal, no al DOM.
+    nuevoElemento.textContent = `Elemento ${i}`;
+    estructura_temporal.appendChild(nuevoElemento); // Añade a la estructura temporal, no al DOM.
 }
 let padre = document.querySelector("section#insertar1");
 let nodo_referencia = document.querySelector("section#insertar1 p:nth-of-type(3)");
 padre.insertBefore(estructura_temporal, nodo_referencia); // Una sola inserción al DOM.
 
 
-////Element API (newer, supported by browsers starting at 2016). Several methods:
+////Element API (newer, supported by browsers starting at 2016.  Look for Node API: <method_name> in caniuse.com). Several methods:
 //  -before
 //  -after
 //  -append
@@ -188,20 +188,20 @@ nodoPadre.replaceChild(nodoNuevo, nodoAntiguo);
 
 
 ////Element API: 
-//  oldElement.replaceWith(newElement)-> Replaces oldElement with newElement
-//  oldElement.replaceChildren(...nodes) -> replaces all child nodes, at any level, of an oldElement with the nodes passed as arguments.
+//  oldElement.replaceWith(newElements)-> Replaces all children of oldElement with newElements but NOT oldElement itself
+//  oldElement.replaceChildren(newElements) -> replaces all childdren of oldElement with newElements INCLUDING oldElement itself
+//  both of them accept several nodes at the same time as arguments
 
 //Example 2: Replace a node with replaceWith
-objetivo=document.querySelector("#sustituir1>p:first-of-type");
-console.log(objetivo);
+objetivo=document.querySelector("#sustituir1");
 parrafo=document.createElement("p");
 parrafo.classList.add("insertado");
 parrafo.textContent="Párrafo que ha sustituido al que había aquí antes con replaceWith";
 //alternative to .textContent:
 //  texto=document.createTextNode("nuevo texto");
 //  parrafo.appendChild(texto);
-
 objetivo.replaceWith(parrafo);  
+
 
 //Example 3: Replace all child nodes with replaceChildren
 objetivo=document.querySelector("#sustituir2");
@@ -229,4 +229,4 @@ document.body.appendChild(referencia);  //the "removed" element is back!
 
 
 //Example 2: removing elements from the DOM with remove
-borrar.remove(document.querySelector(#lista_compra > ul));    //remove does not returns a reference to the recently removed element, so it's unrecoverable
+borrar.remove(document.querySelector("#lista_compra > ul"));    //remove does not returns a reference to the recently removed element, so it's unrecoverable
