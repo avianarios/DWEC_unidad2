@@ -1,3 +1,5 @@
+// Código moderno (para probar transpilación y polyfills)
+
 //import 'regenerator-runtime/runtime';  // Importa el runtime para que los generadores funcionen
 import 'regenerator-runtime';
 
