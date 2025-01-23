@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple DOM example</title>
+    <script src="../js/3.-modifying DOM.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="../css/estilos.css">
+  </head>
+  <body class="contenedor-flex">
+        <!--Este comentario está aquí para ver cómo funcionan los distintos métodos del DOM con los distintos tipos de nodos. Recuerda que los comentarios son nodos de tipo 8, los espacios en blanco, retornos de carro y tabuladores son de tipo 3 y las etiquetas HTML son de tipo 1-->
+      <header>
+        <h1 id="titulo1">Ejemplo de manipulación del DOM</h1>
+      </header>
+
+      <section id="insertar1">
+        <p>Párrafo de relleno con un texto aleatorio</p>
+        <p>Párrafo de relleno con un texto aleatorio</p>
+        <p>Párrafo de relleno con un texto aleatorio</p>
+        <p>Párrafo de relleno con un texto aleatorio</p>
+        <p>Párrafo de relleno con un texto aleatorio</p>
+      </section>
+
+      <section id="lista">
+        <ul id="lista_compra">
+          <li class="verdura">cebollas</li>
+          <li class="verdura">patatas</li>
+          <ul>
+            <li>monalisa</li>
+            <li>gallega</li>
+          </ul>
+          <li class="verdura">cebollas</li>
+          <li class="fruta">manzanas</li>
+          <li class="fruta">peras</li>
+          <ul>
+            <li>blanquillas</li>
+            <li>conferencia</li>
+            <li>agua</li>
+          </ul>
+          <li class="fruta">plátanos</li>
+          <li class="fruta">aguacates</li>
+        </ul>
+      </section>
+
+      <section id="insertar2">
+        <p>Párrafo de relleno con un texto aleatorio</p>
+        <p>Párrafo de relleno con un texto aleatorio</p>
+        <p>Párrafo de relleno con un texto aleatorio</p>
+        <p>Párrafo de relleno con un texto aleatorio</p>
+        <p>Párrafo de relleno con un texto aleatorio</p>
+      </section>
+      <!--Este comentario está aquí para ver cómo funcionan los distintos métodos del DOM con los distintos tipos de nodos. Recuerda que los comentarios son nodos de tipo 8, los espacios en blanco, retornos de carro y tabuladores son de tipo 3 y las etiquetas HTML son de tipo 1-->
+      <section id="animales" class="tarjeta"><!--Este comentario está aquí para ver cómo funcionan los distintos métodos del DOM con los distintos tipos de nodos. Recuerda que los comentarios son nodos de tipo 8, los espacios en blanco, retornos de carro y tabuladores son de tipo 3 y las etiquetas HTML son de tipo 1-->
+        <figure id="gato">
+          <img src="../img/gato4.jpg" alt="Un lindo gatito">
+          <figcaption>Este es un lindo gatito <a href="/Felis_silvestris_catus" target="_blank">Felis silvestris catus</a></figcaption>
+          <p muestra-info="nombre"></p>
+          <p muestra-info="raza"></p>
+        </figure>
+        <figure id="perro">
+          <img src="../img/perro2.jpg" alt="Un lindo perrito">
+          <figcaption>Este es un lindo perrito <a href="https://es.wikipedia.org/wiki/Canis_familiaris"  target="_self">Canis familiaris</a></figcaption>
+          <p muestra-info="nombre"></p>
+          <p muestra-info="raza"></p>
+        </figure>
+      </section>
+      <section>
+        <form id="formulario-contacto" class="contenedor-flex-columna">
+          <fieldset>
+              <label for="nombre">Nombre</label>
+              <input type="text" id="nombre" name="nombre" placeholder="nombre" minlength="4" maxlength="15" required>
+          </fieldset>
+          <fieldset>
+              <label for="apellidos">Apellidos</label>
+              <input type="text" id="apellidos" name="apellidos" placeholder="apellidos">
+          </fieldset>
+          <fieldset>
+              <label for="correo">Correo-e</label>
+              <input type="email" id="correo" name="correo" placeholder="Correo electrónico" required pattern="[a-z0-9\-\.]+@[a-z0-9\-]+\.[a-z]{2,4}">
+          </fieldset>
+          <fieldset>
+              <label for="dni">DNI</label>
+              <input type="text" name="dni" required pattern="(([X-Z]{1}-?[0-9]{7})|([0-9]{8}))[A-Z]{1}" placeholder="DNI"/>
+          </fieldset>
+          <fieldset>
+              <label for="dni">Edad</label>
+              <input type="number" name="edad" min="18" max="100" placeholder="min 18, max 100"/>
+          </fieldset>
+          <fieldset>
+              <input type="checkbox" checked name="first" value="first"> <label for="first">First option</label>
+              <input type="checkbox" name="second" value="second"> <label for="second">Second option</label>
+              <input type="checkbox" name="third" value="third" disabled> <label for="third">Third option</label>
+          </fieldset>
+          <button id="enviar">Enviar</button>
+        </form>
+
+      </section>
+
+      <section id="sustituir">
+        <article id="sustituir1">
+          <p>Este <code>article</code> va a ser sustituido</p>
+          <ul>
+            <li>Un elemento de lista</li>
+            <li>Un elemento de lista</li>
+            <li>Un elemento de lista</li>
+          </ul>
+          <p>Este <code>article</code> va a ser sustituido</p>
+        </article>
+        <article id="sustituir2">
+          <p>Este <code>article</code> va a ser sustituido</p>
+          <ul>
+            <li>Un elemento de lista</li>
+            <li>Un elemento de lista</li>
+            <li>Un elemento de lista</li>
+          </ul>
+          <p>Este <code>article</code> va a ser sustituido</p>          
+        </article>
+        <article id="sustituir3">
+          <p>Este <code>article</code> va a ser sustituido</p>
+          <ul>
+            <li>Un elemento de lista</li>
+            <li>Un elemento de lista</li>
+            <li>Un elemento de lista</li>
+          </ul>
+          <p>Este <code>article</code> va a ser sustituido</p>
+        </article>
+        <article id="sustituir4">
+          <p>Este <code>article</code> va a ser sustituido</p>
+          <ul>
+            <li>Un elemento de lista</li>
+            <li>Un elemento de lista</li>
+            <li>Un elemento de lista</li>
+          </ul>
+          <p>Este <code>article</code> va a ser sustituido</p>
+        </article>
+
+
+        
+      </section>    
+      
+  </body>
+</html>

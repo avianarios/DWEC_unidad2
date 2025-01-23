@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple DOM example</title>
+    <script src="../js/2.-manipulating properties and attributes.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="../css/principal.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">    
+  </head>
+  <body class="contenedor-flex-vertical espaciado">
+    <!--Este comentario está aquí para ver cómo funcionan los distintos métodos del DOM con los distintos tipos de nodos. Recuerda que los comentarios son nodos de tipo 8, los espacios en blanco, retornos de carro y tabuladores son de tipo 3 y las etiquetas HTML son de tipo 1-->
+      <header>
+        <h1 id="titulo1">Ejemplo de manipulación de texto en DOM</h1>
+      </header>
+        <section class="contenedor-flex-vertical tarjeta">
+        <h2>innerHTML</h2>
+        <section class="contenedor-flex-vertical">
+          <section>
+            <h2>Antes</h2>
+            <article class="contenedor-flex-vertical">
+              <p>Este texto va a ser sustituido, mediante innerHTML. InnerHTML cambiará el todos los hijos del nodo seleccionado e interpretará las etiquetas HTML. El código es el siguiente:</p>
+              <p class="codigo">let inHTML=document.getElementById("inHTML");
+inHTML.innerHTML="<strong>texto cambiado, mediante innerHTML, tras crear el DOM</strong>";</p>
+            </article>
+          </section>
+          <section>
+            <h2>Después</h2>
+            <article id="inHTML">
+              <article>
+                <p>Este texto va a ser sustituido, mediante innerHTML, usando el siguiente código:</p>
+                <p class="codigo">let inHTML=document.getElementById("innerHTML");
+  inHTML.innerHTML="<strong>texto cambiado, mediante innerHTML, tras crear el DOM</strong>";</p>
+              </article>
+              </article>
+          </section>
+        </section>
+      </section>
+
+
+      <section class="contenedor-flex-vertical tarjeta">
+        <h2>outerHTML</h2>
+        <section class="contenedor-flex-vertical">
+          <section>
+            <h2>Antes</h2>
+            <article class="contenedor-flex-vertical">
+              <p>Este texto va a ser sustituido, mediante outerHTML, usando el siguiente código:</p>
+              <p class="codigo">let outHTML=document.getElementById("outHTML");
+outHTML.outerHTML="<strong>texto cambiado, mediante outerHTML, tras crear el DOM</strong>";</p>
+            </article>
+          </section>
+          <section>
+            <h2>Después</h2>
+            <article id="outHTML">
+              <p>Este texto va a ser sustituido, mediante outerHTML, usando el siguiente código:</p>
+              <p class="codigo">let outHTML=document.getElementById("outHTML");
+  outHTML.outerHTML="<strong>texto cambiado, mediante outerHTML, tras crear el DOM</strong>";</p>
+              </article>
+          </section>
+        </section>
+      </section>
+
+
+      <section class="contenedor-flex-vertical tarjeta">
+        <h2>innerTXT</h2>
+        <section class="contenedor-flex-vertical">
+          <section>
+            <h2>Antes</h2>
+            <article class="contenedor-flex-vertical">
+              <p>Este texto va a ser sustituido, mediante innerText, usando el siguiente código:</p>
+              <p class="codigo">let inTxt=document.getElementById("inTxt");
+inTxt.innerText="<strong>texto cambiado, mediante innerText, tras crear el DOM</strong>";</p>
+            </article>
+          </section>
+          <section>
+            <h2>Después</h2>
+            <article id="inTxt">
+                <p>Este texto va a ser sustituido usando outerHTML usando el siguiente código:</p>
+                <p class="codigo">let inTxt=document.getElementById("inText");
+inTxt.innerText="<strong>texto cambiado, mediante innerText, tras crear el DOM</strong>";</p>
+                </article>
+          </section>
+        </section>
+      </section>
+
+      <section class="contenedor-flex-vertical tarjeta">
+        <h2>outerTXT</h2>
+        <section class="contenedor-flex-vertical">
+          <section>
+            <h2>Antes</h2>
+            <article class="contenedor-flex-vertical">
+              <p>Este texto va a ser sustituido, mediante outerText, usando el siguiente código:</p>
+              <p class="codigo">let outTxt=document.getElementById("outTxt");
+outTxt.outerText="<strong>texto cambiado, mediante outerText, tras crear el DOM</strong>";</p>
+            </article>
+          </section>
+          <section>
+            <h2>Después</h2>
+            <article id="outTxt">
+              <p>Este texto va a ser sustituido, mediante outerText, usando el siguiente código:</p>
+              <p class="codigo">let outTxt=document.getElementById("outTxt");
+outTxt.outerText="<strong>texto cambiado, mediante outerText, tras crear el DOM</strong>";</p>
+                </article>
+          </section>
+        </section>
+      </section>
+
+      <section class="contenedor-flex-vertical tarjeta">
+        <h2>textContent</h2>
+        <section class="contenedor-flex-vertical">
+          <section>
+            <h2>Antes</h2>
+            <article class="contenedor-flex-vertical">
+              <p>Este texto va a ser sustituido, mediante textContent, usando el siguiente código:</p>
+              <p class="codigo">let txtContent=document.getElementById("contTxt");
+txtContent.textContent="<strong>texto cambiado, mediante contentText, tras crear el DOM</strong>";</p>
+            </article>
+          </section>
+          <section>
+            <h2>Después</h2>
+            <article id="txtContent">
+              <p>Este texto va a ser sustituido, mediante textContent, usando el siguiente código:</p>
+              <p class="codigo">let txtContent=document.getElementById("contTxt");
+txtContent.textContent="<strong>texto cambiado, mediante contentText, tras crear el DOM</strong>";</p>
+                </article>
+          </section>
+        </section>
+      </section>
+      <!--Este comentario está aquí para ver cómo funcionan los distintos métodos del DOM con los distintos tipos de nodos. Recuerda que los comentarios son nodos de tipo 8, los espacios en blanco, retornos de carro y tabuladores son de tipo 3 y las etiquetas HTML son de tipo 1-->
+      <section id="animales" class="tarjeta"><!--Este comentario está aquí para ver cómo funcionan los distintos métodos del DOM con los distintos tipos de nodos. Recuerda que los comentarios son nodos de tipo 8, los espacios en blanco, retornos de carro y tabuladores son de tipo 3 y las etiquetas HTML son de tipo 1-->
+        <h3>Animales</h3>
+        <section class="contenedor-flex-horizontal">
+          <figure id="gato">
+            <img src="../img/gato4.jpg" alt="Un lindo gatito">
+            <figcaption>Este es un lindo gatito <a href="https://es.wikipedia.org/wiki/Felis_silvestris_catus" target="_blank">Felis silvestris catus</a></figcaption>
+            <p muestra-info="nombre"></p>
+            <p muestra-info="raza"></p>
+          </figure>
+          <figure id="perro">
+            <img src="../img/perro2.jpg" alt="Un lindo perrito">
+            <figcaption>Este es un lindo perrito <a href="https://es.wikipedia.org/wiki/Canis_familiaris"  target="_self">Canis familiaris</a></figcaption>
+            <p muestra-info="nombre"></p>
+            <p muestra-info="raza"></p>
+          </figure>
+        </section>
+      </section> 
+      <section id="ponerID">
+        <p>Este párrafo es para ponerle el atributo ID con JS</p>
+        <p>Este párrafo es para jugar con los atributos</p>
+        <p>Este párrafo es para jugar con los atributos</p>
+        <p>Este párrafo es para jugar con los atributos</p>
+      </section>
+      <section id="clases">
+        <p class="prueba prueba2">este es un texto aleatorio para trabajar con clases</p>
+        <p>este es un texto aleatorio para trabajar con clases</p>
+        <p>este es un texto aleatorio para trabajar con clases</p>
+        <p>este es un texto aleatorio para trabajar con clases</p>
+        <p>este es un texto aleatorio para trabajar con clases</p>
+      </section>
+      <section id="modificarClases">
+        <p id="idPorEliminar" class="rojo fuenteGrande">Este párrafo es para quitarle el atributo class con JS</p>
+        <p class="rojo fuenteGrande">Este párrafo es para quitarle el atributo class con JS</p>
+        <p class="rojo fuenteGrande">Este párrafo es para quitarle el atributo class con JS</p>
+        <p class="rojo fuenteGrande">Este párrafo es para quitarle el atributo class con JS</p>
+      </section>
+      <button id="enviar">Enviar</button>
+
+      <section>
+        <form id="formulario-contacto" class="contenedor-flex-columna">
+          <fieldset>
+              <label for="nombre">Nombre</label>
+              <input type="text" id="nombre" name="nombre" placeholder="nombre" minlength="4" maxlength="15" required>
+          </fieldset>
+          <fieldset>
+              <label for="apellidos">Apellidos</label>
+              <input type="text" id="apellidos" name="apellidos" placeholder="apellidos">
+          </fieldset>
+          <fieldset>
+              <label for="correo">Correo-e</label>
+              <input type="email" id="correo" name="correo" placeholder="Correo electrónico" required pattern="[a-z0-9\-\.]+@[a-z0-9\-]+\.[a-z]{2,4}">
+          </fieldset>
+          <fieldset>
+              <label for="dni">DNI</label>
+              <input type="text" name="dni" required pattern="(([X-Z]{1}-?[0-9]{7})|([0-9]{8}))[A-Z]{1}" placeholder="DNI"/>
+          </fieldset>
+          <fieldset>
+              <label for="dni">Edad</label>
+              <input type="number" name="edad" min="18" max="100" placeholder="min 18, max 100"/>
+          </fieldset>
+          <fieldset>
+              <input type="checkbox" checked name="first" value="first"> <label for="first">First option</label>
+              <input type="checkbox" name="second" value="second"> <label for="second">Second option</label>
+              <input type="checkbox" name="third" value="third" disabled> <label for="third">Third option</label>
+          </fieldset>
+          <button id="enviar">Enviar</button>
+        </form>
+      </section>
+
+
+
+      <section id="parrafos">
+        <article>
+          <p class="normal letra_grande fondo_rojo">esto es un párrafo normal</p>
+          <p>esto es un párrafo <strong>especial</strong></p>
+          <p class="normal letra_pequeña fondo_verde">esto es un párrafo normal</p>
+          <p>esto es un párrafo <strong>especial</strong></p>
+          <p class="normal letra_pequeña fondo_verde">esto es un párrafo normal</p>
+          <p>esto es un párrafo sin clase</p>
+        </article>
+      </section>   
+      <section id="lista">
+        <ul id="listaCompra">
+          <li class="verdura">cebollas</li>
+          <li class="verdura">patatas</li>
+          <ul>
+            <li>blanca</li>
+            <li>roja</li>
+          </ul>
+          <li class="verdura">cebollas</li>
+          <li class="fruta">manzanas</li>
+          <li class="fruta">peras</li>
+          <ul>
+            <li>blanquillas</li>
+            <li>conferencia</li>
+            <li>agua</li>
+          </ul>
+          <li class="fruta">plátanos</li>
+          <li class="fruta">aguacates</li>
+        </ul>
+      </section>
+      <footer>
+        <p>&copy; 2025 Manipulando propiedades y atributos de los nodos del DOM</p>
+        <p></p>
+        <p>Alejandro Viana Ríos</p>
+      </footer>
+    </body>
+</html>
