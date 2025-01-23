@@ -69,14 +69,14 @@
         </article>
 
         <article class="contenedor-flex-vertical borde jc-center">
-          <h3 id="hoverPara">Preventing default behaviour of an element</h3>
+          <h3>Preventing default behaviour of an element</h3>
           <a href="http://www.ecosia.org">Enlace a ecosia</a>
         </article>
 
         <article class="contenedor-flex-vertical borde jc-center">
-          <h3 id="hoverPara">Removing event listener (hover this text)</h3>
+          <h3 id="tituloHover">Removing event listener (hover this text)</h3>
           <p id="caja_hover" hidden class="caja_mensajes"> </p>
-          <button id="clickIt">Stop listening for events</button>
+          <button id="botonParaHover">Stop listening for events</button>
         </article>
       </section>
 
@@ -87,7 +87,7 @@
           <p>The standard DOM Events describes 3 phases of event propagation:</p>
           <ol>
             <li>Capturing phase – the event goes all the way down from Window>Document>HTML>... to the element.</li>
-            <li>Target phase – the event reached the target element. It is not handled separately, but at capturing and at bubbling phase</li>
+            <li>Target phase – the event reached the target element. It isn't handled separately; it's part of both the capturing and bubbling phases.</li>
             <li>Bubbling phase – the event bubbles all the way up from the element to ...HTML>Document>Window</li>
           </ol>
           <p>Event handlers have been created only for this section. They could've been created for the whole document, starting at window->document->html...</p>
@@ -101,12 +101,16 @@
           <p>This is not standard way of capturing events. A third optional element in addEventListener is required to be true<br>
             Click on the paragraph to see how events are transmitted all the way down from where an event handler was defined to the element where it occurred</p>
         </article>
+        <article id="bubbling_and_capturing_phase" class="borde">
+          <h3>Bubbling and capturing</h3>
+          <p>Click at any place on this paragraph to console out how events are transmitted all the way down, reach the target, and goes all their way up</p>
+        </article>        
         <article id="stop_bubbling" class="borde">
           <h3>Stopping propagation</h3>
           <p>An eventHandler is defined at this paragraph. It won't allow bubbling. Do it unless there's a real reason</p>
         </article>
       </section>
-  
+
       <section class="contenedor-flex-vertical ai-center borde gap" id="event_delegation">
         <header>
           <h3>Event delegation</h3>
