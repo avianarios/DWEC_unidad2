@@ -10,11 +10,11 @@
     2. [Manipulating attributes and properties](#2---manipulating-attributes-and-properties)
     3. [Modifying DOM](#3---modifying-dom)
     4. Navigating DOM
-    5. Events
-        1. Handling events
-        2. Bubbling and capturing events
+    5. [Events](#5---events)
+        1. [Handling events](#handling-events)
+        2. [Event propagation](#event-propagation)
         3. Event delegation
-        4. User interface most common events
+        4. [Most common events](#most-common-events)
 4. Forms
 5. BOM (Browser Object Model)
     1. Window
@@ -262,11 +262,11 @@ An **event** is an action or change that occurs on a web page or in the browser,
     - The user submits a form
     - The user presses a key on their keyboard
 
-#### Key concepts
+## Key concepts
 - **Event handler:** A JavaScript function that executes when an event occurs.
 - **Event listener:** An interface that ‘listens’ for a specific event on an element and executes the associated handler when it occurs.
 
-#### Ways of handling events in JavaScript
+## Handling events
 Three ways of working with events:
 
 1. **Inline event handlers (Manejadores en línea)**  
@@ -301,7 +301,17 @@ Three ways of working with events:
     });
     ```
 
-### Common types of events:
+## Event propagation
+
+The standard DOM Events describes 3 phases of event propagation:
+
+1. **Capturing phase** – the event goes all the way down from `Window > Document > HTML > ...` to the element.
+2. **Target phase** – the event reached the target element. It isn't handled separately; it's part of both the capturing and bubbling phases.
+3. **Bubbling phase** – the event bubbles all the way up from the element to `HTML > Document > Window`.
+
+By default all events use bubbling phase. They have their origin at the element that created them and, then, they go all their way up to Window object stopping at the first element that handles them
+
+## Most common events
     - Mouse events:
         - click: the user clicks on an element.
         - dblclick: the user double clicks.
