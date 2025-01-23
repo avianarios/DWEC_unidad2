@@ -1,0 +1,213 @@
+# 2. DOM (Document Object Model)
+
+## Contents
+1. Selecting DOM elements
+2. [Manipulating attributes and properties](#2---manipulating-attributes-and-properties)
+3. [Modifying DOM](#3---modifying-dom)
+4. Navigating DOM
+5. [Events](#5---events)
+    1. [Most common events](#51--most-common-events)
+    2. [Handling events](#52--handling-events)
+    3. [Propagation and delegation](#53--propagation-and-delegation)
+
+------
+
+## 2 - Manipulating attributes and properties
+
+### Attributes:
+- These are the values defined directly in an element's HTML markup, such as `alt` or `src`.
+- They are stored in the DOM exactly as defined in the HTML.
+- They do not always reflect the current state of elements. If you change a property in JavaScript, the corresponding attribute in the DOM may not update, and vice versa.
+- They are accessed and modified using the `getAttribute()` and `setAttribute()` methods.
+
+### Properties:
+- These are dynamic values maintained by the browser that reflect the current state of an element.
+- They are not necessarily synchronized with HTML attributes.
+- They are defined via the element objects in JavaScript and accessed using the dot operator (`.`).
+
+### Examples of Differences Between Attributes and Properties:
+
+- **Checkbox (`checked`)**:
+  - Attribute: `input.getAttribute("checked")` returns `null` or `"checked"`, depending on whether the attribute is present in the initial HTML.
+  - Property: `input.checked` returns `true` or `false`, reflecting the current state of the checkbox (which can change dynamically).
+
+- **Link (`href`)**:
+  - Attribute: `link.getAttribute("href")` returns the original attribute value as it appears in the HTML, such as `./page.html`.
+  - Property: `link.href` returns the absolute URL calculated by the browser, such as `http://example.com/page.html`.
+
+- **Disabled (`disabled`)**:
+  - Attribute: `button.getAttribute("disabled")` returns `"disabled"` if the attribute is present, or `null` if it is not.
+  - Property: `button.disabled` returns `true` or `false`, indicating whether the button is currently disabled.
+
+
+### Example:
+```javascript
+let elemento = document.querySelector("img");
+elemento.src = "nueva-imagen.jpg";  // está manipulando la propiedad src
+elemento.setAttribute("src", "nueva-imagen.jpg");  // manipulando el atributo src
+```
+
+Some DOM elements have properties that do not have a corresponding attribute. For example:  
+- `input.checked` (property) reflects whether a checkbox is currently checked, but the `checked` attribute only has a value in the HTML if it is present. Changing the `checked` property using the dot operator will alter the checkbox's selection state, but it will not directly affect the `checked` attribute.  
+- Other examples include `disabled` and `selected`.  
+
+Other attributes are not linked to properties with the same name, such as `href`.  
+- `link.href` returns the absolute URL, while `link.getAttribute("href")` returns the value as it appears in the HTML (which may not be an absolute URL).  
+
+### Summary:
+An attribute controls the initial configuration, while a property reflects the current behavior. The `checked` attribute indicates the checkbox is initially checked, and the `checked` property reflects whether it is currently checked (this can change in real-time).  
+
+### Custom Attributes and Properties:
+You can create custom attributes and properties. A common convention is to prefix their names with `data-`.
+
+### Which to use: attribute or property?
+- **Should it appear in the DOM because a tool needs to interact with it?** → Attributes (`setAttribute` and `getAttribute`).  
+- **Is it for internal use in the program's logic?** → Properties (`.`).  
+
+----
+
+## 3 - Modifying DOM
+
+# XSS Warning
+
+**Warning!!!!!**  
+Despite modern browsers protecting you from XSS (Cross-Site Scripting) and disabling script execution when inserted, **never insert HTML obtained from untrusted sources** like databases, forms, or user input without cleaning it first. This could lead to security risks on unprotected or old web browsers.
+
+Here you can see three ways of preventing malicious scripts from executing
+---
+
+## Example 1: XSS Injection
+```javascript
+const codigoMaligno = prompt("dame el elemento a añadir");
+//el usuario introduce por teclado <script>alert('te la he colado')</script>
+document.body.insertAdjacentHTML('beforeend', codigoMaligno);
+//script insertado en mi DOM
+```
+
+## Example 2: Cleaning a string
+```javascript
+function escaparHTML(cadena_sucia) {
+    const parrafo = document.createElement('p');
+    p.textContent = cadena_sucia;
+    return parrafo.innerHTML;
+}
+
+const comentarioPeligroso = "<script>alert('XSS')</script>";
+const comentarioSeguro = escaparHTML(comentarioPeligroso);   //se inserta dentro de un <p>, por lo que ya no se ejecuta.
+const punto_insercion = document.querySelector("#insertar1");
+punto_insercion.insertAdjacentHTML("beforebegin", comentarioSeguro); 
+```
+
+## Example 2: inserting a clean comment
+```javascript
+ const punto_insercion = document.querySelector("#insertar1");
+ const comentarioPeligroso = "<script>alert('XSS')</script>"; // Contenido malicioso
+ const textoNode = document.createTextNode(comentarioPeligroso); // Se convierte en texto plano, ya no hay peligro
+ punto_insercion.appendChild(textoNode);
+```
+
+## Example 3: Inserting as clean text
+```javascript
+ const comentarioPeligroso = "<script>alert('XSS')</script>";
+ const punto_insercion = document.querySelector("#insertar1");
+
+// Usando insertAdjacentText para insertar el comentario
+ punto_insercion.insertAdjacentText("beforebegin", comentarioPeligroso);   //Se inserta como texto plano, por lo que no se ejecuta
+```
+
+-------
+
+# 5 - Events
+An **event** is an action or change that occurs on a web page or in the browser, either due to user interaction or to system processes. We can associate actions with events such as:
+    - The page finishes loading
+    - The user clicks a button
+    - The user hovers over a dropdown
+    - The user submits a form
+    - The user presses a key on their keyboard
+
+## Key concepts
+- **Event handler:** A JavaScript function to be executed when an event occurs.
+- **Event listener:** An interface that ‘listens’ for a specific event on an element and executes the associated callback when it occurs.
+
+## 5.1- Most common events
+- **Mouse events**:
+  - `click`: the user clicks on an element.
+  - `dblclick`: the user double clicks.
+  - `mouseover`: the mouse passes over an element.
+  - `mouseout`: the mouse leaves an element.
+  - `mousemove`: the mouse moves inside an element.
+  - `mouseenter`: Similar to `mouseover`, but does not propagate to child elements.
+  - `mouseleave`: Similar to `mouseout`, but does not propagate to child elements.
+  - `contextmenu`: the user presses right click (opens the context menu).
+
+- **Keyboard events**:
+  - `keydown`: the user presses a key.
+  - `keyup`: the user releases a key.
+
+- **Form events**:
+  - `submit`: a form is submitted.
+  - `change`: the value of an input field changes.
+  - `input`: Similar to `change`, but occurs while the user is typing.
+  - `focus`: an input field gains focus.
+  - `blur`: a field loses focus.
+
+- **Document/window events**:
+  - `DOMContentLoaded`: When the DOM is fully loaded.
+  - `load`: all resources (images, scripts, etc.) are fully loaded.
+  - `resize`: the browser window is resized.
+  - `scroll`: the user scrolls the page.
+
+- **Clipboard events**:
+  - `cut`: the user cuts text.
+  - `copy`: the user copies text.
+  - `paste`: the user pastes text.
+
+
+## 5.2- Handling events
+Three ways of working with events:
+
+1. **Inline event handlers (Manejadores en línea)**  
+   *Not recommended.* Mixing HTML and JavaScript makes maintenance difficult and does not allow multiple handlers to be added for the same event.
+
+   ```html
+    <button onClick="console.log('¡Saludos, criatura!')">Saludar</button>
+    <button id="enviar" onclick="saludar()">Enviar</button>
+    <script>
+        let saludar = () => console.log ("¡Saludos, criatura!");
+    </script>
+
+    <button id="enviar" onclick="saludar()">Enviar</button>
+    <script src="codigo.js"></script>
+   ```
+
+2. **Event handler properties** 
+    *Not recommended.* Some events can't be assigned by using properties and it only allows one handler per event
+   ```javascript
+    let boton = document.querySelector("#formulario_contacto button");
+    boton.onclick = function () { console.log("¡Saludos, criatura!"); };
+
+    let boton=document.querySelector("button");
+    let saludar = () => console.log ("¡Saludos, criatura!");
+    boton.setAttribute("onclick", "saludar");
+   ```
+
+3. **Using event listeners** 
+    *Recommended.* It allows to attach more than one handler to the same event, it has control over when the event is triggered and it works even with no HTML elements
+    ```javascript
+    let boton=document.querySelector("#formulario_contacto button");
+    boton.addEventListener("click", function (){        //it's click, not onclick
+        console.log('¡Saludos, criatura!');
+    });
+    ```
+
+## 5.3- Propagation and delegation
+
+The standard DOM Events describes 3 phases of event propagation:
+
+1. **Capturing phase** – the event goes all the way down, looking for the event handler, from the main objetc `Window > Document > HTML > ...` until gets the element where the event occurred.
+2. **Target phase** – the event reaches the target element. It isn't handled separately; it's part of both the capturing and bubbling phases.
+3. **Bubbling phase** – the event bubbles all the way up, looking for the event handler, starting at the element where the event occurred, going through every parent container until it gets to `HTML > Document > Window`.
+
+By default all events use bubbling phase. They have their origin at the element that created them and, then, they go all their way up to Window object stopping at the first element that handles them
+
+[Volver atrás](https://github.com/avianarios/codigo_DWEC/tree/main/unidad%205)

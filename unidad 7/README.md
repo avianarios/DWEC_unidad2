@@ -2,18 +2,18 @@
 
 ## Contents
 1. Vue essentials
-1.1. Text interpolation
-1.2. Use of expressions
-1.3. Reactivity
-1.4. Computed properties
-1.5. Conditional rendering
-1.6. Events
-1.7. Class and style bindings
+    1. Text interpolation
+    2. Use of expressions
+    3. Reactivity
+    4. Computed properties
+    5. Conditional rendering
+    6. Events
+    7. Class and style bindings
 
 2. Advanced vue
-2.1. Props
-2.2. V-form
-2.3. Emitters
-2.4. Injectors
-2.5. Routing
-2.6. Watchers
+    1. Props
+    2. V-form
+    3. Emitters
+    4. Injectors
+    5. Routing
+    6. Watchers
