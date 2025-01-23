@@ -109,5 +109,6 @@ console.log (elemento.closest("section"));
 
 
 //Example 2: getting if the current node contains a given node
+//node.contains(node) -> returns true if "node" is a descendant of "node"
 let otroNodo=document.getElementById("perro");
 console.log (elemento.contains(otroNodo))
