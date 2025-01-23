@@ -56,7 +56,6 @@ try{
 //Example 5: Defining an event handler as an object
 class Manejador {
     handleEvent(event) {
-        //let method = 'on' + event.type[0].toUpperCase() + event.type.slice(1);    // allows to switch mousedown to onMousedown
         this[event.type]();
     }
 
@@ -67,14 +66,6 @@ class Manejador {
     mouseup(){
         button_object2.innerHTML += "...and released.";
     }
-
-/*    onMousedown() {
-        button_object2.innerHTML = "Mouse button pressed";
-    }
-
-    onMouseup() {
-        button_object2.innerHTML += "...and released.";
-    }*/
 }
 let menu = new Manejador();
 let button_object2=document.getElementById("eventhandler_object2");
@@ -123,7 +114,6 @@ infoEvento.addEventListener("click", (evento) => {
 class Menu {
     constructor(elem) {
         elem.addEventListener("click", this.onClick.bind(this));
-        //alternative:     elem.onclick = this.onClick.bind(this); 
         //bind(this) garantiza que el contexto de this dentro del manejador apunte a la instancia de la clase, no al elemento que disparó el evento.
     }
     
