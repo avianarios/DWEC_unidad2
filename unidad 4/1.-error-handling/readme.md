@@ -42,3 +42,5 @@ Errors can be controlled by using two methods: `if` statements or `try..catch..f
     2. An **Error** object is created (although another value can be thrown, this is not recommended).
     3. The control is passed to the `catch` block, where the error (or value) is handled.
 3. After handling the error, the program executes the `finally` block, and code outside `try...catch` runs normally.
+
+[Back to the index](../readme.md)
