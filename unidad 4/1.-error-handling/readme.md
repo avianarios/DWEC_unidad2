@@ -43,4 +43,4 @@ Errors can be controlled by using two methods: `if` statements or `try..catch..f
     3. The control is passed to the `catch` block, where the error (or value) is handled.
 3. After handling the error, the program executes the `finally` block, and code outside `try...catch` runs normally.
 
-[Volver al repositorio principal](https://github.com/avianarios/codigo_DWEC/tree/main/unidad%204)
+[Volver atrás](https://github.com/avianarios/codigo_DWEC/tree/main/unidad%204)

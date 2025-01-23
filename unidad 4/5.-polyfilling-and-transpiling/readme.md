@@ -188,3 +188,5 @@ npm install --save-dev webpack webpack-cli webpack-merge @babel/core @babel/pres
 ### 8. Install `html-webpack-plugin`, include it, and configure it in `webpack.common.js` (section plugins, new `HtmlWebpackPlugin`).
 ### 9. Install `css-loader`, `mini-css-extract-plugin`, and include them, and configure them in `webpack.common.js` (section rules and plugins (`MiniCssExtractPlugin`)).
 ### 10. Configure Webpack to move assets to the dist folder (section rules, type: `'asset/resource'`, generator: `{filename: 'assets/[name].[hash][ext]'}`).
+
+[Volver atrás](https://github.com/avianarios/codigo_DWEC/tree/main/unidad%204)
