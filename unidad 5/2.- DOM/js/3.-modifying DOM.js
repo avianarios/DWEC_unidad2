@@ -75,22 +75,30 @@ padre.insertBefore(estructura_temporal, nodo_referencia); // Una sola inserción
 
 
 ////Element API (newer, supported by browsers starting at 2016.  Look for Node API: <method_name> in caniuse.com). Several methods:
-//  -before
-//  -after
-//  -append
-//  -prepend
-//  -insertAdjacentElement
-//  -insertAdjacentHTML
-//  -insertAdjacentText
+//  -before -> inserts a node before another one
+//  -after -> inserts a node after another one
+//  -append -> inserts a node as the last child of another one
+//  -prepend -> inserts a node as the first child of another one
+//  -insertAdjacentElement -> inserts a node of type Element in a specific position
+//  -insertAdjacentHTML -> inserts an HTML code in a specific position
+//  -insertAdjacentText -> inserts a node of type text in a specific position
 
-//Example 4: Insert a node before another one with before
+
+//Example 4: before -> insert a node before another one
 //reference_node.before(new_node|string) inserts new_node|string before reference_node as a brother
 nuevo_comentario = document.createComment("Esto es un comentario insertado con before en section#insertar1 p:first-of-type");
 document.querySelector("section#insertar1 p:first-of-type").before(nuevo_comentario);
 document.querySelector("section#insertar1 p:last-of-type").before("<p>esto es un texto insertado como texto con before después de section#insertar1 p:last-of-type</p>")
 
 
-//Example 5: Insert a node after another one with after
+//Example 5: before can insert several nodes at the same time and even text
+let punto_insercion = document.body;
+nodo1 = document.createElement('section');
+nodo2 = document.createElement('p');
+punto_insercion.before(nodo1, nodo2, '<p>Este texto se va a insertar antes del body</p>');
+
+
+//Example 6: after -> insert a node after another one 
 //reference_node.after(new_node|string) inserts new_node|string after reference_node as a brother
 nuevo_nodo = document.createElement("p");
 nuevo_nodo.textContent = "Texto insertado mediante after en section#insertar1 p:nth-of-type(2)";
@@ -100,17 +108,31 @@ document.querySelector("section#insertar1 p:nth-of-type(2)").after(nuevo_nodo);
 document.querySelector("section#insertar1 p:nth-of-type(4)").after("<p>esto es un texto insertado como texto con after antes de section#insertar1 p:nth-of-type(4)</p>")
 
 
-//Example 6: Insert with append
+//Example 7: after can insert several nodes at the same time and even text
+punto_insercion = document.body;
+nodo1 = document.createElement('section');
+nodo2 = document.createElement('p');
+punto_insercion.after(nodo1, nodo2, '<p>Este texto se va a insertar después del body</p>');
+
+
+//Example 8: append -> insert a node as the last child of another one
 //container_node.append(new_node)-> adds a new node as the last child of the container
 //At this example innerHTML (Unsecure when getting data from untrusted sources, but you have to write less code) will be used instead of createTextNode (more secure, but you have to write more code)
-let punto_insercion=document.querySelector("ul>ul:nth-of-type(1)");
+punto_insercion=document.querySelector("ul>ul:nth-of-type(1)");
 let elemento=document.createElement("li");
 elemento.classList.add("insertado");
 elemento.innerHTML="agria (insertado con append en ul>ul:nth-of-type(1))"
 punto_insercion.append(elemento);
 
 
-//Example 7: insert with prepend and createTextNode 
+//Example 9: append can insert several nodes at the same time and even text
+punto_insercion = document.body;
+nodo1 = document.createElement('section');
+nodo2 = document.createElement('p');
+punto_insercion.append(nodo1, nodo2, '<p>Este texto se va a insertar como último hijo del body</p>');
+
+
+//Example 10: prepend -> insert a node as the first child of another one
 //container_node.prepend(new_node)-> adds a new node as the first child of the container
 //At this example createTextNode (more secure, but you have to write more code) will be used instead of innerHTML (Unsecure when getting data from untrusted sources, but you have to write less code) 
 punto_insercion=document.querySelector("ul");
@@ -122,12 +144,12 @@ elemento.append(fruta);
 punto_insercion.prepend(elemento);
 
 
-//Example 8: Inserting nodes with insertAdjacentElement, insertAdjacentHTML, insertAdjacentText
+//Example 11: insertAdjacentElement, insertAdjacentHTML, insertAdjacentText
 // reference_node.insertAdjacentElement("where", inserted_node)-> inserts a created element
 // reference_node.insertAdjacentHTML("where", inserted_node) -> inserts an HTML code into DOM. No need to create an element. Much faster than innerHTML
 // reference_node.insertAdjacentText("where", inserted_node) -> inserts plain text. It treats HTML tags as text
 // "Where" can be one of the following: beforebegin, afterbegin, beforeend, afterend
- punto_insercion=document.querySelector("section:nth-of-type(3)");
+punto_insercion=document.querySelector("section:nth-of-type(3)");
 
 nodo=document.createElement("p");
 nodo.textContent="un texto insertado con insertAdjacentElement beforebegin en section:nth-of-type(3). Por tanto, se coloca antes del nodo section:nth-of-type(3)";
@@ -144,7 +166,7 @@ punto_insercion.insertAdjacentHTML("beforeend", "<p class=\"insertado\">un texto
 punto_insercion.insertAdjacentText("afterend", "<p class=\"insertado\">un texto insertado con insertAdjancentText afterend de section:nth-of-type(3). Por tanto, no se interpretan las etiquetas HTML y se coloca después de que se cierre el nodo section:nth-of-type(3)</p>");
 
 
-// Example 8: Creating a form field with its label and inserting it before another one with after
+// Example 12: Creating a form field with its label and inserting it before another one with after
 const fragmento = document.createDocumentFragment();
 const nuevoFieldset = document.createElement("fieldset");
 
@@ -174,10 +196,10 @@ fieldsetApellidos.after(fragmento);
 ///////////////////////
 ////Replacing nodes////
 ///////////////////////
-
 ////Node API: replaceChild
 // parentNode.replaceChild(newChild, oldChild) -> replaces oldChild, located at parentNode, with newChild
-//Example 1: replacing a node with replaceChild
+
+//Example 1: replaceChild
 const nodoPadre = document.querySelector('#gato');
 const nodoAntiguo = document.querySelector('#gato>img');
 const nodoNuevo = document.createElement('img');
@@ -188,45 +210,65 @@ nodoPadre.replaceChild(nodoNuevo, nodoAntiguo);
 
 
 ////Element API: 
-//  oldElement.replaceWith(newElements)-> Replaces all children of oldElement with newElements but NOT oldElement itself
-//  oldElement.replaceChildren(newElements) -> replaces all childdren of oldElement with newElements INCLUDING oldElement itself
+//  replaceWith -> Replaces all children of an element INCLUDING the element itself
+//  replaceChildren -> replaces all childdren of an element BUT NO the element itself
 //  both of them accept several nodes at the same time as arguments
 
-//Example 2: Replace a node with replaceWith
+//Example 2: replaceWith -> replace a node and all its descendants (but not the node itself)
+//  oldElement.replaceWith(newElements)-> Replaces all children of oldElement with newElements but NOT oldElement itself
 objetivo=document.querySelector("#sustituir1");
 parrafo=document.createElement("p");
 parrafo.classList.add("insertado");
-parrafo.textContent="Párrafo que ha sustituido al que había aquí antes con replaceWith";
+parrafo.textContent="el article que había aquí se ha sustituido por este párrafo. Como ha usado replaceWith, el article no desaparece";
 //alternative to .textContent:
 //  texto=document.createTextNode("nuevo texto");
 //  parrafo.appendChild(texto);
 objetivo.replaceWith(parrafo);  
 
 
-//Example 3: Replace all child nodes with replaceChildren
+//Example 3: replaceWith can replace several nodes at the same time, even text
 objetivo=document.querySelector("#sustituir2");
+parrafo=document.createElement("p");
+parrafo.textContent="Párrafo que ha sustituido al que había aquí antes con replaceWith";
+parrafo2=document.createElement("p");
+parrafo2.textContent="Párrafo que ha sustituido al que había aquí antes con replaceWith";
+objetivo.replaceWith(parrafo, parrafo2, "<p>Texto insertado con replaceWith</p>");
+
+
+//Example 4: replaceChildren -> replace a node and all its descendants (including the node itself)
+//  oldElement.replaceChildren(newElements)-> Replaces all children of oldElement with newElements INCLUDING oldElement itself
+objetivo=document.querySelector("#sustituir3");
 parrafo=document.createElement("p");
 parrafo.textContent="Párrafo que ha sustituido al todo el bloque section que había aquí antes con replaceChildren";
 parrafo.classList.add("insertado");
 objetivo.replaceChildren(parrafo);
 
 
+//Example 5: replaceWith can replace several nodes at the same time, even text
+objetivo=document.querySelector("#sustituir4");
+parrafo=document.createElement("p");
+parrafo.textContent="Párrafo que ha sustituido al que había aquí antes con replaceWith";
+parrafo2=document.createElement("p");
+parrafo2.textContent="Párrafo que ha sustituido al que había aquí antes con replaceWith";
+objetivo.replaceWith(parrafo, parrafo2, "<p>Texto insertado con replaceWith</p>");
+
+
 //////////////////////
 ////Removing nodes////
 //////////////////////
 // Node API: removeChild
-// Element API: remove
 
-//Example 1: Removing elements from the DOM with remmoveChild
+//Example 1: remmoveChild
+//parentNode.removeChild(nodeToRemove) -> takes a reference to the parent node and the node being removed (the child). Returns a reference to the removed node so it can be connected to the DOM again
 //removing does not erases the element. It just disconnects it from the DOM, but still exists (until web browser's garbage collector removes it from memory)
-//remove (node_to_remove) 
-//removeChild -> Needs a reference to the parent and the node being removed (the child). Returns a reference to the removed node so it can be connected to the DOM again
 let borrar=document.querySelector("#lista_compra");
 borrar.isConnected ? console.log ("El elemento está conectado al DOM") : console.log ("El elemento no está conectado al DOM");
 let referencia=document.querySelector("#lista").removeChild(borrar);
 borrar.isConnected ? console.log ("El elemento está conectado al DOM") : console.log ("El elemento no está conectado al DOM");
 document.body.appendChild(referencia);  //the "removed" element is back!
 
+// Element API: remove
 
-//Example 2: removing elements from the DOM with remove
+//Example 2: remove
+// node.remove() -> removes the node from the DOM. It does not return a reference to the removed node, so it's unrecoverable
 borrar.remove(document.querySelector("#lista_compra > ul"));    //remove does not returns a reference to the recently removed element, so it's unrecoverable
