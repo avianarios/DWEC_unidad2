@@ -1,4 +1,10 @@
-# JSDoc Description and Usage
+# Documenting code 
+
+## Contents
+1. [What is JSDoc?](#1--jsdoc-description-and-usage)
+2. [Configurando el entorno](#2--setting-up-the-environment)
+
+# 1- JSDoc Description and Usage
 
 **Descriptive variable and method names** are essential. Documenting your code is a highly recommended practice. Though documenting can be uncomfortable, it is a very important process. While no one enjoys documenting, everyone appreciates understanding someone else’s code.
 
@@ -81,3 +87,35 @@ To execute JSDoc:
 - **Cleverlinks:** Automatically creates links within the same documentation, meaning that if you mention the name of a function, class, data type, or any other symbol that is documented within the same generated documentation, JSDoc will automatically create a link to that reference.
 
 - **MonospaceLinks:** Makes internal links to documentation code look like code, using a monospace typeface.
+
+---
+
+# 2- Setting up the environment
+
+JSDoc is a tool and a documentation standard for JavaScript that allows you to add comments in the code with a special format to describe functions, variables, classes, and other elements of the code. These comments are processed to automatically generate readable documentation in HTML format or other formats.
+
+The steps to get this project running with Node.js are as follows:
+
+1. **Install Node.js** on your machine.
+
+2. **Start the project from its directory with `npm init`**.  
+   Answer the questions to generate the `package.json` file, which is the configuration file for Node.js.  
+   Do not use uppercase letters, spaces, or special characters in the "name" field.
+
+3. **Install packages and their dependencies**
+   - `npm install --save-dev <package_name>` to install packages in the current project that are only needed for development.
+   - `npm install <package_name>` to install packages in the current project that are needed for production.
+   - `npm install -g <package_name>` to install packages globally, not just for the current project.
+
+   Packages for this project:
+   - `npm install --save-dev jsdoc rimraf minami npm-run-all taffydb`
+
+4. **Create a JSDoc configuration file** named `jsdoc.json`.  
+   This file will contain the necessary parameters to automatically generate the documentation, avoiding the need to input them manually each time it is run. *(Check the `jsdoc.json` file for more details.)*
+
+5. **Open the `package.json` file** and create the necessary scripts to automate tasks.  
+   If the scripts are not created, you will need to run the following commands manually:
+
+   ```bash
+   npx jsdoc -c jsdoc.json
+   ```
