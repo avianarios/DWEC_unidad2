@@ -27,21 +27,21 @@
         </article>
 
         <article class="contenedor-flex-vertical gap borde jc-center">
-          <h3>Reading event information</h3>
-          <p>Events are stored in an object which provides additional information. Different types of events provide different properties</p>
-          <p>Here you can practice with mouse events getting information about: type, currentTarget, target, istrusted, timeStamp, clientX, clientY and buttons pressed</p>            
-          <p>context menu is disabled so you can check that button 2 (right button has been pressed)</p>
-          <button id="informacionEvento">Event object information</button>
-          <p id="texto_coordenadas" class="dp_none"></p>
-        </article>
-
-        <article class="contenedor-flex-vertical gap borde jc-center">
           <h3>Defining an event handler using an object instead of a function</h3>
           <p>Create a class with a constructor that attaches eventhandlers</p>
           <ul class="contenedor-flex-fila gap jc-center">
             <li><button id="eventhandler_object1">One event with object</button></li>
             <li><button id="eventhandler_object2">multiple events with object</button></li>
           </ul>
+        </article>
+
+        <article class="contenedor-flex-vertical gap borde jc-center">
+          <h3>Reading event information</h3>
+          <p>Events are stored in an object which provides additional information. Different types of events provide different properties</p>
+          <p>Here you can practice with mouse events getting information about: type, currentTarget, target, istrusted, timeStamp, clientX, clientY and buttons pressed</p>            
+          <p>context menu is disabled so you can check that button 2 (right button has been pressed)</p>
+          <button id="informacionEvento">Event object information</button>
+          <p id="texto_coordenadas" class="dp_none"></p>
         </article>
 
         <article class="contenedor-flex-vertical gap borde jc-center">
@@ -54,7 +54,7 @@
           </ul>
           <p id="texto_botones_accion"></p>
         </article>
-
+      
         <article class="contenedor-flex-vertical gap borde jc-center">
           <h3>Using data attributes</h3>
           <p>they can be used alongside event handlers to perform actions</p>
@@ -69,13 +69,18 @@
         </article>
 
         <article class="contenedor-flex-vertical borde jc-center">
+          <h3 id="hoverPara">Preventing default behaviour of an element</h3>
+          <a href="http://www.ecosia.org">Enlace a ecosia</a>
+        </article>
+
+        <article class="contenedor-flex-vertical borde jc-center">
           <h3 id="hoverPara">Removing event listener (hover this text)</h3>
           <p id="caja_hover" hidden class="caja_mensajes"> </p>
           <button id="clickIt">Stop listening for events</button>
         </article>
       </section>
 
-
+      
       <section id="bubbling_and_capturing" class="contenedor-flex-vertical ai-center borde gap">
         <header>
           <h3>Event propagation</h3>
