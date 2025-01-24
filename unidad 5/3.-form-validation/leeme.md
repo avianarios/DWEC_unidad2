@@ -181,6 +181,30 @@ Si deseas desactivar temporalmente la validación HTML para un formulario, usa e
 - **Seguridad**: No es suficiente para proteger tu aplicación, ya que los usuarios pueden modificar el formulario desde el navegador. Siempre complementa con validación en el servidor.  
 - **Mensajes personalizados**: Aunque HTML ofrece validación automática, la personalización es limitada. Si necesitas más control sobre los mensajes, JavaScript es el complemento ideal.
 
+
+Incluso si no se usan los atributos de validación HTML como required, pattern, minlength, etc., el navegador todavía realiza la validación básica por su cuenta, especialmente en los campos de formularios como correos electrónicos o contraseñas. Esto ocurre aún si no incluyes ningún atributo de validación explícito en el HTML, y puede hacer que el navegador intente aplicar su propia lógica de validación.
+¿Por qué sucede esto?
+
+    Los navegadores modernos tienen implementadas validaciones automáticas en campos comunes, como correo electrónico (type="email") y contraseñas (type="password") para asegurar que los datos tengan un formato básico adecuado. Por ejemplo, el navegador validará que un campo de correo electrónico contenga una estructura válida (algo como user@example.com), incluso si no usas el atributo required o pattern.
+
+    Mensajes de validación predeterminados: Cuando el navegador detecta que hay un error en un campo, mostrará sus propios mensajes de validación (que generalmente están en el idioma configurado en el navegador).
+
+¿Cómo evitar la validación automática del navegador?
+
+Si no deseas que el navegador aplique esta validación por su cuenta (y quieres usar solo JavaScript para la validación), necesitas desactivarla completamente, y para eso, se utiliza el atributo novalidate en el formulario.
+
+```javascript
+<form id="myForm" action="#" method="POST" novalidate>
+  <label for="email">Email:</label>
+  <input type="email" id="email" name="email">
+  <br><br>
+
+  <button type="submit">Submit</button>
+</form>
+```
+
+novalidate: Indica al navegador que no realice ninguna validación automática del formulario antes de enviarlo. Esto significa que el navegador no mostrará mensajes de error predeterminados (como los de "el correo electrónico no es válido"), y todo se gestionará manualmente a través de JavaScript.
+
 ---
 
 # Validando con JavaScript
