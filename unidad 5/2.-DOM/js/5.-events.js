@@ -497,7 +497,8 @@ function cargarScript(src, callback) {
     var script = document.createElement('script');
     script.src = src;
     script.type = 'text/javascript';
-    script.onload = callback;  // Ejecutar el callback cuando se haya cargado el script
+    script.addEventListener('load', callback);  // Ejecutar el callback cuando se haya cargado el script
+    //    script.onload = callback;  // Ejecutar el callback cuando se haya cargado el script
     document.head.appendChild(script);  // Añadir el script al head
 }
 
@@ -509,3 +510,39 @@ document.getElementById('cargarScript').onclick = function() {
         $('body').css('background-color', 'lightblue');  // Cambiar el color de fondo como prueba
     });
 };
+
+
+let boton=document.querySelector("button");
+boton.addEventListener("click", ()=>{
+    const script=document.createElement("script");
+    script.src="js/tonto.js";
+    script.type="text/javascript";
+    document.head.append(script);
+});
+
+
+
+//TERMINAR.
+//Cómo selecciono el input donde haya ocurrido el evento
+document.querySelector("form").addEventListener("focus", (evento)=>{
+    console.log("el evento que ha ocurrido es "+evento.type);
+    document.querySelector("input").classList.add("rojo");
+});
+
+document.querySelector("form").addEventListener("blur", (evento)=>{
+    console.log("el evento que ha ocurrido es "+evento.type);
+    document.querySelector("input").classList.remove("rojo");
+});
+
+
+document.getElementById("cargarScript").addEventListener("click",()=>{
+    var script = document.createElement('script');
+    script.src = src;
+    script.type = 'text/javascript';
+    script.addEventListener('load', ()=>{
+        console.log("cargado correctamente");
+    });
+    document.head.appendChild(script);  // Añadir el script al head
+});
+
+
