@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Validation with HTML</title>
+  <link rel="stylesheet" href="../css/estilos.css" type="text/css">
+  <script src="../js/validate-form.js" defer></script>
+</head>
+<body>
+  <h1>Form Validation Example</h1>
+    <form id="myForm" action="#" method="POST" novalidate>
+        <!-- Name Field -->
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+        <br><br>
+
+        <!-- Email Field -->
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" require autocomplete="off">
+        <br><br>
+
+        <!-- Phone Field -->
+        <label for="phone">Phone (123-456-7890):</label>
+        <input type="text" id="phone" name="phone">
+        <small>Format: 123-456-7890</small>
+        <br><br>
+
+        <!-- Password Field -->
+        <label for="password">Password (at least 8 characters):</label>
+        <input type="password" id="password" name="password" autocomplete="off">
+        <br><br>
+
+        <!-- Confirm Password -->
+        <label for="confirm-password">Confirm Password:</label>
+        <input type="password" id="confirm-password" name="confirm-password" autocomplete="off">
+        <br><br>
+
+        <!-- Submit Button -->
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
