@@ -17,7 +17,7 @@ cambiaTxt.addEventListener("click", ()=>{cambiaTxt.innerText="Veces pulsado:"+co
 
 
 // Example 3: Attaching an event handler to the document wich will be triggered when clicking at any button (thanks to bubbling) because of the CSS selector used in the condition: evento.target.matches("button")
-document.addEventListener("click", evento => {
+document.addEventListener("click", evento=> {
     if (evento.target.matches("button")) {   //CSS selector
       console.log("Clicked Button")
     }
@@ -95,7 +95,7 @@ button_object2.addEventListener('mouseup', menu);
 let infoEvento = document.getElementById("informacionEvento");
 let texto_explicativo=document.getElementById("texto_coordenadas");
 
-infoEvento.addEventListener("click", (evento) => {
+infoEvento.addEventListener("click", evento=> {
     if (texto_explicativo.classList.contains ("dp_none")){ texto_explicativo.classList.remove("dp_none"); }
     texto_explicativo.innerHTML="Button "+evento.button + " has been pressed<br>";
     texto_explicativo.innerHTML+="An event of type: "+evento.type + " has occurred at:" + evento.target+"<br> but was generated at"+evento.target+" at timestamp of "+evento.timeStamp +"<br> at coordinates X:"+evento.clientX+" Y:"+evento.clientY;
@@ -169,7 +169,7 @@ document.querySelector("a").addEventListener("click", function(event) {
 
 //Example 2: Preventing the default action of the mouse right-click button
 //this eventlistener is attached to the document, so it will be triggered when right-clicking anywhere in the document
-document.addEventListener('contextmenu', evento => {
+document.addEventListener('contextmenu', evento=> {
     evento.preventDefault();        //removes default action when pressing right button
     let texto_explicativo=document.getElementById("texto_coordenadas");
     if (texto_explicativo.classList.contains ("dp_none")){ texto_explicativo.classList.remove("dp_none"); }
@@ -217,13 +217,13 @@ function RespondClick() {
 //let's add event listeners all the way up on ancestors of a paragraph untill its section for bubbling phase
 // //there's no way of selecting a parent contanier AND all its children at the same CSS selector. Therefore, two selectors have to be used
 let seccion=document.getElementById("bubbling_phase");
-seccion.addEventListener('click', (evento)=>{
+seccion.addEventListener('click', evento=>{
     console.log("Fase de burbujeo: El evento ha llegado a "+evento.currentTarget.tagName+", pero lo lanzó "+evento.target.tagName);
 });
 
 let elementos=document.querySelectorAll("#bubbling_phase *");
 for (let elemento of elementos){
-    elemento.addEventListener('click', (evento) =>{
+    elemento.addEventListener('click', evento=>{
         console.log("Fase de burbujeo: El evento ha llegado a "+evento.currentTarget.tagName+", pero lo lanzó "+evento.target.tagName);
     });
 }
@@ -232,13 +232,13 @@ for (let elemento of elementos){
 //Example 2: Defining eventhandlers only for capturing phase
 //let's add event listeners all the way up on ancestors of a paragraph untill its section for both phases: capturing 
 seccion=document.getElementById("capturing_phase");
-seccion.addEventListener('click', (evento)=>{
+seccion.addEventListener('click', evento=>{
     console.log("Fase de captura: El evento ha llegado a "+evento.currentTarget.tagName+", pero lo lanzó "+evento.target.tagName);
 }, {capture:true}); //using true is equivalent to {capture:true}. it can be used with once:true to remove after using for the first time {capture:true, once:true}
 
 elementos=document.querySelectorAll("#capturing_phase *");
 for (let elemento of elementos){
-    elemento.addEventListener('click', (evento) =>{
+    elemento.addEventListener('click', evento=>{
         console.log("Fase de captura: El evento ha llegado a "+evento.currentTarget.tagName+", pero lo lanzó "+evento.target.tagName);
     }, {capture:true});
 }
@@ -255,10 +255,10 @@ seccion.addEventListener('click', function(evento){
 
 elementos=document.querySelectorAll("#bubbling_and_capturing_phase *");
 for (let elemento of elementos){
-    elemento.addEventListener('click', (evento) =>{
+    elemento.addEventListener('click', evento=>{
         console.log("Fase de burbujeo: El evento ha llegado a "+evento.currentTarget.tagName+", pero lo lanzó "+evento.target.tagName);
     });
-    elemento.addEventListener('click', (evento) =>{
+    elemento.addEventListener('click', evento=>{
         console.log("Fase de captura: El evento ha llegado a "+evento.currentTarget.tagName+", pero lo lanzó "+evento.target.tagName);
     }, {capture:true});
 }
@@ -289,6 +289,7 @@ for (let element of document.querySelectorAll("*")){
 }*/
 
 //Example 4: stop propagation
+// stopPropagation() method stops the event from bubbling up the DOM tree, preventing any parent handlers from being notified of the event.
 function responder(evento){
     console.log("Fase de burbujeo: El evento ha llegado a "+evento.currentTarget.tagName+", pero lo lanzó "+evento.target.tagName);
 }
@@ -302,16 +303,16 @@ parrafo.addEventListener('click', evento=>{
 
 
 //Example 5: Event delegation
-//Capturing an event just on a parent element
+//An eventlistener is added to a parent element, so it will be triggered when clicking on any of its children avoiding the need of adding an eventlistener to each child
 objetivo=document.getElementById("event_delegation");
-objetivo.addEventListener('click', (evento)=>{
+objetivo.addEventListener('click', evento=>{
     console.log ("Burbujeo: evento capturado por "+evento.currentTarget.tagName+", pero lanzado en "+evento.target.tagName);
 });
 
 
 //Example 6: Event delegatin: capturing a click event at table level
 let selectedTd;
-document.getElementById("tabla1").addEventListener('click', (evento)=>{
+document.getElementById("tabla1").addEventListener('click', evento=>{
     let celdaPinchada = evento.target.closest('td'); // If an element inside td is clicked, it returs the closest td  parent element. It allows to select td despide of clicking on a image or a text inside the table cell
     if (celdaPinchada){     // if there's a td parend (the closest element is not null)
         if (selectedTd)
@@ -321,47 +322,65 @@ document.getElementById("tabla1").addEventListener('click', (evento)=>{
     } 
 });
 
-//////////////////////////
-////Most common events////
-//////////////////////////
+/////////////////////
+////Common events////
+/////////////////////
 
-//Example 1: mouseover and mouseout events
+//Example 1: mouse events
 objetivo=document.getElementById("tabla2");
-objetivo.addEventListener('mouseover', (evento)=>{
+
+//mouseover event is triggered when the mouse pointer enters the element
+objetivo.addEventListener('mouseover', evento=>{
     evento.target.style.background="red";
 });
-objetivo.addEventListener('mouseout', (evento)=>{
+
+//mouseout event is triggered when the mouse pointer leaves the element
+objetivo.addEventListener('mouseout', evento=>{
     evento.target.style.background="";
 });
-objetivo.addEventListener('click', (evento)=>{
+
+//click event is triggered when the element is clicked
+objetivo.addEventListener('click', evento=>{
     evento.target.style.background="green";
 });
 
 
 //Example 2: pointer events
-document.getElementById("caja_pointerup").addEventListener('pointerup',  mensajes_puntero);
-document.getElementById("caja_pointerdown").addEventListener('pointerdown', mensajes_puntero);
-document.getElementById("caja_pointermove").addEventListener('pointermove', mensajes_puntero);
-
-function mensajes_puntero (evento){
+//pointer events are similar to mouse events, but they are more advanced and support pen and touch input
+const mensajes_puntero=evento=>{
     let nombre_destino="caja_"+evento.type;
     let caja_texto_form=document.getElementById(nombre_destino);
     caja_texto_form.innerHTML+="Event:"+evento.type+" Pointer type:"+evento.pointerType+" isprimary:"+evento.isPrimary+" PointerID:"+evento.pointerId+"<br>";
     caja_texto_form.scrollTo(0, caja_texto_form.scrollHeight);
-}
+};
+
+//pointerup event is triggered when the pointer is released
+document.getElementById("caja_pointerup").addEventListener('pointerup',  mensajes_puntero);
+
+//pointerdown event is triggered when the pointer is pressed
+document.getElementById("caja_pointerdown").addEventListener('pointerdown', mensajes_puntero);
+
+//pointermove event is triggered when the pointer is moved
+document.getElementById("caja_pointermove").addEventListener('pointermove', mensajes_puntero);
+
 
 
 //Example 3: keyboard events
-objetivo=document.getElementById("introduccion_texto");
-objetivo.addEventListener('keydown', mensajes_teclado);
-objetivo.addEventListener('keyup', mensajes_teclado);
-
-function mensajes_teclado(evento){
+const mensajes_teclado=evento=>{
     let nombre_destino="caja_"+evento.type;
     caja_texto_form=document.getElementById(nombre_destino);
     caja_texto_form.innerHTML+="Event:"+evento.type+" physical key code:"+evento.code+" Character:"+evento.key+"<br>";
     caja_texto_form.scrollTo(0, caja_texto_form.scrollHeight);
-}
+};
+
+objetivo=document.getElementById("introduccion_texto");
+
+//keydown event is triggered when a key is pressed
+objetivo.addEventListener('keydown', mensajes_teclado);
+
+//keyup event is triggered when a key is released
+objetivo.addEventListener('keyup', mensajes_teclado);
+
 
 /*Function to add an event listener dynamically
 function addGlobalEventListener(type, selector, callback, options) {
@@ -404,83 +423,78 @@ window.addEventListener('scroll', ()=>{
 //Example 5: form events
 let formulario=document.querySelector("form[name=form1]");
 caja_texto_form=document.getElementById("caja_eventos_form");
-//focus and blur events do not propagate in bubbling phase. Two options to avoid declaring an eventhandler for each form input:
-//  1.-They propagate at capture phase, so declare them at that phase by using {capture:true}
-//  2.- Add focusin and focusout events with addEventListener. They are the same as focus and blur, but the former propagates on bubbling phase.
 
-formulario.addEventListener("focus", (evento)=>{
-    caja_texto_form.innerHTML+="<br>Event of type "+evento.type+" at field "+evento.target.name;
+const registra=evento=>{
+    caja_texto_form.innerHTML+=`<br>Se ha lanzado el evento ${evento.type} en el campo ${evento.target.name}. El campo ${evento.target.name} tiene el valor ${evento.target.value}`;
     caja_texto_form.scrollTo(0, caja_texto_form.scrollHeight);
-}, {capture:true});
+    console.log(`Se ha lanzado el evento ${evento.type} en el campo ${evento.target.name}. El campo ${evento.target.name} tiene el valor ${evento.target.value}`);
+};
 
-formulario.addEventListener("blur", (evento)=>{
-    caja_texto_form.innerHTML+="<br>Event of type "+evento.type+" at field "+evento.target.placeholder;
-    caja_texto_form.scrollTo(0, caja_texto_form.scrollHeight);
-
-    if (!evento.target.value){  //if the input field is empty
-        evento.target.classList.add("borde_rojo");
-        evento.target.classList.remove("borde_verde");
-    }else{
-        evento.target.classList.add("borde_verde");
-        evento.target.classList.remove("borde_rojo");
-    }
-
-    if (evento.target.name=="nombre"){
-        if (evento.target.value!="perico"){
-        console.log ("usted se llama perico, corríjalo");
-        objetivo=document.getElementById("error");
-        objetivo.hidden = !objetivo.hidden;
-        evento.target.focus();  //not working on firefox
-        }else{
-            objetivo=document.getElementById("error");
-            objetivo.hidden = !objetivo.hidden;
-        }
-    }
-}, {capture:true});
-
-//it is triggered every time the user change any value
-formulario.addEventListener("input", registra);
-
-//it is triggered when the element has finished changing
-formulario.addEventListener("change", registra);
-
-formulario.addEventListener("copy", noPermitido);
-formulario.addEventListener("cut", noPermitido);
-formulario.addEventListener("paste", registra);
-
-//a form can be submitted by using a submit button or by pressing enter when certain form elements have focus
-formulario.addEventListener("submit", registra);
-
-function noPermitido(evento){
+const noPermitido=evento=>{
     evento.preventDefault();
     alert (evento.type+" is not allowed");
     registra(evento);
 };
 
-function registra(evento){
-    caja_texto_form.innerHTML+="<br>Event of type "+evento.type+" at field "+evento.target.placeholder;
-    caja_texto_form.scrollTo(0, caja_texto_form.scrollHeight);
-}
+//focusin event is triggered when an element receives focus
+formulario.addEventListener("focusin", evento=>{
+    registra(evento);
+    evento.target.classList.toggle("focoCampoFormulario");  //this can be done by using input:focus at CSS, but it's just an example
+});
 
-////Changing stylesheet depending on a select field////
-formulario.elements.selector_color.addEventListener('change', (event)=>{
-  let hoja=document.querySelector("head :last-child");
-  if (hoja.rel=="stylesheet")
-    hoja.href="../css/"+formulario.elements.selector_color.options[formulario.elements.selector_color.selectedIndex].value;
-  else{
-    //let head = document.querySelector('head');
-    let hoja_estilos = document.createElement('link');
-    hoja_estilos.rel = 'stylesheet';
-    hoja_estilos.type = 'text/css';
-    hoja_estilos.href = "../css/"+formulario.elements.selector_color.options[formulario.elements.selector_color.selectedIndex].value;
-    hoja.insertAdjacentElement("afterend", hoja_estilos);
-  }
+//focusout event is triggered when an element loses focus
+formulario.addEventListener("focusout", evento=>{
+    registra(evento);
+    evento.target.classList.toggle("focoCampoFormulario");  //this can be done by using input:focus at CSS, but it's just an example
+});
+
+//input event is triggered when the value of an input element is changed while it keeps focused
+formulario.addEventListener("input", evento=>{
+    registra(evento);
+});
+
+//change event is triggered when the value of an input element is changed and the element loses focus
+formulario.addEventListener("change", registra);
+
+//a form can be submitted by using a submit button or by pressing enter when certain form elements have focus
+formulario.addEventListener("submit", registra);
+
+//Changing stylesheet depending on a select field
+formulario.elements.selector_color.addEventListener('change', event=> {
+    const hoja = document.querySelector("[rel=stylesheet]:last-of-type");
+    const colorSeleccionado = formulario.elements.selector_color.value; // Obtener directamente el valor seleccionado
+    const nuevaHoja = "../css/" + colorSeleccionado;
+
+    if (hoja) {
+        hoja.href = nuevaHoja; // Cambiar directamente el href si ya existe una hoja de estilos
+    } else {
+        const nuevaHojaEstilos = document.createElement('link');
+        nuevaHojaEstilos.rel = 'stylesheet';
+        nuevaHojaEstilos.type = 'text/css';
+        nuevaHojaEstilos.href = nuevaHoja;
+        document.head.append(nuevaHojaEstilos); // Usar append para añadir la nueva hoja de estilos al head
+    }
 });
 
 
-// Example 6: webpage events
+//Example 6: clipboard events
+//copy event is triggered when the user copies the content of an element
+document.body.addEventListener("copy", noPermitido);
+
+//cut event is triggered when the user cuts the content of an element
+document.body.addEventListener("cut", noPermitido);
+
+//paste event is triggered when the user pastes the content of an element
+document.body.addEventListener("paste", registra);
+
+
+// Example 7: webpage events
 caja_texto_pagina=document.getElementById("caja_eventos_pagina");
+
+//DOMContentLoaded event is triggered when the initial HTML document has been completely loaded and parsed, without waiting for stylesheets, images, and subframes to finish loading
 window.addEventListener("DOMContentLoaded", mensaje)
+
+//load event is triggered when the whole page has loaded, including all dependent resources such as stylesheets, images, and subframes
 window.addEventListener("load", mensaje);
 
 function mensaje (evento){
@@ -493,6 +507,36 @@ function mensaje (evento){
 ////////////////////////////////////
 ////dynamic loading of an script////
 ////////////////////////////////////
+// loading a script dynamically allows a script to be loaded at the time it is needed, not when the page loads. This can be useful for loading scripts that are not needed at the beginning, but at a specific time, reducing the initial page load time.
+//This can be achieved by adding a script element to the head of the page with the src of the script to be loaded in response to an event, such as click, DomContentLoaded or scroll.
+
+//Example 1: loading a script dynamically when clicking a button
+let boton=document.querySelector("button");
+boton.addEventListener("click", ()=>{
+    const script=document.createElement("script");
+    script.src="js/scriptSencillo.js";
+    script.type="text/javascript";
+    document.head.append(script);
+});
+
+
+//Example 2: loading a script dynamically when the user gets to the bottom of the window when doing scroll
+//scroll event is triggered when the user scrolls the page
+window.addEventListener('scroll', () => {
+    const alturaDocumento = document.documentElement.scrollHeight;  // Altura total del documento
+    const alturaVentana = window.innerHeight;   // Altura de la ventana visible (viewport)
+    const desplazamientoActual = window.scrollY || document.documentElement.scrollTop;  // Desplazamiento actual desde el top de la página
+
+    // Comprobamos si el desplazamiento llegó al final
+    if (desplazamientoActual + alturaVentana >= alturaDocumento - 10) {
+        cargarScript('https://code.jquery.com/jquery-3.7.1.min.js', ()=>{
+            console.log('jQuery ha sido cargado con éxito');
+            // Probar que jQuery funciona
+            $('body').css('background-color', 'lightcoral');  // Cambiar el color de fondo como prueba
+        });
+    }
+});
+
 function cargarScript(src, callback) {
     var script = document.createElement('script');
     script.src = src;
@@ -501,48 +545,4 @@ function cargarScript(src, callback) {
     //    script.onload = callback;  // Ejecutar el callback cuando se haya cargado el script
     document.head.appendChild(script);  // Añadir el script al head
 }
-
-// Ejemplo de cómo cargar jQuery dinámicamente
-document.getElementById('cargarScript').onclick = function() {
-    cargarScript('https://code.jquery.com/jquery-3.6.0.min.js', function() {
-        console.log('jQuery ha sido cargado con éxito');
-        // Probar que jQuery funciona
-        $('body').css('background-color', 'lightblue');  // Cambiar el color de fondo como prueba
-    });
-};
-
-
-let boton=document.querySelector("button");
-boton.addEventListener("click", ()=>{
-    const script=document.createElement("script");
-    script.src="js/tonto.js";
-    script.type="text/javascript";
-    document.head.append(script);
-});
-
-
-
-//TERMINAR.
-//Cómo selecciono el input donde haya ocurrido el evento
-document.querySelector("form").addEventListener("focus", (evento)=>{
-    console.log("el evento que ha ocurrido es "+evento.type);
-    document.querySelector("input").classList.add("rojo");
-});
-
-document.querySelector("form").addEventListener("blur", (evento)=>{
-    console.log("el evento que ha ocurrido es "+evento.type);
-    document.querySelector("input").classList.remove("rojo");
-});
-
-
-document.getElementById("cargarScript").addEventListener("click",()=>{
-    var script = document.createElement('script');
-    script.src = src;
-    script.type = 'text/javascript';
-    script.addEventListener('load', ()=>{
-        console.log("cargado correctamente");
-    });
-    document.head.appendChild(script);  // Añadir el script al head
-});
-
 

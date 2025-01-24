@@ -1,0 +1,1 @@
+console.log("Este JS existe en el servidor y se carga dinámicamente en el cliente");
