@@ -232,3 +232,12 @@ figcaption {
 .fondo-rojo{
     background-color: red;
 }
+
+/*input:focus*/
+.focoCampoFormulario {
+    transform: scale(1.2); /* Aumenta el tamaño un 20% */
+    transition: transform 0.2s ease-in-out; /* Suaviza la animación */
+    outline: none; /* Elimina el contorno predeterminado */
+    border: 2px solid #4caf50; /* Añade un borde distintivo */
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.5); /* Efecto de sombra */
+}
