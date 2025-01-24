@@ -130,6 +130,9 @@ An **event** is an action or change that occurs on a web page or in the browser,
 - **Event listener:** An interface that ‘listens’ for a specific event on an element and executes the associated callback when it occurs.
 
 ## 5.1- Most common events
+
+### Right now the most important events and when are they triggered are described
+
 - **Mouse events**:
   - `click`: the user clicks on an element.
   - `dblclick`: the user double clicks.
@@ -146,13 +149,19 @@ An **event** is an action or change that occurs on a web page or in the browser,
 
 - **Form events**:
   - `submit`: a form is submitted.
-  - `change`: the value of an input field changes.
-  - `input`: Similar to `change`, but occurs while the user is typing.
-  - `focus`: an input field gains focus.
-  - `blur`: a field loses focus.
+  - `focus`: A "focusable" element gains focus when it becomes the user's interaction target after being clicked with the mouse, navigated to with the tab key, or using the `element.focus()` method. There can only be one element with focus at a time. This event only propagates during the capturing phase, so it is not recommended.
+  - `focusin`: Similar to `focus`, but it works during the bubbling phase. Recommended.
+  - `blur`: An element loses focus when it stops being the user's interaction target after another "focusable" element is clicked with the mouse, navigated to with the tab key, or the `element.focus()` method is used. It loses focus because another element has gained it. This event only propagates during the capturing phase, so it is not recommended.
+  - `focusout`: Similar to `blur`, but it works only during the bubbling phase. Recommended.
+  - `change`: an input field loses focus and its content has changed.
+  - `input`: every time that user interacts with the input field, as long as it keeps focused.
+
+### Which elements are focusable by default?
+
+Interactive elements such as `input`, `button`, `a`, `textarea`, `select`, etc. You can make non-interactive elements focusable using the `tabindex` attribute, but this is not recommended because it does not align with user expectations and can cause confusion. Alternatively, you can use the `element.focus()` method.
 
 - **Document/window events**:
-  - `DOMContentLoaded`: When the DOM is fully loaded.
+  - `DOMContentLoaded`: When the DOM is fully loaded without stylesheets, images or subframes.
   - `load`: all resources (images, scripts, etc.) are fully loaded.
   - `resize`: the browser window is resized.
   - `scroll`: the user scrolls the page.
@@ -164,10 +173,10 @@ An **event** is an action or change that occurs on a web page or in the browser,
 
 
 ## 5.2- Handling events
-Three ways of working with events:
+Four ways of working with events:
 
-1. **Inline event handlers (Manejadores en línea)**  
-   *Not recommended.* Mixing HTML and JavaScript makes maintenance difficult and does not allow multiple handlers to be added for the same event.
+1. **Inline event handlers**  
+   **Not recommended.** Mixing HTML and JavaScript makes maintenance difficult and does not allow multiple handlers to be added for the same event.
 
    ```html
     <button onClick="console.log('¡Saludos, criatura!')">Saludar</button>
@@ -175,24 +184,29 @@ Three ways of working with events:
     <script>
         let saludar = () => console.log ("¡Saludos, criatura!");
     </script>
-
-    <button id="enviar" onclick="saludar()">Enviar</button>
-    <script src="codigo.js"></script>
    ```
 
-2. **Event handler properties** 
-    *Not recommended.* Some events can't be assigned by using properties and it only allows one handler per event
+2. **Event handler as a property** 
+    **Not recommended.** Functions are assigned to events via properties such as onclick.
+    **Problems:** Only one handler can be associated with each event, limiting flexibility. This approach also lacks support for adding multiple listeners or fine-grained control over event handling.
+
    ```javascript
-    let boton = document.querySelector("#formulario_contacto button");
+    let boton = document.querySelector("button");
     boton.onclick = function () { console.log("¡Saludos, criatura!"); };
-
-    let boton=document.querySelector("button");
-    let saludar = () => console.log ("¡Saludos, criatura!");
-    boton.setAttribute("onclick", "saludar");
    ```
 
-3. **Using event listeners** 
-    *Recommended.* It allows to attach more than one handler to the same event, it has control over when the event is triggered and it works even with no HTML elements
+3. **Inline-like event assignment using attributes**
+    **The worst option.** Sets the event attribute directly in the DOM as a string, which is evaluated as code when the event occurs.
+    **Problems:** String is evaluated in the global context, which may cause security problems or issues with `this`. Besides, complex functions can't be passed as callbacks and only one handler is allowed per event.
+
+  ```javascript
+    let boton=document.querySelector("button");
+    boton.setAttribute("onclick", "console.log('saludos, criatura')");  //arrow functions doesn't work
+   ```
+
+4. **Using event listeners** 
+    **Recommended.** This method allows multiple handlers to be associated with the same event. It offers more control over event handling, is more flexible, does not rely on HTML attributes or strings, allows the use of custom events, and separates presentation and logic.
+
     ```javascript
     let boton=document.querySelector("#formulario_contacto button");
     boton.addEventListener("click", function (){        //it's click, not onclick

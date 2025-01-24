@@ -7,7 +7,7 @@
 4. Navegación por el DOM
 5. [Eventos](#5---eventos)
     1. [Eventos más comunes](#51--eventos-más-comunes)
-    2. [Manejo de eventos](#52--manejando-eventos)
+    2. [Manejo de eventos](#52--manejo-de-eventos)
     3. [Delegación](#53--delegación)
 
 ------
@@ -128,9 +128,12 @@ Un **evento** es una acción o cambio que ocurre en una página web o en el nave
 
 ## Conceptos clave
 - **Manejador de eventos:** Una función de JavaScript que se ejecuta cuando ocurre un evento.
-- **Escucha de eventos:** Una interfaz que ‘escucha’ un evento específico en un elemento y ejecuta el callback asociado cuando ocurre.
+- **Escucha de eventos:** Una interfaz que ‘escucha’ un evento específico en un elemento y ejecuta la función de respuesta (callback function) asociado cuando ocurre.
 
 ## 5.1- Eventos más comunes
+
+### A continuación se describen los eventos más comunes y cuándo se lanzan:
+
 - **Eventos del ratón**:
   - `click`: el usuario hace clic en un elemento.
   - `dblclick`: el usuario hace doble clic.
@@ -146,14 +149,20 @@ Un **evento** es una acción o cambio que ocurre en una página web o en el nave
   - `keyup`: el usuario suelta una tecla.
 
 - **Eventos de formulario**:
-  - `submit`: un formulario es enviado.
-  - `change`: el valor de un campo de entrada cambia.
-  - `input`: Similar a `change`, pero ocurre mientras el usuario está escribiendo.
-  - `focus`: un campo de entrada recibe el foco.
-  - `blur`: un campo pierde el foco.
+  - `submit`: se envía el formulario.
+  - `change`: un campo de entrada pierde el foco y su contenido ha cambiado.
+  - `input`: cada vez que el usuario interactúa con el campo, mientras éste mantenga el foco.
+  - `focus`: Un elemento "enfocable" gana el foco cuando se convierte en el objetivo de interacción del usuario tras haber pinchado con el ratón, haber navegado con tabulador o haber usado la función element.focus(). Sólo puede haber un elemento con el foco en cada momento. Este evento sólo se propaga en la fase de captura, por lo que **no está recomendado**.  
+  - `focusin`: Igual que focus, pero para la fase de burbujeo. **Recomendado**
+  - `blur`: Un elemento pierde el foco cuando deja de ser el objetivo de interacción del usuario tras haber pinchado en otro elemento "enfocable" con el ratón, haber navegado con tabulador o haber usado la función element.focus(). Lo pierde porque otro lo ha ganado. Este evento sólo se propaga en la fase de captura, por lo que **no está recomendado**
+  - `focusout`: Igual que `blur`, pero funciona sólo en la fase de burbujeo. **Recomendado**
+
+  ### ¿Qué elementos son enfocables por defecto? 
+
+  Los interactivos como input, button, a, textarea, select, etc. Se puede hacer enfocables a otros elementos no interactivos usando el atributo `tabindex`, pero no está recomendado porque no es el comportamiento que los usuarios esperan y puede resultar confuso, o mediante el método element.focus()
 
 - **Eventos de documento/ventana**:
-  - `DOMContentLoaded`: Cuando el DOM está completamente cargado.
+  - `DOMContentLoaded`: Cuando el DOM está completamente cargado, pero sin hojas de estilos, imágenes o subframes.
   - `load`: todos los recursos (imágenes, scripts, etc.) están completamente cargados.
   - `resize`: la ventana del navegador se redimensiona.
   - `scroll`: el usuario desplaza la página.
@@ -164,37 +173,40 @@ Un **evento** es una acción o cambio que ocurre en una página web o en el nave
   - `paste`: el usuario pega texto.
 
 ## 5.2- Manejo de eventos
-Tres formas de trabajar con eventos:
+Cuatro formas de trabajar con eventos:
 
   1. **Manejadores de eventos en línea**  
-     *No recomendado.* Mezclar HTML y JavaScript hace que el mantenimiento sea difícil y no permite agregar varios manejadores para el mismo evento.
-   ```html
-    <button onClick="console.log('¡Saludos, criatura!')">Saludar</button>
-    <button id="enviar" onclick="saludar()">Enviar</button>
-    <script>
-        let saludar = () => console.log ("¡Saludos, criatura!");
-    </script>
+    **No recomendado.** Mezclar HTML y JavaScript dificulta el mantenimiento y no permite asociar múltiples manejadores al mismo evento.
 
-    <button id="enviar" onclick="saludar()">Enviar</button>
-    <script src="codigo.js"></script>
-   ```
-
-2. **Propiedades de manejador de eventos**  
-   *No recomendado.* Algunos eventos no pueden ser asignados utilizando propiedades y solo permiten un manejador por evento.
    ```javascript
-    let boton = document.querySelector("#formulario_contacto button");
+    let boton = document.querySelector("button");
     boton.onclick = function () { console.log("¡Saludos, criatura!"); };
-
-    let boton=document.querySelector("button");
-    let saludar = () => console.log ("¡Saludos, criatura!");
-    boton.setAttribute("onclick", "saludar");
    ```
 
-3. **Usando escuchadores de eventos**  
-   *Recomendado.* Permite adjuntar más de un manejador al mismo evento, tiene control sobre cuándo se activa el evento y funciona incluso sin elementos HTML.
+  2. **Manejador como propiedad del evento**
+    **No recomendado.** Las funciones se asignan a eventos a través de propiedades como onclick.
+    **Problemas:** Solo se puede asociar un manejador por evento, lo que limita la flexibilidad. Además, este enfoque no permite agregar múltiples oyentes ni un control detallado sobre el manejo del evento.
+  
+  ```javascript
+    let boton=document.querySelector("button");
+    boton.setAttribute("onclick", "console.log('saludos, criatura')");  //arrow functions doesn't work
+   ```
+
+  3. **Asignación de eventos tipo en línea mediante atributos**
+    **La peor opción.** Establece el atributo del evento directamente en el DOM como una cadena, la cual se evalúa como código cuando el evento ocurre.
+    **Problemas:** La cadena se evalúa en el contexto global, lo que puede generar vulnerabilidades de seguridad o problemas con this, no se pueden pasar funciones complejas como callbacks y sólo se permite un manejador por evento.
+
     ```javascript
-    let boton=document.querySelector("#formulario_contacto button");
-    boton.addEventListener("click", function (){        //it's click, not onclick
+    let boton = document.querySelector("button");
+    boton.setAttribute("onclick", "console.log('¡Saludos, criatura!')"); // Las funciones flecha no funcionan aquí
+    ```
+
+  4. **Usando escuchadores de eventos**  
+    **Recomendado.** Este método permite asociar múltiples manejadores al mismo evento. Ofrece un mayor control sobre el manejo de eventos, es más flexible, no depende de atributos HTML o cadenas de texto, permite usar eventos personalizados y separa lógica de presentación. 
+
+    ```javascript
+    let boton = document.querySelector("#formulario_contacto button");
+    boton.addEventListener("click", function () { // Es "click", no "onclick"
         console.log('¡Saludos, criatura!');
     });
     ```
