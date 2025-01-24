@@ -208,9 +208,9 @@ function RespondClick() {
 }
 
 
-/////////////////////////
-////Event propagation////
-/////////////////////////
+//////////////////////////////////
+////Propagation and delegation////
+//////////////////////////////////
 //event delegation exists thanks to the propagation mechanism
 
 //Example 1: Defining eventhandlers only for bubbling phase
