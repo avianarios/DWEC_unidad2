@@ -8,7 +8,7 @@
 5. [Events](#5---events)
     1. [Most common events](#51--most-common-events)
     2. [Handling events](#52--handling-events)
-    3. [Propagation and delegation](#53--propagation-and-delegation)
+    3. [Delegation](#53--delegation)
 
 ------
 
@@ -200,7 +200,7 @@ Three ways of working with events:
     });
     ```
 
-## 5.3- Propagation and delegation
+## 5.3- Delegation
 
 The standard DOM Events describes 3 phases of event propagation:
 

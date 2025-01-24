@@ -8,7 +8,7 @@
 5. [Eventos](#5---eventos)
     1. [Eventos más comunes](#51--eventos-más-comunes)
     2. [Manejo de eventos](#52--manejando-eventos)
-    3. [Propagación y delegación](#53--propagación-y-delegación)
+    3. [Delegación](#53--delegación)
 
 ------
 
@@ -199,7 +199,7 @@ Tres formas de trabajar con eventos:
     });
     ```
 
-## 5.3- Propagación y delegación
+## 5.3- Delegación
 
 El estándar de los eventos DOM describe 3 fases de propagación de eventos:
 

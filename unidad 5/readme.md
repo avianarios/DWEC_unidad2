@@ -13,8 +13,11 @@
     5. [Events](./2.-DOM/readme.md#5---events)
         1. [Most common events](./2.-DOM/readme.md#51--most-common-events)
         2. [Handling events](./2.-DOM/readme.md#52--handling-events)
-        3. [Propagation and delegation](./2.-DOM/readme.md#53--propagation-and-delegation)
-4. Forms
+        3. [Delegation](./2.-DOM/readme.md#53--delegation)
+4. Form validation
+    1. [Form validation](./3.-form-validation/readme.md#form-validation)
+    2. [Validation with HTML](./3.-form-validation/readme.md#validation-with-html)
+    3. [Validation with JavaScript](./3.-form-validation/readme.md#validation-with-javascript)
 5. BOM (Browser Object Model)
     1. Window
     2. Location
