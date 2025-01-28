@@ -28,8 +28,9 @@ Hay varios parámetros a tener en cuenta en este tipo de validación:
 ## Método de validación de campos en el cliente
 Se puede realizar de tres formas:
   - de forma nativa, es decir, usando únicamente atributos HTML.
-  - mediante JS.
-  - mezclando la validación nativa con la de JS.
+  - Mezclando la validación nativa con la de JavaScript.
+  - Mediante JavaScript exclusivamente.
+  
 
 ## Cuándo validar
 Marca el momento en el cual se comprueba si la información es correcta. 
@@ -41,6 +42,7 @@ Marca el momento en el cual se comprueba si la información es correcta.
       - Campos relacionados que dependen unos de otros (como contraseñas) que no se validaron correctamente.
       - Errores no detectados debido a la falta de un repaso global.
 
+
 ## Mensajes de error
 - Pueden ser nativos, generados automáticamente por el navegador si hay reglas de validación nativas y no se usa `setCustomValidity`. Estos mensajes **se mandarán cuando se intente enviar el formulario ó cuando se use reportValidity()**
 - Pueden gestionados por JavaScript de dos formas:
@@ -48,17 +50,16 @@ Marca el momento en el cual se comprueba si la información es correcta.
   - Usando mensajes del sistema, mediante dos métodos:
     - `campo.setCustomValidity("msj")`,que establece un mensaje de error personalizado para un campo de formulario HTML. Al usar este método, el navegador considerará el campo no válido, y el mensaje asignado se mostrará como el error asociado a ese campo **cuando se envíe el formulario**.
     - `campo.reportValidity()`, que muestra inmediatamente el mensaje de error, sea personalizado o nativo (por ese orden) **sin esperar a que se envíe el formulario**.
+
   
 ## Estilos condicionales 
 A los campos se les puede dar un estilo en función de la validez de sus datos:
   - Mediante estilos condicionales nativos (siempre que haya reglas nativas aplicadas y pseudoclases en el fichero de estilos). Se aplica en cuando las condiciones no se cumplen.
   - Mediante JS, añadiendo o quitando clases.
 
-## formas de validar
-  - `form.checkValidity()` es un método del formulario que revisa todos sus campos y devuelve true si todos son válidos, o false si alguno no lo es.
-  - `campo.validity.valid` es una propiedad de cada campo que contiene true si cumple con todas las **reglas de validación nativas** que tiene asociadas y false si no. Se usa en validaciones mixtas HTML+JS
 
 -----
+
 
 # 1- Validación nativa
 
@@ -272,16 +273,35 @@ Una estrategia común es usar la validación de HTML para reglas simples y compl
   1. Define un patrón con el atributo `pattern` en HTML para validar formatos específicos como correos electrónicos o números de teléfono.
   2. Usa JavaScript para:
     - Sobreescribir los mensajes nativos  mediante `campo.setCustomValidity("msj")` **cuando la validación nativa determina que un campo no es válido**. Cuando se utiliza este método, el navegador considerará el campo no válido, y el mensaje que le asignes se mostrará como el error asociado a ese campo **cuando se mande el formulario**. Para mostrar el mensaje inmediatamente (si se está usando un evento `input`), hay que usar `campo.reportValidity()`. Si se reinicia el mensaje personalizado (`campo.setCustomValidity("")`), vuelven a activarse los mensajes nativos. 
-    - Validar en tiempo real mientras el usuario escribe mediante el uso del evento `input`
-    - Implementar reglas avanzadas que el HTML no cubre.
+    - Validar en tiempo real mientras el usuario escribe mediante el uso del evento `input` (además de validar al enviar `submit`)
+    - Implementar reglas avanzadas que HTML no cubre.
+
+¿Cómo validar con JavaScript y HTML?
+
+Cada campo de un formulario tiene una propiedad asociada `validity` que devuelve un objeto con propiedades sobre la validez del campo tras haber evaluado las **reglas nativas de validación**. Las propiedades son:
+  - `valid`: devuelve true si el campo es válido, según sus restricciones de validación.
+  - `valueMissing`: devuelve true si el campo tiene el atributo `required` y está vacío.
+  - `typeMismatch`: devuelve true si el valor del campo no es del tipo adecuado, según el atributo `type` del elemento. Por ejemplo, un `email` sin formato de correo-e.
+  - `patterMIsmatch`: devuelve true si el valor del campo no coincide con el patrón especificado en su atributo `pattern`.
+  - tooLong: devuelve true si el valor del campo es más largo de lo que permite el atributo `maxlength` del campo.
+  - tooShort: devuelve true si el valor del campo es más corto de lo que permite el atributo `minlength` del campo.
+  - `rangeOverflow`: devuelve true si el valor del campo es mayor que el valor máximo permitido por el atributo `max`.
+  - `rangeUnderflow`: devuelve true si el valor del campo es menor que el valor mínimo permitido por el atributo min.
+  - `stepMismatch`: devuelve true si el valor del campo no cumple con el paso definido por el atributo step, que es comúnmente usado con campos numéricos.
+  - `customError`. devuelve true si se ha establecido un error personalizado mediante setCustomValidity() en el campo. 
+    
+Se puede validar mediante HTML y JavaScript de varias formas:
+  1. Leyendo las propiedades de los campos del formulario como `required`, `pattern`, `value`, `maxlength`, etc. y viendo a ver si se cumplen. En este caso hay que escribir condiciones para casa caso.
+  2. Usando el método `form.checkValidity()` que revisa todos los campos del formulario y devuelve true si todos son válidos, o false si alguno no lo es.   
+  3. Usando la propiedad `campo.validity.valid`, que pertenece al objeto que devuelve la propiedad validity de cada campo de un formulario. Ésta devuelve true si cumple con todas las **reglas de validación nativas** que tiene asociadas y false si no. 
+  4. Usar las diferentes propiedades del objeto campo `campo.validity`. **Es el que más control da**
+     
 
 
   ## Ejemplo 1- Validación y estilado nativos. Personalización de los mensajes de error
   - La reglas de validación, que determinan cuándo un campo tiene un valor válido, se escriben directamente en el HTML.
   - El navegador validará automáticamente al enviar el formulario y bloqueará el envío si detecta un campo no válido basado en las reglas nativas.
   - Se mostrarán mensajes de validación nativos, salvo que se use `campo.setCustomValidity("msj")`. Si se desea que se vea el mensaje sin esperar a que se mande el formulario, hay que usar `campo.reportValidity()`
-
-
     
       ```html
         <!-- Password Field: Required and must have a minimum length -->
@@ -313,15 +333,14 @@ Una estrategia común es usar la validación de HTML para reglas simples y compl
         });
       ```
 
-   
-  ## Ejemplo 2: Validación y estilado nativos. Mensajes personalizados con JS
-  La reglas de validación, que determinan cuándo un campo tiene un valor válido, se escriben directamente en el HTML.
-  El navegador validará automáticamente al enviar el formulario y bloqueará el envío si detecta un campo no válido basado en las reglas nativas.
-  Se mostrarán mensajes de validación nativos, salvo que se use `setCustomValidity`
+    
+  ## Ejemplo 2: Validación y estilado nativo. Mensajes personalizados con JS
+  Los atributos de validación, que determinan cuándo un campo tiene un valor válido, se escriben en el HTML pero los comprueba JavaScript.
+  El navegador usará los atributos de validación para aplicar los estilos condicionales mediante pseudoclases.
+  Se valida al enviar el formulario y se bloqueará el envío si se detecta un campo no válido basado en las reglas nativas.
+  Se mostrarán mensajes de validación personalizados medieante `setCustomValidity`
 
-  En este ejemplo, se deja que HTML haga la validación completa. JS sólo comprueba si se cumplen los requisitos que impone la validación nativa y, en caso contrario, muestra un mensaje personalizado con `setCustomValidity`.
-
-  ```html
+    ```html
     <form action="#" method="POST">
       <label for="name">Name:</label>
       <input type="text" id="name" name="name" required>
@@ -356,7 +375,7 @@ Una estrategia común es usar la validación de HTML para reglas simples y compl
     });
   ```
 
-  ## Ejemplo 3: Validación nativa y con JS. Estilado con JS
+  ## Ejemplo 3: Validación mixta. Estilado con JS
   - La reglas de validación, que determinan cuándo un campo tiene un valor válido, se pueden escribir en el HTML y también en JavaScript. Primero se evaluarán las reglas en el HTML y, después, las de JS. 
   - Se pueden añadir escuchadores de eventos para otros eventos diferentes a `submit` como, por ejemplo `input`, que validen el formulario antes de enviarlo.
   - Hay que evitar que se mande el campo con `preventDefault` para poder hacer la validación en JS y mandarlo, tras haberlo comprobado, con `form.submit()`.
@@ -368,7 +387,7 @@ Una estrategia común es usar la validación de HTML para reglas simples y compl
   ```html
   <form action="#" method="POST">
     <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required>
+    <input type="text" id="name" name="name" required minlength="8">
     <button type="submit">Submit</button>
   </form>
   ```
@@ -388,6 +407,23 @@ Una estrategia común es usar la validación de HTML para reglas simples y compl
       return true;
     }
   }
+
+  // //Alternativa a la función anterior usando propiedades más específicas de validity
+  // function validateField(input) {
+  //   if (input.validity.valueMissing) {
+  //     input.classList.add('invalid');
+  //     input.classList.remove('valid');
+  //     return false; // Campo vacío y obligatorio
+  //   } else if (input.validity.tooShort) {
+  //     input.classList.add('invalid');
+  //     input.classList.remove('valid');
+  //     return false; // Longitud insuficiente
+  //   } else {
+  //     input.classList.add('valid');
+  //     input.classList.remove('invalid');
+  //     return true; // Campo válido
+  //   }
+  // }
 
   // Escuchar el evento 'input' para validar mientras el usuario escribe
   formulario.addEventListener('input', event=>{
@@ -429,46 +465,34 @@ Una estrategia común es usar la validación de HTML para reglas simples y compl
 ```
 
 ```javascript
+
 document.getElementById('form1').addEventListener('submit', function(event) {
     event.preventDefault(); // Previene el envío del formulario para validarlo primero
-    let isValid = true;
   
-    // Solo validamos el campo 'name'
-    const nameField = {
-      id: 'name',
-      required: true,
-      minLength: 8,
-      errorMessage: 'El nombre es obligatorio y debe tener al menos 8 caracteres'
-    };
-  
-    const nameInput = document.getElementById(nameField.id);
-    const nameErrorElement = document.getElementById(`${nameField.id}Error`);
+    const campo = document.getElementById("name");
+    const nameErrorElement = document.getElementById(`${campo.id}Error`);
     let errorText = '';
   
     // Validar si es obligatorio
-    if (nameField.required && !nameInput.value.trim()) {
-      errorText = nameField.errorMessage || `${nameField.id} es obligatorio`;
+    if (campo.required && !campo.value.trim()) {
+      errorText = "El nombre es obligatorio";
     }
   
     // Validar longitud mínima si existe
-    if (nameField.minLength && nameInput.value.length < nameField.minLength) {
-      errorText = nameField.errorMessage || `${nameField.id} debe tener al menos ${nameField.minLength} caracteres`;
+    if (campo.minLength && campo.value.length < campo.minLength) {
+      errorText = errorText || `${campo.id} debe tener al menos ${campo.minLength} caracteres`;
     }
   
     // Aplicar el mensaje de error si hay uno
     if (errorText) {
       nameErrorElement.textContent = errorText;
-      isValid = false;
     } else {
       nameErrorElement.textContent = ''; // Limpiar el mensaje de error
-    }
-  
-    // Si es válido, permitir el envío
-    if (isValid) {
-      alert("Formulario válido, se enviará");
-      // Aquí puedes usar: this.submit() para enviar el formulario
-    } else {
-      alert("Por favor, corrige los errores antes de enviar el formulario");
+      event.target.submit();    
+      // event.target referencia al nodo que lanzó el evento. Aunque el botón es el que provoca la acción, es el formulario el que desencadena el evento. El envío de un formulario es, por definición, una acción asociada a un formulario, no a un botón.
+      // en este caso event.currentTarget también funcionaría, porque el manejador está asociado al formulario
+      // también funciona this.submit, porque en el manejador no se define una función de flecha, o document.getElementById("form1")
+      // también funcionaría document.querySelector("form").submit();
     }
   });
 ```
@@ -517,10 +541,10 @@ Para validar exclusivamente con JavaScript, hay que desactivar la validación na
       const email = document.getElementById("email").value;
 
       // Validación simple
-      if (nombre.trim() === "") {
+      if (nombre.trim() == "") {
         console.log("El nombre es obligatorio.");
         event.preventDefault(); // Evita que el formulario se envíe
-      } else if (email.trim() === "") {
+      } else if (email.trim() == "") {
         console.log("El correo electrónico es obligatorio.");
         event.preventDefault();
       }
@@ -533,7 +557,7 @@ Para validar exclusivamente con JavaScript, hay que desactivar la validación na
 
   ```html
   <form id="registro" novalidate>
-    <label for="telefono">Teléfono (123-456-7890):</label>
+    <label for="telefono">Teléfono (123 456 780):</label>
     <input type="text" id="telefono" name="telefono">
     <button type="submit">Registrar</button>
   </form>
@@ -541,10 +565,10 @@ Para validar exclusivamente con JavaScript, hay que desactivar la validación na
   <script>
     document.getElementById("registro").addEventListener("submit", (event)=>{
       const telefono = document.getElementById("telefono").value;
-      const regexTelefono = /^\d{3}-\d{3}-\d{4}$/; // Expresión regular para el formato 123-456-7890
+      const regexTelefono = /^\d{3} \d{3} \d{3}$/; // Expresión regular para el formato 123-456-789
 
       if (!regexTelefono.test(telefono)) {
-        console.log("El teléfono no tiene el formato correcto (123-456-7890).");
+        console.log("El teléfono no tiene el formato correcto (123 456 789).");
         event.preventDefault();
       }
     });
@@ -553,6 +577,8 @@ Para validar exclusivamente con JavaScript, hay que desactivar la validación na
 
   ### Ejemplo 3. Validación en tiempo real
   Por defecto la validación ocurre al enviar el formulario, pero se puede proporcionar retroalimentación instantánea mientras el usuario escribe, en lugar de esperar a que intente enviar el formulario.
+
+  No obstante, también debe validarse al mandar el formulario (`submit`)
 
   ```html
   <form novalidate>
