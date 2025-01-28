@@ -160,18 +160,14 @@ npm install --save-dev webpack webpack-cli webpack-merge @babel/core @babel/pres
         ├── package.json          # Archivo de configuración de npm
         └── babel.config.js       # Configuración de Babel (opcional)
 
-### 5. To move HTML and multimedia resources to the dist folder, you must use the following:
-
-### 8. Install `html-webpack-plugin`, include it, and configure it in `webpack.common.js` (section plugins, new `HtmlWebpackPlugin`).
-### 9. Install `css-loader`, `mini-css-extract-plugin`, and include them, and configure them in `webpack.common.js` (section rules and plugins (`MiniCssExtractPlugin`)).
-### 10. Configure Webpack to move assets to the dist folder (section rules, type: `'asset/resource'`, generator: `{filename: 'assets/[name].[hash][ext]'}`).
-
-[Volver atrás](https://github.com/avianarios/codigo_DWEC/tree/main/unidad%204)
+### 5. To move HTML and multimedia resources to the dist folder, follow the following steps:
+  - Install `html-webpack-plugin`, include it, and configure it in `webpack.common.js` (section plugins, new `HtmlWebpackPlugin`).
+  - Install `css-loader`, `mini-css-extract-plugin`, and include them, and configure them in `webpack.common.js` (section rules and plugins (`MiniCssExtractPlugin`)).
+  - Configure Webpack to move assets to the dist folder (section rules, type: `'asset/resource'`, generator: `{filename: 'assets/[name].[hash][ext]'}`).
 
 
 
-
-### 5. Create scripts in `package.json` to run webpack to create different files:
+### 6. Create scripts in `package.json` to run webpack to create different files:
 - **Development**: This mode generates a larger and more readable output, with source maps to make reading and debugging easier
   - Modern: `webpack --config webpack.modern.js --mode development`
   - Legacy: `webpack --config webpack.legacy.js --mode development`
@@ -191,4 +187,7 @@ npm install --save-dev webpack webpack-cli webpack-merge @babel/core @babel/pres
   - `inline-source-map`: Instead of generating a separate .map file, this option embeds the sourcemap directly into the generated JavaScript file as a data URI in the file header. This means that no additional request is made to the server to get the .map file.
   - `nosources-source-map`: Creates a source map without the original source code. It is useful when you want to protect your code but still need to debug it in production. When debugging, you'll see the error message, the file, and the line number in the browser's developer tools, but not the code.
 
-### 6. Test it by using local modern and old browsers or a service like BrowserStack, SauceLabs, or CrossBrowserTesting alongside a hosting service like Netlify or Vercel.
+### 7. Test it by using local modern and old browsers or a service like BrowserStack, SauceLabs, or CrossBrowserTesting alongside a hosting service like Netlify or Vercel.
+
+
+[Volver atrás](https://github.com/avianarios/codigo_DWEC/tree/main/unidad%204)
