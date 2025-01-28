@@ -11,9 +11,9 @@
     3. [Modifying DOM](./2.-DOM/readme.md#3---modifying-dom)
     4. Navigating DOM
     5. [Events](./2.-DOM/readme.md#5---events)
-        1. [Most common events](./2.-DOM/readme.md#51--most-common-events)
+        1. [Common events](./2.-DOM/readme.md#51--common-events)
         2. [Handling events](./2.-DOM/readme.md#52--handling-events)
-        3. [Delegation](./2.-DOM/readme.md#53--delegation)
+        3. [Delegating event handling](./2.-DOM/readme.md#53--delegating-event-handling)
 4. Form validation
     1. [Form validation](./3.-form-validation/readme.md#form-validation)
     2. [Validation with HTML](./3.-form-validation/readme.md#validation-with-html)

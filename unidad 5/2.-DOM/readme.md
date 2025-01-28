@@ -6,9 +6,9 @@
 3. [Modifying DOM](#3---modifying-dom)
 4. Navigating DOM
 5. [Events](#5---events)
-    1. [Most common events](#51--most-common-events)
+    1. [Common events](#51--common-events)
     2. [Handling events](#52--handling-events)
-    3. [Delegation](#53--delegation)
+    3. [Delegating event handling](#53--delegating-event-handling)
 
 ------
 
@@ -129,7 +129,7 @@ An **event** is an action or change that occurs on a web page or in the browser,
 - **Event handler:** A JavaScript function to be executed when an event occurs.
 - **Event listener:** An interface that ‘listens’ for a specific event on an element and executes the associated callback when it occurs.
 
-## 5.1- Most common events
+## 5.1- Common events
 
 ### Right now the most important events and when are they triggered are described
 
@@ -214,7 +214,7 @@ Four ways of working with events:
     });
     ```
 
-## 5.3- Delegation
+## 5.3- Delegating event handling
 
 The standard DOM Events describes 3 phases of event propagation:
 

@@ -6,9 +6,9 @@
 3. [Modificación del DOM](#3---modificando-el-dom)
 4. Navegación por el DOM
 5. [Eventos](#5---eventos)
-    1. [Eventos más comunes](#51--eventos-más-comunes)
+    1. [Eventos comunes](#51--eventos-comunes)
     2. [Manejo de eventos](#52--manejo-de-eventos)
-    3. [Delegación](#53--delegación)
+    3. [Delegando la gestión de eventos](#53--delegando-la-gestión-de-eventos)
 
 ------
 
@@ -130,7 +130,7 @@ Un **evento** es una acción o cambio que ocurre en una página web o en el nave
 - **Manejador de eventos:** Una función de JavaScript que se ejecuta cuando ocurre un evento.
 - **Escucha de eventos:** Una interfaz que ‘escucha’ un evento específico en un elemento y ejecuta la función de respuesta (callback function) asociado cuando ocurre.
 
-## 5.1- Eventos más comunes
+## 5.1- Eventos comunes
 
 ### A continuación se describen los eventos más comunes y cuándo se lanzan:
 
@@ -211,7 +211,7 @@ Cuatro formas de trabajar con eventos:
     });
     ```
 
-## 5.3- Delegación
+## 5.3- Delegando la gestión de eventos
 
 El estándar de los eventos DOM describe 3 fases de propagación de eventos:
 
