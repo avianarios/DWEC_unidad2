@@ -1,0 +1,70 @@
+/* invalid form*/
+/* Estilos para los campos no válidos */
+input:invalid {
+  border-color: red;
+}
+
+input:invalid:focus {
+  border-color: red;
+  background-color: #fdd;
+}
+
+input:valid {
+  border-color: green;
+}
+
+input:valid:focus {
+  border-color: green;
+  background-color: #e9f7e9;
+}
+
+input[type="password"]:invalid {
+  border-color: red;
+}
+
+input[type="password"]:valid {
+  border-color: green;
+}
+
+input[type="email"]:invalid {
+  border-color: red;
+}
+
+input[type="email"]:valid {
+  border-color: green;
+}
+
+input[type="text"]:invalid {
+  border-color: red;
+}
+
+input[type="text"]:valid {
+  border-color: green;
+}
+
+/* Estilos adicionales para el campo de teléfono */
+input[type="text"]#phone:invalid {
+  border-color: red;
+}
+
+input[type="text"]#phone:valid {
+  border-color: green;
+}
+
+/* Estilo para mensajes de error debajo de campos específicos */
+input:invalid + small {
+  color: red;
+  font-size: 0.9em;
+}
+
+input:valid + small {
+  color: green;
+  font-size: 0.9em;
+}
+
+small.error {
+  color: red;
+  display: block;
+  margin-top: 5px;
+  font-size: 12px;
+}

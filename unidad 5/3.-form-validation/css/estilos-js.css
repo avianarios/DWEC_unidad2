@@ -1,0 +1,32 @@
+/* invalid form*/
+/* Estilos para los campos no válidos */
+.valido{
+  border-color: green;
+}
+
+.valido:focus{
+  border-color: green;
+  background-color: #e9f7e9;
+}
+
+.valido+small{
+  color: green;
+  font-size: 0.9em;
+}
+
+.no-valido{
+  border-color: red;
+}
+
+.no-valido:focus{
+  border-color: red;
+  background-color: #fdd;
+}
+
+.no-valido+small{
+  color: red;
+  font-size: 0.9em;
+}
+
+
+

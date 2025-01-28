@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Validation only with JS (novalidate)</title>
+  <!--<link rel="stylesheet" href="../css/a.css" type="text/css">-->
+  <link rel="stylesheet" href="../css/estilos-comun.css" type="text/css">
+  <link rel="stylesheet" href="../css/estilos-js.css" type="text/css">
+
+  <script src="../js/5.-(novalidate)js-validates-and-formats.js" defer></script>
+</head>
+<body>
+  <h1>Form Validation Example</h1>
+  <form id="form1" action="#" method="POST" novalidate>
+    <!-- Name Field -->
+    <section>
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name">
+      <small id="nameError" class="error"></small> <!-- Error message -->
+    </section>
+
+    <!-- Email Field -->
+    <section>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" autocomplete="new-password">
+      <small id="emailError" class="error"></small> <!-- Error message -->
+    </section>
+
+    <!-- Phone Field -->
+    <section>
+      <label for="phone">Phone (123 456 789):</label>
+      <input type="text" id="phone" name="phone" autocomplete="new-password">>
+      <small id="phoneError" class="error"></small> <!-- Error message -->
+    </section>
+
+    <!-- Password Field -->
+    <section>
+      <label for="password">Password (at least 8 characters):</label>
+      <input type="password" id="password" name="password">
+      <small id="passwordError" class="error"></small> <!-- Error message -->
+    </section>
+
+    <!-- Confirm Password -->
+    <section>
+      <label for="confirm-password">Confirm Password:</label>
+      <input type="password" id="confirm-password" name="confirm-password">
+      <small id="confirm-passwordError" class="error"></small> <!-- Error message -->
+    </section>
+
+    <!-- Submit Button -->
+    <button type="submit">Submit</button>
+  </form>
+</body>
+</html>

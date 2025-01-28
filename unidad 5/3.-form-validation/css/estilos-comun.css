@@ -36,7 +36,6 @@ label {
 input {
     width: 100%;
     padding: 10px;
-    margin-bottom: 20px;
     border: 2px solid #ccc;
     border-radius: 4px;
     font-size: 14px;
@@ -74,3 +73,8 @@ button:hover {
 button:focus {
     outline: none;
 }
+
+
+section{
+    margin-bottom: 20px;
+  }

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Validation only with JS (novalidate)</title>
+  <link rel="stylesheet" href="../css/a.css" type="text/css">
+  <script src="../js/4.-(novalidate)js-validates-html-formats.js" defer></script>
+</head>
+<body>
+  <h1>Form Validation Example</h1>
+    <form id="form1" action="#" method="POST" novalidate>
+       <!-- Name Field: Required and must not be empty -->
+      <section>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" minlength="8" required>
+        <small id="nameError" class="error"></small> <!-- Mensaje de error -->
+      </section>
+
+      <!-- Email Field: Required and must be in valid email format -->
+      <!-- firefox needs required alonside autocomplete to remove autocompletion dialog to show up-->
+      <section>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required autocomplete="new-password">
+        <small id="emailError" class="error"></small> <!-- Mensaje de error -->
+      </section>
+
+      <!-- Phone Field: Required and must match a specific pattern -->
+      <section>
+        <label for="phone">Phone (123 456 789):</label>
+        <input type="text" id="phone" name="phone" pattern="\d{3} \d{3} \d{3}" required autocomplete="new-password">>
+        <small id="phoneError" class="error"></small> <!-- Mensaje de error -->
+      </section>
+
+      <!-- Password Field: Required and must have a minimum length -->
+      <section>
+        <label for="password">Password (at least 8 characters):</label>
+        <input type="password" id="password" name="password" minlength="8" required>
+        <small id="passwordError" class="error"></small> <!-- Mensaje de error -->
+      </section>
+
+      <!-- Confirm Password: Required and must match the password -->
+      <section>
+        <label for="confirm-password">Confirm Password:</label>
+        <input type="password" id="confirm-password" name="confirm-password" required>
+        <small id="confirm-passwordError" class="error"></small> <!-- Mensaje de error -->
+      </section>
+
+      <!-- Submit Button -->
+      <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
