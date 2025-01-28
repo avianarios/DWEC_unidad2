@@ -39,7 +39,7 @@ function validatePasswords() {
 const campos = formulario.querySelectorAll('input');
 campos.forEach(input => {
   input.addEventListener('input', () => {
-    if (input.id === 'password' || input.id === 'confirm-password') {
+    if (input.id == 'password' || input.id == 'confirm-password') {
       validatePasswords(); // Validar contraseñas específicamente
     }
     validateField(input); // Validar otros campos

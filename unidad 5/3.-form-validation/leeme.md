@@ -4,8 +4,9 @@
 1. [Validación nativa](#1--validación-nativa)
     1. [Atributos nativos de validación](#11--atributos-nativos-de-validación)
     2. [Estilos condicionales](#12--estilos-condicionales)
-2. [Validación con JavaScript](#2--validación-con-javascript)
-3. [Validación mixta HTML y JavaScript](#3--validación-mixta-con-html-y-javascript)
+2. [Validación mixta HTML y JavaScript](#2--validación-mixta-con-html-y-javascript)
+3. [Validación con JavaScript](#3--validación-con-javascript)
+
   
 -------
 
@@ -33,7 +34,12 @@ Se puede realizar de tres formas:
 ## Cuándo validar
 Marca el momento en el cual se comprueba si la información es correcta. 
   - Validación nativa: siempre al enviar el formulario (evento `submit`).
-  - Validación mediante JS: puede ser en cualquier momenot, pero lo normal es al escribir (`input`), al pasar a otro campo (`focusout`) o al enviar (`submit`)
+  - Validación mediante JS: lo normal es hacerla en dos momentos:
+    - validar cada campo al escribir (`input`) o al pasar al siguiente campo (`focusout`)
+    - al enviar el formulario (`submit`). Es necesario aunque, supuestamente, ya se ha validado cada campo porque puede ocurrir:
+      - Campos obligatorios que el usuario nunca tocó (si no lo tocó, la validación no se lanza).
+      - Campos relacionados que dependen unos de otros (como contraseñas) que no se validaron correctamente.
+      - Errores no detectados debido a la falta de un repaso global.
 
 ## Mensajes de error
 - Pueden ser nativos, generados automáticamente por el navegador si hay reglas de validación nativas y no se usa `setCustomValidity`. Estos mensajes **se mandarán cuando se intente enviar el formulario ó cuando se use reportValidity()**
@@ -45,13 +51,12 @@ Marca el momento en el cual se comprueba si la información es correcta.
   
 ## Estilos condicionales 
 A los campos se les puede dar un estilo en función de la validez de sus datos:
-  - Mediante estilos condicionales nativos (siempre que haya reglas nativas aplicadas y pseudoclases en el fichero de estilos)
+  - Mediante estilos condicionales nativos (siempre que haya reglas nativas aplicadas y pseudoclases en el fichero de estilos). Se aplica en cuando las condiciones no se cumplen.
   - Mediante JS, añadiendo o quitando clases.
 
 ## formas de validar
   - `form.checkValidity()` es un método del formulario que revisa todos sus campos y devuelve true si todos son válidos, o false si alguno no lo es.
   - `campo.validity.valid` es una propiedad de cada campo que contiene true si cumple con todas las **reglas de validación nativas** que tiene asociadas y false si no. Se usa en validaciones mixtas HTML+JS
-
 
 -----
 
@@ -261,146 +266,7 @@ A los campos se les puede dar un estilo en función de la validez de sus datos:
 
 ---
 
-# 2- Validación con JavaScript
-
-La validación de formularios con JavaScript es una herramienta poderosa que complementa (o incluso reemplaza) la validación basada en HTML. JavaScript permite validar datos de manera más dinámica y personalizada, proporcionando una experiencia de usuario más rica y adaptada a las necesidades de la aplicación.
-
-Las ventajas de usar JavaScript para validar son:
-  - **Validación en tiempo real:** Puedes verificar los datos mientras el usuario escribe o selecciona valores, sin necesidad de esperar a que envíe el formulario.
-  - **Reglas avanzadas:** Permite implementar validaciones complejas, como:
-    - Comparar dos campos (por ejemplo, confirmar una contraseña).
-    - Verificar si un nombre de usuario ya existe consultando una API.
-    - Validar un formato específico que HTML no soporta.
-  - **Mensajes personalizados:** Puedes mostrar mensajes de error más específicos y amigables.
-  - **Compatibilidad con APIs externas**: Permite validaciones como verificar si un nombre de usuario ya está tomado mediante una API.
-  
-Sus limitaciones son:
-  - **Dependencia del navegador**: Si JavaScript está deshabilitado, la validación no funcionará.
-  - **Más trabajo**: Requiere escribir más código y manejar los errores manualmente.
-
-Para validar exclusivamente con JavaScript, hay que desactivar la validación nativa del navegador mediante la propiedad `novalidate` en la etiqueta `form`. ¿Qué ocurre cuando se desactiva?
-  - El navegador **sigue evaluando los atributos de validación nativos** (si están presentes), aunque se use `novalidate` en el formulario. Al ser evaluados, se pueden seguir usando las pseudoclases de estilo condicional (si están en la hoja de estilos).
-  - **Los mensajes nativos no se muestran**. Hay que mostrar mensajes personalizados o bien con `setCustomValidity()` (recuerda que `setCustomValidity()` también se puede usar para sobreescribir los mensajes nativos en validaciones donde coexisten HTML y JS) o bien insertando nodos de texto en el DOM.
-  - **Si no se impide mediante JavaScript, el navegador permite enviar el formulario aunque los campos tengan un formato incorrecto**.
-  - **Las pseudoclases para estilo condicional siguen funcionando** siempre que haya atributos de validación nativos.
-
-  
-  ## Ejemplo 1. Validación básica
-  Se pueden realizar comprobaciones simples, como asegurarse de que un campo no esté vacío.
-
-  ```html
-  <form id="formulario" novalidate>
-    <label for="nombre">Nombre:</label>
-    <input type="text" id="nombre" name="nombre">
-    <label for="email">Correo electrónico:</label>
-    <input type="email" id="email" name="email">
-    <button type="submit">Enviar</button>
-  </form>
-
-  <script>
-    document.getElementById("formulario").addEventListener("submit", (event)=>{
-      const nombre = document.getElementById("nombre").value;
-      const email = document.getElementById("email").value;
-
-      // Validación simple
-      if (nombre.trim() === "") {
-        console.log("El nombre es obligatorio.");
-        event.preventDefault(); // Evita que el formulario se envíe
-      } else if (email.trim() === "") {
-        console.log("El correo electrónico es obligatorio.");
-        event.preventDefault();
-      }
-    });
-  </script>
-  ```
-
-  ## Ejemplo 2. Validación con expresiones regulares
-  Puedes usar expresiones regulares para validar formatos específicos, como números de teléfono, contraseñas o correos electrónicos.
-
-  ```html
-  <form id="registro" novalidate>
-    <label for="telefono">Teléfono (123-456-7890):</label>
-    <input type="text" id="telefono" name="telefono">
-    <button type="submit">Registrar</button>
-  </form>
-
-  <script>
-    document.getElementById("registro").addEventListener("submit", (event)=>{
-      const telefono = document.getElementById("telefono").value;
-      const regexTelefono = /^\d{3}-\d{3}-\d{4}$/; // Expresión regular para el formato 123-456-7890
-
-      if (!regexTelefono.test(telefono)) {
-        console.log("El teléfono no tiene el formato correcto (123-456-7890).");
-        event.preventDefault();
-      }
-    });
-  </script>
-  ```
-
-  ### Ejemplo 3. Validación en tiempo real
-  Por defecto la validación ocurre al enviar el formulario, pero se puede proporcionar retroalimentación instantánea mientras el usuario escribe, en lugar de esperar a que intente enviar el formulario.
-
-  ```html
-  <form novalidate>
-    <label for="password">Contraseña:</label>
-    <input type="password" id="password" name="password">
-    <small id="error"></small>
-  </form>
-
-  <script>
-    document.getElementById("password").addEventListener("input", function(){
-      const password = this.value;
-      const error = document.getElementById("error");
-
-      if (password.length < 8) {
-        error.textContent = "La contraseña debe tener al menos 8 caracteres.";
-        error.style.color = "red";
-      } else {
-        error.textContent = "Contraseña válida.";
-        error.style.color = "green";
-      }
-    });
-  </script>
-  ```
-
-  ## Ejemplo 4. Validación cruzada de campos
-  Comprueba si los valores de dos o más campos están relacionados, como la confirmación de contraseñas.
-
-  ```html
-  <form id="signup" novalidate>
-    <label for="password">Contraseña:</label>
-    <input type="password" id="password" name="password">
-
-    <label for="confirm-password">Confirmar contraseña:</label>
-    <input type="password" id="confirm-password" name="confirm-password">
-
-    <button type="submit">Registrarse</button>
-  </form>
-
-  <script>
-    document.getElementById("signup").addEventListener("submit", function (event) {
-      const password = document.getElementById("password").value;
-      const confirmPassword = document.getElementById("confirm-password").value;
-
-      if (password !== confirmPassword) {
-        alert("Las contraseñas no coinciden.");
-        event.preventDefault();
-      }
-    });
-  </script>
-  ```
-
-  ## Buenas prácticas al validar formularios con JavaScript
-    
-  1. **Complementar con HTML:** Usa la validación HTML para reglas básicas y JavaScript para validaciones avanzadas o en tiempo real.
-  2. **Siempre validar en el servidor:** Aunque JavaScript es útil, nunca debes confiar únicamente en la validación del cliente. Los usuarios pueden deshabilitar JavaScript o manipular los datos enviados.
-  3. **Mensajes claros:** Asegúrate de que los mensajes de error sean fáciles de entender y que expliquen cómo solucionar el problema.
-  4. **Usar `preventDefault()`:** Esto evita que el formulario se envíe si alguna validación falla.
-  5. **Mantén el código modular:** Si tienes múltiples reglas de validación, organiza el código en funciones reutilizables.
-
-----
-
-# 3- Validación mixta con HTML y JavaScript
+# 2- Validación mixta con HTML y JavaScript
 
 Una estrategia común es usar la validación de HTML para reglas simples y complementarla con JavaScript para casos más avanzados. Por ejemplo:
   1. Define un patrón con el atributo `pattern` en HTML para validar formatos específicos como correos electrónicos o números de teléfono.
@@ -608,6 +474,145 @@ document.getElementById('form1').addEventListener('submit', function(event) {
 ```
 
 ----
+
+# 3- Validación con JavaScript
+
+La validación de formularios con JavaScript es una herramienta poderosa que complementa (o incluso reemplaza) la validación basada en HTML. JavaScript permite validar datos de manera más dinámica y personalizada, proporcionando una experiencia de usuario más rica y adaptada a las necesidades de la aplicación.
+
+Las ventajas de usar JavaScript para validar son:
+  - **Validación en tiempo real:** Puedes verificar los datos mientras el usuario escribe o selecciona valores, sin necesidad de esperar a que envíe el formulario.
+  - **Reglas avanzadas:** Permite implementar validaciones complejas, como:
+    - Comparar dos campos (por ejemplo, confirmar una contraseña).
+    - Verificar si un nombre de usuario ya existe consultando una API.
+    - Validar un formato específico que HTML no soporta.
+  - **Mensajes personalizados:** Puedes mostrar mensajes de error más específicos y amigables.
+  - **Compatibilidad con APIs externas**: Permite validaciones como verificar si un nombre de usuario ya está tomado mediante una API.
+  
+Sus limitaciones son:
+  - **Dependencia del navegador**: Si JavaScript está deshabilitado, la validación no funcionará.
+  - **Más trabajo**: Requiere escribir más código y manejar los errores manualmente.
+
+Para validar exclusivamente con JavaScript, hay que desactivar la validación nativa del navegador mediante la propiedad `novalidate` en la etiqueta `form`. ¿Qué ocurre cuando se desactiva?
+  - El navegador **sigue evaluando los atributos de validación nativos** (si están presentes), aunque se use `novalidate` en el formulario. Al ser evaluados, se pueden seguir usando las pseudoclases de estilo condicional (si están en la hoja de estilos).
+  - **Los mensajes nativos no se muestran**. Hay que mostrar mensajes personalizados o bien con `setCustomValidity()` (recuerda que `setCustomValidity()` también se puede usar para sobreescribir los mensajes nativos en validaciones donde coexisten HTML y JS) o bien insertando nodos de texto en el DOM.
+  - **Si no se impide mediante JavaScript, el navegador permite enviar el formulario aunque los campos tengan un formato incorrecto**.
+  - **Las pseudoclases para estilo condicional siguen funcionando** siempre que haya atributos de validación nativos.
+
+  
+  ## Ejemplo 1. Validación básica
+  Se pueden realizar comprobaciones simples, como asegurarse de que un campo no esté vacío.
+
+  ```html
+  <form id="formulario" novalidate>
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="nombre">
+    <label for="email">Correo electrónico:</label>
+    <input type="email" id="email" name="email">
+    <button type="submit">Enviar</button>
+  </form>
+
+  <script>
+    document.getElementById("formulario").addEventListener("submit", (event)=>{
+      const nombre = document.getElementById("nombre").value;
+      const email = document.getElementById("email").value;
+
+      // Validación simple
+      if (nombre.trim() === "") {
+        console.log("El nombre es obligatorio.");
+        event.preventDefault(); // Evita que el formulario se envíe
+      } else if (email.trim() === "") {
+        console.log("El correo electrónico es obligatorio.");
+        event.preventDefault();
+      }
+    });
+  </script>
+  ```
+
+  ## Ejemplo 2. Validación con expresiones regulares
+  Puedes usar expresiones regulares para validar formatos específicos, como números de teléfono, contraseñas o correos electrónicos.
+
+  ```html
+  <form id="registro" novalidate>
+    <label for="telefono">Teléfono (123-456-7890):</label>
+    <input type="text" id="telefono" name="telefono">
+    <button type="submit">Registrar</button>
+  </form>
+
+  <script>
+    document.getElementById("registro").addEventListener("submit", (event)=>{
+      const telefono = document.getElementById("telefono").value;
+      const regexTelefono = /^\d{3}-\d{3}-\d{4}$/; // Expresión regular para el formato 123-456-7890
+
+      if (!regexTelefono.test(telefono)) {
+        console.log("El teléfono no tiene el formato correcto (123-456-7890).");
+        event.preventDefault();
+      }
+    });
+  </script>
+  ```
+
+  ### Ejemplo 3. Validación en tiempo real
+  Por defecto la validación ocurre al enviar el formulario, pero se puede proporcionar retroalimentación instantánea mientras el usuario escribe, en lugar de esperar a que intente enviar el formulario.
+
+  ```html
+  <form novalidate>
+    <label for="password">Contraseña:</label>
+    <input type="password" id="password" name="password">
+    <small id="error"></small>
+  </form>
+
+  <script>
+    document.getElementById("password").addEventListener("input", function(){
+      const password = this.value;
+      const error = document.getElementById("error");
+
+      if (password.length < 8) {
+        error.textContent = "La contraseña debe tener al menos 8 caracteres.";
+        error.style.color = "red";
+      } else {
+        error.textContent = "Contraseña válida.";
+        error.style.color = "green";
+      }
+    });
+  </script>
+  ```
+
+  ## Ejemplo 4. Validación cruzada de campos
+  Comprueba si los valores de dos o más campos están relacionados, como la confirmación de contraseñas.
+
+  ```html
+  <form id="signup" novalidate>
+    <label for="password">Contraseña:</label>
+    <input type="password" id="password" name="password">
+
+    <label for="confirm-password">Confirmar contraseña:</label>
+    <input type="password" id="confirm-password" name="confirm-password">
+
+    <button type="submit">Registrarse</button>
+  </form>
+
+  <script>
+    document.getElementById("signup").addEventListener("submit", function (event) {
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirm-password").value;
+
+      if (password !== confirmPassword) {
+        alert("Las contraseñas no coinciden.");
+        event.preventDefault();
+      }
+    });
+  </script>
+  ```
+
+  ## Buenas prácticas al validar formularios con JavaScript
+    
+  1. **Complementar con HTML:** Usa la validación HTML para reglas básicas y JavaScript para validaciones avanzadas o en tiempo real.
+  2. **Siempre validar en el servidor:** Aunque JavaScript es útil, nunca debes confiar únicamente en la validación del cliente. Los usuarios pueden deshabilitar JavaScript o manipular los datos enviados.
+  3. **Mensajes claros:** Asegúrate de que los mensajes de error sean fáciles de entender y que expliquen cómo solucionar el problema.
+  4. **Usar `preventDefault()`:** Esto evita que el formulario se envíe si alguna validación falla.
+  5. **Mantén el código modular:** Si tienes múltiples reglas de validación, organiza el código en funciones reutilizables.
+
+----  
 
 # Resumen
 1. Validación sólo con HTML o mixta HTML-JS

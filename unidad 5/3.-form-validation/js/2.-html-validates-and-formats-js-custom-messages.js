@@ -11,9 +11,9 @@ const validateField = (field) => {
   field.setCustomValidity('');
 
   // Validación personalizada
-  if (field.name=='name'){
+  if (field.name == 'name') {
     if (field.required && !field.value.trim()) {
-    field.setCustomValidity('Este campo es obligatorio.');
+      field.setCustomValidity('Este campo es obligatorio.');
     }
     if (field.value.length < 8) {
       field.setCustomValidity('El nombre debe tener al menos 8 caracteres.');
@@ -42,12 +42,27 @@ const validateField = (field) => {
   field.reportValidity();
 };
 
+
+// if (field.name.validity.valid){
+//   field.setCustomValidity("un mensaje");
+// }
+// validity.valueMissing
+// validity.tooShort
+// validity.patternMismatch
+// validity.typeMismatch
+
+
 const form = document.getElementById('form1');
 const fields = form.querySelectorAll('input');
 
 // Validar campos en tiempo real (oninput)
-fields.forEach((field) => {
+/*fields.forEach((field) => {
   field.addEventListener('input', () => validateField(field));
+});*/
+form.addEventListener('input', (event)=>{
+  if (event.target.type == 'input') {
+    validateField(event.target);
+  }
 });
 
 form.addEventListener('submit', function (event) {
@@ -59,5 +74,6 @@ form.addEventListener('submit', function (event) {
     alert('Por favor, corrige los errores antes de enviar el formulario.');
   } else {
     alert('Formulario válido, enviando...');
+    form.submit();
   }
 });
