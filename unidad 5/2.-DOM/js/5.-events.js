@@ -80,8 +80,8 @@ button_object2.addEventListener('mouseup', menu);
 // What information? Depends on the event
 
 //Example 1: Showing event information
-// type -> type of event (click, keydown, etc.)
-// target -> DOM element that triggered the event
+// event.type -> type of event (click, keydown, etc.)
+// event.target -> DOM element that triggered the event
 // currentTarget -> DOM element that the event handler was assigned to
 // isTrusted -> true when the user triggered it, false if the event was generated programmatically (e.g. by the dispatchEvent method).
 // timeStamp -> provides the exact time (in milliseconds) at which the event occurred, since the execution of the web page started. It is useful to calculate the duration between two events or to manage events accurately.
@@ -151,6 +151,47 @@ document.querySelector("#botones_accion").addEventListener('click', (event) => {
             elem.hidden=!elem.hidden;
         }
     }
+});
+
+//Example 4:
+
+document.getElementById("atributos-eventos").addEventListener("click", function(event) {
+    console.log("Tipo de evento:", event.type); // "click"
+    console.log("¿Es de confianza?", event.isTrusted); // true o false
+    console.log("Timestamp del evento:", event.timeStamp); // tiempo en milisegundos desde carga
+    console.log("Target del evento:", event.target); // El botón donde ocurrió el evento
+    console.log("CurrentTarget del evento:", event.currentTarget); // El botón que tiene el manejador
+    
+    // Atributos de target y currentTarget
+    console.log("ID del target:", event.target.id); // btn1
+    console.log("ClassName del target:", event.target.className); // "boton"
+    console.log("ClassList del target:", event.target.classList); // ["boton"]
+    console.log("Value del input:", event.target.value); // si fuera un formulario, el valor que el usuario ha escrito
+    console.log("Nombre del elemento:", event.target.name); // En este caso sería undefined, ya que no es un formulario
+    console.log("Tipo del elemento:", event.target.type); // "button"
+    console.log("Href del target:", event.target.href); // undefined para un botón, pero funcionaría si fuera un enlace
+    console.log("Alt del target:", event.target.alt); // undefined
+    console.log("Dataset del target:", event.target.dataset); // { info: "button1" }
+});
+
+// Evento de teclado
+document.getElementById("input1").addEventListener("keydown", function(event) {
+    console.log("Tipo de evento:", event.type); // "keydown"
+    console.log("¿Es de confianza?", event.isTrusted); // true o false
+    console.log("Timestamp del evento:", event.timeStamp); // tiempo en milisegundos desde carga
+    console.log("Target del evento:", event.target); // El input donde ocurrió el evento
+    console.log("CurrentTarget del evento:", event.currentTarget); // El input que tiene el manejador
+    
+    // Atributos de target y currentTarget
+    console.log("ID del target:", event.target.id); // input1
+    console.log("ClassName del target:", event.target.className); // ""
+    console.log("ClassList del target:", event.target.classList); // []
+    console.log("Value del input:", event.target.value); // El texto que el usuario ha escrito
+    console.log("Nombre del elemento:", event.target.name); // "nombre"
+    console.log("Tipo del elemento:", event.target.type); // "text"
+    console.log("Href del target:", event.target.href); // undefined
+    console.log("Alt del target:", event.target.alt); // undefined
+    console.log("Dataset del target:", event.target.dataset); // {} si no tiene atributos data-
 });
 
 

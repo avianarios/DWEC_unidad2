@@ -132,7 +132,10 @@ Un **evento** es una acción o cambio que ocurre en una página web o en el nave
 
 ## 5.1- Eventos comunes
 
-### A continuación se describen los eventos más comunes y cuándo se lanzan:
+**OJO: Esto no es un manual oficial. Aquí no se muestran todos los eventos ni todas sus propiedades, sino los más usados.**
+
+### Tipos de eventos
+A continuación se describen los eventos más comunes y cuándo se lanzan:
 
 - **Eventos del ratón**:
   - `click`: el usuario hace clic en un elemento.
@@ -157,8 +160,8 @@ Un **evento** es una acción o cambio que ocurre en una página web o en el nave
   - `blur`: Un elemento pierde el foco cuando deja de ser el objetivo de interacción del usuario tras haber pinchado en otro elemento "enfocable" con el ratón, haber navegado con tabulador o haber usado la función element.focus(). Lo pierde porque otro lo ha ganado. Este evento sólo se propaga en la fase de captura, por lo que **no está recomendado**
   - `focusout`: Igual que `blur`, pero funciona sólo en la fase de burbujeo. **Recomendado**
 
-  ### ¿Qué elementos son enfocables por defecto? 
-
+  ¿Qué elementos son enfocables por defecto? 
+  
   Los interactivos como input, button, a, textarea, select, etc. Se puede hacer enfocables a otros elementos no interactivos usando el atributo `tabindex`, pero no está recomendado porque no es el comportamiento que los usuarios esperan y puede resultar confuso, o mediante el método element.focus()
 
 - **Eventos de documento/ventana**:
@@ -171,6 +174,61 @@ Un **evento** es una acción o cambio que ocurre en una página web o en el nave
   - `cut`: el usuario corta texto.
   - `copy`: el usuario copia texto.
   - `paste`: el usuario pega texto.
+
+### Atributos de eventos
+
+Cuando ocurre un evento, el navegador crea un objeto `event` que se pasa como argumento al manejador del evento. Los eventos tienen **atributos** que permiten trabajar con ellos. Dichos atributos dependen del tipo de evento, pero hay algunos que son comunes a todos los eventos. Algunos de ellos son los siguientes:
+
+Cuando un evento se dispara, el navegador genera un objeto event (que será pasado como argumento al manejador del evento) que tiene una serie de atributos con información sobre él. Dichos atributos dependen del tipo de evento, pero hay algunos que son comunes a todos.
+
+- **Atributos comunes** a todos los eventos:
+  - `type`: el tipo de evento.
+  - `isTrusted`: si el evento fue generado por el navegador (true) o mediante JavaScript (false)
+  - `timeStamp`: momento en que ocurrió el evento expresado en milisegundos desde que se inició la carga de la página.
+  - `target`: referencia al objeto donde ocurrió el evento.
+  - `currentTarget`: referencia al objeto al que se ha asignado el manejador del evento.
+
+  Tanto target como currentTarget, tienen los siguientes atributos:
+  - `id`: el identificador del nodo del DOM.
+  - `className`: el nombre de la clase.
+  - `classList`: una lista de claes del elemento.
+  - `value`: en elementos de formulario, contiene el valor que el usuario ha introducido.
+  - `name`: el nombre del elemento (a veces en mayúsculas).
+  - `type`: tipo del elemento (button, submit, etc.)
+  - `href`
+  - `alt`
+  - `dataset`: accede a los atributos personalizados `data-`
+
+- **Atributos de eventos de ratón**
+  - `clientX`: Coordenada horizontal del puntero del ratón, relativa a la ventana del navegador.
+  - `clientY`: Coordenada vertical del puntero del ratón, relativa a la ventana del navegador.
+  - `screenX`: Coordenada horizontal del puntero del ratón, relativa a la pantalla.
+  - `screenY`: Coordenada vertical del puntero del ratón, relativa a la pantalla.
+  - `pageX`: La coordenada horizontal del puntero del ratón, relativa al documento completo (incluyendo el desplazamiento de la página).
+  - `pageY`: La coordenada vertical del puntero del ratón, relativa al documento completo.
+  - `offsetX`: La coordenada horizontal del puntero del ratón, relativa al borde izquierdo del elemento que ha disparado el evento.
+  - `offsetY`: La coordenada vertical del puntero del ratón, relativa al borde superior del elemento que ha disparado el evento.
+  - `button`: Indica qué botón del ratón se ha presionado (0: botón izquierdo, 1: botón central, 2: botón derecho).
+  - `buttons`: Indica qué botones del ratón están presionados en el momento del evento. Es un valor numérico que usa una máscara de bits para representar los botones presionados.
+
+- **Atributos de eventos de teclado**
+  - `key`: El valor de la tecla que fue presionada, como "a", "Enter", "ArrowLeft", etc.
+  - `altKey`: Un valor booleano que indica si la tecla Alt estaba presionada cuando ocurrió el evento.
+  - `ctrlKey`: Un valor booleano que indica si la tecla Ctrl estaba presionada cuando ocurrió el evento.
+  - `shiftKey`: Un valor booleano que indica si la tecla Shift estaba presionada cuando ocurrió el evento.
+  - `metaKey`: Un valor booleano que indica si la tecla Meta (generalmente la tecla de "Windows" o "Command" en macOS) estaba presionada cuando ocurrió el evento.
+  - `repeat`:  Un valor booleano que indica si la tecla se está repitiendo (por ejemplo, cuando se mantiene presionada una tecla).
+
+- **Atributos de eventos de toque**
+  - `targetTouches`: Devuelve una lista de los puntos de contacto actuales en el área de la pantalla.
+  - `touches`: Devuelve todos los puntos de contacto en la pantalla en el momento del evento de toque.
+  - `changedTouches`: Devuelve los puntos de contacto que han cambiado (por ejemplo, cuando un dedo se ha levantado de la pantalla).
+
+- **Atributos de eventos de formulario**
+  - `disabled`
+  - `checked`
+  - `files`: ficheros seleccionados en un campo de tipo `file`.
+
 
 ## 5.2- Manejo de eventos
 Cuatro formas de trabajar con eventos:
