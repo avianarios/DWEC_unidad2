@@ -1,66 +1,66 @@
 //En este ejemplo 
-//  -Validación: nativa.
-//  -Mensajes de error: personalizados
-//  -Momento de validar: en cada pulsación (evento input) y al mandar (evento submit)
+//  -Validación: nativa, mediante atributos de HTML
+//  -Mensajes de error: personalizados, mediante setCustomValidity
+//  -Momento de validar: en cada pulsación (evento input) y al mandar el formulario (evento submit)
 //  -Estilado: nativo, con las pseudoclases :valid y :invalid en el fichero de estilos CSS
 
 
 // Función para validar campos
 const validateField = (field) => {
-  // Reseteamos el mensaje de error
+  // Reinicio del mensaje de error
   field.setCustomValidity('');
+  let msj="";
 
-  // Validación personalizada
-  if (field.name == 'name') {
-    if (field.required && !field.value.trim()) {
-      field.setCustomValidity('Este campo es obligatorio.');
-    }
-    if (field.value.length < 8) {
-      field.setCustomValidity('El nombre debe tener al menos 8 caracteres.');
-    }
+  // Para la validación personalizada leo los atributos de los campos del formulario HTML (no es lo mejor, pero es un ejemplo)
+  if (field.required && !field.value.trim()) {
+    msj="Este campo es obligatorio.";
   }
 
-  if (field.required && !field.value.trim()) {
-    field.setCustomValidity('Este campo es obligatorio.');
+  if (field.value.length < 8) {
+    msj+=" Debe tener al menos 8 caracteres.";
   }
 
   if (field.type == 'email' && field.value && !field.value.includes('@')) {
-    field.setCustomValidity('Formato de correo electrónico no válido.');
+    msj=" Formato de correo electrónico no válido.";
   }
 
-  if (field.pattern && field.value && !new RegExp(field.pattern).test(field.value)) {
-    field.setCustomValidity('El teléfono debe tener el formato 123 123 123.');
+  if (field.pattern && !new RegExp(field.pattern).test(field.value)) {
+    msj=" El teléfono debe tener el formato 123 123 123";
   }
-
-  if (field.name == 'password' && field.value.length < 8) {
-    field.setCustomValidity('La contraseña debe tener al menos 8 caracteres.');
-  }
-
+  
   if (field.name == 'confirm-password' && field.value !== document.getElementById('password').value) {
-    field.setCustomValidity('Las contraseñas no coinciden.');
+    msj="Las contraseñas no coinciden.";
   }
+  field.setCustomValidity(msj);
   field.reportValidity();
 };
 
 
-// if (field.name.validity.valid){
-//   field.setCustomValidity("un mensaje");
-// }
-// validity.valueMissing
-// validity.tooShort
-// validity.patternMismatch
-// validity.typeMismatch
+/*  //Alternativa a la función anterior usando propiedades más específicas de validity
+  function validateField(input) {
+    if (input.validity.valueMissing) {
+      input.classList.add('invalid');
+      input.classList.remove('valid');
+      return false; // Campo vacío y obligatorio
+    } else if (input.validity.tooShort) {
+      input.classList.add('invalid');
+      input.classList.remove('valid');
+      return false; // Longitud insuficiente
+    } else {
+      input.classList.add('valid');
+      input.classList.remove('invalid');
+      return true; // Campo válido
+    }
+  }*/
 
 
 const form = document.getElementById('form1');
 const fields = form.querySelectorAll('input');
 
 // Validar campos en tiempo real (oninput)
-/*fields.forEach((field) => {
-  field.addEventListener('input', () => validateField(field));
-});*/
 form.addEventListener('input', (event)=>{
-  if (event.target.type == 'input') {
+  //el nombre debe estar en mayúsculas
+  if (event.target.tagName == 'INPUT') {
     validateField(event.target);
   }
 });

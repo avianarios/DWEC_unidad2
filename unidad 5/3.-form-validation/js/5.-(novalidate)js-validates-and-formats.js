@@ -1,10 +1,78 @@
 //En este ejemplo 
-//  -Validación: exclusivamente con JavaScript, anulando la nativa con "novalidate". JS lo comprueba todo (aún se evalúan los atributos nativos para determinar el estilo de los campos)
-//  -Mensajes de error: Los inserta JS como nodos en el DOM (como no hay validación nativa, no se pueden sobreescribir)
-//  -Momento de validar: en cada pulsación y al enviar el formulario
-//  -Estilado: JS, insertando clases en los campos e insertando texto en el DOM
+//  -Validación: exclusivamente con JavaScript, anulando la nativa con "novalidate" y usando las propiedades de validity
+//  -Mensajes de error: JS, como nodos en el DOM (como no hay validación nativa, no se pueden sobreescribir)
+//  -Momento de validar: al enviar el formulario
+//  -Estilado: JS, añadiendo clases (que están en el fichero CSS)
+
+
+const campos=document.querySelectorAll("input"); // Selecciona todos los campos
+campos.forEach(campo => {
+  campo.classList.add('no-valido');
+});
+
+document.getElementById('form1').addEventListener('submit', function(event) {
+  event.preventDefault(); // Previene el envío del formulario para validarlo primero
+  let isValid=true; // Variable para marcar si el formulario es válido
+  
+
+  campos.forEach(campo => {
+    const errorElement = document.getElementById(`${campo.id}Error`);
+    let errorText = '';
+
+    // Usamos la propiedad validity para acceder a las propiedades del campo
+    if (!campo.validity.valid) {
+      // Verificamos cada posible error
+      if (campo.validity.valueMissing) {
+        errorText = `El campo ${campo.name} es obligatorio`;
+      } else if (campo.validity.tooShort) {
+        errorText = `El campo ${campo.name} debe tener al menos ${campo.minLength} caracteres`;
+      } else if (campo.validity.patternMismatch) {
+        errorText = `El campo ${campo.name} no coincide con el formato esperado`;
+      } else if (campo.validity.typeMismatch && campo.type === 'email') {
+        errorText = 'El correo electrónico no es válido';
+      } else if (campo.id === 'confirm-password' && campo.value !== document.getElementById('password').value) {
+        errorText = 'Las contraseñas no coinciden';
+      }
+    }
+
+    // Aplicar el mensaje de error si hay uno
+    if (errorText) {
+      errorElement.textContent = errorText;
+      isValid=false; // Marcar el formulario como no válido
+      campo.classList.add('no-valido');
+      campo.classList.remove('valido');
+    } else {
+      errorElement.textContent = ''; // Limpiar el mensaje de error si no hay error
+      campo.classList.add('valido');
+      campo.classList.remove('no-valido');
+    }
+  });
+
+  // Si todos los campos son válidos, enviamos el formulario
+  if (isValid) {
+    event.target.submit();
+  }
+});
+
+
+// if (errorText) {
+//   errorElement.textContent = errorText;
+//   campo.classList.add('no-valido');
+//   campo.classList.remove('valido');
+//   isValid = false; // **Marcar el formulario como no válido**
+// } else {
+//   errorElement.textContent = ''; // Limpiar el mensaje de error si no hay error
+//   campo.classList.add('valido');
+//   campo.classList.remove('no-valido');
+// }
+// });
+
 
 // Función que se llama para validar cada campo
+/*
+el siguiente código lo he encontrado por ahí, pero no me gusta
+Lo pongo para que tengáis una alternativa, pero no lo recomiendo. No me gusta tener que definir los campos en una matriz y luego recorrerlo para añadir los escuchadores de eventos. Tampoco me gusta tener que usar los atributos de los campos en el HTML para definir las reglas de validación, prefiero el objeto validity
+
 function validateField(input, field, errorElement) {
   let errorText = '';
 
@@ -81,4 +149,4 @@ document.getElementById('form1').addEventListener('submit', function(event) {
   if (!formIsValid) {
     event.preventDefault(); // Previene el envío si hay errores
   }
-});
+});*/
