@@ -1,5 +1,5 @@
 body{
-    width: 50vw;
+    width: 60vw;
     margin: 0 auto;
     background-color: lightblue;
     font-family: 'Open Sans', sans-serif;
@@ -231,4 +231,9 @@ figcaption {
 
 .fondo-rojo{
     background-color: red;
+}
+
+small{
+    color: red;
+    font-weight: bold;
 }

@@ -1,0 +1,41 @@
+/* Estilo general */
+html, body {
+  height: 100%; 
+  margin: 0; 
+  display: flex; 
+  flex-direction: column; 
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  line-height: 1.6;
+}
+
+/* Encabezado */
+header {
+  background-color: #0073e6;
+  color: white;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+/* Contenido principal */
+main {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1; /* AQUÍ ESTÁ LA CLAVE: Este contenedor obtiene todo el espacio libre disponible DESPUÉS de colocar al resto de contenedores flex */
+  gap: 20px;
+}
+
+/* Pie de página */
+footer {
+  text-align: center;
+  padding: 1rem 0;
+  background-color: #003f7f;
+  color: white;
+  width: 100%; 
+  margin-top: auto; 
+}
