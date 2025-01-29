@@ -1,9 +1,9 @@
 # 2. DOM (Document Object Model)
 
 ## Contenidos
-1. Selección de elementos del DOM
-2. [Manipulación de atributos y propiedades](#2---manipulando-atributos-y-propiedades)
-3. [Modificación del DOM](#3---modificando-el-dom)
+1. [Selección de elementos](#1--selección-de-elementos)
+2. [Manipulación de atributos y propiedades](#2---manipulación-de-atributos-y-propiedades)
+3. [Modificación del DOM](#3---modificación-del-dom)
 4. Navegación por el DOM
 5. [Eventos](#5---eventos)
     1. [Eventos comunes](#51--eventos-comunes)
@@ -12,7 +12,56 @@
 
 ------
 
-## 2 - Manipulando atributos y propiedades
+El DOM (Document Object Model) es una representación en forma de árbol de un documento HTML o XML que permite a los scripts acceder y modificar su contenido, estructura y estilo. Es una interfaz que los navegadores proporcionan para manipular páginas web dinámicamente mediante JavaScript.
+
+Proporciona una serie de objetos para representar los elementos de una web, métodos para modificarla y eventos para interactuar con ella siendo posible hacer lo siguiente:
+  - Seleccionar nodos
+  - Modificar su contenido
+  - Modificar atributos
+  - Crear y eliminar nodos
+  - Reaccionar a eventos
+
+## 1 -Selección de elementos
+
+`Window` es el objeto global que representa la ventana del navegador web. `document` es una propiedad del objeto `window` que representa la página web cargada. Es el punto de entrada del DOM para acceder a cualquier elemento.
+
+`document` también tiene propiedades que representan los elementos de la página web:
+  - html
+  - head
+  - body
+
+Los métodos de selección de etiquetas devuelven los siguientes tipos de objetos:
+  - `HTMLElement` un nodo
+  - `HTMLCollection` una colección de nodos
+    - Actualizados dinámicamente si se realizan cambios en el DOM
+    - Acceso por índice numérico, por nombre o por id
+    - Recorrido como lista iterable
+    - Se puede recorrer con for o con forEach si se convierte en Array (Array.from())
+  - `NodeList`
+    - No se actualiza si se realizan cambios en el DOM (excepto Node.childNodes)
+    - Sólo se accede por índice numérico
+    - Se puede recorrer con forEach
+
+Los selectores que pueden devolver múltiples elementos SIEMPRE devuelven una lista o colección, incluso si hay uno o ningún nodo.
+
+`NodeList` o `HTMLCollection` no son Arrays. Las principales diferencias podrían ser:
+  - no se pueden usar métodos de array como push, pop, slice, join, shift...
+  - Los elementos `HTMLCollection` son dinámicos, mientras que los Arrays son siempre estáticos.
+
+Los métodos para seleccionar nodos son:
+  - Aquellos que devuelven un `HTMLElement` (un único nodo) 
+    - `document.getElementByID("id")`
+    - `document.querySelector("selectorCSS")`
+  - Aquellos que devuelven un `HTMLCollection` (colección viva):
+    - `document.getElementsByTagName("etiqueta")`
+    - `document.getElementsByClassName("clase")`
+  - Aquellos que devuelven un `NodeList` (colección estática)
+    - `document.getElementsByName("nombre")`
+    - `document.querySelectorAll("selectorCSS")`
+
+----
+
+## 2 - Manipulación de atributos y propiedades
 
 ### Atributos:
 - Son los valores definidos directamente en el marcado HTML de un elemento, como `alt` o `src`.
@@ -65,7 +114,7 @@ Se pueden crear atributos y propiedades personalizadas. Hay una convención que 
 
 ----
 
-## 3 - Modificando el DOM
+## 3 - Modificación del DOM
 
 # Advertencia sobre XSS
 

@@ -1,7 +1,7 @@
 # 2. DOM (Document Object Model)
 
 ## Contents
-1. Selecting DOM elements
+1. [Selecting DOM elements](#1---selecting-dom-elements)
 2. [Manipulating attributes and properties](#2---manipulating-attributes-and-properties)
 3. [Modifying DOM](#3---modifying-dom)
 4. Navigating DOM
@@ -11,6 +11,56 @@
     3. [Delegating event handling](#53--delegating-event-handling)
 
 ------
+
+The DOM (Document Object Model) is a tree-like representation of an HTML or XML document that allows scripts to access and modify its content, structure and style. It is an interface that browsers provide to manipulate web pages dynamically using JavaScript.
+
+It provides a series of objects to represent the elements of a web, methods to modify it and events to interact with it, being possible to do the following:
+  - Select nodes
+  - Modify its content
+  - Modify attributes
+  - Create and delete nodes
+  - React to events
+
+
+## 1 - Selecting DOM elements
+
+Window` is the global object representing the web browser window. `document` is a property of the `window` object representing the loaded web page. It is the DOM entry point for accessing any element.
+
+document` also has properties that represent the elements of the web page:
+  - html
+  - head
+  - body
+
+The tag selection methods return the following types of objects:
+  - `HTMLElement` a node
+  - `HTMLCollection` a collection of nodes
+    - dynamically updated if changes are made to the DOM
+    - Accessed by numeric index, by name or by id
+    - Traversal as an iterable list
+    - Can be traversed with for or forEach if converted to Array (Array.from())
+  - NodeList
+    - Not updated if changes are made to the DOM (except Node.childNodes)
+    - Accessed by numeric index only
+    - Can be traversed with forEach
+
+Selectors that can return multiple elements ALWAYS return a list or collection, even if there is one or no nodes.
+
+NodeList` or `HTMLCollection` are not arrays. The main differences could be:
+  - you can't use array methods like push, pop, slice, join, shift...
+  - The `HTMLCollection` elements are dynamic, while Arrays are always static.
+
+The methods for selecting nodes are:
+  - Those that return a `HTMLElement` (a single node) 
+    - `document.getElementByID(‘id’)`
+    - `document.querySelector(‘selectorCSS’)`.
+  - Those that return an `HTMLCollection` (living collection):
+    - `document.getElementsByTagName(‘tag’)` `.
+    - `document.getElementsByClassName(‘class’)`.
+  - Those returning a `NodeList` (static collection)
+    - `document.getElementsByName(‘name’)` `document.querySelector
+    - `document.querySelectorAll(‘selectorCSS’)`
+
+----
 
 ## 2 - Manipulating attributes and properties
 
