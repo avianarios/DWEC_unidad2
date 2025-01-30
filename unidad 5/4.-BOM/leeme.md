@@ -3,13 +3,9 @@
 1. [Principales objetos del DOM](#1--objeto-window)
 2. [Objeto window](#2--objeto-window)
 3. [Objeto screen](#3--objeto-screen)
-4. [Organizing](./4.-organizing/readme.md)
-5. [Polyfilling and transpiling](https://github.com/avianarios/codigo_DWEC/tree/main/unidad%204/5.-polyfilling-and-transpiling)
-
-
-
-
-
+4. [Objeto location](#4--objeto-location-en-javascript)
+5. [Objeto history]
+----
 
 
 El BOM (Browser Object Model) es un conjunto de objetos proporcionados por el navegador para interactuar con el entorno de la ventana del usuario. A diferencia del DOM, que se centra en la estructura del documento HTML, el BOM permite manipular elementos externos como la ventana, la barra de direcciones, el historial y la ubicación de la página.
@@ -59,7 +55,7 @@ Aunque hay algunas propiedades y objetos que no pertenecen al objeto window en e
 
  En el entorno del navegador, al acceder a un objeto o método del objeto `window` el navegador los resuelve automáticamente como propiedades de dicho objeto, ya que es el global. No es necesario escribir `window.document`, es posible escribir `document` porque internamente el navegador lo resuelve como `window.document`.
 
-## Propiedades del objeto `window`
+## Propiedades
 
 Algunas de las propiedades más importantes del objeto `window` incluyen:
 - `window.innerHeight`: altura del contenido de la ventana, en píxeles, excluyendo la barra de desplazamiento horizontal.
@@ -69,7 +65,7 @@ Algunas de las propiedades más importantes del objeto `window` incluyen:
 - `window.screenX` y `window.screenY`: coordenadas de la posición de la ventana en la pantalla, en relación con la esquina superior izquierda de la pantalla del dispositivo.
 
 
-## Métodos del objeto `window`
+## Métodos
 
 1. `window.setTimeout()` Ejecuta una función después de un retraso especificado.  
      ```javascript
@@ -155,7 +151,7 @@ window.setTimeout(function() {
 
 El objeto `screen` proporciona información sobre la pantalla del usuario, como su resolución, dimensiones, orientación y más. Es útil para adaptar la interfaz de usuario a las características de la pantalla del dispositivo.
 
-## Propiedades del Objeto `screen`
+## Propiedades
 
 - `screen.width` Devuelve el ancho total de la pantalla en píxeles. Este valor incluye toda la pantalla, no solo el área visible del navegador.
   ```javascript
@@ -223,7 +219,7 @@ if (screen.orientation) {
 
 El objeto navigator proporciona información sobre el navegador del usuario y su entorno. Se accede a través de `window.navigator` y contiene varias propiedades y métodos útiles.
 
-## Propiedades del objeto navigator
+## Propiedades
 
 Algunas de las propiedades más importantes de navigator son:
   - `navigator.userAgent`: Devuelve una cadena con información sobre el navegador y el sistema operativo.
@@ -265,7 +261,8 @@ Algunas de las propiedades más importantes de navigator son:
   - `navigator.deviceMemory` Devuelve la cantidad de memoria RAM del dispositivo en gigabytes.
   - `navigator.connection` Proporciona información sobre la conexión de red del usuario, como el tipo de conexión (Wi-Fi, 4G, etc.) y la velocidad estimada.
 
-## Métodos destacados del objeto navigator
+## Métodos
+
   - `navigator.geolocation.getCurrentPosition()` Obtiene la posición actual del usuario. Recibe una función de callback que se ejecuta cuando se obtiene la ubicación.
     ```javascript
     navigator.geolocation.getCurrentPosition((position) => {
@@ -296,3 +293,94 @@ Algunas de las propiedades más importantes de navigator son:
   - Algunas propiedades y métodos pueden no estar disponibles en todos los navegadores o dispositivos.
   - El acceso a ciertas funcionalidades (como la geolocalización o los dispositivos multimedia) requiere el permiso del usuario.
   - El objeto `navigator` es de solo lectura, lo que significa que no se pueden modificar sus propiedades directamente.
+
+  ----
+
+# 4- Objeto `location` en JavaScript
+
+El objeto `location` proporciona información sobre la URL de la página actual. También permite cambiar la URL y redirigir al navegador.
+
+## Propiedades
+
+- `location.href` Devuelve o establece la URL completa de la página actual.
+  ```javascript
+  console.log(location.href);
+  location.href = "https://www.ejemplo.com";
+  ```
+
+- `location.protocol` Devuelve el protocolo de la URL (por ejemplo, `http:` o `https:`).
+  ```javascript
+  console.log(location.protocol);
+  ```
+
+- `location.host` Devuelve el nombre de host y el puerto (si está especificado) de la URL.
+  ```javascript
+  console.log(location.host);
+  ```
+
+- `location.hostname` Devuelve solo el nombre de host sin el puerto.
+```javascript
+console.log(location.hostname);
+```
+
+- `location.port` Devuelve el puerto de la URL.
+  ```javascript
+  console.log(location.port);
+  ```
+
+- `location.pathname` Devuelve la ruta de la URL.
+```javascript
+console.log(location.pathname);
+```
+
+- `location.search` Devuelve la cadena de consulta (query string) de la URL, incluida la "?".
+```javascript
+console.log(location.search);
+```
+
+- `location.hash` Devuelve el fragmento de la URL, incluida la "#".
+```javascript
+console.log(location.hash);
+```
+
+## Métodos
+
+- `location.reload()` Recarga la página actual.
+```javascript
+location.reload();
+```
+
+- `location.replace()` Carga una nueva URL, reemplazando la página actual en el historial. No se podrá volver a la página anterior utilizando el botón de "atrás" del navegador.
+```javascript
+location.replace("https://www.ejemplo.com");
+```
+
+- `location.assign()` Carga una nueva URL, pero mantiene la página actual en el historial.
+```javascript
+location.assign("https://www.ejemplo.com");
+```
+
+## Notas
+- Al modificar `location.href` o usar `location.assign()`, el navegador redirige a la nueva URL.
+- El método `replace()` reemplaza la página actual en el historial, mientras que `assign()` mantiene la página actual en el historial.
+
+----
+
+# 5- Objeto history
+
+# Objeto `history` en JavaScript
+
+El objeto `history` en JavaScript es parte de la API del navegador y proporciona una interfaz para manipular el historial de sesión del navegador. Permite navegar hacia adelante y hacia atrás a través del historial del usuario, así como manipular el contenido del historial.
+
+## Propiedades
+
+- `history.length` Devuelve el número de elementos en el historial de sesión, incluyendo la página actual.
+  ```javascript
+  console.log(history.length); // Ejemplo: 5
+  ```
+
+- `history.scrollRestoration` Permite obtener o establecer el comportamiento de restauración del desplazamiento al navegar por el historial. Puede tener dos valores: "auto" (por defecto) o "manual".
+  ```javascript
+  console.log(history.scrollRestoration); // "auto"
+  history.scrollRestoration = "manual";
+  ```
