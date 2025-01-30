@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Información del Navegador</title>
+    <link rel="stylesheet" href="../css/3.-navigator.css" type="text/css">
+    <script src="../js/3.-navigator.js" defer></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+</head>
+<body>
+    <header>
+        <h1>Información del Navegador y Dispositivo</h1>
+    </header>
+
+    <main>
+        <!-- Sección de propiedades -->
+        <section>
+            <h2>Propiedades</h2>
+            <ul>
+                <li>User Agent: <output id="userAgent"></output></li>
+                <li>Idioma preferido: <output id="language"></output></li>
+                <li>Idiomas soportados: <output id="languages"></output></li>
+                <li>Cookies habilitadas: <output id="cookieEnabled"></output></li>
+                <li>¿Está en línea?: <output id="online"></output></li>
+                <li>Núcleos de CPU: <output id="hardwareConcurrency"></output></li>
+                <li>Memoria RAM (GB): <output id="deviceMemory"></output></li>
+                <li>Tipo de conexión: <output id="connectionType"></output></li>
+                <li>Ancho de banda estimado (Mbps): <output id="connectionSpeed"></output></li>
+            </ul>
+        </section>
+
+        <!-- Sección de userAgentData -->
+        <section>
+            <h2>Información de userAgentData</h2>
+            <ul>
+                <li>Marcas del navegador: <output id="uaBrands"></output></li>
+                <li>Plataforma: <output id="uaPlatform"></output></li>
+                <li>¿Es móvil?: <output id="uaMobile"></output></li>
+                <li>Arquitectura: <output id="uaArchitecture"></output></li>
+                <li>Versión del sistema operativo: <output id="uaPlatformVersion"></output></li>
+            </ul>
+        </section>
+
+        <!-- Sección de geolocalización -->
+        <section>
+            <h2>Geolocalización</h2>
+            <button id="getLocation">Obtener Ubicación</button>
+            <p>Latitud: <output id="latitude"></output></p>
+            <p>Longitud: <output id="longitude"></output></p>
+
+
+
+        </section>
+
+        <section class="contenedor-flex-columna gap">
+            <article class="contenedor-flex-columna gap borde jc-center">
+                <h2>Geolocation</h2>
+                <ul>
+                  <li>getCurrentPosition: gets static position</li>
+                  <li>watchPosition: gets a live position</li>
+                </ul>
+                <p>both methods return an object with some interesting properties (click buttons)</p>
+                <button id="getcurrentposition_button">Show static position</button>
+                <button id="watchposition_button">Show live position</button>
+                <p id='texto_coordenadas' class="dp_none texto_pequeño"></p>
+                <div id="map-wrapper" class="dp_none">
+                  <div id="map" class="dp_none"><div>
+               </div>
+              </article>
+    
+          </section>
+        <!-- Sección de portapapeles -->
+        <section>
+            <h2>Portapapeles</h2>
+            <button id="copyText">Copiar Texto</button>
+            <button id="readText">Leer Texto</button>
+            <p>Texto copiado/leído: <p id="clipboardText"></p></p>
+        </section>
+
+        <!-- Sección de vibración -->
+        <section>
+            <h2>Vibración</h2>
+            <button id="vibrate">Vibrar Dispositivo</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2023 - Información del Navegador</p>
+    </footer>
+</body>
+</html>

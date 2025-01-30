@@ -11,74 +11,59 @@
     <link rel="stylesheet" href="../css/estilos.css">
 </head>
 <body>
-    <section class="contenedor-flex-columna gap">
+    <section class="contenedor-flex-vertical gap">
 
-        <section class="contenedor-flex-columna ai-center borde gap">
+        <section class="contenedor-flex-vertical ai-center borde gap">
 
-          <article class="contenedor-flex-columna gap borde jc-center">
-            <h2>setTimeout, setInterval and clearTimeout</h2>
+          <article class="contenedor-flex-vertical gap borde jc-center">
+            <h2>Timing</h2>
             <ol>
               <li>Delays an action</li>
               <li>Executes an action in a regular basis</li>
               <li>Stops an action started with setInterval</li>
             </ol>
-            <label>SetTimeout example: <button id="settimeout">Show message (2sec delay)</button></label>
+            <label>SetTimeout example: <button id="settimeout">Show message (delay)</button></label>
             <label>setInterval example: <button id="setinterval">Show time counter</button></label>
             <label>clearTimeout example:<button id="cleartimeout">Stop time counter</button></label>
-            <p id='texto1' class="dp_none"></p>
+            <small id='texto1' class="dp_none"></small>
           </article>
           
-          <article class="contenedor-flex-columna gap borde jc-center">
-            <h2>open</h2>
-            <ul id="lista_botones1" class="contenedor-flex-columna gap jc-center">
+          <article class="contenedor-flex-vertical gap borde jc-center">
+            <h2>Handing windows</h2>
+            <ol>
+              <li>open</li>
+              <li>resizeBy</li>
+              <li>resizeTo</li>
+              <li>moveTo</li>
+              <li>close</li>
+            </ol>
+            <ul id="lista_botones1" class="contenedor-flex-vertical gap jc-center">
               <li><button id="open1">Open new window (with options)</button></li>
               <li><button id="open2">Open new window (with delay)</button></li>
-            </ul>
-            <p id='contador' class="dp_none"></p>
-          </article>
-  
-          <article class="contenedor-flex-columna gap borde jc-center">
-            <h2>resizeBy and resizeTo</h2>
-            <ol>
-              <li>Adds or subtracts from the window size</li>
-              <li>Stablishes the new size</li>
-            </ol>
-            <ul id="lista_botones1" class="contenedor-flex-columna gap jc-center">
-              <li><button id="resizeBy">Open new window and resize it (resizeBy)</button></li>
-              <li><button id="resizeTo">Open new window and resize it (resizeTo)</button></li>
+              <li><p id='contador' class="dp_none"></p></li>
+              <li><button id="resizeBy">resizeBy</button></li>
+              <li><button id="resizeTo">resizeTo</button></li>
+              <li><button id="moveTo">moveTo</button></li>
+              <li><button id="close">close</button></li>
             </ul>
           </article>
 
-          <article class="contenedor-flex-columna gap borde jc-center">
-            <h2>moveTo</h2>
-            <ul id="lista_botones1" class="contenedor-flex-columna gap jc-center">
-              <li><button id="move">Open new window and move it</button></li>
-            </ul>
-          </article>
-
-          <article class="contenedor-flex-columna gap borde jc-center">
-            <h2>close</h2>
-            <ul id="lista_botones1" class="contenedor-flex-columna gap jc-center">
-              <li><button id="close">Open new window and close it</button></li>
-            </ul>
-          </article>
-
-          <article class="contenedor-flex-columna gap borde jc-center">
-            <h2>showing information</h2>
+          <article class="contenedor-flex-vertical gap borde jc-center">
+            <h2>Interacting with users</h2>
             <h3>alert, confirm and prompt</h3>
             <ol>
               <li>alert: Shows a message in a modal window</li>
               <li>confirm: Shows a confirmation window</li>
               <li>prompt: Asks for data</li>
             </ol>
-            <ul id="lista_botones1" class="contenedor-flex-columna gap jc-center">
+            <ul id="lista_botones1" class="contenedor-flex-vertical gap jc-center">
               <li><button id="muestra_mensaje">Show message</button></li>
               <li><button id="muestra_confirmacion">Ask confirmation</button></li>
               <li><button id="pide_datos">Ask for data</button></li>
             </ul>
           </article>
 
-          <article class="contenedor-flex-columna gap borde jc-center">
+          <article class="contenedor-flex-vertical gap borde jc-center">
             <h2>window properties</h2>
             <p>some window properties (location, document and screen) are objects as well, so they can be accessed in two ways: window.location.href or location.href</p>
             <ol>
@@ -104,7 +89,7 @@
           </article>
 
         
-          <article class="contenedor-flex-columna gap borde jc-center">
+          <article class="contenedor-flex-vertical gap borde jc-center">
             <h2>history</h2>
             <h2>Go, back, forward methods</h2>
             <input type="number" name="posiciones" id="posiciones">
