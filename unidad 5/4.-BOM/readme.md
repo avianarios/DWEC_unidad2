@@ -49,27 +49,12 @@ The **`window`** object is one of the main components of the **BOM (Browser Obje
 
 Some of the most important properties of the `window` object include:
 
-1. **`window.document`** Provides access to the HTML document loaded in the browser window. This is a reference to the `document` object, which allows interaction with the page's DOM.
-
-2. **`window.location`** Contains the current URL of the browser and allows redirecting the page to a new URL. Some common properties are:
-    - `window.location.href`: Gets or sets the full URL.  
-    - `window.location.pathname`: Gets or sets the URL path.
-
-3. **`window.history`** Allows interaction with the browser's history.  Some common methods are:
-    - `window.history.back()`: Goes back to the previous page.  
-    - `window.history.forward()`: Moves forward to the next page in the history.
-
-4. **`window.screen`**  Provides information about the user's screen, such as its size and the availability of the screen.  Some common properties are:
-    - `window.screen.width`: Screen width.  
-    - `window.screen.height`: Screen height.
-
-5. **`window.navigator`** Provides information about the user's browser and operating system.  Some common properties are:
-    - `window.navigator.userAgent`: Information about the browser.  
-    - `window.navigator.language`: Browser language.
-
-6. **`window.localStorage` and `window.sessionStorage`**  Allow storing data persistently in the browser. `localStorage` stores data indefinitely, while `sessionStorage` stores data only for the current session.
-
-7. **`window.console`** Provides access to the browser's console for debugging and output. Example: `window.console.log()` to show messages in the console.
+Some of the more important properties of the `window` object include:
+- `window.innerHeight`: height of the window contents, in pixels, excluding the horizontal scrollbar.
+- `window.innerWidth`: width of the window contents, in pixels, excluding the vertical scroll bar.
+- `window.outerHeight`: total height of the browser window, including toolbars and borders.
+- `window.outerWidth`: total width of the browser window, including toolbars and borders.
+- `window.screenX` and `window.screenY`: coordinates of the window's position on the screen, relative to the top left corner of the device's screen.
 
 
 ## Methods of the `window` object

@@ -20,7 +20,8 @@
     3. [Validation with JavaScript](./3.-form-validation/readme.md#validation-with-javascript)
 5. BOM (Browser Object Model)
     1. Window
-    2. Location
-    3. Geolocation
-    4. Storage
-    5. Document
+    2. Screen
+    3. Navigator
+    4. Location
+    5. Storage
+    6. Document
