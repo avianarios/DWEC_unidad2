@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Información del Navegador</title>
+    <link rel="stylesheet" href="../css/3.-navigator.css" type="text/css">
+    <script src="../js/3.-navigator3.js" defer></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@9.0.0/ol.css">
+    <script src="https://cdn.jsdelivr.net/npm/ol@9.0.0/dist/ol.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Información de geolocalización de OpenLayers</h1>
+    </header>
+
+    <main>
+        <section class="contenedor-flex-columna gap">
+            <article class="contenedor-flex-columna gap borde jc-center">
+                <h2>Geolocation</h2>
+                <ul>
+                  <li>getCurrentPosition: gets static position</li>
+                  <li>watchPosition: gets a live position</li>
+                </ul>
+                <p>both methods return an object with some interesting properties (click buttons)</p>
+                <button id="getcurrentposition_button">Show static position</button>
+                <button id="watchposition_button">Show live position</button>
+                <p id='texto_coordenadas' class="dp_none texto_pequeño"></p>
+                <div id="map-wrapper" class="dp_none">
+                  <div id="map" class="dp_none"><div>
+               </div>
+            </article>
+        </section>
+    <footer>
+        <p>© 2023 - Información del Navegador</p>
+    </footer>
+</body>
+</html>

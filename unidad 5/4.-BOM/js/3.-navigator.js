@@ -1,3 +1,21 @@
+/*
+console.log (window.navigator.userAgent);
+//useful when offering functionality depending on the web broser
+//there's no guarantee that the browser agent is indeed the one advertised by this property.
+//Some browsers allow users to modify useragent to pretend they are using another browser
+//therefore, you can't rely on detecting user browser this way
+if (window.navigator.userAgent.includes("Chrome")){
+    //do something
+}
+
+//it is better to try to detect the funcionality needed (capability detection)
+if( typeof window.addEventListener === 'function' ) {
+    // let's use addEventListener
+} else {
+    // addEventListener is not supported, use another way
+}*/
+
+
 // Propiedades del objeto navigator
 document.getElementById("userAgent").textContent = navigator.userAgent;
 document.getElementById("language").textContent = navigator.language;
