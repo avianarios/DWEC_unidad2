@@ -276,15 +276,15 @@ Una estrategia común es usar la validación de HTML para reglas simples y compl
     - Validar en tiempo real mientras el usuario escribe mediante el uso del evento `input` (además de validar al enviar `submit`)
     - Implementar reglas avanzadas que HTML no cubre.
 
-¿Cómo validar con JavaScript y HTML?
+¿Cómo validar con JavaScript?
 
 Cada campo de un formulario tiene una propiedad asociada `validity` que devuelve un objeto con propiedades sobre la validez del campo tras haber evaluado las **reglas nativas de validación**. Las propiedades son:
   - `valid`: devuelve true si el campo es válido, según sus restricciones de validación.
   - `valueMissing`: devuelve true si el campo tiene el atributo `required` y está vacío.
   - `typeMismatch`: devuelve true si el valor del campo no es del tipo adecuado, según el atributo `type` del elemento. Por ejemplo, un `email` sin formato de correo-e.
   - `patterMIsmatch`: devuelve true si el valor del campo no coincide con el patrón especificado en su atributo `pattern`.
-  - tooLong: devuelve true si el valor del campo es más largo de lo que permite el atributo `maxlength` del campo.
-  - tooShort: devuelve true si el valor del campo es más corto de lo que permite el atributo `minlength` del campo.
+  - `tooLong`: devuelve true si el valor del campo es más largo de lo que permite el atributo `maxlength` del campo.
+  - `tooShort`: devuelve true si el valor del campo es más corto de lo que permite el atributo `minlength` del campo.
   - `rangeOverflow`: devuelve true si el valor del campo es mayor que el valor máximo permitido por el atributo `max`.
   - `rangeUnderflow`: devuelve true si el valor del campo es menor que el valor mínimo permitido por el atributo min.
   - `stepMismatch`: devuelve true si el valor del campo no cumple con el paso definido por el atributo step, que es comúnmente usado con campos numéricos.
@@ -297,8 +297,7 @@ Se puede validar mediante HTML y JavaScript de varias formas:
   4. Usar las diferentes propiedades del objeto campo `campo.validity`. **Es el que más control da**
      
 
-
-  ## Ejemplo 1- Validación y estilado nativos. Personalización de los mensajes de error
+## Ejemplo 1- Validación y estilado nativos. Personalización de los mensajes de error
   - La reglas de validación, que determinan cuándo un campo tiene un valor válido, se escriben directamente en el HTML.
   - El navegador validará automáticamente al enviar el formulario y bloqueará el envío si detecta un campo no válido basado en las reglas nativas.
   - Se mostrarán mensajes de validación nativos, salvo que se use `campo.setCustomValidity("msj")`. Si se desea que se vea el mensaje sin esperar a que se mande el formulario, hay que usar `campo.reportValidity()`
@@ -447,7 +446,7 @@ Se puede validar mediante HTML y JavaScript de varias formas:
 
   Para validar exclusivamente con JS hay que usar la propiedad `novalidate` del formulario, que implica lo siguiente:
   - Si hubiera atributos nativos en el HTML, **se evaluarían, pero no para evitar el envío del formulario si no se cumplen, sino sólo para aplicar las pseudoclases** como, por ejemplo, `:valid` o `:invalid` (si están definidas en el CSS), ,
-  - La lógica de validación que determina si un campo es válido o no y, por tanto, si el formulario se manda o no, se escribe exclusivamente en JavaScript. Podemos usar la validación nativa para detectar si se cumplen con las propiedades y métodos `input.validity` o `input.checkvalidity()`,
+  - La lógica de validación que determina si un campo es válido o no y, por tanto, si el formulario se manda o no, se escribe exclusivamente en JavaScript. Aún así, la validación nativa se evalúa, generando las pseudoclases y afectando a la propiedad `.validity` de cada campo. Por tanto, se puede usar `campo.validity` o `input.checkvalidity()` para validar en JS.
   - Los mensajes de validación habrá que mostrarlos mediante JS, usando `setCustomValidity()`. **No se mostrarán mensajes nativos** (ya que las reglas nativas sólo se evalúan para aplicar las pseudoclases)
 
 ```html
