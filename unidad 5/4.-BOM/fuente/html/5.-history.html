@@ -13,10 +13,16 @@
     <article class="contenedor-flex-vertical gap borde jc-center">
         <h2>history</h2>
         <h2>Go, back, forward methods</h2>
-        <input type="number" name="posiciones" id="posiciones">
-        <button id="back">move back</button>
-        <button id="forward">move forward</button>
-        <button id="go">go</button>
+        <button id="anyadir">Añadir página al historial</button>
+        <article id="movimiento">
+            <button id="back">move back</button>
+            <button id="forward">move forward</button>
+            <fieldset>
+                <button id="go">go (+number or -number)</button>
+                <input type="number" name="posiciones" id="posiciones">
+            </fieldset>
+        </article>
+        <p id="texto"></p>
     </article>  
 </body>
 </html>
