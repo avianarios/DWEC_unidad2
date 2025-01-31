@@ -3,8 +3,11 @@
 1. [Principales objetos del DOM](#1--objeto-window)
 2. [Objeto window](#2--objeto-window)
 3. [Objeto screen](#3--objeto-screen)
-4. [Objeto location](#4--objeto-location-en-javascript)
+4. [Objeto navigator](#4--objeto-navigator)
+5. [Objeto location](#5--objeto-location)
 5. [Objeto history]
+6. [Objeto localStorage]
+7. [Objeto SessionStorage]
 ----
 
 
@@ -17,14 +20,12 @@ Aunque el BOM no tiene un conjunto de reglas o un documento único que dicte có
 El BOM no es un estándar oficial, pero los navegadores lo implementan de manera similar. Sus principales objetos son:
 
 1. `window`** Es el objeto global en el contexto del navegador y representa la ventana del navegador. Todos los demás objetos del BOM están dentro de `window` bien porque pertenecen a él o bien porque se ejecutan en el contexto global y el navegador los asocia a él.
-2. `document`** El objeto que representa el documento HTML cargado en la ventana. Es la puerta de entrada al DOM.
-3. `screen`** Contiene información sobre la pantalla del usuario. 
-4. `navigator`** Proporciona información sobre el navegador y el sistema del usuario. 
-5. `location`** Representa la URL actual y permite redireccionar.
-6. `history`** Permite interactuar con el historial de navegación.
-7. `localStorage`** Permite almacenar datos de forma persistente en el navegador.
-8. `SessionStorage`** Similar a localStorage, pero los datos se eliminan cuando la sesión del navegador termina.
-9. `window.console`** Accede a la consola del navegador, donde puedes ver los logs y depurar el código.
+2. `screen`** Contiene información sobre la pantalla del usuario. 
+3. `navigator`** Proporciona información sobre el navegador y el sistema del usuario. 
+4. `location`** Representa la URL actual y permite redireccionar.
+5. `history`** Permite interactuar con el historial de navegación.
+6. `localStorage`** Permite almacenar datos de forma persistente en el navegador.
+7. `SessionStorage`** Similar a localStorage, pero los datos se eliminan cuando la sesión del navegador termina.
 
 -----
 
@@ -58,10 +59,14 @@ Aunque hay algunas propiedades y objetos que no pertenecen al objeto window en e
 ## Propiedades
 
 Algunas de las propiedades más importantes del objeto `window` incluyen:
-- `window.innerHeight`: altura del contenido de la ventana, en píxeles, excluyendo la barra de desplazamiento horizontal.
-- `window.innerWidth`: ancho del contenido de la ventana, en píxeles, excluyendo la barra de desplazamiento vertical.
+- `window.innerHeight`: altura del área visible dentro del navegador, en píxeles, excluyendo la barra de desplazamiento horizontal.
+
+- `window.innerWidth`: ancho del área visible dentro del navegador, en píxeles, excluyendo la barra de desplazamiento vertical y las pestañas.
+
 - `window.outerHeight`: altura total de la ventana del navegador, incluyendo las barras de herramientas y bordes.
+
 - `window.outerWidth`: ancho total de la ventana del navegador, incluyendo las barras de herramientas y bordes.
+
 - `window.screenX` y `window.screenY`: coordenadas de la posición de la ventana en la pantalla, en relación con la esquina superior izquierda de la pantalla del dispositivo.
 
 
@@ -214,7 +219,6 @@ if (screen.orientation) {
 
 ---
 
-
 # 4- Objeto `navigator`
 
 El objeto navigator proporciona información sobre el navegador del usuario y su entorno. Se accede a través de `window.navigator` y contiene varias propiedades y métodos útiles.
@@ -244,7 +248,9 @@ Algunas de las propiedades más importantes de navigator son:
       }
       ```
   - `navigator.language`: Indica el idioma preferido del usuario (ejemplo: "es-ES").
+
   - `navigator.languages`: Devuelve una matriz con los idiomas preferidos en orden de preferencia.
+
   - `navigator.onLine`: Retorna true si el navegador tiene conexión a Internet y false si no.
     ```javascript
     if (navigator.onLine) {
@@ -255,10 +261,30 @@ Algunas de las propiedades más importantes de navigator son:
     ```
 
   - `navigator.cookieEnabled`: Indica si las cookies están habilitadas en el navegador.
+
   - `navigator.geolocation`: Proporciona acceso a la API de geolocalización, que permite obtener la ubicación geográfica del usuario
+      ```javascript
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                document.getElementById("latitude").textContent = position.coords.latitude;
+                document.getElementById("longitude").textContent = position.coords.longitude;
+            },
+            (error) => {
+                alert("Error al obtener la ubicación: " + error.message);
+            }, { enableHighAccuracy: true }
+        );
+      } else {
+        alert("Geolocalización no soportada en este navegador.");
+      }
+      ```
+
   - `navigator.mediaDevices`: Proporciona acceso a los dispositivos multimedia (como cámaras y micrófonos) a través de la API MediaDevices.
+
   - `navigator.hardwareConcurrency` Devuelve el número de núcleos de procesamiento lógicos disponibles en el dispositivo.
+
   - `navigator.deviceMemory` Devuelve la cantidad de memoria RAM del dispositivo en gigabytes.
+
   - `navigator.connection` Proporciona información sobre la conexión de red del usuario, como el tipo de conexión (Wi-Fi, 4G, etc.) y la velocidad estimada.
 
 ## Métodos
@@ -272,6 +298,7 @@ Algunas de las propiedades más importantes de navigator son:
     ```
 
   - `navigator.geolocation.watchPosition()` Observa la posición del usuario y ejecuta una función de callback cada vez que la ubicación cambia.
+
   - `navigator.mediaDevices.getUserMedia()` Solicita acceso a los dispositivos multimedia del usuario, como la cámara o el micrófono. Devuelve una promesa que resuelve con un objeto MediaStream.
     ```javascript
     navigator.mediaDevices.getUserMedia({ video: true })
@@ -284,8 +311,11 @@ Algunas de las propiedades más importantes de navigator son:
     ```
 
   - `navigator.clipboard.writeText()` Escribe texto en el portapapeles del usuario. Devuelve una promesa que se resuelve cuando el texto se ha copiado correctamente.
+
   - `navigator.clipboard.readText()` Lee el texto almacenado en el portapapeles del usuario. Devuelve una promesa que resuelve con el texto leído.
+
   - `navigator.vibrate()` Hace vibrar el dispositivo (si es compatible). Recibe un patrón de vibración en milisegundos.
+
   - `navigator.share()` Permite compartir contenido (como enlaces o archivos) a través de las opciones de compartir del dispositivo. Devuelve una promesa.
 
 
@@ -296,13 +326,13 @@ Algunas de las propiedades más importantes de navigator son:
 
   ----
 
-# 4- Objeto `location` en JavaScript
+# 5- Objeto `location`
 
 El objeto `location` proporciona información sobre la URL de la página actual. También permite cambiar la URL y redirigir al navegador.
 
 ## Propiedades
 
-- `location.href` Devuelve o establece la URL completa de la página actual.
+- `location.href` Devuelve o establece la URL completa de la página actual, agregándola al historial
   ```javascript
   console.log(location.href);
   location.href = "https://www.ejemplo.com";
@@ -368,19 +398,63 @@ location.assign("https://www.ejemplo.com");
 
 # 5- Objeto history
 
-# Objeto `history` en JavaScript
-
-El objeto `history` en JavaScript es parte de la API del navegador y proporciona una interfaz para manipular el historial de sesión del navegador. Permite navegar hacia adelante y hacia atrás a través del historial del usuario, así como manipular el contenido del historial.
+Proporciona una interfaz para manipular el historial de sesión del navegador. Permite navegar hacia adelante y hacia atrás a través del historial del usuario, así como manipular el contenido del historial.
 
 ## Propiedades
 
 - `history.length` Devuelve el número de elementos en el historial de sesión, incluyendo la página actual.
   ```javascript
-  console.log(history.length); // Ejemplo: 5
+  console.log(history.length);
   ```
 
-- `history.scrollRestoration` Permite obtener o establecer el comportamiento de restauración del desplazamiento al navegar por el historial. Puede tener dos valores: "auto" (por defecto) o "manual".
+- `history.state` Devuelve el estado asociado con la entrada de historial activa, generalmente usado con `pushState()` o `replaceState()`.
   ```javascript
-  console.log(history.scrollRestoration); // "auto"
-  history.scrollRestoration = "manual";
+  history.pushState({ page: 1 }, "Página 1", "?page=1");
+  console.log(history.state); // { page: 1 }
   ```
+
+## Métodos
+
+- `history.back()` Regresa a la página anterior en el historial.
+  ```javascript
+  history.back();
+  ```
+
+- `history.forward()` Avanza a la siguiente página en el historial.
+  ```javascript
+  history.forward();
+  ```
+
+- `history.go(n)` Mueve el historial en la dirección especificada por `n` (positivo para avanzar, negativo para retroceder).
+  ```javascript
+  history.go(-1); // Regresa una página
+  history.go(2);  // Avanza dos páginas
+  ```
+
+- `history.pushState(state, title, url)` Agrega una nueva entrada al historial compuesta de un objeto, un título y una URL y añade la URL visible en la barra de direcciones sin recargar la página.
+  ```javascript
+  history.pushState({ page: 2 }, "Página 2", "?page=2");
+  console.log(history.state); // { page: 2 }
+  ```
+
+- `history.replaceState(state, title, url)` Reemplaza la entrada actual en el historial por una compuesta de un objeto, un título y una URL.
+  ```javascript
+  history.replaceState({ page: 3 }, "Página 3", "?page=3");
+  console.log(history.state); // { page: 3 }
+  ```
+
+
+Normalmente, al navegar entre páginas, el navegador solo recuerda las URL, pero los siguientes métodos `history.pushState()` y `history.replaceState()` permiten guardar información adicional que se mantiene accesible cuando el usuario usa los botones de "atrás" y "adelante" del navegador. Esto es un método fáil de mantener datos en el historial sin necesidad de usar localStorage o hacer peticiones al servidor. Esta información se puede leer con `history.state`
+
+¿Para qué se usa eso?
+- Navegar dentro de una aplicación sin perder el estado actual
+- Permitir que el usuario comparta enlaces específicos como, por ejemplo, de una foto en concreto. Con el siguiente código, si el usuario comparte https://miweb.com?imagen=5, al abrirlo se  mostrará la imagen correcta.
+  ```javascript
+  function verImagen(id) {
+    history.pushState({ imagen: id }, "Imagen " + id, "?imagen=" + id");
+  }
+  ```
+- En formularios de varios pasos, se puede cambiar la URL en cada paso sin perder los datos ingresados.
+- Actualizar la URL sin generar tráfico innecesario, siempre que sean cambios pequeños.
+
+
