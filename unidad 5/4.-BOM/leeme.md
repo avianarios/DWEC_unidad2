@@ -398,20 +398,8 @@ location.assign("https://www.ejemplo.com");
 
 # 5- Objeto history
 
-Proporciona una interfaz para manipular el historial de sesión del navegador. Permite navegar hacia adelante y hacia atrás a través del historial del usuario, así como manipular el contenido del historial.
+El objeto `history` permite interactuar con el historial de navegación del navegador y almacenar información asociada al estado de la página actual mediante un objeto de datos, sin recargarla. Dicho objeto se puede recuperar cuando el usuario navega hacia atrás o adelante. Se trata de una forma de almacenar información asociada a la la página visitada que tiene diferencias respecto a otros dos objetos usados para almacenar información, `localStorage` y `sessionStorage`
 
-## Propiedades
-
-- `history.length` Devuelve el número de elementos en el historial de sesión, incluyendo la página actual.
-  ```javascript
-  console.log(history.length);
-  ```
-
-- `history.state` Devuelve el estado asociado con la entrada de historial activa, generalmente usado con `pushState()` o `replaceState()`.
-  ```javascript
-  history.pushState({ page: 1 }, "Página 1", "?page=1");
-  console.log(history.state); // { page: 1 }
-  ```
 
 ## Métodos
 
@@ -431,6 +419,8 @@ Proporciona una interfaz para manipular el historial de sesión del navegador. P
   history.go(2);  // Avanza dos páginas
   ```
 
+Al navegar entre páginas el navegador sólo recuerda las URL, pero los siguientes métodos, `history.pushState()` y `history.replaceState()`, permiten guardar información adicional que se mantiene accesible cuando el usuario usa los botones de "atrás" y "adelante" del navegador. Esto es un método fáil de mantener datos en el historial sin necesidad de usar `localStorage`, `sessionStorage` o hacer peticiones al servidor. Esta información se puede obtener leyendo la propiedad `history.state`
+
 - `history.pushState(state, title, url)` Agrega una nueva entrada al historial compuesta de un objeto, un título y una URL y añade la URL visible en la barra de direcciones sin recargar la página.
   ```javascript
   history.pushState({ page: 2 }, "Página 2", "?page=2");
@@ -443,9 +433,6 @@ Proporciona una interfaz para manipular el historial de sesión del navegador. P
   console.log(history.state); // { page: 3 }
   ```
 
-
-Normalmente, al navegar entre páginas, el navegador solo recuerda las URL, pero los siguientes métodos `history.pushState()` y `history.replaceState()` permiten guardar información adicional que se mantiene accesible cuando el usuario usa los botones de "atrás" y "adelante" del navegador. Esto es un método fáil de mantener datos en el historial sin necesidad de usar localStorage o hacer peticiones al servidor. Esta información se puede leer con `history.state`
-
 ¿Para qué se usa eso?
 - Navegar dentro de una aplicación sin perder el estado actual
 - Permitir que el usuario comparta enlaces específicos como, por ejemplo, de una foto en concreto. Con el siguiente código, si el usuario comparte https://miweb.com?imagen=5, al abrirlo se  mostrará la imagen correcta.
@@ -457,4 +444,26 @@ Normalmente, al navegar entre páginas, el navegador solo recuerda las URL, pero
 - En formularios de varios pasos, se puede cambiar la URL en cada paso sin perder los datos ingresados.
 - Actualizar la URL sin generar tráfico innecesario, siempre que sean cambios pequeños.
 
+## Propiedades
 
+- `history.length` Devuelve el número de elementos en el historial de sesión, incluyendo la página actual.
+  ```javascript
+  console.log(history.length);
+  ```
+
+- `history.state` Devuelve la información de estado (el objeto) asociado con la entrada de historial activa (la que hay en la URL actualmente).
+  ```javascript
+  history.pushState({ page: 1 }, "Página 1", "?page=1");
+  console.log(history.state); // { page: 1 }
+  ```
+
+
+
+| Característica       | `localStorage` | `sessionStorage` | `history.state` |
+|----------------------|----------------|------------------|-----------------|
+| **Persistencia**      | Los datos **NO se borran** al cerrar el navegador. | Los datos **se borran** al cerrar la pestaña o el navegador. | Los datos **se borran** al recargar la página o cambiar de URL. |
+| **Alcance**           | Disponible en todas las pestañas que usen la misma URL/origen. | Solo disponible en la pestaña actual. | Solo disponible en la sesión del historial. |
+| **Capacidad**         | ~5-10 MB (depende del navegador). | ~5 MB. | Depende del navegador, pero suele ser más **limitado**. |
+| **Accesibilidad**     | Puede ser leído desde cualquier script en la misma página. | Solo accesible en la pestaña actual. | Solo accesible al moverse en el historial con `popstate`. |
+| **Seguridad**         | No se borra automáticamente, lo que puede ser un riesgo de privacidad. | Más seguro que `localStorage` porque los datos se eliminan al cerrar la pestaña. | Más seguro porque solo es accesible en la sesión de navegación. |
+| **Uso recomendado**   | Para guardar configuraciones de usuario a largo plazo, datos que deban persistir después de cerrar el navegador. | Para almacenar datos temporales que deben desaparecer al cerrar la pestaña. | Para manejar navegación dentro de una SPA o formularios con pasos. |
