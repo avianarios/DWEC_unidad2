@@ -3,41 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pruebas del objeto history</title>
+    <title>Objeto history</title>
+    <script src="../js/5.-history.js" defer></script>
+    <link rel="stylesheet" href="../css/estilos.css" type="text/css">
 </head>
 <body>
 
 <h1>Prueba del objeto `history`</h1>
-<p>Abre la consola para ver los resultados.</p>
-
-<script>
-    // Mostrar la longitud del historial
-    console.log('history.length:', history.length);
-
-    // Probar history.state
-    history.pushState({ page: 1 }, "Página 1", "?page=1");
-    console.log('history.state después de pushState:', history.state);
-
-    // Regresar al estado anterior
-    history.back();
-    console.log('Se ha ejecutado history.back()');
-
-    // Avanzar al siguiente estado
-    history.forward();
-    console.log('Se ha ejecutado history.forward()');
-
-    // Ir a un número específico en el historial (retroceder 1 página)
-    history.go(-1);
-    console.log('Se ha ejecutado history.go(-1)');
-
-    // Probar replaceState
-    history.replaceState({ page: 2 }, "Página 2", "?page=2");
-    console.log('history.state después de replaceState:', history.state);
-
-    // Agregar una nueva entrada al historial
-    history.pushState({ page: 3 }, "Página 3", "?page=3");
-    console.log('history.state después de una nueva entrada de pushState:', history.state);
-</script>
-
+    <article class="contenedor-flex-vertical gap borde jc-center">
+        <h2>history</h2>
+        <h2>Go, back, forward methods</h2>
+        <input type="number" name="posiciones" id="posiciones">
+        <button id="back">move back</button>
+        <button id="forward">move forward</button>
+        <button id="go">go</button>
+    </article>  
 </body>
 </html>
