@@ -1,3 +1,4 @@
+//Ejemplo de cómo evitar el envío de un formulario al servidor para procesarlo en local
 document.getElementById('miFormulario').addEventListener('submit', function(event) {
     event.preventDefault(); // Evita el envío del formulario
 
