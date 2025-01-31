@@ -7,4 +7,5 @@ document.getElementById('miFormulario').addEventListener('submit', function(even
 
     // Mostrar los datos en la página
     document.getElementById('resultado').innerText = `Nombre: ${nombre}, Edad: ${edad}`;
+    this.reset();
 });
