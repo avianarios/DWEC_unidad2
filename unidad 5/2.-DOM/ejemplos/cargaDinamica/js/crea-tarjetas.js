@@ -1,16 +1,4 @@
-//este script añade un botón al final del body que al hacer click añade un párrafo al final del body
-/*const botonParrafo=document.createElement("button");
-botonParrafo.innerText="Crear párrafo";
-document.querySelector("main").append(botonParrafo);
-
-botonParrafo.addEventListener("click", ()=>{
-    for (let i = 0; i < 5; i++) {  // Crear 5 párrafos
-        const p = document.createElement("p");  // Crear el nodo <p>
-        p.innerText = "Este párrafo fue creado dinámicamente";  // Asignar el texto
-        document.querySelector("main").append(p);  // Insertarlo en el DOM
-    }
-});*/
-
+//este script añade un botón al final del body que al hacer click añade una fila con varias tarjetas y añade una hoja de estilos en la cabecera del html para darles formato
 
 const botonAnyadir=document.createElement("button");
 botonAnyadir.innerText="Crear productos";
@@ -24,14 +12,14 @@ link.href = "../css/tarjetas.css";
 document.head.append(link);
 
 
-//crea las tarjetas de 3 en 3
 const numeroTarjetas=4;
 
 const contenedorTarjetas = document.querySelector("#contenedorTarjetas");
 botonAnyadir.addEventListener("click", () => {
+    //Creo el contenedor que contendrá las tarjetas
     const contenedorTarjetas=document.createElement("section");
     contenedorTarjetas.classList.add("contenedorTarjetas");
-    for (let i = 0; i < numeroTarjetas; i++) {  // Crear 3 tarjetas
+    for (let i = 0; i < numeroTarjetas; i++) {  // Crear varias tarjetas
         const tarjeta = document.createElement("article");  // Crear el contenedor de la tarjeta
         tarjeta.classList.add("tarjeta");  // Añadir clase para los estilos
 
@@ -47,9 +35,10 @@ botonAnyadir.addEventListener("click", () => {
         descripcion.innerText = "Texto descriptivo de la tarjeta.";
         tarjeta.append(descripcion);
 
-        // Insertar la tarjeta en el contenedor principal
+        // Insertar la tarjeta en su contenedor
         contenedorTarjetas.append(tarjeta);
     }
+    //añado el contenedor con las tarjetas al final del contenedor main
     document.querySelector("main").append(contenedorTarjetas);
 });
 
