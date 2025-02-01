@@ -1,3 +1,5 @@
+import mostrarMensaje from './mostrarMensajes.js';
+
 // Obtener las propiedades del objeto screen
 document.getElementById("screenWidth").textContent = screen.width;
 document.getElementById("screenHeight").textContent = screen.height;

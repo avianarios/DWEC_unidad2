@@ -4,25 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Objeto history</title>
-    <script src="../js/5.-history.js" defer></script>
     <link rel="stylesheet" href="../css/estilos.css" type="text/css">
+    <script type="module" src="../js/5.-history.js" defer></script>
 </head>
-<body>
+<body class="contenedor-flex-vertical">
+    <main>
+        <h1>Prueba del objeto `history`</h1>
+        <section>
+            <h2>pushState, back, forward and go methods. length property</h2>
+            <article id="movimiento">
+                <menu class="grupo-botones">
+                    <button type="submit" id="anyadir">Añadir página al historial</button>
 
-<h1>Prueba del objeto `history`</h1>
-    <article class="contenedor-flex-vertical gap borde jc-center">
-        <h2>history</h2>
-        <h2>Go, back, forward methods</h2>
-        <button id="anyadir">Añadir página al historial</button>
-        <article id="movimiento">
-            <button id="back">move back</button>
-            <button id="forward">move forward</button>
-            <fieldset>
-                <button id="go">go (+number or -number)</button>
-                <input type="number" name="posiciones" id="posiciones">
-            </fieldset>
-        </article>
-        <p id="texto"></p>
-    </article>  
+                    <button type="submit" id="back">Move back</button>
+                    <button type="submit" id="forward">Move forward</button>
+                </menu>
+                <fieldset>
+                    <legend>Ir a una posición específica</legend>
+                    <menu class="grupo-botones">
+                        <button type="submit" id="go">Go (+number or -number)</button>
+                        <input type="number" name="posiciones" id="posiciones">
+                    </menu>
+                </fieldset>
+            </article>
+            <output id="mensajeHistory" class="informacion" role="status"></output>
+        </section>
+    </main>
+    <footer>
+        <p>© 2025 - Objeto history</p>
+    </footer>
 </body>
 </html>

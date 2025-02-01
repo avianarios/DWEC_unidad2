@@ -4,68 +4,111 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Información del Navegador</title>
-    <link rel="stylesheet" href="../css/3.-navigator.css" type="text/css">
-    <script src="../js/3.-navigator.js" defer></script>
+    <link rel="stylesheet" href="../css/estilos.css" type="text/css">
+    <script type="module" src="../js/3.-navigator.js" defer></script>
 </head>
-<body>
-    <header>
-        <h1>Información del Navegador y Dispositivo</h1>
-    </header>
-
+<body class="contenedor-flex-vertical">
     <main>
+        <h1>Información del Navegador y Dispositivo</h1>
+
         <!-- Sección de propiedades -->
         <section>
             <h2>Propiedades</h2>
-            <ul>
-                <li>User Agent: <output id="userAgent"></output></li>
-                <li>Idioma preferido: <output id="language"></output></li>
-                <li>Idiomas soportados: <output id="languages"></output></li>
-                <li>Cookies habilitadas: <output id="cookieEnabled"></output></li>
-                <li>¿Está en línea?: <output id="online"></output></li>
-                <li>Núcleos de CPU: <output id="hardwareConcurrency"></output></li>
-                <li>Memoria RAM (GB): <output id="deviceMemory"></output></li>
-                <li>Tipo de conexión: <output id="connectionType"></output></li>
-                <li>Ancho de banda estimado (Mbps): <output id="connectionSpeed"></output></li>
-            </ul>
+            <dl class="lista-definicion">
+                <dt>User Agent:</dt>
+                <dd><output id="userAgent"></output></dd>
+
+                <dt>Idioma preferido:</dt>
+                <dd><output id="language"></output></dd>
+
+                <dt>Idiomas soportados:</dt>
+                <dd><output id="languages"></output></dd>
+
+                <dt>Cookies habilitadas:</dt>
+                <dd><output id="cookieEnabled"></output></dd>
+
+                <dt>¿Está en línea?:</dt>
+                <dd><output id="online"></output></dd>
+
+                <dt>Núcleos de CPU:</dt>
+                <dd><output id="hardwareConcurrency"></output></dd>
+
+                <dt>Memoria RAM (GB):</dt>
+                <dd><output id="deviceMemory"></output></dd>
+
+                <dt>Tipo de conexión:</dt>
+                <dd><output id="connectionType"></output></dd>
+
+                <dt>Ancho de banda estimado (Mbps):</dt>
+                <dd><output id="connectionSpeed"></output></dd>
+            </dl>
         </section>
 
         <!-- Sección de userAgentData -->
         <section>
             <h2>Información de userAgentData</h2>
-            <ul>
-                <li>Marcas del navegador: <output id="uaBrands"></output></li>
-                <li>Plataforma: <output id="uaPlatform"></output></li>
-                <li>¿Es móvil?: <output id="uaMobile"></output></li>
-                <li>Arquitectura: <output id="uaArchitecture"></output></li>
-                <li>Versión del sistema operativo: <output id="uaPlatformVersion"></output></li>
-            </ul>
+            <dl class="lista-definicion">
+                <dt>Marcas del navegador:</dt>
+                <dd><output id="uaBrands"></output></dd>
+
+                <dt>Plataforma:</dt>
+                <dd><output id="uaPlatform"></output></dd>
+
+                <dt>¿Es móvil?:</dt>
+                <dd><output id="uaMobile"></output></dd>
+
+                <dt>Arquitectura:</dt>
+                <dd><output id="uaArchitecture"></output></dd>
+
+                <dt>Versión del sistema operativo:</dt>
+                <dd><output id="uaPlatformVersion"></output></dd>
+            </dl>
         </section>
 
         <!-- Sección de geolocalización -->
         <section>
             <h2>Geolocalización</h2>
-            <button id="getLocation">Obtener Ubicación</button>
-            <p>Latitud: <output id="latitude"></output></p>
-            <p>Longitud: <output id="longitude"></output></p>
+            <menu class="grupo-botones">
+                <button type="submit" id="getLocation">Obtener Ubicación</button>
+            </menu>
+            <dl class="lista-definicion">
+                <dt>Latitud:</dt>
+                <dd><output id="latitude"></output></dd>
+
+                <dt>Longitud:</dt>
+                <dd><output id="longitude"></output></dd>
+            </dl>
+            <output id="mensajeGeolocalizacion" class="informacion" role="status"></output>
         </section>
-        
+
         <!-- Sección de portapapeles -->
         <section>
             <h2>Portapapeles</h2>
-            <button id="copyText">Copiar Texto</button>
-            <button id="readText">Leer Texto</button>
-            <p>Texto copiado/leído: <p id="clipboardText"></p></p>
+            <menu class="grupo-botones">
+                <button type="submit" id="readText">Leer Texto</button>
+                <button type="submit" id="writeText">Escribir Texto</button>
+            </menu>
+            <dl class="lista-definicion">
+                <dt>Texto copiado/leído:</dt>
+                <dd><output id="clipboardText"></output></dd>
+            </dl>
+            <output id="mensajePortapapeles" class="informacion" role="status"></output>
         </section>
 
         <!-- Sección de vibración -->
         <section>
             <h2>Vibración</h2>
-            <button id="vibrate">Vibrar Dispositivo</button>
+            <menu class="grupo-botones">
+                <button type="submit" id="vibrate">Vibrar Dispositivo</button>
+            </menu>
+            <!-- Mensajes -->
+            <output id="mensajeVibracion" class="informacion" role="status"></output>
         </section>
+
     </main>
 
     <footer>
-        <p>© 2023 - Información del Navegador</p>
+        <p>© 2025 - Objeto navigator</p>
     </footer>
 </body>
 </html>

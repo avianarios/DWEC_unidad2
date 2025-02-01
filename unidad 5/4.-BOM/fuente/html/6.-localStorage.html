@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo de localStorage con Datos Simples y Objetos</title>
+    <link rel="stylesheet" href="../css/estilos.css" type="text/css">
+    <script type="module" src="../js/6.-localStorage.js" defer></script>
+</head>
+<body class="contenedor-flex-vertical">
+    <main>
+        <h1>Ejemplo de localStorage con Datos Simples y Objetos</h1>
+
+        <!-- Sección para datos simples (clave-valor) -->
+        <section>
+            <h2>Datos Simples (Clave-Valor)</h2>
+            <form id="formularioSimple">
+                <label for="claveSimple">Clave:</label>
+                <input type="text" id="claveSimple" name="claveSimple" required>
+                
+                <label for="valorSimple">Valor:</label>
+                <input type="text" id="valorSimple" name="valorSimple" required>
+                
+                <menu class="grupo-botones">
+                    <button type="submit">Guardar</button>
+                    <button type="button" id="leerSimple">Leer</button>
+                    <button type="button" id="eliminarSimple">Eliminar</button>
+                </menu>
+            </form>
+            <!-- Mensajes -->
+            <output id="mensajeSimples" class="informacion" role="status"></output>            
+        </section>
+
+        <!-- Sección para objetos (JSON) -->
+        <section>
+            <h2>Objetos (JSON)</h2>
+            <form id="formularioObjeto">
+                <label for="claveObjeto">Clave:</label>
+                <input type="text" id="claveObjeto" name="claveObjeto" required>
+                
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required>
+                
+                <label for="edad">Edad:</label>
+                <input type="number" id="edad" name="edad" required>
+                
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                
+                <menu class="grupo-botones">
+                    <button type="submit">Guardar Objeto</button>
+                    <button type="button" id="leerObjeto">Leer</button>
+                    <button type="button" id="eliminarObjeto">Eliminar</button>
+                </menu>
+            </form>
+            <!-- Mensajes -->
+            <output id="mensajeObjetos" class="informacion" role="status"></output>
+        </section>
+
+    </main>
+    <footer>
+        <p>© 2025 - Objeto localStorage</p>
+    </footer>    
+</body>
+</html>

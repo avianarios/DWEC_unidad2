@@ -1,43 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Location object</title>
-     <script src="../js/4.-location.js" defer></script>
+    <title>Location Object</title>
     <link rel="stylesheet" href="../css/estilos.css" type="text/css">
+    <script type="module" src="../js/4.-location.js" defer></script>
 </head>
-<body>
-    <section class="contenedor-flex-columna gap">
-          <article class="contenedor-flex-columna gap borde jc-center">
-            <h2>location</h2>
-            <p>is reachable through window and document. Interesting properties:</p>
-            <ul class="lista_viñetas">
-              <li>href: entire URL</li>
-              <li>protocol: protocol scheme of the URL, including the final ':'.</li>
-              <li>host: hostname:port or the URL</li>
-              <li>hostname: domain of the URL</li>
-              <li>port: port number of the URL</li>
-              <li>search: "querystring" of the URL</li>
+<body class="contenedor-flex-vertical">
+    <main>
+        <h1>Location Object</h1>
+
+        <!-- Sección para propiedades de location -->
+        <section>
+            <h2>Propiedades de Location</h2>
+            <p>El objeto <code>location</code> es accesible a través de <code>window</code> y <code>document</code>. Tiene varias propiedades interesantes:</p>
+            <ul>
+                <li><strong>href:</strong> La URL completa.</li>
+                <li><strong>protocol:</strong> El esquema del protocolo de la URL, incluyendo el <code>':'</code> final.</li>
+                <li><strong>host:</strong> El <code>hostname:port</code> de la URL.</li>
+                <li><strong>hostname:</strong> El dominio de la URL.</li>
+                <li><strong>port:</strong> El número de puerto de la URL.</li>
+                <li><strong>search:</strong> La "cadena de consulta" de la URL.</li>
             </ul>
-            <button id="show_location">show location properties</button>
-            <p id='texto1' class="dp_none"></p>
-          </article>
-          
-          <article class="contenedor-flex-columna gap borde jc-center">
-            <h2>Opening URLs</h2>
-            <h3>alert, confirm and prompt</h3>
-            <ol>
-              <li>alert: Shows a message in a modal window</li>
-              <li>confirm: Shows a confirmation window</li>
-              <li>prompt: Asks for data</li>
-            </ol>
-            <ul id="lista_botones1" class="contenedor-flex-fila gap jc-center">
-              <li><button id="assign_button">assign</button></li>
-              <li><button id="replace_button">replace</button></li>
-              <li><button id="reload_button">reload</button></li>
-            </ul>
-          </article>
-      </section>
+            <menu class="grupo-botones">
+                <button type="submit" id="show_location">Mostrar Propiedades</button>
+            </menu>
+            <output id="mensajeLocation" class="informacion" role="status"></output>
+        </section>
+
+        <!-- Sección para métodos de location -->
+        <section>
+            <h2>Métodos de Location</h2>
+            <p>El objeto <code>location</code> también tiene métodos útiles para manipular la URL:</p>
+            <menu class="grupo-botones">
+                <button type="submit"  id="assign_button">Assign</button>
+                <button type="submit" id="replace_button">Replace</button>
+                <button type="submit" id="reload_button">Reload</button>
+            </menu>
+        </section>
+    </main>
+    <footer>
+        <p>© 2025 - Objeto location</p>
+    </footer>
 </body>
 </html>

@@ -1,36 +1,36 @@
-////////////////////////////
-///////location object//////
-////////////////////////////
-///location is an object representing the URL the object is linked to
-//location is linked to window.location and document.location
+import mostrarMensaje from './mostrarMensajes.js';
 
-//properties
-// href
-// protocol
-// host
-// hostname
-// pathname
-// search
-// hash
+document.getElementById("show_location").addEventListener("click", () => {
+  const mensaje = `
+    <dl class="lista-definicion">
+      <dt><strong>location:</strong></dt>
+      <dd>${location}</dd>
 
-let texto1=document.getElementById("texto1");
-document.getElementById("show_location").addEventListener("click", (evento)=>{
-  evento.target.innerText.includes("show") ? 
-      evento.target.innerText=evento.target.innerText.replace("show", "hide") : 
-      evento.target.innerText=evento.target.innerText.replace("hide", "show");
-  texto1.classList.toggle("dp_none");
+      <dt><strong>location.href:</strong></dt>
+      <dd>${location.href}</dd>
 
-  texto1.innerHTML=`<ul class="lista_viñetas">
-                      <li>location: ${location}</li>
-                      <li>location.href: ${location.href}</li>
-                      <li>window.location.protocol: ${window.location.protocol}</li>
-                      <li>location.host: ${location.host}</li>
-                      <li>window.location.hostname: ${window.location.hostname}</li>
-                      <li>location.pathname: ${location.pathname}</li>
-                      <li>location.search: ${location.search}</li>
-                      <li>location.hash: ${location.hash}</li>
-                    </ul>`;
+      <dt><strong>window.location.protocol:</strong></dt>
+      <dd>${window.location.protocol}</dd>
+
+      <dt><strong>location.host:</strong></dt>
+      <dd>${location.host}</dd>
+
+      <dt><strong>window.location.hostname:</strong></dt>
+      <dd>${window.location.hostname}</dd>
+
+      <dt><strong>location.pathname:</strong></dt>
+      <dd>${location.pathname}</dd>
+
+      <dt><strong>location.search:</strong></dt>
+      <dd>${location.search}</dd>
+
+      <dt><strong>location.hash:</strong></dt>
+      <dd>${location.hash}</dd>
+    </dl>
+  `;
+  mostrarMensaje(mensaje, "mensajeLocation");
 });
+
 
 //iterating through location.search
 /*location="https://duckduckgo.com/?t=ffab&q=viajes+a+islandia&ia=web"

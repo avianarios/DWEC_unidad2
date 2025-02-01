@@ -1,98 +1,96 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Window object</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500&family=Roboto:wght@300&display=swap" rel="stylesheet">
-    <script src="../js/1.-window.js" defer></script>
-    <link rel="stylesheet" href="../css/estilos.css">
+    <title>Objeto Window</title>
+    <link rel="stylesheet" href="../css/estilos.css" type="text/css">
+    <script type="module" src="../js/1.-window.js" defer></script>
 </head>
-<body>
-    <section class="contenedor-flex-vertical gap">
-
-        <section class="contenedor-flex-vertical ai-center borde gap">
-
-          <article class="contenedor-flex-vertical gap borde jc-center">
-            <h2>Timing</h2>
+<body class="contenedor-flex-vertical">
+    <main>
+        <h1>Prueba del objeto `window`</h1>
+        <section>
+            <h2>Temporización: setTimeout, setInterval y clearTimeout</h2>
             <ol>
-              <li>Delays an action</li>
-              <li>Executes an action in a regular basis</li>
-              <li>Stops an action started with setInterval</li>
+                <li>setTimeout retrasa una acción</li>
+                <li>setInterval ejecuta una acción en intervalos regulares</li>
+                <li>clearTimeout detiene una acción iniciada con `setInterval`</li>
             </ol>
-            <label>SetTimeout example: <button id="settimeout">Show message (delay)</button></label>
-            <label>setInterval example: <button id="setinterval">Show time counter</button></label>
-            <label>clearTimeout example:<button id="cleartimeout">Stop time counter</button></label>
-            <small id='texto1' class="dp_none"></small>
-          </article>
-          
-          <article class="contenedor-flex-vertical gap borde jc-center">
-            <h2>Handing windows</h2>
-            <ol>
-              <li>open</li>
-              <li>resizeBy</li>
-              <li>resizeTo</li>
-              <li>moveTo</li>
-              <li>close</li>
-            </ol>
-            <ul id="lista_botones1" class="contenedor-flex-vertical gap jc-center">
-              <li><button id="open1">Open new window (with options)</button></li>
-              <li><button id="open2">Open new window (with delay)</button></li>
-              <li><p id='contador' class="dp_none"></p></li>
-              <li><button id="resizeBy">resizeBy</button></li>
-              <li><button id="resizeTo">resizeTo</button></li>
-              <li><button id="moveTo">moveTo</button></li>
-              <li><button id="close">close</button></li>
-            </ul>
-          </article>
-
-          <article class="contenedor-flex-vertical gap borde jc-center">
-            <h2>Interacting with users</h2>
-            <h3>alert, confirm and prompt</h3>
-            <ol>
-              <li>alert: Shows a message in a modal window</li>
-              <li>confirm: Shows a confirmation window</li>
-              <li>prompt: Asks for data</li>
-            </ol>
-            <ul id="lista_botones1" class="contenedor-flex-vertical gap jc-center">
-              <li><button id="muestra_mensaje">Show message</button></li>
-              <li><button id="muestra_confirmacion">Ask confirmation</button></li>
-              <li><button id="pide_datos">Ask for data</button></li>
-            </ul>
-          </article>
-
-          <article class="contenedor-flex-vertical gap borde jc-center">
-            <h2>window properties</h2>
-            <p>some window properties (location, document and screen) are objects as well, so they can be accessed in two ways: window.location.href or location.href</p>
-            <ol>
-              <li>innerHeight (RO):interior height of the window (px)</li>
-              <li>innerWidth (RO):interior width of the window (px)</li>
-              <li>location: current URL</li>
-              <li>document: content showed in the window (object)</li>
-              <li>LocalStorage</li>
-              <li>SessionStorage</li>
-              <li>Screen (RO)
-                <ul class="lista_viñetas">
-                  <li>availHeight: pixels available in the y axis</li>
-                  <li>availWidth</li>
-                  <li>height</li>
-                  <li>width</li>
-                  <li>colorDepth</li>
-                  <li>orientation</li>
-                </ul>
-              </li>
-            </ol>
-            <button id="show_window_properties_button">Show window properties</button>
-            <p id='texto_propiedades' class="dp_none"></p>
-          </article>
-
-        
-
-
+            <menu class="grupo-botones">
+                <button type="submit" id="settimeout">setTimeout</button>
+                <button type="submit" id="setinterval">setInterval</button>
+                <button type="submit" id="cleartimeout">clearTimeout</button>
+            </menu>
+            <output id="mensajeTemporizacion" class="informacion" role="status"></p>
         </section>
-      </section>
+          
+        <section class="contenedor-flex-vertical gap borde jc-center">
+            <h2>Manejo de ventanas: open, resizeBy, resizeTo, moveTo, close</h2>
+            <ol>
+                <li>open: abre una ventana</li>
+                <li>resizeTo: establece las dimensiones de la ventana recién abierta</li>
+                <li>resizeBy: aumenta el tamaño de la ventana recién abierta</li>
+                <li>moveTo: mueve la ventana recién abierta</li>
+                <li>close: cierra la ventana recién abierta</li>
+            </ol>
+            Cuidado porque algunos navegadores aplican restricciones a estas funciones
 
+            <menu class="grupo-botones">
+                <button type="submit" id="open1">open (con opciones)</button>
+                <button type="submit" id="open2">open (con retraso)</button>
+                <button type="submit" id="resizeTo">resizeTo</button>
+                <button type="submit" id="resizeBy">resizeBy</button>
+                <button type="submit" id="moveTo">moveTo</button>
+                <button type="submit" id="close">close</button>
+            </menu>
+            <output id="mensajeManejo" class="informacion" role="status"></p>
+        </section>
+
+        <section class="contenedor-flex-vertical gap borde jc-center">
+            <h2>Interacción con usuarios: alert, confirm y prompt</h2>
+            <ol>
+                <li>alert: Muestra un mensaje en una ventana modal</li>
+                <li>confirm: Muestra una ventana de confirmación</li>
+                <li>prompt: Pide datos al usuario</li>
+            </ol>
+            <menu class="grupo-botones">
+                <button type="submit" id="muestra_mensaje">Alert</button>
+                <button type="submit" id="muestra_confirmacion">Confirm</button>
+                <button type="submit" id="pide_datos">Prompt</button>
+            </menu>
+            <output id="mensajeInteraccion" class="informacion" role="status"></p>
+        </section>
+
+        <section class="contenedor-flex-vertical gap borde jc-center">
+            <h2>Propiedades de la ventana</h2>
+            <p>Algunas propiedades de `window` como location, document y screen también son objetos, por lo que se pueden acceder de dos maneras: `window.location.href` o `location.href`.</p>
+        <dl class="lista-definicion">
+            <dt>Altura interior de la ventana (window.innerHeight):</dt>
+            <dd><output id="innerHeight"></output></dd>
+    
+            <dt>Anchura interior de la ventana (window.innerWidth):</dt>
+            <dd><output id="innerWidth"></output></dd>
+
+            <dt>Altura total de la ventana (window.innerWidth):</dt>
+            <dd><output id="outerHeight"></output></dd>
+    
+            <dt>Anchura total de la ventana (window.outerWidth):</dt>
+            <dd><output id="outerWidth"></output></dd>
+
+            <dt>Distancia hasta el borde izquierdo de la pantalla (window.screenX):</dt>
+            <dd><output id="screenX"></output></dd>
+
+            <dt>Distancia hasta el borde superior de la pantalla (window.screenY):</dt>
+            <dd><output id="screenY"></output></dd>
+        </dl>
+            
+            <output id="mensajePropiedades" class="informacion" role="status"></output>
+        </section>        
+           
+    </main>
+    <footer>
+        <p>© 2025 - Objeto Window</p>
+    </footer>
 </body>
 </html>

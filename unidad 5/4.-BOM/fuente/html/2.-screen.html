@@ -4,63 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Propiedades de screen</title>
-    <script src="../js/2.-screen.js" defer></script>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        section {
-            margin: 10px 0;
-            padding: 8px;
-            border: 1px solid #ccc;
-            background-color: #f9f9f9;
-        }
-    </style>
+    <link rel="stylesheet" href="../css/estilos.css" type="text/css">
+    <script type="module" src="../js/2.-screen.js" defer></script>
 </head>
-<body>
-    <header>
+<body class="contenedor-flex-vertical">
+    <main>
         <h1>Propiedades del objeto screen</h1>
-    </header>
 
-    <section>
-        <h2>Ancho total de la pantalla (screen.width)</h2>
-        <p id="screenWidth"></p>
-    </section>
+        <!-- Sección de propiedades de screen -->
+        <section>
+            <h2>Propiedades de la pantalla</h2>
+            <dl class="lista-definicion">
+                <dt>Ancho total de la pantalla (screen.width):</dt>
+                <dd><output id="screenWidth"></output></dd>
 
-    <section>
-        <h2>Altura total de la pantalla (screen.height)</h2>
-        <p id="screenHeight"></p>
-    </section>
+                <dt>Altura total de la pantalla (screen.height):</dt>
+                <dd><output id="screenHeight"></output></dd>
 
-    <section>
-        <h2>Ancho disponible para el contenido (screen.availWidth)</h2>
-        <p id="availWidth"></p>
-    </section>
+                <dt>Ancho disponible para el contenido (screen.availWidth):</dt>
+                <dd><output id="availWidth"></output></dd>
 
-    <section>
-        <h2>Altura disponible para el contenido (screen.availHeight)</h2>
-        <p id="availHeight"></p>
-    </section>
+                <dt>Altura disponible para el contenido (screen.availHeight):</dt>
+                <dd><output id="availHeight"></output></dd>
 
-    <section>
-        <h2>Profundidad de color (screen.colorDepth)</h2>
-        <p id="colorDepth"></p>
-    </section>
+                <dt>Profundidad de color (screen.colorDepth):</dt>
+                <dd><output id="colorDepth"></output></dd>
 
-    <section>
-        <h2>Profundidad de píxeles (screen.pixelDepth)</h2>
-        <p id="pixelDepth"></p>
-    </section>
+                <dt>Profundidad de píxeles (screen.pixelDepth):</dt>
+                <dd><output id="pixelDepth"></output></dd>
 
-    <section>
-        <h2>Orientación de la pantalla (screen.orientation.type)</h2>
-        <p id="screenOrientation"></p>
-    </section>
-
-    <script>
-
-    </script>
+                <dt>Orientación de la pantalla (screen.orientation.type):</dt>
+                <dd><output id="screenOrientation"></output></dd>
+            </dl>
+        </section>
+    </main>
 </body>
 </html>
