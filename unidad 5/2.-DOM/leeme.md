@@ -318,6 +318,8 @@ Cuatro formas de trabajar con eventos:
     });
     ```
 
+    Si se necesita que `this` dentro de un manejador de evento haga referencia al elemento que disparó el evento, hay que usar funciones tradicionales en vez de funciones de flecha que pierden esa referencia y hacen que `this` apunte al contexto de ejecución global. Otra opción para referenciar al objeto que disparó el evento es usar `event.target` en funciones de flecha.
+
 ## 5.3- Delegando la gestión de eventos
 
 El estándar de los eventos DOM describe 3 fases de propagación de eventos:
