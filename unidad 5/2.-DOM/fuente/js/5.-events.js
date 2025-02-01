@@ -533,6 +533,7 @@ document.body.addEventListener("paste", registra);
 caja_texto_pagina=document.getElementById("caja_eventos_pagina");
 
 //DOMContentLoaded event is triggered when the initial HTML document has been completely loaded and parsed, without waiting for stylesheets, images, and subframes to finish loading
+//it is useful when you want to wait for the DOM to be ready before doing any processing
 window.addEventListener("DOMContentLoaded", mensaje)
 
 //load event is triggered when the whole page has loaded, including all dependent resources such as stylesheets, images, and subframes
