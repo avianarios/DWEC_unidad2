@@ -40,7 +40,6 @@ document.getElementById('cargarUsuario').addEventListener('click', ()=>{
     .then(data => {
         // Mostrar los datos en el contenedor
         const usuario=data.results[0];
-        console.log(usuario);
         let tarjeta=`
             <section class="card">
                 <img src="${usuario.picture.large}" alt="Foto de perfil">
@@ -139,79 +138,113 @@ document.getElementById('cargarReceta').addEventListener('click', async () => {
 ////////////////////////////////////////////
 //// promise.all y any con await y sync ////
 ////////////////////////////////////////////
-document.getElementById('cargarProductos').addEventListener('click', async () => {
-    const apiKey = 'K9P7ybYHefJidGFgDM0u4g==0mKSBGC0BZSU0Eem';
+//Clave de la API api-ninjas.com
 
-    // Función para obtener citas
-    async function obtenerCitas() {
-        const url = 'https://api.api-ninjas.com/v1/quotes';
-        const response = await fetch(url, {
-            method: 'GET',
-            headers: {
-                'X-Api-Key': apiKey
-            }
-        });
-        if (!response.ok) {
-            throw new Error('Error al obtener citas: ' + response.statusText);
+//Código común a .all y .any
+const apiKey = 'K9P7ybYHefJidGFgDM0u4g==0mKSBGC0BZSU0Eem';
+
+// Función para obtener citas
+async function obtenerCitas() {
+    const url = 'https://api.api-ninjas.com/v1/quotes';
+    const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+            'X-Api-Key': apiKey
         }
-        return response.json();
+    });
+    if (!response.ok) {
+        throw new Error('Error al obtener citas: ' + response.statusText);
     }
+    return response.json();
+}
 
-    // Función para obtener información nutricional
-    async function obtenerNutricion(query) {
-        const url = `https://api.api-ninjas.com/v1/nutrition?query=${encodeURIComponent(query)}`;
-        const response = await fetch(url, {
-            method: 'GET',
-            headers: {
-                'X-Api-Key': apiKey
-            }
-        });
-        if (!response.ok) {
-            throw new Error('Error al obtener información nutricional: ' + response.statusText);
-        }
-        return response.json();
-    }
-
-    // Función para obtener información sobre gatos
-    async function obtenerGatos(name) {
-        const url = `https://api.api-ninjas.com/v1/cats?name=${encodeURIComponent(name)}`;
-        const response = await fetch(url, {
-            method: 'GET',
-            headers: {
-                'X-Api-Key': apiKey
-            }
-        });
-        if (!response.ok) {
-            throw new Error('Error al obtener gatos: ' + response.statusText);
-        }
-        return response.json();
-    }
-
+//Ejemplo 1: Promise.all
+document.getElementById('cargarTodasCitas').addEventListener('click', async () => {
     try {
         // Usamos Promise.all para realizar las peticiones en paralelo
-        const resultados = await Promise.all([
+        const [cita1,cita2,cita3] = await Promise.all([
             obtenerCitas(),
-            obtenerNutricion('1lb brisket and fries'),
-            obtenerGatos('abyssinian')
+            obtenerCitas(),
+            obtenerCitas(),
         ]);
 
-        // Mostrar los resultados
-        console.log('Citas:', resultados[0]);
-        console.log('Nutrición:', resultados[1]);
-        console.log('Gatos:', resultados[2]);
-
-        // Aquí podrías manipular el DOM para mostrar los datos en la página
-        // Por ejemplo, con algo como:
-        // mostrarMensaje(resultados[0], 'mensajeCitas');
-        // mostrarMensaje(resultados[1], 'mensajeNutricion');
-        // mostrarMensaje(resultados[2], 'mensajeGatos');
+        const tarjetas = `
+            <section class="card">
+                <h2>Cita 1</h2>
+                <p>"${cita1[0].quote}"</p>
+                <p><label>- ${cita1[0].author}</label></p>
+            </section>
+    
+            <section class="card">
+                <h2>Cita 2</h2>
+                <p>"${cita2[0].quote}"</p>
+                <p><label>- ${cita2[0].author}</label></p>
+            </section>
+        
+            <section class="card">
+                <h2>Cita 3</h2>
+                <p>"${cita3[0].quote}"</p>
+                <p><label>- ${cita3[0].author}</label></p>
+            </section>
+        `;
+        
+        mostrarMensaje(tarjetas, 'mensajeAllAny',false);
 
     } catch (error) {
-        console.error('Error:', error.message);
-        // También puedes mostrar el error en el DOM si lo prefieres
-        // mostrarMensaje(`Hubo un error: ${error.message}`, 'mensajeErrores');
+        mostrarMensaje(`Hubo un error: ${error.message}`, 'mensajeAllAny');
     }
 });
 
+
+//Ejemplo 2: Promise.any
+// Función para manejar la API de Shazam (no funcionará porque no tenemos clave)
+async function obtenerCancion() {
+    const url = 'https://shazam.p.rapidapi.com/songs/v2/get-details?id=1217912247&l=en-US';
+    const options = {
+        method: 'GET',
+        headers: {
+            'x-rapidapi-key': 'Sign Up for Key',  // Aquí debería ir tu clave de API válida
+            'x-rapidapi-host': 'shazam.p.rapidapi.com'
+        }
+    };
+    const response = await fetch(url, options);
+    if (!response.ok) {
+        console.log(`${response.type} ${response.status}`);
+        throw new Error('Error al obtener la canción: ' + response.statusText);
+    }
+    return response.json();
+}
     
-    
+
+document.getElementById('cargarAlgunasCitas').addEventListener('click', async () => {
+    try {
+        // Usamos Promise.any para devolver la primera promesa que se resuelva
+        const [resultado] = await Promise.any([
+            obtenerCancion(),
+            obtenerCitas()
+        ]);
+
+        // Verificamos si el resultado es de la cita o de la canción
+        let tarjeta;
+        if (resultado.quote) {  // Si el resultado tiene la propiedad 'quote', es de la cita
+            tarjeta = `
+                <section class="card">
+                    <h2>Cita</h2>
+                    <p>"${resultado.quote}"</p>
+                    <p><label>- ${resultado.author}</label></p>
+                </section>
+            `;
+        } else if (resultado.title) {  // Si tiene la propiedad 'title', es de la canción
+            tarjeta = `
+                <section class="card">
+                    <h2>Canción</h2>
+                    <p>"${resultado.title}"</p>
+                    <p><label>- ${resultado.subtitle}</label></p>
+                </section>
+            `;
+        }
+        mostrarMensaje(tarjeta, 'mensajeAllAny',false);
+    } catch (error) {
+        mostrarMensaje(`Hubo un error: ${error.message}`, 'mensajeAllAny');
+    }
+});
