@@ -265,11 +265,20 @@ Para abordar esto, en JavaScript moderno se utilizan **promesas** y `async/await
 
 # 4- Promesas
 Las promesas surgen en con ES6 (ES2015) para simplificar la gestión del código asíncrono y simplificar la gestión de errores y el encadenamiento de operaciones. Son objetos que representan el estado actual de una operación asíncrona. Una promesa puede estar en uno de tres estados:
-- Pendiente (pending): La operación asíncrona aún no ha terminado.
-- Cumplida (fulfilled): La operación asíncrona se completó con éxito.
-- Rechazada (rejected): La operación asíncrona falló.
+- `Pendiente (pending)`: La operación asíncrona aún no ha terminado.
+- `Cumplida (fulfilled)`: La operación asíncrona se completó con éxito.
+- `Rechazada (rejected)`: La operación asíncrona falló.
 
-Para ilustrar cómo funcionan las promesas, vamos a usar la API fetch, que es una API que permite manejar conexinones HTTP mediante el uso de: 
+El objeto promise proporciona los siguientes métodos:
+- `then()`: Maneja el resultado cuando la promesa se resuelve (cuando tiene éxito).
+- `catch()`: Maneja los errores cuando la promesa es rechazada.
+- `finally()`: Se ejecuta después de que la promesa se resuelva o sea rechazada, independientemente de lo que ocurriera.
+- `all()`: Permite esperar múltiples promesas en paralelo y devolver una promesa cuando todas las de la matriz se resuelven. Si alguna es rechazada, `.all()` las rechaza todas.
+- `race()`: recibe un array de promesas y devuelve una nueva promesa que se resuelve o rechaza tan pronto como la primera promesa se resuelva o se rechace.
+- `allSettled()`: permite esperar que todas las promesas se resuelvan, independientemente de si se resolvieron con éxito o fueron rechazadas. Devuelve un array con objetos que contienen el estado y el valor (o el motivo del rechazo) de cada promesa.
+- `any()`: funciona de manera similar a `Promise.race()`, pero en lugar de resolver con la primera promesa que se resuelva, any() resuelve con la primera promesa que no se rechace.
+
+Para ilustrar cómo funcionan las promesas, vamos a usar la API fetch, que es una API que permite manejar conexiones HTTP mediante el uso de: 
 - `Request`: Representa una solicitud HTTP. Puedes usarla para personalizar detalles de la solicitud antes de pasarla a fetch().
 - Una función `fetch(URL)`, que devuelve una promesa a un objeto Response
 - `Response`: Representa la respuesta a una solicitud HTTP realizada con fetch(). Incluye las siguientes propiedades y métodos para trabajar con el cuerpo de la respuesta
@@ -286,23 +295,14 @@ Para ilustrar cómo funcionan las promesas, vamos a usar la API fetch, que es un
 - `Headers`: Representa las cabeceras HTTP que puedes agregar a las solicitudes o respuestas. Permite configurar las cabeceras de la solicitud o inspeccionar las cabeceras de la respuesta.
 - `FormData`: Aunque no es un objeto exclusivo de la Fetch API, se usa junto con fetch() para enviar datos de formularios (por ejemplo, para realizar una carga de archivos).
  
-Fetch inicia una solicitud HTTP y devuelve un objeto promesa (`promise`) que se resuelve cuando se recibe la respuesta de la solicitud HTTP. El objeto promise proporciona los siguientes métodos:
-- `then()`: Maneja el resultado cuando la promesa se resuelve (tiene éxito).
-- `catch()`: Maneja los errores cuando la promesa es rechazada.
-- `finally()`: Se ejecuta después de que la promesa se resuelva o sea rechazada, independientemente de lo que ocurriera.
-- `all()`: Permite esperar múltiples promesas en paralelo y devolver una promesa cuando todas las de la matriz se resuelven. Si alguna es rechazada, `.all()` las rechaza todas.
-- `race()`: recibe un array de promesas y devuelve una nueva promesa que se resuelve o rechaza tan pronto como la primera promesa se resuelva o se rechace.
-- `allSettled()`: permite esperar que todas las promesas se resuelvan, independientemente de si se resolvieron con éxito o fueron rechazadas. Devuelve un array con objetos que contienen el estado y el valor (o el motivo del rechazo) de cada promesa.
-- `any()`: funciona de manera similar a `Promise.race()`, pero en lugar de resolver con la primera promesa que se resuelva, any() resuelve con la primera promesa que no se rechace.
-
-
 Flujo de trabajo:
-- Se hace una conexión con fetch, que devuelve una promesa.
-- Se usan los métodos del objeto `promise` para interactura con dicha promesa
+- Se hace una solicitud HTTP con fetch, que devuelve una promesa.
+- Se usan los métodos del objeto `promise` para interactuar con dicha promesa
   - `.then` para cuando se resuelve
   -`.catch` para cuando es rechazada
 - Esa promesa se resuelve con un objeto `Response`, que representa la respuesta HTTP.
-- Se accede a los datos de la respuesta (por ejemplo, el cuerpo), usando los métodos del objeto `response` como `.json()`, `.text()`, o `.blob()`, dependiendo del tipo de respuesta esperada.
+- Se comprueba qué ha respondido el servidor (200, 403, 404, etc.). Se puede usar `response.ok` que comprueba la 200 o `response.status`
+- Si la repuesta es 200, se accede a los datos de la respuesta usando los métodos del objeto `response` como `.json()`, `.text()`, o `.blob()`, dependiendo del tipo de respuesta esperada.
 
 
 ```javascript
@@ -400,13 +400,21 @@ Promise.all([promesa1, promesa2, promesa3])
 });
 
 ```
-
+----
 
 # 5-Async/Await
 La sintaxis de ES2015 (ES6) maneja bien la asincronía, pero permite encadenar varios .then y .catch, lo que puede resultar confuso en ocasiones. ES2017 (ES8) sigue gestionando la asincronía con promesas, pero introduce una nueva sintaxis para manejarlas de manera más legible y estructurada permitiendo escribir código asíncrono con una apariencia más similar al código síncrono. Para ello usa dos elementos que sustituyen a `.then()` y `.catch()`:
   - `async` se usa a la hora de declarar la función y hace que ésta devuelva una promesa. Si dentro de la función se devuelve un valor, este se envuelve automáticamente en una promesa resuelta.
   - `await` sólo puede usarse dentro de funciones `async` y permite esperar el resultado de una promesa antes de continuar con la ejecución.
+  ```javascript
+  async function obtenerDatos() {
+      let respuesta = await fetch("https://jsonplaceholder.typicode.com/todos/1");
+      let datos = await respuesta.json();
+      console.log(datos);
+  }
 
+  obtenerDatos();
+  ```
 
 ```javascript
 // Gestionando la asincronía mediante el uso de fetch, que devuelve una promesa. Aquí se gestiona con await (ES8)
@@ -433,6 +441,8 @@ lanzarError().catch(console.error); // Error: Ocurrió un problema
 ```
 
 ```javascript
+//Ejemplo de promise.all para cargar varias imágenes de forma concurrente
+
 // Función para cargar una imagen, devuelve una promesa
 function cargarImagen(url) {
   //El objeto promise acepta dos argumentos: función que ejecutar si se resuelve la promesa y función a ejecutar si se rechaza
@@ -453,7 +463,6 @@ async function cargarImagenes() {
   try {
     // await espera hasta que esa promesa se resuelva (o sea rechazada)
     // promise.all devolverá una promesa resuelta cuando todas se resuelvan o se rechazará si alguna no se resuelve
-    // Esperamos que todas las imágenes se carguen de forma concurrente
     const imagenes = await Promise.all([
       cargarImagen('https://via.placeholder.com/150'),
       cargarImagen('https://via.placeholder.com/200'),
@@ -470,46 +479,8 @@ async function cargarImagenes() {
   }
 }
 
-// Llamamos a la función para cargar las imágenes
 cargarImagenes();
 ```
-
-
-
----
-
-### 🔹 **`await`**  
-La palabra clave `await` solo puede usarse dentro de funciones `async`. Se usa para esperar el resultado de una promesa antes de continuar con la ejecución.
-
-```javascript
-async function obtenerDatos() {
-    let respuesta = await fetch("https://jsonplaceholder.typicode.com/todos/1");
-    let datos = await respuesta.json();
-    console.log(datos);
-}
-
-obtenerDatos();
-```
-
-
-### 🔹 **Ejecutar múltiples promesas en paralelo con `Promise.all`**
-Si tienes varias operaciones asíncronas que pueden ejecutarse en paralelo, puedes combinarlas con `Promise.all` en lugar de usar `await` en cada una secuencialmente.
-
-```javascript
-async function obtenerDatosParalelo() {
-    let [usuario, posts] = await Promise.all([
-        fetch("https://jsonplaceholder.typicode.com/users/1").then(res => res.json()),
-        fetch("https://jsonplaceholder.typicode.com/posts?userId=1").then(res => res.json())
-    ]);
-
-    console.log("Usuario:", usuario);
-    console.log("Posts:", posts);
-}
-
-obtenerDatosParalelo();
-```
-
----
 
 ### 🔹 **Diferencias con Promesas normales**
 | Característica      | Promesas (`.then()`) | `async/await` |
@@ -527,4 +498,3 @@ obtenerDatosParalelo();
 
 ---
 
-Si tienes dudas o quieres ver ejemplos más avanzados, no dudes en preguntar. 😊
