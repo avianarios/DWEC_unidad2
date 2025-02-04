@@ -352,3 +352,5 @@ function saludar(nombre = "amigo") {
 
 console.log(saludar());         // "Hola, amigo!"
 console.log(saludar("Carlos")); // "Hola, Carlos!"
+
+//be careful as jsdoc is not working well when exporting by default
