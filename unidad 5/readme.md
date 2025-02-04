@@ -19,9 +19,12 @@
     2. [Validation with HTML](./3.-form-validation/readme.md#validation-with-html)
     3. [Validation with JavaScript](./3.-form-validation/readme.md#validation-with-javascript)
 5. BOM (Browser Object Model)
-    1. Window
-    2. Screen
-    3. Navigator
-    4. Location
-    5. Storage
-    6. Document
+    1. [Window Object](./4.-BOM/readme.md/#1--window-object)
+    2. [Screen Object](./4.-BOM/readme.md/#2--screen-object)
+    3. [Navigator Object](./4.-BOM/readme.md/#3--navigator-object)
+    4. [Location Object](./4.-BOM/readme.md/#4--location-object)
+    5. [History Object](./4.-BOM/readme.md/#5--history-object)
+    6. [localStorage Object](./4.-BOM/readme.md/#6--localstorage-object)
+    7. [sessionStorage Object](./4.-BOM/readme.md/#7--sessionstorage-object)
+    8. [Cookies](./4.-BOM/readme.md/#8--cookies)
+    9. [Performance Object](./4.-BOM/readme.md/#9--performance-object)

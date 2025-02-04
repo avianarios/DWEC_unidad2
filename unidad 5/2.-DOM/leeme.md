@@ -2,10 +2,10 @@
 
 ## Contenidos
 1. [Selección de elementos](#1--selección-de-elementos)
-2. [Manipulación de atributos y propiedades](#2---manipulación-de-atributos-y-propiedades)
-3. [Modificación del DOM](#3---modificación-del-dom)
+2. [Manipulación de atributos y propiedades](#2--manipulación-de-atributos-y-propiedades)
+3. [Modificación del DOM](#3--modificación-del-dom)
 4. Navegación por el DOM
-5. [Eventos](#5---eventos)
+5. [Eventos](#5--eventos)
     1. [Eventos comunes](#51--eventos-comunes)
     2. [Manejo de eventos](#52--manejo-de-eventos)
     3. [Delegando la gestión de eventos](#53--delegando-la-gestión-de-eventos)
@@ -61,7 +61,7 @@ Los métodos para seleccionar nodos son:
 
 ----
 
-## 2 - Manipulación de atributos y propiedades
+## 2- Manipulación de atributos y propiedades
 
 ### Atributos:
 - Son los valores definidos directamente en el marcado HTML de un elemento, como `alt` o `src`.
@@ -114,7 +114,7 @@ Se pueden crear atributos y propiedades personalizadas. Hay una convención que 
 
 ----
 
-## 3 - Modificación del DOM
+## 3- Modificación del DOM
 
 # Advertencia sobre XSS
 
@@ -166,7 +166,7 @@ punto_insercion.insertAdjacentHTML("beforebegin", comentarioSeguro);
 
 -------
 
-# 5 - Eventos
+# 5- Eventos
 
 Un **evento** es una acción o cambio que ocurre en una página web o en el navegador, ya sea por interacción del usuario o por procesos del sistema. Podemos asociar acciones con eventos como:
     - La página termina de cargar

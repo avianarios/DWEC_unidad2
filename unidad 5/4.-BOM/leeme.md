@@ -1,37 +1,24 @@
 # Índice
 
-1. [Principales objetos del DOM](#1--objeto-window)
-2. [Objeto window](#2--objeto-window)
-3. [Objeto screen](#3--objeto-screen)
-4. [Objeto navigator](#4--objeto-navigator)
-5. [Objeto location](#5--objeto-location)
-6. [Objeto history](#6--objeto-history)
-7. [Objeto localStorage](#7--objeto-localstorage)
-8. [Objeto SessionStorage](#8--objeto-sessionstorage)
-9. [Galletitas (cookies)](#9--galletitas-cookies)
-10. [Objeto Performance](#10--objeto-performance)
-----
-
-
 El BOM (Browser Object Model) es un conjunto de objetos proporcionados por el navegador para interactuar con el entorno de la ventana del usuario. A diferencia del DOM, que se centra en la estructura del documento HTML, el BOM permite manipular elementos externos como la ventana, la barra de direcciones, el historial y la ubicación de la página.
 
 Aunque el BOM no tiene un conjunto de reglas o un documento único que dicte cómo debe implementarse en todos los navegadores. Sin embargo, los navegadores más comunes (como Chrome, Firefox, Safari, etc.) han adoptado una implementación bastante similar de los objetos que mencioné (como window, navigator, location, etc.), de modo que los desarrolladores pueden usarlos con bastante confianza sabiendo que funcionarán de manera similar en la mayoría de los navegadores.
 
-# 1- Principales objetos del BOM
-
 El BOM no es un estándar oficial, pero los navegadores lo implementan de manera similar. Sus principales objetos son:
 
-1. **`window`** Es el objeto global en el contexto del navegador y representa la ventana del navegador. Todos los demás objetos del BOM están dentro de `window` bien porque pertenecen a él o bien porque se ejecutan en el contexto global y el navegador los asocia a él.
-2. **`screen`** Contiene información sobre la pantalla del usuario. 
-3. **`navigator`** Proporciona información sobre el navegador y el sistema del usuario. 
-4. **`location`** Representa la URL actual y permite redireccionar.
-5. **`history`** Permite interactuar con el historial de navegación.
-6. **`localStorage`** Permite almacenar datos de forma persistente en el navegador.
-7. **`SessionStorage`** Similar a localStorage, pero los datos se eliminan cuando la sesión del navegador termina.
+1. [Objeto window](#1--objeto-window)
+2. [Objeto screen](#2--objeto-screen)
+3. [Objeto navigator](#3--objeto-navigator)
+4. [Objeto location](#4--objeto-location)
+5. [Objeto history](#5--objeto-history)
+6. [Objeto localStorage](#6--objeto-localstorage)
+7. [Objeto SessionStorage](#7--objeto-sessionstorage)
+8. [Galletitas (cookies)](#8--galletitas-cookies)
+9. [Objeto Performance](#9--objeto-performance)
 
 -----
 
-# 2- Objeto Window
+# 1- Objeto Window
 
 El objeto `window` es uno de los componentes principales del **BOM (Browser Object Model)** y representa la ventana del navegador donde se ejecuta la página web. Es el objeto global en JavaScript en un entorno de navegador, por lo que se puede usar sus métodos y acceder a sus propiedades y objetos sin necesidad de referenciarlo explícitamente. Por ejemplo, las funciones como `window.alert()` y `window.setTimeout()` se pueden ejecutar con `alert()` y `setTimeout()`.
 
@@ -166,7 +153,7 @@ window.setTimeout(function() {
 
 ---
 
-# 3- Objeto `screen`
+# 2- Objeto `screen`
 
 El objeto `screen` proporciona información sobre la pantalla del usuario, como su resolución, dimensiones, orientación y más. Es útil para adaptar la interfaz de usuario a las características de la pantalla del dispositivo.
 
@@ -233,7 +220,7 @@ if (screen.orientation) {
 
 ---
 
-# 4- Objeto `navigator`
+# 3- Objeto `navigator`
 
 El objeto `navigator` proporciona información sobre el navegador del usuario y su entorno. Se accede a través de `window.navigator` y contiene varias propiedades y métodos útiles.
 
@@ -338,10 +325,10 @@ Algunas de las propiedades más importantes de navigator son:
   - El acceso a ciertas funcionalidades (como la geolocalización o los dispositivos multimedia) requiere el permiso del usuario.
   - El objeto `navigator` es de solo lectura, lo que significa que no se pueden modificar sus propiedades directamente.
   - Algunas propiedades, como `navigator.userAgent`, pueden ser modificadas por el usuario o por extensiones del navegador, por lo que no son fiables. Por tanto, no se puede fiar en detectar el tipo de navegador así:
-    ```javascript
-    if (window.navigator.userAgent.includes("Chrome")){
-        //haz algo
-    }
+  ```javascript
+  if (window.navigator.userAgent.includes("Chrome")){
+      //haz algo
+  }
 
   //Es mejor intentar detectar la funcionalidad que se necesite (detección de capacidades)
   if( typeof window.addEventListener === 'function' ) {
@@ -351,10 +338,10 @@ Algunas de las propiedades más importantes de navigator son:
   }
   ```
 
-
   ----
 
-# 5- Objeto `location`
+# 4- Objeto `location`
+
 
 El objeto `location` proporciona información sobre la URL de la página actual. También permite cambiar la URL y redirigir al navegador.
 
@@ -424,7 +411,7 @@ location.assign("https://www.ejemplo.com");
 
 ----
 
-# 6- Objeto history
+# 5- Objeto history
 
 El objeto `history` permite interactuar con el historial de navegación del navegador y almacenar información asociada al estado de la página actual mediante un objeto de datos, sin recargarla. Dicho objeto se puede recuperar cuando el usuario navega hacia atrás o adelante. Se trata de una forma de almacenar información asociada a la la página visitada que tiene diferencias respecto a otros dos objetos usados para almacenar información, `localStorage` y `sessionStorage`
 
@@ -497,7 +484,7 @@ Al navegar entre páginas el navegador sólo recuerda las URL, pero los siguient
 
 --------
 
-# 7- Objeto localStorage
+# 6- Objeto localStorage
 
 El objeto `localStorage` permite almacenar datos de manera persistente en el navegador del usuario. La información guardada en `localStorage` no se elimina cuando la página se recarga o se cierra el navegador, a diferencia de `sessionStorage`, que solo mantiene los datos durante la sesión activa.
 
@@ -577,7 +564,7 @@ Dado que `localStorage` solo puede almacenar cadenas, si deseas guardar objetos 
 
 ----
 
-# 8- Objeto sessionStorage
+# 7- Objeto sessionStorage
 
 El objeto `sessionStorage` permite almacenar datos en el navegador de manera temporal, durante la duración de la sesión de la página. Los datos almacenados en `sessionStorage` se eliminan cuando se cierra la pestaña o ventana del navegador.
 
@@ -651,7 +638,7 @@ Dado que `sessionStorage` solo puede almacenar cadenas, si deseas guardar objeto
 
 -----
 
-# 9- Galletitas (Cookies)
+# 8- Galletitas (Cookies)
 
 Las galletitas (`cookies`) son pequeños fragmentos de datos que los sitios web almacenan en el navegador del usuario. Se utilizan principalmente para recordar información sobre el usuario, como preferencias, sesiones de inicio de sesión o datos de seguimiento, ya que HTTP es un protocolo sin estado. En realidad no pertecen al BOM, sino que pertenecen al objeto `document`, que define el DOM, pero como éste se define en el ámbito global, se convierte en una propiedad del objeto `window` y se puede acceder a él mediante `window.document` o `document`
 
@@ -739,7 +726,7 @@ En el navegador, las cookies se pueden leer y escribir usando la propiedad `docu
 
 ----
 
-# 10- Objeto `performance`
+# 9- Objeto `performance`
 
 El objeto `performance` proporciona una interfaz para acceder a varias funcionalidades relacionadas con el rendimiento de la página web. Estas funcionalidades incluyen la medición de la velocidad de carga y la ejecución de los recursos. Este objeto es útil para los desarrolladores a la hora de mejorar la experiencia del usuario, optimizar tiempos de carga, y hacer ajustes en el rendimiento general de la web.
 
@@ -819,3 +806,5 @@ console.log(measures[0].duration);
 ## Conclusión
 
 El objeto `performance` es una herramienta esencial para el análisis y la mejora del rendimiento de las aplicaciones web. Ofrece un control detallado sobre la medición de tiempos de ejecución y la supervisión de recursos.
+
+[Volver atrás](https://github.com/avianarios/codigo_DWEC/tree/main/unidad%205)
