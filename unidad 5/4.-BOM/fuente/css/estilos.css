@@ -134,7 +134,8 @@ output.informacion {
 }
 
 output.mostrar {
-    display: block; /* Visible cuando hay contenido */
+    display: flex; /* Visible cuando hay contenido */
+    justify-content: center;
 }
 
 
@@ -144,23 +145,23 @@ output.mostrar {
     padding: 0;
   }
   
-  .lista-definicion dt {
+.lista-definicion dt {
     display: inline; /* Hace que el dt esté en línea */
     font-weight: bold;
     color: #007bff; /* Color azul para los términos */
-  }
+}
   
-  .lista-definicion dd {
+.lista-definicion dd {
     display: inline; /* Hace que el dd esté en línea */
     margin-left: 0.5rem; /* Espacio entre el dt y el dd */
     margin-bottom: 0.75rem; /* Espacio entre cada par dt-dd */
-  }
+}
   
-  .lista-definicion dd::after {
+.lista-definicion dd::after {
     content: ""; /* Agrega un salto de línea después de cada dd */
     display: block;
     margin-bottom: 0.5rem;
-  }
+}
 
 
 /*Efecto de desvanecimiento de los mensajes al irse*/
@@ -221,4 +222,9 @@ input[type="checkbox"]{
 
 label[for="cookieSecure"]{
     display: inline;
+}
+
+img{
+    max-width: 100%;
+    height: auto;
 }
