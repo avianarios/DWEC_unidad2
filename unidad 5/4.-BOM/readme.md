@@ -259,22 +259,31 @@ Some of the most important properties of `navigator` are:
 
   - **`navigator.cookieEnabled`**: Indicates whether cookies are enabled in the browser.
 
-  - **`navigator.geolocation`**: Provides access to the geolocation API, which allows retrieving the user's geographical location.
-      ```javascript
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                document.getElementById("latitude").textContent = position.coords.latitude;
-                document.getElementById("longitude").textContent = position.coords.longitude;
-            },
-            (error) => {
-                alert("Error obtaining location: " + error.message);
-            }, { enableHighAccuracy: true }
-        );
-      } else {
-        alert("Geolocation is not supported in this browser.");
-      }
-      ```
+  - **`navigator.geolocation`**: It provides access to the geolocation API, which allows the geographic location of the user to be obtained using the following methods:
+    - `getCurrentPosition(functionSuccess, functionError, Options)`: Returns the current position once.
+    - `watchPosition(functionSuccess, functionError, Options)`: Gets the location continuously.
+    - `clearWatch(id)`: Stops the watch started with `watchPosition()`.
+
+    If the location cannot be obtained, `functionError` receives an error object with one of these properties:
+    - `error.PERMISSION_DENIED`: User denied permission.
+    - `error.POSITION_UNAVAILABLE`: Location could not be determined.
+    - `error.TIMEOUT`: The timeout has expired.
+
+    ```javascript
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+          (position) => {
+              document.getElementById("latitude").textContent = position.coords.latitude;
+              document.getElementById("longitude").textContent = position.coords.longitude;
+          },
+          (error) => {
+              alert("Error obtaining location: " + error.message);
+          }, { enableHighAccuracy: true }
+      );
+    } else {
+      alert("Geolocation is not supported in this browser.");
+    }
+    ```
 
   - **`navigator.mediaDevices`**: Provides access to multimedia devices (such as cameras and microphones) through the MediaDevices API.
 
@@ -480,15 +489,15 @@ When navigating between pages, the browser only remembers the URLs. However, the
 
 # 6- `localStorage` Object
 
-The `localStorage` object allows storing data persistently in the user's browser. Data saved in `localStorage` is not removed when the page reloads or the browser is closed, unlike `sessionStorage`, which only keeps data during the active session.
+The `localStorage` object allows storing data persistently in the user's browser. 
 
 ## Main Features
 
-1. **Lifetime**: Data stored in `localStorage` has no expiration date and remains in the browser until manually deleted (via code or by the user).
-2. **Storage by origin**: Data is associated with the origin (protocol + domain + port). This means a website cannot access another website's data.
-3. **Capacity**: Most modern browsers allow storing up to **5 MB** of data per origin.
-4. **Stores only strings**: `localStorage` can only store data in string format. To store objects or arrays, they must be converted to JSON.
-5. **Synchronization**: Data in `localStorage` is available across all tabs and windows of the same origin.
+1. **Lifetime**: Stored data remains in the browser until it is explicitly deleted.
+2. **Scope**: Only pages of the same origin (protocol + domain + port) can access the data.
+3. **Capacity**: Most modern browsers allow up to **5 MB** of data to be stored per origin.
+4. **Data type**: Only text strings (`string`) can be stored. To store objects, they must be converted to text.
+5. **Availability**: Data is available in all tabs and windows of the same source.
 
 ## Methods
 
@@ -529,7 +538,7 @@ The `localStorage` object allows storing data persistently in the user's browser
 
 ## Related Events
 
-When data in `localStorage` is modified, a `storage` event is triggered in other windows or tabs of the same origin. This is useful for synchronizing data across tabs.
+When data is modified in `localStorage`, a `storage` event is fired in other windows or tabs of the same source. This is useful for synchronising data between tabs.
 ```javascript
 window.addEventListener("storage", (event) => {
     console.log("Change in localStorage:", event.key, event.newValue);
@@ -561,12 +570,11 @@ Since `localStorage` can only store strings, if you need to save objects or arra
 The `sessionStorage` object allows temporary data storage in the browser for the duration of the page session. Data stored in `sessionStorage` is deleted when the browser tab or window is closed.
 
 ## Main Features
-
-1. **Lifetime**: Data stored in `sessionStorage` only persists during the page session. If the browser tab or window is closed, the data is lost.
-2. **Storage by origin**: Data is associated with the origin (protocol + domain + port). This means a website cannot access another website's data.
-3. **Capacity**: Most modern browsers allow storing up to **5 MB** of data per origin.
-4. **Stores only strings**: `sessionStorage` can only store data in string format. To store objects or arrays, they must be converted to JSON.
-5. **Synchronization**: Data in `sessionStorage` is only available to the tab that created it. Any other tab cannot access the data, even if it is from the same origin.
+1. **Lifetime**: The data is only valid for the duration of the page session. If the browser tab or window is closed, the data is lost.
+2. **Scope**: Only pages of the same origin (protocol + domain + port) can access the data.
+3. **Capacity**: Most modern browsers allow up to **5 MB** of data to be stored per origin.
+4. **Data type**: Only text strings (`string`) can be stored. To store objects, they must be converted to text.
+5. **Availability**: Data is only available to the tab that created it. Any other tab can NOT access the data, even if it comes from the same source. 
 
 Examples:
   - Same tab, same origin:
@@ -580,10 +588,6 @@ Examples:
   - Two tabs, same origin:
     - Open https://www.example.com in two different tabs.
     - Each tab has its own instance of `sessionStorage`, and data is not shared between them.
-
-## Properties
-
-- **`sessionStorage.length`**: Returns the number of key-value pairs stored in `sessionStorage`.
 
 ## Methods
 
@@ -612,6 +616,9 @@ Examples:
   ```javascript
   sessionStorage.key(3);
   ```
+## Properties
+
+- **`sessionStorage.length`**: Returns the number of key-value pairs stored in `sessionStorage`.
 
 ## Storing Objects and Arrays
 
@@ -643,6 +650,14 @@ Cookies have several common uses:
 - **Maintain user session**: For example, remembering that a user has logged in.
 - **Store preferences**: Such as language or website theme.
 - **Tracking and analytics**: To collect data on user behavior.
+
+## Main features
+
+- **Lifetime**: Data is stored until the defined expiry date. If not defined, it will be deleted when the browser is closed.
+- **Scope**: Only pages on the same domain can access the biscuits, although they are not restricted by protocol or port.
+- **Capacity**: Usually limited to about 4 KB per biscuit, including name, value and attributes.
+- **Data type**: They can only store strings. To store objects, they need to be converted to text.
+- **Availability**: They can be accessible from different tabs, windows and browser sessions, as long as they comply with the restrictions of the domain and the established attributes.
 
 ## How do cookies work?
 

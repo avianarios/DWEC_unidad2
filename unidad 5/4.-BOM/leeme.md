@@ -263,22 +263,31 @@ Algunas de las propiedades más importantes de navigator son:
 
   - **`navigator.cookieEnabled`**: Indica si las cookies están habilitadas en el navegador.
 
-  - **`navigator.geolocation`**: Proporciona acceso a la API de geolocalización, que permite obtener la ubicación geográfica del usuario
-      ```javascript
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                document.getElementById("latitude").textContent = position.coords.latitude;
-                document.getElementById("longitude").textContent = position.coords.longitude;
-            },
-            (error) => {
-                alert("Error al obtener la ubicación: " + error.message);
-            }, { enableHighAccuracy: true }
-        );
-      } else {
-        alert("Geolocalización no soportada en este navegador.");
-      }
-      ```
+  - **`navigator.geolocation`**: Proporciona acceso a la API de geolocalización, que permite obtener la ubicación geográfica del usuario mediante los siguientes métodos:
+    - `getCurrentPosition(funcionExito, funcionError, Opciones)`: Devuelve la posición actual una sola vez
+    - `watchPosition(funcionExito, funcionError, Opciones)`: Obtiene la ubicación de manera continua.
+    - `clearWatch(id)`: Detiene la observación iniciada con `watchPosition()`.
+
+    Si la ubicación no se puede obtener, `funcionError` recibe un objeto error con una de estas propiedades:
+    - `error.PERMISSION_DENIED`: El usuario denegó el permiso.
+    - `error.POSITION_UNAVAILABLE`: No se pudo determinar la ubicación.
+    - `error.TIMEOUT`: Se agotó el tiempo de espera.
+
+    ```javascript
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+          (position) => {
+              document.getElementById("latitude").textContent = position.coords.latitude;
+              document.getElementById("longitude").textContent = position.coords.longitude;
+          },
+          (error) => {
+              alert("Error al obtener la ubicación: " + error.message);
+          }, { enableHighAccuracy: true }
+      );
+    } else {
+      alert("Geolocalización no soportada en este navegador.");
+    }
+    ```
 
   - **`navigator.mediaDevices`**: Proporciona acceso a los dispositivos multimedia (como cámaras y micrófonos) a través de la API MediaDevices.
 
@@ -486,15 +495,14 @@ Al navegar entre páginas el navegador sólo recuerda las URL, pero los siguient
 
 # 6- Objeto localStorage
 
-El objeto `localStorage` permite almacenar datos de manera persistente en el navegador del usuario. La información guardada en `localStorage` no se elimina cuando la página se recarga o se cierra el navegador, a diferencia de `sessionStorage`, que solo mantiene los datos durante la sesión activa.
+El objeto `localStorage` permite almacenar datos de manera persistente en el navegador del usuario. 
 
-## Características Principales
-
-1. **Vida útil**: Los datos almacenados en `localStorage` no tienen fecha de expiración y permanecen en el navegador hasta que se eliminan manualmente (por código o por el usuario).
-2. **Almacenamiento por origen**: Los datos están asociados al origen (protocolo + dominio + puerto). Esto significa que un sitio web no puede acceder a los datos de otro sitio web.
+## Características:
+1. **Vida útil**: Los datos almacenados permanecen en el navegador hasta que se eliminan explícitamente.
+2. **Alcance**: Sólo las páginas del mismo origen (protocolo + dominio + puerto) pueden acceder a los datos.
 3. **Capacidad**: La mayoría de los navegadores modernos permiten almacenar hasta **5 MB** de datos por origen.
-4. **Solo almacena cadenas**: `localStorage` solo puede almacenar datos en formato de cadena (`string`). Si necesitas almacenar objetos o arrays, debes convertirlos a JSON.
-5. **Sincronización**: Los datos en `localStorage` están disponibles en todas las pestañas y ventanas del mismo origen.
+4. **Tipo de datos**: Sólo se puede almacenar cadenas de texto (`string`). Para almacenar objetos hay que convertirlos a texto.
+5. **Disponibilidad**: Los datos están disponibles en todas las pestañas y ventanas del mismo origen.
 
 
 ## Métodos
@@ -545,7 +553,7 @@ window.addEventListener("storage", (event) => {
 
 ## Almacenamiento de Objetos y Arrays
 
-Dado que `localStorage` solo puede almacenar cadenas, si deseas guardar objetos o arrays, debes convertirlos a JSON usando `JSON.stringify()` al guardar y `JSON.parse()` al recuperar.
+Dado que `localStorage` solo puede almacenar cadenas, para guardar objetos o arrays, hay que convertirlos a JSON usando `JSON.stringify()` al guardar y `JSON.parse()` al recuperar.
 
   ```javascript
   // Guardar un objeto
@@ -557,24 +565,22 @@ Dado que `localStorage` solo puede almacenar cadenas, si deseas guardar objetos 
   console.log(usuarioGuardado); // { nombre: "Juan", edad: 30 }
   ```
 
-
 ## Limitaciones y consideraciones
-  - Seguridad: No almacenes información sensible (como contraseñas o tokens) en `localStorage`, ya que es accesible desde JavaScript y puede ser vulnerable a ataques XSS (Cross-Site Scripting).
+  - Seguridad: No se debe almacenar información sensible (como contraseñas o tokens) en `localStorage`, ya que es accesible desde JavaScript y puede ser vulnerable a ataques XSS (Cross-Site Scripting).
   - Sincronización: Los cambios en `localStorage` no se sincronizan automáticamente entre diferentes dispositivos o navegadores.
 
 ----
 
 # 7- Objeto sessionStorage
 
-El objeto `sessionStorage` permite almacenar datos en el navegador de manera temporal, durante la duración de la sesión de la página. Los datos almacenados en `sessionStorage` se eliminan cuando se cierra la pestaña o ventana del navegador.
+El objeto `sessionStorage` permite almacenar datos en el navegador de manera temporal, durante la duración de la sesión de la página. 
 
-## Características Principales
-
-1. **Vida útil**: Los datos almacenados en `sessionStorage` sólo persisten durante la sesión de la página. Si se cierra la pestaña o ventana del navegador, los datos se pierden.
-2. **Almacenamiento por origen**: Los datos están asociados al origen (protocolo + dominio + puerto). Esto significa que un sitio web no puede acceder a los datos de otro sitio web.
+## Características
+1. **Vida útil**: Los datos sólo son válidos durante la sesión de la página. Si se cierra la pestaña o ventana del navegador, los datos se pierden.
+2. **Alcance**: Sólo las páginas del mismo origen (protocolo + dominio + puerto) pueden acceder a los datos.
 3. **Capacidad**: La mayoría de los navegadores modernos permiten almacenar hasta **5 MB** de datos por origen.
-4. **Solo almacena cadenas**: `sessionStorage` solo puede almacenar datos en formato de cadena (`string`). Si necesitas almacenar objetos o arrays, debes convertirlos a JSON.
-5. **Sincronización**: Los datos en `localStorage` sólo están disponibles para la pestaña que lo creó. Cualquier otra pestaña NO puede acceder a los datos, aunque provenga del mismo origen. 
+4. **Tipo de datos**: Sólo se puede almacenar cadenas de texto (`string`). Para almacenar objetos hay que convertirlos a texto.
+5. **Disponibilidad**: Los datos sólo están disponibles para la pestaña que lo creó. Cualquier otra pestaña NO puede acceder a los datos, aunque provenga del mismo origen. 
 
 Ejemplos:
   - Misma pestaña, mismo origen:
@@ -588,11 +594,6 @@ Ejemplos:
   - Dos pestañas, mismo origen:
     - Abres https://www.ejemplo.com en dos pestañas diferentes.
     - Cada pestaña tendrá su propia instancia de sessionStorage, y los datos no se compartirán entre ellas.
-
-
-## Propiedades
-
-- **`sessionStorage.length`**: Devuelve el número de pares clave-valor almacenados en el `sessionStorage`.
 
 ## Métodos
 
@@ -622,6 +623,10 @@ Ejemplos:
   sessionStorage.key(3);
   ``` 
 
+## Propiedades
+
+- **`sessionStorage.length`**: Devuelve el número de pares clave-valor almacenados en el `sessionStorage`.
+
 ## Almacenamiento de Objetos y Arrays
 
 Dado que `sessionStorage` solo puede almacenar cadenas, si deseas guardar objetos o arrays, debes convertirlos a JSON usando `JSON.stringify()` al guardar y `JSON.parse()` al recuperar.
@@ -642,10 +647,9 @@ Dado que `sessionStorage` solo puede almacenar cadenas, si deseas guardar objeto
 
 Las galletitas (`cookies`) son pequeños fragmentos de datos que los sitios web almacenan en el navegador del usuario. Se utilizan principalmente para recordar información sobre el usuario, como preferencias, sesiones de inicio de sesión o datos de seguimiento, ya que HTTP es un protocolo sin estado. En realidad no pertecen al BOM, sino que pertenecen al objeto `document`, que define el DOM, pero como éste se define en el ámbito global, se convierte en una propiedad del objeto `window` y se puede acceder a él mediante `window.document` o `document`
 
-Cada vez que el usuario realiza una solicitud al servidor, el navegador devuelve las cookies que pertenecen a ese dominio mediante el encabezado «cookie». Pueden ser enviadas con cualquier tipo de recurso, no sólo páginas web y se asocian a un dominio. Existen, por tanto, dos tipos de cookies según su dominio de origen:
+Cada vez que el usuario realiza una solicitud al servidor, el navegador devuelve las cookies que pertenecen a ese dominio mediante el encabezado `cookie`. Pueden ser enviadas con cualquier tipo de recurso, no sólo páginas web y se asocian a un dominio. Existen, por tanto, dos tipos de cookies según su dominio de origen:
   - Cookies de origen (first-party): creadas por el servidor del dominio actual.
   - Cookies de terceros (third-party): enviadas por servidores con dominios diferentes al que el usuario está visitando. Estas suelen utilizarse con fines de publicidad y seguimiento, pero actualmente los navegadores están limitando su uso por razones de privacidad.
-
 
 ## ¿Para qué se usan las cookies?
 
@@ -654,6 +658,13 @@ Las cookies tienen varios usos comunes:
 - **Almacenar preferencias**: Como el idioma o el tema de un sitio web.
 - **Rastreo y análisis**: Para recopilar datos sobre el comportamiento del usuario.
 
+## Características
+
+- **Vida útil**: Los datos se almacenan hasta la fecha de expiración definida. Si no está definida, se eliminarán cuando se cierre el navegador.
+- **Alcance**: Sólo las páginas del mismo dominio pueden acceder a las galletitas, aunque no se restringen por protocolo ni puerto.
+- **Capacidad**: Suelen estar limitadas a unos 4 KB por galletita, incluyendo nombre, valor y atributos.
+- **Tipo de datos**: Sólo pueden almacenar cadenas de texto (string). Para almacenar objetos, es necesario convertirlos a texto.
+- **Disponibilidad**: Pueden ser accesibles desde diferentes pestañas, ventanas y sesiones del navegador, siempre que cumplan las restricciones del dominio y los atributos establecidos.
 
 ## ¿Cómo funcionan las cookies?
 
@@ -675,20 +686,18 @@ En el navegador, las cookies se pueden leer y escribir usando la propiedad `docu
 - **`secure`**: Indica que la cookie solo se enviará sobre conexiones HTTPS.
 
 - **`samesite`**: Controla si la cookie se envía en solicitudes entre sitios. Valores posibles:
-  - Strict: La cookie solo se envía en solicitudes del mismo sitio.
-  - Lax: La cookie se envía en solicitudes del mismo sitio y en algunas solicitudes entre sitios (como navegación mediante enlaces).
-  - None: La cookie se envía en todas las solicitudes (requiere que secure esté habilitado).
+  - `Strict`: La cookie sólo se envía si la solicitud viene del mismo dominio.
+  - `Lax`: La cookie se envía si la solicitud viene del mismo dominio y en solicitudes entre sitios cuando el usuario pincha en enlaces, no cuando la web intenta descargar recursos de forma automática (descarga de imágenes, por ejemplo).
+  - `None`: La cookie se envía en todas las solicitudes y requiere que `secure` esté habilitado.
 
 - **`cookie`**: Es una propiedade que permite...
   - ...leer de ella para obtener todas las cookies. Contiene una cadena de texto con los valores `nombre=valor` de todas las cookies del dominio, separadas por punto y coma (;). NO se obtienen el resto de propiedades.
-  - ...escribir en ella para crear nuevas cookies. Los campos que no se especifiquen toman valores por defecto:
+  - ...escribir en ella para crear nuevas cookies. Los campos que no se especifiquen toman los siguientes valores por defecto:
     - `expires` o `max-age`: se considera una cookie de sesión, eliminándose cuando el navegador se cierre.
     - `path`: será el directorio en el que está cuando se crea la cookie (en https://ejemplo.com/pagina1, el path es /pagina1)
     - `domain`: la cookie será válida sólo en el dominio en el que se creó.
     - `secure`: false
     - `samesite`: lax, es decir, se enviará en solicitudes de navegación de primer nivel.
-  
-     
   Esta propiedad NO permite modificar una cookie ya existente. Lo que hace si se le da el nombre de una que ya existe, en realidad, es crearla de nuevo. Por tanto, habría que darle los mismos parámetros.
 
   ```javascript
@@ -722,7 +731,6 @@ En el navegador, las cookies se pueden leer y escribir usando la propiedad `docu
 | **Accesibilidad**     | Puede ser leído desde cualquier script en la misma página. | Solo accesible en la pestaña actual. | Solo accesible al moverse en el historial con `popstate`. | Se pueden acceder mediante JavaScript a través de `document.cookie`, pero no desde otros dominios (debido a la política de mismo origen). |
 | **Seguridad**         | No se borra automáticamente, lo que puede ser un riesgo de privacidad. | Más seguro que `localStorage` porque los datos se eliminan al cerrar la pestaña. | Más seguro porque solo es accesible en la sesión de navegación. | Pueden ser **marcadas como HttpOnly** para evitar que sean accesibles a través de JavaScript, lo que mejora la seguridad. Además, pueden tener el atributo `secure` para ser transmitidas solo sobre HTTPS. |
 | **Uso recomendado**   | Para guardar configuraciones de usuario a largo plazo, datos que deban persistir después de cerrar el navegador. | Para almacenar datos temporales que deben desaparecer al cerrar la pestaña. | Para manejar navegación dentro de una SPA o formularios con pasos. | Para almacenar datos que deban ser enviados al servidor en cada solicitud HTTP (como autenticación, preferencias del usuario, etc.). |
-
 
 ----
 
