@@ -32,7 +32,6 @@ document.getElementById("movimiento").addEventListener("click", (evento)=>{
 
 
 //Example 3: showing history information
-mensaje=document.getElementById("mensaje");
 window.addEventListener('popstate', (evento) => {
     mostrarMensaje(history.state.title, "mensajeHistory");
 });
