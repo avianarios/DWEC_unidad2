@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarjeta de Datos de Persona</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 10px;
+            width: 300px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            text-align: center;
+            padding: 20px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+        .card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+
+        .card h2 {
+            margin: 10px 0;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .card p {
+            font-size: 16px;
+            color: #777;
+            margin: 5px 0;
+        }
+
+        .card .info {
+            font-size: 14px;
+            color: #555;
+            margin: 5px 0;
+        }
+
+        .card .info span {
+            font-weight: bold;
+        }
+
+        .card .contact {
+            margin-top: 15px;
+        }
+
+        .card .contact a {
+            text-decoration: none;
+            color: #3498db;
+            font-weight: bold;
+        }
+
+        .card .contact a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <img src="https://via.placeholder.com/100" alt="Foto de perfil">
+        <h2>Juan Pérez</h2>
+        <p>Desarrollador Web</p>
+
+        <div class="info">
+            <p><span>Correo:</span> juanperez@example.com</p>
+            <p><span>Dirección:</span> Calle Ficticia 123, Madrid</p>
+            <p><span>Teléfono:</span> +34 912 345 678</p>
+        </div>
+
+        <div class="contact">
+            <a href="mailto:juanperez@example.com">Enviar Correo</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demostración de Promesas y Fetch</title>
+    <link rel="stylesheet" href="estilos.css" type="text/css">
+    <link rel="stylesheet" href="tarjeta.css" type="text/css">
+    <script type="module" src="3.-promesas.js" defer></script>
+</head>
+<body class="contenedor-flex-vertical">
+    <main>
+        <h1>Demostración de Promesas y Fetch</h1>
+        <section>
+            <h2>Promesas con .then y .catch</h2>
+            <menu class="grupo-botones">
+                <button id="cargarCita" type="submit">Cargar cita</button>
+                <button id="cargarUsuario" type="submit">Cargar usuario</button>
+            </menu>
+            <output id="mensajeThen" class="informacion" role="status"></output>            
+        </section>
+
+        <section>
+            <h2>Promesas con async y wait</h2>
+            <menu class="grupo-botones">
+                <button id="cargarGato" type="submit">Cargar gato</button>
+                <button id="cargarReceta" type="submit">Cargar receta</button>
+            </menu>
+            <output id="mensajeAwait" class="informacion" role="status"></output>            
+        </section>
+
+        <section>
+            <h2>Múltiples promesas con async, wait, Promise.all y Promise.any </h2>
+            <menu class="grupo-botones">
+                <button id="cargarProductos" type="submit">Cargar productos</button>
+            </menu>
+            <output id="mensajeAllAny" class="informacion" role="status"></output>            
+        </section>
+    </main>    
+</body>
+</html>
